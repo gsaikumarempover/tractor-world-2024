@@ -138,7 +138,8 @@ export default function SellTractor() {
             <Heading
               heading={"Tractor World is best place to sell your tractor"}
             />
-            <div BannerUnderlineImg={true}>
+            {/* <div BannerUnderlineImg={true}> */}
+            <div>
               <p className="text-sm my-2 font-bold text-black">
                 Thinking to upgrade your old tractor with a new one?
               </p>

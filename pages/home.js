@@ -21,6 +21,7 @@ import Call from '@Images/home/call.svg';
 import Share from '@Images/home/share.svg';
 import Thumb from '@Images/home/thumb.svg';
 import Tractor from '@Images/home/tractor.svg';
+import slide1 from '@Images/testimonials/slide1.svg'
 import 'flowbite';
 import { Carousel } from 'flowbite';
 import Btn from '@components/Btn';
@@ -301,7 +302,9 @@ export default function HomePage({ locale }) {
                 <Heading heading={'Explore Tractor World'} viewButton={false} />
                 <div className='grid sm:grid-cols-6 gap-4 grid-cols-3 pb-4'>
                     {exploreimages.map((item, index) => (
-                        <a href={item.url}> <Image key={index} src={item.image} className='cursor-pointer' alt={`Explore item ${index + 1}`} /></a>
+                        <a href={item.url} key={index}> 
+                        <Image src={item.image} className='cursor-pointer' alt={`Explore item ${index + 1}`} />
+                        </a>
                     ))
                     }
                 </div>
@@ -505,15 +508,15 @@ export default function HomePage({ locale }) {
                     <div id="Testimonials-carousel" className="relative w-full" data-carousel="slide">
                         <div className="relative h-36 overflow-hidden md:h-[30rem]">
                             <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                <img src='images/testimonials/slide1.svg'
+                                <Image src={slide1}
                                     className="w-full"
                                     alt="Slide 1" />
                             </div>
                             <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                <img src="images/testimonials/slide1.svg" alt="Slide 2" />
+                                <Image src={slide1} alt="Slide 2" />
                             </div>
                             <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                <img src="images/testimonials/slide1.svg" alt="Slide 3" />
+                                <Image src={slide1} alt="Slide 3" />
                             </div>
                         </div>
                         {/* w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 */}
