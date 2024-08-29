@@ -77,18 +77,18 @@ export default function about() {
           </div>
         </form>
         <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4 mt-6">
-          <img src="images/about/brands/mahindra.svg" alt="mahindra" className="w-full" />
-          <img src="images/about/brands/swaraj.svg" alt="swaraj" className="w-full" />
-          <img src="images/about/brands/elcher.svg" alt="Elcher" className="w-full" />
-          <img src="images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full" />
-          <img src="images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full" />
-          <img src="images/about/brands/escorts.svg" alt="escorts" className="w-full" />
-          <img src="images/about/brands/kartar.svg" alt="kartar" className="w-full" />
-          <img src="images/about/brands/captain.svg" alt="captain" className="w-full" />
-          <img src="images/about/brands/preet.svg" alt="preet" className="w-full" />
-          <img src="images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full" />
-          <img src="images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full" />
-          <img src="images/about/brands/autonxt.svg" alt="autonxt" className="w-full" />
+          <Image src="images/about/brands/mahindra.svg" alt="mahindra" className="w-full" />
+          <Image src="images/about/brands/swaraj.svg" alt="swaraj" className="w-full" />
+          <Image src="images/about/brands/elcher.svg" alt="Elcher" className="w-full" />
+          <Image src="images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full" />
+          <Image src="images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full" />
+          <Image src="images/about/brands/escorts.svg" alt="escorts" className="w-full" />
+          <Image src="images/about/brands/kartar.svg" alt="kartar" className="w-full" />
+          <Image src="images/about/brands/captain.svg" alt="captain" className="w-full" />
+          <Image src="images/about/brands/preet.svg" alt="preet" className="w-full" />
+          <Image src="images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full" />
+          <Image src="images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full" />
+          <Image src="images/about/brands/autonxt.svg" alt="autonxt" className="w-full" />
         </div>
         <div className="my-4 sm:hidden block">
           <Btn text={'view all'} />
@@ -100,7 +100,7 @@ export default function about() {
         <p className="text-[#888888] text-sm mb-3">We Promise To Find You The Right Equipment</p>
         <Heading heading={'Get Your Rentals In Easy Steps'} />
         <div className="image-wrapper overflow-x-auto">
-          <img src='images/about/rentalSteps.svg' alt="rentalSteps" className="w-full" />
+          <Image src='images/about/rentalSteps.svg' alt="rentalSteps" className="w-full" />
         </div>
        </div>
 

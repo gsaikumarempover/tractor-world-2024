@@ -5,29 +5,24 @@ import { useTranslation } from 'next-i18next';
 import Btn from '@components/Btn'
 
 export const AdvanceSearch = ({ locale }) => {
-
-  const { t } = useTranslation();
-  const language = locale.toUpperCase();
-  const { loading, error, data } = useQuery(GET_LIVE_INVENTORY, {
-    variables: { lang: language },
-  });
-
-  if (loading) return <p>Loading Brands ...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   const [selectedBrand, setSelectedBrand] = useState('');
   const [brandOptions, setBrandOptions] = useState([]);
   const [hpOptions, setHpOptions] = useState([]);
   const [priceRangeOptions, setPriceRangeOptions] = useState([]);
   const [liveInventoryData, setLiveInventoryData] = useState([]);
-
+  const { t } = useTranslation();
+  const language = locale?.toUpperCase();
+  const { loading, error, data } = useQuery(GET_LIVE_INVENTORY, {
+    variables: { lang: language },
+  });
+  
   useEffect(() => {
     if (data) {
       const brandSet = new Set(data.allLiveInventory.edges.map(edge => edge.node.liveInventoryData.brand));
       setBrandOptions([...brandSet]);
       setLiveInventoryData(data.allLiveInventory.edges.map(edge => edge.node.liveInventoryData));
     }
-  }, [data]);
+  }, [data,liveInventoryData]);
 
   // Fetch HP and calculate price ranges based on selected brand
   useEffect(() => {
@@ -47,7 +42,15 @@ export const AdvanceSearch = ({ locale }) => {
       }
       setPriceRangeOptions(priceRanges);
     }
-  }, [selectedBrand]);
+  }, [selectedBrand,liveInventoryData]);
+
+
+
+  if (loading) return <p>Loading Brands ...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+
+
 
   const handleBrandChange = (e) => {
     setSelectedBrand(e.target.value);

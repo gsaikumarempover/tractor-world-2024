@@ -183,7 +183,7 @@ export default function DealerLocator() {
                      </div>   
                     
                      <div className="card bg-[#EEEEF0] mb-2">
-                      <span class="w-full px-2 py-1 rounded-md inline-block cursor-pointer 
+                      <span className="w-full px-2 py-1 rounded-md inline-block cursor-pointer 
                     font-bold text-black text-sm" id="location-span">
                         Ram Motors, Chandrapur
                       </span> 
@@ -240,9 +240,9 @@ export default function DealerLocator() {
               <iframe
                 className="w-full h-[100%]"
                 id="map"
-                frameborder="0"
-                marginheight="0"
-                marginwidth="0"
+                frameBorder="0"
+                marginHeight="0"
+                marginWidth="0"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d38194496.11757613!2d68.147344015625!3d23.906486820399638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390f8fb261d14dc7%3A0x4c7b1fb4b77b7e8f!2sIndia!5e0!3m2!1sen!2sin!4v1620772645379!5m2!1sen!2sin"
                 allowfullscreen
               ></iframe>

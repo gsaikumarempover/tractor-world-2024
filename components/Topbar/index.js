@@ -46,16 +46,16 @@ export default function Topbar() {
                             <span className="sm:inline-flex hidden ml-2">contact@example.com</span>
                         </li>
 
-                        <Link href="#testimonials">
+                        <Link href="#testimonials" >
                         <a className="py-2 sm:inline-flex hidden md:px-4 px-2 border-r">{t('testimonials')} 
                         </a>
                         </Link>
 
-                        <Link href="/tractor-details#compareTractor">
+                        <Link href="/tractor-details#compareTractor" >
                         <a className="py-2 sm:inline-flex hidden md:px-4 px-2 border-r">{t('compareTractor')}</a>
                         </Link>
 
-                        <Link href="/dealer-locator" >
+                        <Link href="/dealer-locator"  >
                        <a className="py-2 md:px-4 px-2 md:border-l sm:border-0 border-l 
                         ml-auto text-grayColor flex items-center">
                             <Image src={Location} alt="location" className="" />
@@ -95,9 +95,9 @@ export default function Topbar() {
                                         const isSelected = locale === activeLocale; // Check if the locale is currently selected
                                         return (
                                             <li key={locale}>
-                                                <Link href={asPath} locale={locale}>
+                                                <Link href={asPath} locale={locale} >
                                                     <a className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white ${isSelected ? 'font-bold active text-secondaryColor' : ''}`} onClick={() => handleLocaleChange(locale)}>
-                                                        {locale.toUpperCase()}
+                                                        {locale?.toUpperCase()}
                                                     </a>
                                                 </Link>
                                             </li>

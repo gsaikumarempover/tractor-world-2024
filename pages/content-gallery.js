@@ -18,14 +18,14 @@ export default function ContentGallery() {
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
         return (
-            <img src='images/conentGallery/rightArrow.svg' className={'gallerynext-arrow'} alt='RightArrow' onClick={onClick}></img>
+            <Image src='images/conentGallery/rightArrow.svg' className={'gallerynext-arrow'} alt='RightArrow' onClick={onClick}></Image>
         );
     }
 
     function SamplePrevArrow(props) {
         const { className, style, onClick } = props;
         return (
-            <img src='images/conentGallery/leftArrow.svg' className={'galleryprev-arrow'} alt='LeftArrow' onClick={onClick}></img>
+            <Image src='images/conentGallery/leftArrow.svg' className={'galleryprev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
         );
     }
     const contentGallerysettings = {
@@ -138,7 +138,7 @@ export default function ContentGallery() {
                             <div className="border-b pb-3 p-1 relative" key={index}>
                                 <div className="flex gap-3">
                                     <div>
-                                        <img
+                                        <Image
                                             src={item.thumbnail}
                                             className="cursor-pointer sm:w-[350px] w-[240px]"
                                             alt={item.tractorname}
@@ -164,8 +164,8 @@ export default function ContentGallery() {
                             <div className="flex sm:grid sm:grid-cols-4 gap-8">
 
                                 {newUpdateDetails.map((item, index) => (
-                                    <div className="bg-[#6521780F] bg-opacity-20 overflow-hidden shadow-md flex-none w-80 sm:w-auto">
-                                        <img src={item.thumbnail} className="w-[100%] cursor-pointer" alt={item.alt} />
+                                    <div className="bg-[#6521780F] bg-opacity-20 overflow-hidden shadow-md flex-none w-80 sm:w-auto" key={index}>
+                                        <Image src={item.thumbnail} className="w-[100%] cursor-pointer" alt={item.alt} />
                                         <div className="py-2 px-3">{item.discription}</div>
                                     </div>
                                 ))}

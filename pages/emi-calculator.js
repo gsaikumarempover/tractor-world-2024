@@ -86,13 +86,13 @@ export default function EmiCalculator() {
           <div className="bg-[#F6F6F6] px-3 py-6 mt-3 flex sm:flex-row flex-col gap-4">
             <div className="sm:w-1/2 w-full">
               <div>
-                <div class="flex ">
-                  <label htmlFor="loanAmount" class="form-label mr-4">
+                <div className="flex ">
+                  <label htmlFor="loanAmount" className="form-label mr-4">
                     Loan Amount
                   </label>
                   <input
                     type="text"
-                    class="px-3 py-2 border rounded-md ml-auto text-center"
+                    className="px-3 py-2 border rounded-md ml-auto text-center"
                     value="340000"
                   />
                 </div>
@@ -106,7 +106,7 @@ export default function EmiCalculator() {
                     id="loanAmount"
                   />
                 </div>
-                <div class="flex ">
+                <div className="flex ">
                   <label htmlFor="tenure" className="form-label ">
                     ₹1L
                   </label>
@@ -136,7 +136,7 @@ export default function EmiCalculator() {
                   id="tenure"
                 />
 
-                <div class="flex py-2 ">
+                <div className="flex py-2 ">
                   <label htmlFor="tenure" className="form-label ">
                     12
                   </label>

@@ -12,14 +12,14 @@ import { useTranslation } from 'next-i18next';
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <img src='images/slickslider/right_arrow.svg' className={'custom-arrow next-arrow'} alt='RightArrow' onClick={onClick}></img>
+    <Image src='images/slickslider/right_arrow.svg' className={'custom-arrow next-arrow'} alt='RightArrow' onClick={onClick}></Image>
   );
 }
 
 function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <img src='images/slickslider/left_arrow.svg' className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></img>
+    <Image src='images/slickslider/left_arrow.svg' className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
   );
 }
 
@@ -40,7 +40,7 @@ const LiveInventoryContainer = ({ locale }) => {
     }
   }, []);
 
-  const language = locale.toUpperCase();
+  const language = locale?.toUpperCase();
   const { loading, error, data } = useQuery(GET_LIVE_INVENTORY, {
     variables: { lang: language },
   });

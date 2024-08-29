@@ -20,7 +20,8 @@ import Search from '@Images/topbar/search.svg';
 import Logo from '@Images/navbar/logo.svg';
 import NavbarSearch from '@Images/navbar/search.svg'
 import MblLogo from '@Images/navbar/mblLogo.svg'
-
+import EndTractor from '@Images/navbar/endTractor.png'
+ 
 
 export default function Navbar({ currentPage }) {
 
@@ -60,7 +61,12 @@ export default function Navbar({ currentPage }) {
          text-white text-sm mr-2 border-gradient">
             {/* <div><img src="/images/navbar/calculator.png" alt="Sell"
               className="w-3 mr-1" /></div> */}
-            <a href="/sell-tractor">Sell</a></div>
+            {/* <a href="/sell-tractor">Sell</a> */}
+
+            <Link href="/sell-tractor" >
+                    <a>Sell</a>
+             </Link>
+            </div>
 
           <div className={`${isNavbarOpen ? 'block' : 'hidden'} transition-max-height duration-300 
         ease-in-out w-full sm:block sm:w-auto`} id="navbar-default">
@@ -69,22 +75,22 @@ export default function Navbar({ currentPage }) {
          sm:bg-transparent bg-white z-50 sm:relative fixed top-0 py-4 Navbar">
               <div className="sm:hidden block px-4 ">
                 <div className="flex justify-between">
-                  <Link href="./">
+                  <Link href="./" >
                     <a className="self-center text-2xl font-semibold 
               whitespace-nowrap dark:text-white">
                       <Image src={MblLogo} alt="mblLogo"></Image>
                     </a>
                   </Link>
                   <div>
-                    <Image src={Crossmark} onClick={hideNavbar} className="crossIcon" /></div>
+                    <Image src={Crossmark} onClick={hideNavbar} className="crossIcon" alt="Crossmark" /></div>
                 </div>
                 <div className="flex my-3">
 
-                  <Link href="/tractor-details#compareTractor">
+                  <Link href="/tractor-details#compareTractor" >
                     <a className="text-[.84rem] pr-4">Compare Tractor</a>
                   </Link>
 
-                  <Link href="#testimonials">
+                  <Link href="#testimonials" >
                     <a className="text-[.84rem] pl-4 border-l border-[#EFEAEA]">
                       Testimonials</a></Link>
 
@@ -107,7 +113,7 @@ export default function Navbar({ currentPage }) {
                   </a>
                 </Link> */}
 
-                <Link href="/aboutus">
+                <Link href="/aboutus" >
                   <a className={`${currentPage == "about" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block"><Image src={About} alt="about" /></span>
@@ -116,7 +122,7 @@ export default function Navbar({ currentPage }) {
                   </a>
                 </Link>
 
-                <Link href="/compare-tractors">
+                <Link href="/compare-tractors" >
                   <a className={`${currentPage == "compare" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block"><Image src={Compare} alt="compare" /></span>
@@ -125,7 +131,7 @@ export default function Navbar({ currentPage }) {
                   </a>
                 </Link>
 
-                <Link href="/dealer-locator">
+                <Link href="/dealer-locator" >
                   <a className={`${currentPage == "dealerLocator" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block"><Image src={Location} alt="location" /></span>
@@ -134,7 +140,7 @@ export default function Navbar({ currentPage }) {
                   </a>
                 </Link>
 
-                <Link href="/loan">
+                <Link href="/loan" >
                   <a className={`${currentPage == "loan" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block"><Image src={Loan} alt="loan" /></span>
@@ -143,7 +149,7 @@ export default function Navbar({ currentPage }) {
                   </a>
                 </Link>
 
-                <Link href="/content-gallery">
+                <Link href="/content-gallery" >
                   <a className={`${currentPage == "contentGallery" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block"><Image src={ContentGallery} alt="ContentGallery" /></span>
@@ -283,7 +289,7 @@ export default function Navbar({ currentPage }) {
                 <Link href="/contact-us">
                   <a className={`${currentPage == "contact" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
-                      <span className="sm:hidden block"><Image src={Contact} /></span>
+                      <span className="sm:hidden block"><Image src={Contact} alt="Contact-image" /></span>
                       <span className={`md:ml-0 ml-2 ${currentPage == "contact" ? 'active' : ''}`}>Contact us</span>
                     </div>
                   </a>
@@ -302,7 +308,11 @@ export default function Navbar({ currentPage }) {
                   sm:text-xs text-sm">
                     {/* <div>
                       <img src="/images/navbar/calculator.png" alt="EMI Calculator" className="w-3 mr-1" /></div> */}
-                    <a href="/sell-tractor"> Sell </a></div>
+                    {/* <a href="/sell-tractor"> Sell </a> */}
+                    <Link href="/sell-tractor">
+                    <a>Sell</a>
+                  </Link>
+                    </div>
                 </li>
               </ul>
 
@@ -318,7 +328,7 @@ export default function Navbar({ currentPage }) {
               </div>
 
               <div className="sm:hidden block">
-                <img src="/images/navbar/endTractor.png"
+                <Image src={EndTractor}
                   className="w-full relative bottom-0 left-0" alt="sidebarFooterImage" />
               </div>
             </div>
