@@ -1,18 +1,104 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
+import Btn from "@components/Btn";
 import Image from "next/image";
-import Heading from "../components/Heading";
+import Table from "@components/Table";
+import Heading from "@components/Heading";
 import Tab from '@components/Tab';
-import CompareImage from '@Images/liveInventory/compareImage.svg';
-import Btn from '@components/Btn';
+import CompareImage from '@Images/liveInventory/compareImage.svg'; 
 
-
-export default function CompareTractor() {
+export default function CompareTractorDetails() {
     const breadcrumbData = [
         { label: 'Home', link: '/' },
-        { label: 'Campare Tractor', link: '#' },
+        { label: 'Compare Tractor', link: '#' },
     ];
+
+    const images = [
+        {
+            name: "Mahindra 475 DI",
+            emiStartsFrom: "EMI starts from ₹ 13,810*",
+            price: "₹ 6.45 lac - 6.75 lac*",
+            checkPrice: "Check Tractor Price",
+            image: "images/compareTractorImg/mahindra.svg"
+        },
+        {
+            name: "Massey Ferguson 90 4WD",
+            emiStartsFrom: "EMI starts from ₹ 24,055*",
+            price: "₹ 11.24 lac - 11.55 lac*",
+            checkPrice: "Check Tractor Price",
+            image: "images/compareTractorImg/massey.svg"
+        },
+
+        {
+            name: "Massey Ferguson 90 4WD",
+            emiStartsFrom: "EMI starts from ₹ 24,055*",
+            price: "₹ 11.24 lac - 11.55 lac*",
+            checkPrice: "Check Tractor Price",
+            image: "images/compareTractorImg/massey.svg"
+        },
+
+
+    ];
+
+    // Specifications data
+    const [engineData, setEngineData] = useState([
+        {
+            tablData: [
+                { td: "Engine HP" },
+                { td: "49 HP" },
+                { td: "Torque" },
+                { td: "150 Nm" }
+            ]
+        },
+        {
+            tablData: [
+                { td: "RPM" },
+                { td: "6000 RPM" },
+                { td: "Fuel Type" },
+                { td: "Diesel" }
+            ]
+        },
+        {
+            tablData: [
+                { td: "Transmission" },
+                { td: "Manual" },
+                { td: "Drivetrain" },
+                { td: "4WD" }
+            ]
+        }
+    ]);
+
+
+    const [steeringData, setSteeringData] = useState([
+        { label: "Engine HP", value: "niharika" },
+        { label: "PTO HP", value: "44.9 HP" },
+        { label: "Wheel drive", value: "2WD" },
+        { label: "Forward Gears", value: "2" },
+        { label: "Reverse Gears", value: "2" },
+        { label: "Brake Type", value: "Oil Immersed" },
+        { label: "Price", value: "Check Price" },
+    ]);
+    // end Specifications
+
+    const accordionData = [
+        { id: 1, heading: "Engine", content: { data: engineData } },
+        { id: 2, heading: "Transmission", content: { data: engineData } },
+        { id: 3, heading: "Brakes", content: { data: engineData } },
+        { id: 4, heading: "Steering", content: { data: engineData }, },
+        { id: 5, heading: "Power Take Off", content: { data: steeringData }, },
+        { id: 6, heading: "Fuel Tank", content: { data: steeringData }, },
+        { id: 7, heading: "Dimensions And Weight Of Tractor", content: { data: steeringData }, },
+        { id: 8, heading: "Hydraulics", content: { data: steeringData }, },
+        { id: 9, heading: "Wheels And Tires", content: { data: steeringData }, },
+        { id: 10, heading: "Other Information", content: { data: steeringData }, },
+    ];
+
+    // for accordion
+    const [openAccordion, setOpenAccordion] = useState(1);
+    const toggleAccordion = (index) => {
+        setOpenAccordion(openAccordion === index ? null : index);
+    };
 
     const compareTractorData = {
 
@@ -197,26 +283,105 @@ export default function CompareTractor() {
             <Layout currentPage={"compare"}>
                 <Banner
                     breadcrumbs={breadcrumbData}
-                    heading={"Compare Tractors"}
+                    heading={"Compare Tractor Details"}
                     bannerImg={"images/compareTractorImg/Compare tractor banner.svg"}
                 />
+                <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
 
-                <div className="bg-white mb-3 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
-                    <Heading heading={'Compare Tractors'} />
+                    <div className="flex flex-wrap gap-2 items-center justify-between">
+                        {images.map((tractor, index) => (
+                            <>
 
-                </div>
+                                {index > 0 && (<div className="w-7 text-sm h-7 bg-secondaryColor flex leading-3
+                                 text-white items-center justify-center rounded-full font-bold">Vs</div>
+                                )}
 
-                <div className="bg-white mb-3 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
-                    <Heading heading={'Compare To Buy The Right Tractor'} />
+                                <div>
+                                    <div key={index} className="bg-[#FBFBFB] shadow-lg">
+                                        <Image src={tractor.image} alt="image" layout="responsive" className="object-cover" />
+                                        <div className="p-4 bg-[#FBFBFB]">
+                                            <h3 className="text-[14px]  text-[#000000]">{tractor.name}</h3>
+                                            <p className="text-[14px]  text-secondaryColor mt-2">{tractor.emiStartsFrom}</p>
+                                            <p className="text-[14px] text-[#000000]  mt-2">{tractor.price}</p>
+                                            <p className="text-[14px] text-primaryColor  mt-2 inline-block">
+                                                Enquire
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="my-4">
+                                        <Btn text={'COMPARE'} bgColor={true} />
+                                    </div>
+                                </div>
+                            </>
+                        ))}
+                    </div>
+
+                    <div
+                        className="mt-4"
+                        id="accordion-collapse"
+                        data-accordion="collapse"
+                    >
+                        {accordionData.map((item) => (
+                            <div key={item.id}>
+                                <h2
+                                    id={`accordion-collapse-heading-${item.id}`}
+                                    className="mt-3"
+                                >
+                                    <button
+                                        type="button"
+                                        className="flex items-center justify-between w-full p-3
+                                font-semibold rtl:text-right border bg-[#EEEEF0]
+                                border-gray-200 focus:ring-4 focus:ring-gray-200
+                                dark:focus:ring-gray-800 dark:border-gray-700
+                                dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800
+                                gap-3"
+                                        onClick={() => toggleAccordion(item.id)}
+                                        aria-expanded={openAccordion === item.id}
+                                        aria-controls={`accordion-collapse-body-${item.id}`}
+                                    >
+                                        <span>{item.heading}</span>
+                                        <svg
+                                            data-accordion-icon
+                                            className={`w-3 h-3 ${openAccordion === item.id ? "rotate-180" : ""
+                                                } shrink-0`}
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 10 6"
+                                        >
+                                            <path
+                                                stroke="currentColor"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M9 5 5 1 1 5"
+                                            />
+                                        </svg>
+                                    </button>
+                                </h2>
+
+                                <div
+                                    id={`accordion-collapse-body-${item.id}`}
+                                    className={`${openAccordion === item.id ? "" : "hidden"}`}
+                                    aria-labelledby={`accordion-collapse-heading-${item.id}`}
+                                >
+                                    <div className="border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                                        <Table data={item.content.data} />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="my-4">
+                        <Heading heading={'Tractors in 2024'} />
+                    </div>
 
                     <div className='flex sm:gap-4 gap-2 my-3 font-medium'>
                         <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}>
-                            Under 20 HP</Tab>
-                        <Tab id="twoData" activeTab={activeTab} onClick={handleTabClick}>21 - 30 HP</Tab>
-                        <Tab id="ThreeData" activeTab={activeTab} onClick={handleTabClick}>31 - 40 HP</Tab>
-                        <Tab id="FourData" activeTab={activeTab} onClick={handleTabClick}>41 - 45 HP</Tab>
-                        <Tab id="FifthData" activeTab={activeTab} onClick={handleTabClick}>46 - 50 HP</Tab>
-                        <Tab id="SixthData" activeTab={activeTab} onClick={handleTabClick}>Above 50 HP</Tab>
+                        Popular</Tab>
+                        <Tab id="twoData" activeTab={activeTab} onClick={handleTabClick}>Latest</Tab>
+                        <Tab id="ThreeData" activeTab={activeTab} onClick={handleTabClick}>Upcoming</Tab> 
                     </div>
 
                     <div className="overflow-x-auto sm:overflow-visible">
@@ -240,30 +405,21 @@ export default function CompareTractor() {
                                                         <div className='font-semibold my-1'>{item.brand2price}</div>
 
                                                     </div>
-                                                </div> 
-                                                <Btn className="uppercase" text={'COMPARE'} />
+                                                </div>
+                                                {/* <Btn className="uppercase" text={'COMPARE'} /> */}
                                             </div>
                                         ))}
 
                                     </>
                                 ) : null
-                            )} 
+                            )}
                         </div>
 
-                        <div className='flex justify-center my-6'> 
+                        <div className='flex justify-center my-6'>
                             <Btn text={'View all tractor comparisons'} bgColor={true} />
-                            </div>
+                        </div>
                     </div>
-
-                    <div className='my-4'>
-                        <Heading heading={'About Compare Tractors'} />
-                        <p className="text-[14px] mb-3">Tractorworld.com is a one-stop authentic online destination where you can compare a variety of Tractors and Farm Implements. All top tractor brands are available here including Mahindra, John Deere, Escorts, Sonalika, Eicher, TAFE, New Holland and many more. The information displayed on Tractor Junction is believed to be accurate, unbiased and correct. Choose at least two tractors as per your choice to compare based on their specifications, features, mileage, Price, overall performance and warranty. All Indian Farmers can easily compare tractors of distinct varieties just in a few clicks. Tractorworld brings a welfare opportunity to compare tractor price in India. This allows farmers from every region to compare tractors in India.</p>
-                         <p className="text-[14px] mb-3">Tractorworld provides the most comprehensive tractor comparison tool in India on which you can select at least two or more tractors of your choice for comparison. This online platform provides all the useful guidelines for tractor comparison India. Tractorworld always works to empower Indian farmers with a new tractor compare section.</p>
-                         <p className="text-[14px] mb-3">Compare tractor prices in India, specifications, warranty and many more at one place and then select your dream tractor. For Further more inquiries stay tuned with Tractorworld.</p>
-                    </div>
-
                 </div>
-
             </Layout>
         </div>
     );

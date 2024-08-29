@@ -16,12 +16,12 @@ export default function Banner({breadcrumbs, bannerImg, heading,BannerUnderlineI
                 ))}
             </div>
             <div className='relative'>
-                <img src={bannerImg} className='mt-[-1px] w-full'></img>
+                <Image src={bannerImg} className='mt-[-1px] w-full' alt='banner-image'/>
                 <div className='absolute top-4 left-14 text-white font-semibold text-xl'>
                     {heading}
                     {BannerUnderlineImg && (
                         <div>
-                            <Image src={BannerUnderline}></Image>
+                            <Image src={BannerUnderline} alt='banner-underline'/>
                         </div>
                     )}
                 </div>

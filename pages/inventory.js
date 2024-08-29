@@ -300,7 +300,7 @@ export default function Inventory() {
                 <div className="w-full flex">
                   <input type="search" placeholder="Type Here"
                     className="border-secondaryColor border-r-0 w-full" />
-                  <img src="images/inventory/searchicon.svg" alt="SearchIcon" className="w-[48px]" />
+                  <Image src="images/inventory/searchicon.svg" alt="SearchIcon" className="w-[48px]" />
                 </div>
               </div>
 
@@ -405,7 +405,7 @@ export default function Inventory() {
                                 key={fIdx}
                                 className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                               >
-                                <img src={feature.icon} alt={feature.icon} width={"10"} layout="fill" />
+                                <Image src={feature.icon} alt={feature.icon} width={"10"} layout="fill" />
                                 <span>{feature.text}</span>
                               </div>
                             ))}
@@ -414,7 +414,7 @@ export default function Inventory() {
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
-                              <img src='images/phnIcon.svg' className="w-4 mr-1" /> Interested{" "}
+                              <Image src='images/phnIcon.svg' className="w-4 mr-1"  alt="phnIcon"/> Interested{" "}
                             </span>
                           </div>
                         </div>
@@ -427,18 +427,18 @@ export default function Inventory() {
               <Heading heading={'Tractors Dealers by Brands '} viewButton={false} />
 
               <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">
-                <img src="images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
-                <img src="images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
-                <img src="images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
-                <img src="images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
-                <img src="images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
-                <img src="images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
-                <img src="images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
-                <img src="images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
-                <img src="images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
-                <img src="images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
-                <img src="images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
-                <img src="images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
+                <Image src="images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
               </div>
 
               <div className="my-4 sm:hidden block">
@@ -482,7 +482,7 @@ export default function Inventory() {
                                 key={fIdx}
                                 className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                               >
-                                <img src={feature.icon} alt={feature.icon} width={"10"} layout="fill" />
+                                <Image src={feature.icon} alt={feature.icon} width={"10"} layout="fill" />
                                 <span>{feature.text}</span>
                               </div>
                             ))}
@@ -491,7 +491,7 @@ export default function Inventory() {
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
-                              <img src='images/phnIcon.svg' className="w-4 mr-1" /> Interested{" "}
+                              <Image src='images/phnIcon.svg' className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
                             </span>
                           </div>
                         </div>
@@ -518,8 +518,8 @@ export default function Inventory() {
 
               <div className="overflow-x-auto sm:overflow-visible"> 
               <div className="flex sm:grid sm:grid-cols-2 gap-4"> 
-                <img src="images/banner2.svg" className="flex-none w-80 sm:w-auto" alt="banner1" />
-                <img src="images/banner2.svg" className="flex-none w-80 sm:w-auto" alt="banner2" />  
+                <Image src="images/banner2.svg" className="flex-none w-80 sm:w-auto" alt="banner1" />
+                <Image src="images/banner2.svg" className="flex-none w-80 sm:w-auto" alt="banner2" />  
               </div>
               </div>
             </div>

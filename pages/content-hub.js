@@ -66,7 +66,7 @@ export default function ContentHUb() {
                         {videos.map((video, index) => (
                             <div className="border p-1 relative" key={index}>
                                 <div className="flex gap-3 sm:items-center items-start">
-                                    <img
+                                    <Image
                                         src={video.thumbnail}
                                         className="cursor-pointer sm:w-24 w-20"
                                         alt="videoThumbnail"

@@ -4,7 +4,7 @@ import Banner from "@components/Banner";
 import Heading from "@components/Heading";
 import Image from "next/image";
 import BannerStrip from "@components/BannerStrip";
-import Mahindrafinanace from '@Images/bank/mahindrafinanace.svg';
+// import Mahindrafinanace from '@Images/bank/mahindrafinanace.svg';
 import CanaraBank from '@Images/bank/canaraBank.svg';
 import Yesbank from '@Images/bank/yesbank.svg';
 import Axis from '@Images/bank/axis.svg';
@@ -29,7 +29,7 @@ export default function bank() {
                             <form>
                                 <div className='grid sm:grid-cols-4 grid-cols-2 gap-4 mt-4'>
                                     <div className="m-auto">
-                                        <Image src={Mahindrafinanace} alt="mahindrafinanace" />
+                                        {/* <Image src={Mahindrafinanace} alt="mahindrafinanace" /> */}
                                     </div> 
                                     <div className="m-auto">
                                         <Image src={CanaraBank} alt="canaraBank" /> 

@@ -20,14 +20,14 @@ import Tab from '@components/Tab';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-        <img src='images/slickslider/right_arrow.svg' className={'custom-arrow next-arrow'} alt='RightArrow' onClick={onClick}></img>
+        <Image src='images/slickslider/right_arrow.svg' className={'custom-arrow next-arrow'} alt='RightArrow' onClick={onClick}></Image>
     );
 }
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-        <img src='images/slickslider/left_arrow.svg' className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></img>
+        <Image src='images/slickslider/left_arrow.svg' className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
     );
 }
 
@@ -472,11 +472,11 @@ export default function TractorDetails({ locale }) {
                             </span>
 
                             <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
-                                 rounded-sm w-full'><img src='images/Tractordetails/editIcon.svg' className='w-3' />Change Tractor</div>
+                                 rounded-sm w-full'><Image src='images/Tractordetails/editIcon.svg' className='w-3' alt='Tractordetails/editIcon' />Change Tractor</div>
 
 
                             <div className='mb-3 cursor-pointer flex gap-2 w-full'>
-                                <img src='images/Tractordetails/primaymapIcon.svg' className='w-3' />
+                                <Image src='images/Tractordetails/primaymapIcon.svg' className='w-3' alt='Tractordetails/primaymapIcon' />
                                 Beed, Maharashtra</div>
 
                             <div className='font-bold text-xl mb-1'>₹ 9,84,000 <span className="line-through text-sm opacity-[30%]"> ₹ 10,84,000 </span></div>
@@ -528,7 +528,7 @@ export default function TractorDetails({ locale }) {
                     grid-cols-2 sm:gap-4 gap-8'>
                         {features.map((feature, index) => (
                             <div key={index} className='features-shadow text-sm bg-white pb-1 pt-6 px-2 rounded-md text-center relative'>
-                                <img src={feature.src}
+                                <Image src={feature.src}
                                     alt={feature.alt}
                                     className='block mt-[-41px] mx-auto mb-[2px] sm:w-[43px] w-[40px]' />
                                 <p className='font-bold uppercase'>{feature.title}</p>
@@ -604,8 +604,8 @@ export default function TractorDetails({ locale }) {
                 <div className='bg-[#F6F6F6] px-3 py-6 mt-3 flex sm:flex-row flex-col gap-4'>
 
                     <div className='sm:w-1/2 w-full'>
-                        <label for="downPayment" class="form-label">Down Payment</label>
-                        <input type="range" class="w-full" min="0" max="780000"
+                        <label htmlFor="downPayment" className="form-label">Down Payment</label>
+                        <input type="range" className="w-full" min="0" max="780000"
                             step="1000" ref={rangeInputRef} id="downPayment" />
 
                         <div className="flex justify-between mt-3">
