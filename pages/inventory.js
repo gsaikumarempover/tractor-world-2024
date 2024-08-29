@@ -7,8 +7,8 @@ import DefaultTractor from "@Images/default_tractor.svg";
 import Heading from "../components/Heading";
 import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
-import Banner1 from '@Images/Banner1.svg';
-import Banner2 from '@Images/Banner2.svg';
+// import Banner1 from '@Images/Banner1.svg';
+// import Banner2 from '@Images/Banner2.svg';
 
 export default function Inventory() {
   //// apply,reset btns active 

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Topbar from '@components/Topbar';
-import Crossmark from '@Images/navbar/CrossMark.png';
+import Crossmark from '@Images/navbar/crossmark.png';
 import Home from '@Images/navbar/home.svg';
 import About from '@Images/navbar/about.svg';
 import Compare from '@Images/navbar/compare.svg';
