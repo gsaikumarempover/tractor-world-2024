@@ -298,7 +298,7 @@ export default function CompareTractorDetails() {
 
                                 <div>
                                     <div key={index} className="bg-[#FBFBFB] shadow-lg">
-                                        <img src={tractor.image} alt="image" layout="responsive" className="object-cover" />
+                                        <Image src={tractor.image} alt="image" layout="responsive" className="object-cover" />
                                         <div className="p-4 bg-[#FBFBFB]">
                                             <h3 className="text-[14px]  text-[#000000]">{tractor.name}</h3>
                                             <p className="text-[14px]  text-secondaryColor mt-2">{tractor.emiStartsFrom}</p>
