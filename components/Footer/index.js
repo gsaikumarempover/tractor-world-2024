@@ -48,17 +48,19 @@ export default function Footer() {
             <div className="relative mb-[-10px] z-[10]">
                 <div className="bg-primaryColor xl:w-1/3 sm:w-1/2 w-[95%] mx-auto mb-[-10px] 
         relative sm:px-8 px-4 py-4 rounded-md text-white sm:text-sm text-xs flex justify-between">
-                    <Link href='./dealer-locator' legacyBehavior>
+                    <Link href='./dealers' legacyBehavior>
                         <a className="flex items-center">
                             <Image src={Location} className="mt-4" alt="location" />
                             <span className="ml-2">Find a Dealer</span>
                         </a>
                     </Link>
                     <div className="border-r"></div>
-                    <div className="flex items-center">
+                    <Link href='./contact-us' legacyBehavior>
+                    <a className="flex items-center">
                         <Image src={Enquiry} className="mt-4" alt="enquiry" />
                         <span className="ml-2">Make an Enquiry</span>
-                    </div>
+                    </a>
+                    </Link>
                     <div className="border-r"></div>
                     <div className="flex items-center">
                         <Image src={Call} className="mt-4" alt="call-image" />

@@ -5,6 +5,7 @@ import Layout from "@components/Layout";
 import Tractor1 from '@Images/offers/1.svg';
 import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
+import bannerImg from '@Images/sellTractor/engineering-excellence-banner.svg';
 
 export default function ExclusiveOffers() {
     const breadcrumbData = [
@@ -891,7 +892,7 @@ export default function ExclusiveOffers() {
             <Banner
                 breadcrumbs={breadcrumbData}
                 heading={"Exclusive Offers"}
-                bannerImg={"images/sellTractor/engineering-excellence-banner.svg"}
+                bannerImg={bannerImg}
             />
             <div className='bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3'>
                 <div className='grid sm:grid-cols-3 gap-4'>

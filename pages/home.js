@@ -42,7 +42,10 @@ export default function HomePage({ locale }) {
          router.push('/exclusive-offers');
     };
 
-    
+    const handleAllContentHub = () => {
+         router.push('/content-hub');
+   };
+ 
     const WhyChooseItems = [
         { src: Warranty, alt: "choose1", label: "Warranty" },
         { src: EasyEMI, alt: "EasyEMI", label: "Easy EMi & Pricing" },
@@ -548,7 +551,7 @@ export default function HomePage({ locale }) {
 
             {/* Latest News & Updates */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2">
-                <Heading heading={'Latest News & Updates'} viewButton={true} />
+                <Heading heading={'Latest News & Updates'} viewButton={true}   onClick={handleAllContentHub}/>
 
                 <div className="overflow-x-auto sm:overflow-visible">
                     <div className="flex sm:grid sm:grid-cols-3 xl:gap-8 gap-4 mt-4">
@@ -612,7 +615,7 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className='mt-4'>
-                    <Btn text={'View all'} viewAll={true} />
+                    <Btn text={'View all'} viewAll={true}/>
                 </div>
 
             </div>

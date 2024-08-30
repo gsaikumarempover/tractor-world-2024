@@ -10,6 +10,7 @@ import Certified from "@Images/sellTractor/certified.svg";
 import Notifications from "@Images/sellTractor/notifications.svg";
 import Support from "@Images/sellTractor/support.svg";
 import BannerStrip from "../components/BannerStrip";
+import bannerImg from "@Images/sellTractor/engineering-excellence-banner.svg";
 
 export default function SellTractor() {
   const breadcrumbData = [
@@ -61,7 +62,7 @@ export default function SellTractor() {
         <Banner
           breadcrumbs={breadcrumbData}
           heading={""}
-          bannerImg={"images/sellTractor/engineering-excellence-banner.svg"}
+          bannerImg={bannerImg}
           BannerUnderlineImg={false} />
 
         <BannerStrip heading={'Sell Your Used Tractor'}

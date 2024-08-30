@@ -12,8 +12,10 @@ import CallImg from "@Images/dealerLocator/callImg.svg";
 import MailImg from "@Images/dealerLocator/mailImg.svg";
 import Btn from "@components/Btn";
 import bannerImg from "@Images/dealerLocator/dealerBanner.svg";
-
+import { useRouter } from 'next/router';
 export default function DealerLocator() {
+
+  const router = useRouter();
   const breadcrumbData = [
     { label: 'Home', link: '/' },
     { label: 'DEALER LOCATOR', link: '#' },
@@ -25,7 +27,11 @@ export default function DealerLocator() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
+ 
+  
+  const handleAlldealers = () => {
+    router.push('/dealers');
+  };
   return (
     <Layout currentPage={'dealerLocator'}>
       <Banner
@@ -71,7 +77,7 @@ export default function DealerLocator() {
                     <option value="3">Three</option>
                   </select>
                 </div>
-                <Btn text={"Find Dealer"} bgColor={true} />
+                <Btn text={"Find Dealer"} bgColor={true} onClick={handleAlldealers}/>
 
                 <div>
                   <p className="font-bold py-3 text-black text-lg">Tractor Dealer List</p>
@@ -221,7 +227,7 @@ export default function DealerLocator() {
                   </Slider>
                 </div> 
                 <div className="mt-2">
-                   <Btn text={"View All"} bgColor={false} />
+                   <Btn text={"View All"} bgColor={false}  onClick={handleAlldealers} />
                    </div>
                </div>
             </div>

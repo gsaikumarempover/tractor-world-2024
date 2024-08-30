@@ -13,6 +13,8 @@ import Slider from "react-slick";
 import Instagram from '@Images/dealer/instagram.svg';
 import Twitter from '@Images/dealer/twitter.svg';
 import Facebook from '@Images/dealer/facebook.svg';
+import bannerImg from '@Images/liveInventory/banner.svg';
+import tractorImg from '@Images/about/tractor.svg';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -104,11 +106,11 @@ export default function dealers() {
     return (
         <>
             <Layout>
-                <Banner breadcrumbs={breadcrumbData} bannerImg={'images/liveInventory/banner.svg'}
+                <Banner breadcrumbs={breadcrumbData} bannerImg={bannerImg}
                     heading={'Dealers'} />
 
                 {/* tractor info sec */}
-                <TractorInfo infoImg={'images/about/tractor.svg'}
+                <TractorInfo infoImg={tractorImg}
                     title={'We bring you to the future'}
                     heading={'Tractor World'}
                     infoText={'Tractor world is a fully vertically integrated company, with expertise in design, development and manufacture of the full spectrum of automotive components, aggregates and vehicles.'}

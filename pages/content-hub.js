@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Image from "next/image";
-
+import bannerImg from '@Images/contentHub/banner.svg';
 
 export default function ContentHUb() {
     const breadcrumbData = [
@@ -15,37 +15,37 @@ export default function ContentHUb() {
             name: "Mr. Chari",
             description: "Rising from financial hardships to owning multiple tractors",
             date: "09-July-2024, 12:00 PM",
-            thumbnail: "images/contentHub/videoThumbnail.svg"
+            thumbnail: "/images/contentHub/videoThumbnail.svg"
         },
         {
             name: "Mr. Chari",
             description: "Rising from financial hardships to owning multiple tractors",
             date: "09-July-2024, 12:00 PM",
-            thumbnail: "images/contentHub/videoThumbnail.svg"
+            thumbnail: "/images/contentHub/videoThumbnail.svg"
         },
         {
             name: "Mr. Chari",
             description: "Rising from financial hardships to owning multiple tractors",
             date: "09-July-2024, 12:00 PM",
-            thumbnail: "images/contentHub/videoThumbnail.svg"
+            thumbnail: "/images/contentHub/videoThumbnail.svg"
         },
         {
             name: "Mr. Chari",
             description: "Rising from financial hardships to owning multiple tractors",
             date: "09-July-2024, 12:00 PM",
-            thumbnail: "images/contentHub/videoThumbnail.svg"
+            thumbnail: "/images/contentHub/videoThumbnail.svg"
         },
         {
             name: "Mr. Chari",
             description: "Rising from financial hardships to owning multiple tractors",
             date: "09-July-2024, 12:00 PM",
-            thumbnail: "images/contentHub/videoThumbnail.svg"
+            thumbnail: "/images/contentHub/videoThumbnail.svg"
         },
         {
             name: "Mr. Chari",
             description: "Rising from financial hardships to owning multiple tractors",
             date: "09-July-2024, 12:00 PM",
-            thumbnail: "images/contentHub/videoThumbnail.svg"
+            thumbnail: "/images/contentHub/videoThumbnail.svg"
         }
     ];
 
@@ -56,7 +56,7 @@ export default function ContentHUb() {
                 <Banner
                     breadcrumbs={breadcrumbData}
                     heading={"Content Hub"}
-                    bannerImg={"images/contentHub/banner.svg"}
+                    bannerImg={bannerImg}
                 />
 
                 <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
@@ -70,6 +70,8 @@ export default function ContentHUb() {
                                         src={video.thumbnail}
                                         className="cursor-pointer sm:w-24 w-20"
                                         alt="videoThumbnail"
+                                        width={210}
+                                        height={203}
                                     />
                                     <div>
                                         <div className="font-semibold py-2 sm:text-base text-[14px]">{video.name}</div>
