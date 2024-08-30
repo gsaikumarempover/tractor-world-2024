@@ -13,6 +13,7 @@ import WhyChoose from '@Images/home/whyChoose.svg';
 import LiveInventoryContainer from '@components/LiveInventory';
 import SlickCarousel from '@components/SlickCarousel';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
+import bannerImg from '@Images/liveInventory/banner.svg';
 
 import Tab from '@components/Tab';
 
@@ -44,37 +45,37 @@ export default function TractorDetails({ locale }) {
     //   Features data
     const features = [
         {
-            src: 'images/liveInventory/features/cylinder.svg',
+            src: '/images/liveInventory/features/cylinder.svg',
             alt: 'Cylinder',
             title: 'No. of Cylinder',
             description: '4'
         },
         {
-            src: 'images/liveInventory/features/liftingCapacity.svg',
+            src: '/images/liveInventory/features/liftingCapacity.svg',
             alt: 'Lifting Capacity',
             title: 'Lifting Capacity',
             description: '1850 Kg'
         },
         {
-            src: 'images/liveInventory/features/warranty.svg',
+            src: '/images/liveInventory/features/warranty.svg',
             alt: 'Warranty',
             title: 'Warranty',
             description: '2000 hr/2 year'
         },
         {
-            src: 'images/liveInventory/features/gearBox.svg',
+            src: '/images/liveInventory/features/gearBox.svg',
             alt: 'Gear Box',
             title: 'Gear Box',
             description: '8 Forward + 2 Reverse'
         },
         {
-            src: 'images/liveInventory/features/clutch.svg',
+            src: '/images/liveInventory/features/clutch.svg',
             alt: 'Clutch',
             title: 'Clutch',
             description: 'Single / Double Clutch'
         },
         {
-            src: 'images/liveInventory/features/steering.svg',
+            src: '/images/liveInventory/features/steering.svg',
             alt: 'Steering',
             title: 'Steering',
             description: 'Power / Mechanical'
@@ -443,7 +444,7 @@ export default function TractorDetails({ locale }) {
         <Layout>
             {/* banner sec */}
             <Banner breadcrumbs={breadcrumbData}
-                bannerImg={'images/liveInventory/banner.svg'}
+                bannerImg={bannerImg}
                 heading={'Tractor Details'} />
 
             {/* slide sec */}
@@ -530,6 +531,8 @@ export default function TractorDetails({ locale }) {
                             <div key={index} className='features-shadow text-sm bg-white pb-1 pt-6 px-2 rounded-md text-center relative'>
                                 <Image src={feature.src}
                                     alt={feature.alt}
+                                    width={150}
+                                    height={150}
                                     className='block mt-[-41px] mx-auto mb-[2px] sm:w-[43px] w-[40px]' />
                                 <p className='font-bold uppercase'>{feature.title}</p>
                                 <span>{feature.description}</span>

@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from 'next/image';
 
 export default function InventoryCarousel() {
-    const baseUrl = 'images/liveInventory'
+    const baseUrl = '/images/liveInventory'
     const settings = {
         customPaging: function (i) {
             return (
@@ -27,16 +27,16 @@ export default function InventoryCarousel() {
             <div className="slider-container" id="inventoryCarousel">
                 <Slider {...settings}>
                     <div>
-                        <Image src={baseUrl + "/slide01.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide01' />
+                        <Image  width={520} height={400} src={baseUrl + "/slide01.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide01' />
                     </div>
                     <div>
-                        <Image src={baseUrl + "/slide02.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide02 ' />
+                        <Image  width={520} height={400} src={baseUrl + "/slide02.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide02 ' />
                     </div>
                     <div>
-                        <Image src={baseUrl + "/slide03.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide03' />
+                        <Image  width={520} height={400} src={baseUrl + "/slide03.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide03' />
                     </div>
                     <div>
-                        <Image src={baseUrl + "/slide04.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide04' />
+                        <Image  width={520} height={400} src={baseUrl + "/slide04.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide04' />
                     </div>
                 </Slider>
             </div>
