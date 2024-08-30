@@ -7,7 +7,7 @@ import Gallery1 from '@Images/conentGallery/1.svg';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "../components/MultipleItemsSlide";
-
+import bannerImg from "@Images/sellTractor/engineering-excellence-banner.svg";
 
 export default function ContentGallery() {
     const breadcrumbData = [
@@ -18,14 +18,14 @@ export default function ContentGallery() {
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
         return (
-            <Image src='images/conentGallery/rightArrow.svg' className={'gallerynext-arrow'} alt='RightArrow' onClick={onClick}></Image>
+            <Image src='/images/conentGallery/rightArrow.svg'  width={50} height={50} className={'gallerynext-arrow'} alt='RightArrow' onClick={onClick}></Image>
         );
     }
 
     function SamplePrevArrow(props) {
         const { className, style, onClick } = props;
         return (
-            <Image src='images/conentGallery/leftArrow.svg' className={'galleryprev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
+            <Image src='/images/conentGallery/leftArrow.svg'  width={50} height={50}   className={'galleryprev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
         );
     }
     const contentGallerysettings = {
@@ -59,7 +59,7 @@ export default function ContentGallery() {
 
     const contentGalleryitems = contentGalleryimages.map((src, index) => (
         <div key={index} className="relative">
-            <Image src={src.image} alt={`Explore item ${index + 1}`} />
+            <Image src={src.image} width={1644} height={919} alt={`Explore item ${index + 1}`} />
             <div className="absolute top-0 bg-primaryColor text-white px-2 uppercase text-[13px] py-1">{src.name}</div>
         </div>
     ));
@@ -67,21 +67,21 @@ export default function ContentGallery() {
 
     const galleryDetails = [
         {
-            thumbnail: "images/conentGallery/tractor1.svg",
+            thumbnail: "/images/conentGallery/tractor1.svg",
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
         {
-            thumbnail: "images/conentGallery/tractor1.svg",
+            thumbnail: "/images/conentGallery/tractor1.svg",
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
         {
-            thumbnail: "images/conentGallery/tractor1.svg",
+            thumbnail: "/images/conentGallery/tractor1.svg",
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
@@ -92,24 +92,24 @@ export default function ContentGallery() {
 
     const newUpdateDetails = [
         {
-            thumbnail: "images/conentGallery/videoThumbnail_one.svg",
+            thumbnail: "/images/conentGallery/videoThumbnail_one.svg",
             discription: "Bridgestone the agricultural tyre expert",
             alt: 'videoThumbnail'
         },
         {
-            thumbnail: "images/conentGallery/videoThumbnail_one.svg",
-            discription: "Bridgestone the agricultural tyre expert",
-            alt: 'videoThumbnail'
-        },
-
-        {
-            thumbnail: "images/conentGallery/videoThumbnail_one.svg",
+            thumbnail: "/images/conentGallery/videoThumbnail_one.svg",
             discription: "Bridgestone the agricultural tyre expert",
             alt: 'videoThumbnail'
         },
 
         {
-            thumbnail: "images/conentGallery/videoThumbnail_one.svg",
+            thumbnail: "/images/conentGallery/videoThumbnail_one.svg",
+            discription: "Bridgestone the agricultural tyre expert",
+            alt: 'videoThumbnail'
+        },
+
+        {
+            thumbnail: "/images/conentGallery/videoThumbnail_one.svg",
             discription: "Bridgestone the agricultural tyre expert",
             alt: 'videoThumbnail'
         },
@@ -122,7 +122,7 @@ export default function ContentGallery() {
                 <Banner
                     breadcrumbs={breadcrumbData}
                     heading={""}
-                    bannerImg={"images/sellTractor/engineering-excellence-banner.svg"}
+                    bannerImg={bannerImg}
                     BannerUnderlineImg={false} />
 
                 <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
@@ -140,8 +140,11 @@ export default function ContentGallery() {
                                     <div>
                                         <Image
                                             src={item.thumbnail}
+                                            width={233}
+                                            height={156}
                                             className="cursor-pointer sm:w-[350px] w-[240px]"
                                             alt={item.tractorname}
+                                            
                                         />
                                     </div>
                                     <div>
@@ -165,7 +168,7 @@ export default function ContentGallery() {
 
                                 {newUpdateDetails.map((item, index) => (
                                     <div className="bg-[#6521780F] bg-opacity-20 overflow-hidden shadow-md flex-none w-80 sm:w-auto" key={index}>
-                                        <Image src={item.thumbnail} className="w-[100%] cursor-pointer" alt={item.alt} />
+                                        <Image src={item.thumbnail} width={344} height={200} className="w-[100%] cursor-pointer" alt={item.alt} />
                                         <div className="py-2 px-3">{item.discription}</div>
                                     </div>
                                 ))}

@@ -8,7 +8,7 @@ import Mail from "@Images/contactus/mail.svg";
 import Facebook from "@Images/contactus/facebook.svg";
 import Twitter from "@Images/contactus/twitter.svg";
 import Instagram from "@Images/contactus/instagram.svg";
-
+import bannerImg from "@Images/contactus/contactus-banner.svg";
 export default function ContactUs() {
   const breadcrumbData = [
     { label: "Home", link: "/" },
@@ -20,7 +20,7 @@ export default function ContactUs() {
         <Banner
           breadcrumbs={breadcrumbData}
           heading={""}
-          bannerImg={"images/contactus/contactus-banner.svg"}
+          bannerImg={bannerImg}
           BannerUnderlineImg={false}
         />
         <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">

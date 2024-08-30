@@ -11,6 +11,7 @@ import LocationImg from "@Images/dealerLocator/LocationImg.svg";
 import CallImg from "@Images/dealerLocator/callImg.svg";
 import MailImg from "@Images/dealerLocator/mailImg.svg";
 import Btn from "@components/Btn";
+import bannerImg from "@Images/dealerLocator/dealerBanner.svg";
 
 export default function DealerLocator() {
   const breadcrumbData = [
@@ -30,7 +31,7 @@ export default function DealerLocator() {
       <Banner
         breadcrumbs={breadcrumbData}
         heading={"DEALER LOCATOR "}
-        bannerImg={"images/dealerLocator/dealerBanner.svg"}
+        bannerImg={bannerImg}
       />
       <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
         <div className="bg-[#EFEDED] p-4">
@@ -61,21 +62,10 @@ export default function DealerLocator() {
                 </div>
 
                 <div className="mb-4">
-                  <label className="form-label">State</label>
+                  <label className="form-label">Sub-District (Tehsil or Taluka)</label>
                   <select className="block w-full px-2 py-[7px] border border-gray-300 
                     rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                    <option selected>Select State</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-
-                <div className="mb-4">
-                  <label className="form-label">Brand</label>
-                  <select className="block w-full px-2 py-[7px] border border-gray-300 
-                    rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                    <option selected>Select Brand</option>
+                    <option selected>Select Sub-District (Tehsil or Taluka)</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>

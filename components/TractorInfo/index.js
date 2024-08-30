@@ -10,13 +10,13 @@ export default function TractorInfo({infoImg,title,heading,infoText}) {
                         <Image src={infoImg} alt="Tractor" className="w-full" />
                     </div>
                     <div className="sm:w-1/2 w-full sm:mt-[3.5%] relative">
-                        <Image src="images/about/icon.svg" className="sm:block hidden" alt='icon' />
+                        <Image src="/images/about/icon.svg" width={93} height={70} className="sm:block hidden" alt='icon' />
                         <div className="px-3">
                             <p className="font-medium sm:text-[17px] sm:mt-4">{title}</p>
                             <div className="font-semibold sm:my-4 my-2 text-3xl">{heading}</div>
                             <p className="sm:text-[17px]">{infoText}</p>
                         </div>
-                        <Image src='images/about/arrow.svg' className="absolute right-0 sm:bottom-[27%] w-full" alt='arrow'/> 
+                        <Image src='/images/about/arrow.svg' width={952} height={48} className="absolute right-0 sm:bottom-[27%] w-full" alt='arrow'/> 
                     </div>
                 </div>
             </div>

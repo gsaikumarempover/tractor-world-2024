@@ -13,7 +13,7 @@ import Yesbank from "@Images/bank/yesbank.svg";
 import Axis from "@Images/bank/axis.svg";
 import Table from "@components/Table";
 import BannerStrip from "../components/BannerStrip";
-
+import bannerImg from '@Images/sellTractor/engineering-excellence-banner.svg';
 export default function ApplyNewTractorLoan() {
   const breadcrumbData = [
     { label: "Home", link: "/" },
@@ -167,7 +167,7 @@ export default function ApplyNewTractorLoan() {
         <Banner
           breadcrumbs={breadcrumbData}
           heading={""}
-          bannerImg={"images/sellTractor/engineering-excellence-banner.svg"}
+          bannerImg={bannerImg}
           BannerUnderlineImg={false}
         />
 

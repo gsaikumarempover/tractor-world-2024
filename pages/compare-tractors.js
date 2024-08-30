@@ -7,7 +7,7 @@ import Table from "@components/Table";
 import Heading from "@components/Heading";
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg'; 
-
+import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
 export default function CompareTractorDetails() {
     const breadcrumbData = [
         { label: 'Home', link: '/' },
@@ -20,14 +20,14 @@ export default function CompareTractorDetails() {
             emiStartsFrom: "EMI starts from ₹ 13,810*",
             price: "₹ 6.45 lac - 6.75 lac*",
             checkPrice: "Check Tractor Price",
-            image: "images/compareTractorImg/mahindra.svg"
+            image: "/images/compareTractorImg/mahindra.svg"
         },
         {
             name: "Massey Ferguson 90 4WD",
             emiStartsFrom: "EMI starts from ₹ 24,055*",
             price: "₹ 11.24 lac - 11.55 lac*",
             checkPrice: "Check Tractor Price",
-            image: "images/compareTractorImg/massey.svg"
+            image: "/images/compareTractorImg/massey.svg"
         },
 
         {
@@ -35,7 +35,7 @@ export default function CompareTractorDetails() {
             emiStartsFrom: "EMI starts from ₹ 24,055*",
             price: "₹ 11.24 lac - 11.55 lac*",
             checkPrice: "Check Tractor Price",
-            image: "images/compareTractorImg/massey.svg"
+            image: "/images/compareTractorImg/massey.svg"
         },
 
 
@@ -284,7 +284,7 @@ export default function CompareTractorDetails() {
                 <Banner
                     breadcrumbs={breadcrumbData}
                     heading={"Compare Tractor Details"}
-                    bannerImg={"images/compareTractorImg/Compare tractor banner.svg"}
+                    bannerImg={BannerImg}
                 />
                 <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
 
@@ -298,7 +298,11 @@ export default function CompareTractorDetails() {
 
                                 <div>
                                     <div key={index} className="bg-[#FBFBFB] shadow-lg">
-                                        <Image src={tractor.image} alt="image" layout="responsive" className="object-cover" />
+                                        <Image src={tractor.image} 
+                                          alt="image"
+                                          width={301}
+                                          height={173} 
+                                        />
                                         <div className="p-4 bg-[#FBFBFB]">
                                             <h3 className="text-[14px]  text-[#000000]">{tractor.name}</h3>
                                             <p className="text-[14px]  text-secondaryColor mt-2">{tractor.emiStartsFrom}</p>

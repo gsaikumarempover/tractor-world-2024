@@ -12,14 +12,14 @@ import { useTranslation } from 'next-i18next';
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <Image src='images/slickslider/right_arrow.svg' className={'custom-arrow next-arrow'} alt='RightArrow' onClick={onClick}></Image>
+    <Image src='/images/slickslider/right_arrow.svg'  width={50} height={50}  className={'custom-arrow next-arrow'} alt='RightArrow' onClick={onClick}></Image>
   );
 }
 
 function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <Image src='images/slickslider/left_arrow.svg' className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
+    <Image src='/images/slickslider/left_arrow.svg'  width={50} height={50} className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
   );
 }
 
