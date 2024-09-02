@@ -10,7 +10,7 @@ export default function InventoryCarousel() {
         customPaging: function (i) {
             return (
                 <a>
-                    <Image className='w-full' width={100} height={100} src={`${baseUrl}/slide0${i + 1}.svg`} alt='liveInventory' />
+                    <Image className='w-full' layout='responsive' width={100} height={100} src={`${baseUrl}/slide0${i + 1}.svg`} alt='liveInventory' />
                 </a>
             );
         },
@@ -27,16 +27,16 @@ export default function InventoryCarousel() {
             <div className="slider-container" id="inventoryCarousel">
                 <Slider {...settings}>
                     <div>
-                        <Image width={100} height={100} src={baseUrl + "/slide01.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide01' />
+                        <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide01.svg"} className='detailsSlideImg' alt='slide01' />
                     </div>
                     <div>
-                        <Image width={100} height={100} src={baseUrl + "/slide02.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide02 ' />
+                        <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide02.svg"} className='detailsSlideImg' alt='slide02 ' />
                     </div>
                     <div>
-                        <Image  width={520} height={400} src={baseUrl + "/slide03.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide03' />
+                        <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide03.svg"} className='detailsSlideImg' alt='slide03' />
                     </div>
                     <div>
-                        <Image  width={520} height={400} src={baseUrl + "/slide04.svg"} className='d-block mx-auto mt-4 mb-[6.3rem]' alt='slide04' />
+                        <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide04.svg"} className='detailsSlideImg' alt='slide04' />
                     </div>
                 </Slider>
             </div>

@@ -8,8 +8,8 @@ import "slick-carousel/slick/slick-theme.css";
 const MultipleItemsSlide = ({ items,settings,id }) => {
     const { t } = useTranslation(); 
     return (
-        <div className="slider-container mt-4 bg-white">
-            <Slider {...settings} id={id}>
+        <div className="slider-container mt-4 bg-white" id={id}>
+            <Slider {...settings}>
                 {items}
             </Slider>
 

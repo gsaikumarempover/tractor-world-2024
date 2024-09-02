@@ -428,18 +428,18 @@ export default function Inventory() {
               <Heading heading={'Tractors Dealers by Brands '} viewButton={false} />
 
               <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">
-                <Image width={100} height={100} src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
-                <Image width={100} height={100} src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
+                <Image width={100} height={100} layout="responsive" src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
               </div>
 
               <div className="my-4 sm:hidden block">

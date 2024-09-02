@@ -70,8 +70,8 @@ export default function ContentHUb() {
                                         src={video.thumbnail}
                                         className="cursor-pointer sm:w-24 w-20"
                                         alt="videoThumbnail"
-                                        width={210}
-                                        height={203}
+                                        width={100}
+                                        height={100}
                                     />
                                     <div>
                                         <div className="font-semibold py-2 sm:text-base text-[14px]">{video.name}</div>

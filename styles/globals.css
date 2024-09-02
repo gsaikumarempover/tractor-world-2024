@@ -389,26 +389,22 @@ body {
   cursor: pointer;
 }
 
+#niha>.slick-slider>span:nth-child(1) {
+  position: absolute !important;
+  z-index: 99 !important;
+  cursor: pointer !important;
+  top: 50% !important; 
+  left: -42px !important;
+  transform: translate(50%) !important;
+} 
 
-
-.galleryprev-arrow {
-  position: absolute;
-  z-index: 99;
-  cursor: pointer;
-  bottom: 50%;
-  left: 1.8%;
-  width: 40px;
-  transform: translateX(-50%);
-}
-
-.gallerynext-arrow {
-  position: absolute;
-  z-index: 99;
-  width: 40px;
-  cursor: pointer;
-  bottom: 50%;
-  right: -1.8%;
-  transform: translateX(-50%);
+#niha>.slick-slider>span:nth-child(3) {
+  position: absolute !important;
+  z-index: 99 !important;
+  cursor: pointer !important;
+  top: 50% !important; 
+  right: -42px !important;
+  transform: translate(-50%) !important;
 }
 
 .next-arrow {
@@ -543,9 +539,11 @@ input[type="range"] {
   margin-left: inherit !important
 }
 
-.tractorsFeatures {
+/* .tractorsFeatures {
   margin-top: -41px !important;
-}
+  position: absolute!important;
+  z-index: 999999999999999;
+} */
 
 .ReactModal__Overlay--after-open {
   background-color: rgba(0, 0, 0, 0.8) !important;
@@ -557,11 +555,11 @@ input[type="range"] {
 }
 
 .languageImgSec span {
-  height: 100%!important;
+  height: 100% !important;
 }
 
 /* styles.css or your global stylesheet */
- /* input[type="radio"] {
+/* input[type="radio"] {
   opacity: 0;
   position: absolute;
   width: 0;
@@ -595,4 +593,6 @@ input[type="radio"] + label {
   background-color: var(--theme-color)!important; 
 } */
 
- 
+.detailsSlideImg {
+  margin-bottom: 2.3rem !important;
+}

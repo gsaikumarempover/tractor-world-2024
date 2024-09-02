@@ -18,14 +18,14 @@ export default function ContentGallery() {
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
         return (
-            <Image src='/images/conentGallery/rightArrow.svg'  width={50} height={50} className={'gallerynext-arrow'} alt='RightArrow' onClick={onClick}></Image>
+            <Image src='/images/conentGallery/rightArrow.svg' width={60} height={60} className={'gallerynext-arrow'} alt='RightArrow' onClick={onClick}></Image>
         );
     }
 
     function SamplePrevArrow(props) {
         const { className, style, onClick } = props;
         return (
-            <Image src='/images/conentGallery/leftArrow.svg'  width={50} height={50}   className={'galleryprev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
+            <Image src='/images/conentGallery/leftArrow.svg' width={60} height={60} className={'galleryprev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
         );
     }
     const contentGallerysettings = {
@@ -34,6 +34,7 @@ export default function ContentGallery() {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        adaptiveHeight: true,
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />
     };
@@ -59,11 +60,10 @@ export default function ContentGallery() {
 
     const contentGalleryitems = contentGalleryimages.map((src, index) => (
         <div key={index} className="relative">
-            <Image src={src.image} width={1644} height={919} alt={`Explore item ${index + 1}`} />
+            <Image src={src.image} width={1644} height={919} layout="responsive" alt={`Explore item ${index + 1}`} />
             <div className="absolute top-0 bg-primaryColor text-white px-2 uppercase text-[13px] py-1">{src.name}</div>
         </div>
-    ));
-
+    )); 
 
     const galleryDetails = [
         {
@@ -129,7 +129,7 @@ export default function ContentGallery() {
                     <Heading heading={"Tractor World Content Gallery"} />
                     <hr className="mt-2 mx-2"></hr>
                     <div className="mb-4 p-2">
-                        <MultipleItemsSlide settings={contentGallerysettings} items={contentGalleryitems} />
+                        <MultipleItemsSlide settings={contentGallerysettings} id={'niha'} items={contentGalleryitems} />
                     </div>
 
                     <div className="bg-[#F3F3F4] sm:pt-3 pt-2 py-3 my-6"></div>
@@ -137,14 +137,15 @@ export default function ContentGallery() {
                         {galleryDetails.map((item, index) => (
                             <div className="border-b pb-3 p-1 relative" key={index}>
                                 <div className="flex gap-3">
-                                    <div>
+                                    <div className="sm:w-[350px] sm:h-[200px] w-[240px]">
                                         <Image
                                             src={item.thumbnail}
-                                            width={233}
-                                            height={156}
-                                            className="cursor-pointer sm:w-[350px] w-[240px]"
+                                            layout="responsive"
+                                            width={350}
+                                            height={200}
+                                            className="cursor-pointer"
                                             alt={item.tractorname}
-                                            
+
                                         />
                                     </div>
                                     <div>
@@ -165,7 +166,6 @@ export default function ContentGallery() {
                         <Heading heading={"New Updates"} />
                         <div className="overflow-x-auto sm:overflow-visible">
                             <div className="flex sm:grid sm:grid-cols-4 gap-8">
-
                                 {newUpdateDetails.map((item, index) => (
                                     <div className="bg-[#6521780F] bg-opacity-20 overflow-hidden shadow-md flex-none w-80 sm:w-auto" key={index}>
                                         <Image src={item.thumbnail} width={344} height={200} className="w-[100%] cursor-pointer" alt={item.alt} />

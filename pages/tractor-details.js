@@ -10,8 +10,6 @@ import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
-import LiveInventoryContainer from '@components/LiveInventory';
-import SlickCarousel from '@components/SlickCarousel';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import bannerImg from '@Images/liveInventory/banner.svg';
 
@@ -28,7 +26,7 @@ function SampleNextArrow(props) {
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-        <Image src='images/slickslider/left_arrow.svg'  width={100} height={100} className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
+        <Image src='images/slickslider/left_arrow.svg' width={100} height={100} className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
     );
 }
 
@@ -475,7 +473,7 @@ export default function TractorDetails({ locale }) {
                             <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
                                  rounded-sm w-full'>
                                 <Image src='/images/Tractordetails/editIcon.svg' width={10} height={10}
-                                 className='w-3' alt='Tractordetails/editIcon' />Change Tractor</div>
+                                    className='w-3' alt='Tractordetails/editIcon' />Change Tractor</div>
 
 
                             <div className='mb-3 cursor-pointer flex gap-2 w-full'>
@@ -523,20 +521,21 @@ export default function TractorDetails({ locale }) {
 
             {/* Features sec */}
             <div className='bg-[#F3F3F4]'>
-                <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'>
-
+                <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'> 
 
                     <Heading heading={'Mahindra Arjun 555 DI Features'} />
                     <div className='py-3 sm:mt-5 mt-1 grid md:grid-cols-6 sm:grid-cols-3 
                     grid-cols-2 sm:gap-4 gap-8'>
                         {features.map((feature, index) => (
                             <div key={index} className='features-shadow text-sm bg-white pb-1 pt-6 px-2 rounded-md text-center relative'>
+                               <div className='absolute top-[-30px] left-1/2 transform -translate-x-1/2'>
                                 <Image src={feature.src}
                                     alt={feature.alt}
-                                    width={45}
-                                    height={45}
-                                    className='block mx-auto mb-[2px] sm:w-[43px] w-[40px] tractorsFeatures' />
-                                <p className='font-bold uppercase'>{feature.title}</p>
+                                    width={60}
+                                    height={60}
+                                    className='tractorsFeatures' />
+                                    </div>
+                                <p className='font-bold uppercase mt-5'>{feature.title}</p>
                                 <span>{feature.description}</span>
                             </div>
                         ))}
