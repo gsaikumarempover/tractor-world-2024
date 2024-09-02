@@ -548,9 +548,9 @@ input[type="range"] {
 }
 
 .ReactModal__Overlay--after-open {
-  background-color: #000 !important;
-  opacity: .9 !important;
-  z-index: 9999;
+  /* background-color: #000 !important; */
+  background-color: rgba(40, 8, 8, 0.75)!important;
+   z-index: 9999;
 } 
 
 .ReactModal__Content {

@@ -23,7 +23,7 @@ export default function ModalComponent({ show }) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     return (
-        <div>
+        <div className='bg-[pink]'>
             <Modal
                 isOpen={showModal}
                 style={customStyles}
@@ -38,22 +38,22 @@ export default function ModalComponent({ show }) {
                         <div className='p-4'>
                             <p className='font-bold xl:text-xl lg:text-lg md:text-base'>Select your preferred Language</p>
 
-                            <span>Select Language</span>
+                            <span className='my-4 block'>Select Language</span>
 
-                            <div className='flex gap-4'>
-                                <div>
+                            <div className='flex gap-4 my-4'>
+                                <div className='border-[1px] border-secondaryColor px-2 py-1 rounded'>
                                     <input type="radio" name="language" value="hindi" />
                                     <label className="ml-2">Englidh</label>
                                 </div>
 
-                                <div>
+                                <div className='border-[1px] border-secondaryColor px-2 py-1 rounded'>
                                     <input type="radio" name="language" value="hindi" />
-                                    <label className="ml-2">Englidh</label>
+                                    <label className="ml-2">Hindi</label>
                                 </div>
 
-                                <div>
+                                <div className='border-[1px] border-secondaryColor px-2 py-1 rounded'>
                                     <input type="radio" name="language" value="hindi" />
-                                    <label className="ml-2">Englidh</label>
+                                    <label className="ml-2">Marathi</label>
                                 </div>
 
                             </div>
