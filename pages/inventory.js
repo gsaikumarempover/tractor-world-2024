@@ -4,7 +4,7 @@ import Banner from "@components/Banner";
 import Btn from '@components/Btn';
 import Image from "next/image";
 import DefaultTractor from "@Images/default_tractor.svg";
-import Heading from "../components/Heading";
+import Heading from "@components/Heading";
 import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
 import bannerImg from "@Images/inventory/inventory-banner.svg";
@@ -406,7 +406,7 @@ export default function Inventory() {
                                 key={fIdx}
                                 className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                               >
-                                <Image  src={feature.icon} alt={feature.icon} width={15} height={20} />
+                                <Image  src={feature.icon} alt={feature.icon} width={10} height={10} />
                                 <span>{feature.text}</span>
                               </div>
                             ))}
@@ -415,7 +415,7 @@ export default function Inventory() {
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
-                              <Image src='/images/phnIcon.svg'  width={27} height={27}  className="w-4 mr-1"  alt="phnIcon"/> Interested{" "}
+                              <Image src='/images/phnIcon.svg'  width={15} height={15}  className="w-4 mr-1"  alt="phnIcon"/> Interested{" "}
                             </span>
                           </div>
                         </div>
@@ -428,18 +428,18 @@ export default function Inventory() {
               <Heading heading={'Tractors Dealers by Brands '} viewButton={false} />
 
               <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">
-                <Image width={724} height={459} src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
-                <Image width={724} height={459} src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
+                <Image width={100} height={100} src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
               </div>
 
               <div className="my-4 sm:hidden block">
@@ -483,7 +483,7 @@ export default function Inventory() {
                                 key={fIdx}
                                 className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                               >
-                                <Image src={feature.icon} alt={feature.icon} width={15} height={20}  />
+                                <Image src={feature.icon} alt={feature.icon} width={10} height={10}  />
                                 <span>{feature.text}</span>
                               </div>
                             ))}
@@ -492,7 +492,7 @@ export default function Inventory() {
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
-                              <Image src='/images/phnIcon.svg' width={27} height={27} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                              <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
                             </span>
                           </div>
                         </div>

@@ -21,14 +21,14 @@ import Tab from '@components/Tab';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-        <Image src='images/slickslider/right_arrow.svg' className={'custom-arrow next-arrow'} alt='RightArrow' onClick={onClick}></Image>
+        <Image src='images/slickslider/right_arrow.svg' width={100} height={100} className={'custom-arrow next-arrow'} alt='RightArrow' onClick={onClick}></Image>
     );
 }
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-        <Image src='images/slickslider/left_arrow.svg' className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
+        <Image src='images/slickslider/left_arrow.svg'  width={100} height={100} className={'custom-arrow prev-arrow'} alt='LeftArrow' onClick={onClick}></Image>
     );
 }
 
@@ -473,11 +473,13 @@ export default function TractorDetails({ locale }) {
                             </span>
 
                             <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
-                                 rounded-sm w-full'><Image src='images/Tractordetails/editIcon.svg' className='w-3' alt='Tractordetails/editIcon' />Change Tractor</div>
+                                 rounded-sm w-full'>
+                                <Image src='/images/Tractordetails/editIcon.svg' width={10} height={10}
+                                 className='w-3' alt='Tractordetails/editIcon' />Change Tractor</div>
 
 
                             <div className='mb-3 cursor-pointer flex gap-2 w-full'>
-                                <Image src='images/Tractordetails/primaymapIcon.svg' className='w-3' alt='Tractordetails/primaymapIcon' />
+                                <Image src='/images/Tractordetails/primaymapIcon.svg' width={10} height={10} className='w-3' alt='Tractordetails/primaymapIcon' />
                                 Beed, Maharashtra</div>
 
                             <div className='font-bold text-xl mb-1'>₹ 9,84,000 <span className="line-through text-sm opacity-[30%]"> ₹ 10,84,000 </span></div>
@@ -531,9 +533,9 @@ export default function TractorDetails({ locale }) {
                             <div key={index} className='features-shadow text-sm bg-white pb-1 pt-6 px-2 rounded-md text-center relative'>
                                 <Image src={feature.src}
                                     alt={feature.alt}
-                                    width={150}
-                                    height={150}
-                                    className='block mt-[-41px] mx-auto mb-[2px] sm:w-[43px] w-[40px]' />
+                                    width={45}
+                                    height={45}
+                                    className='block mx-auto mb-[2px] sm:w-[43px] w-[40px] tractorsFeatures' />
                                 <p className='font-bold uppercase'>{feature.title}</p>
                                 <span>{feature.description}</span>
                             </div>

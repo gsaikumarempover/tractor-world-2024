@@ -389,7 +389,7 @@ body {
   cursor: pointer;
 }
 
- 
+
 
 .galleryprev-arrow {
   position: absolute;
@@ -398,17 +398,17 @@ body {
   bottom: 50%;
   left: 1.8%;
   width: 40px;
-  transform: translateX(-50%); 
- }
+  transform: translateX(-50%);
+}
 
- .gallerynext-arrow {
+.gallerynext-arrow {
   position: absolute;
   z-index: 99;
   width: 40px;
   cursor: pointer;
   bottom: 50%;
-  right:-1.8%;
-  transform: translateX(-50%);  
+  right: -1.8%;
+  transform: translateX(-50%);
 }
 
 .next-arrow {
@@ -535,4 +535,25 @@ input[type="range"] {
   border-image-slice: 1;
 }
 
- 
+.BannerUnderline {
+  max-width: 90px !important;
+  min-width: 90px !important;
+  min-height: 90px !important;
+  max-height: 90px !important;
+  margin-left: inherit !important
+}
+
+.tractorsFeatures {
+  margin-top: -41px !important;
+}
+
+.ReactModal__Overlay--after-open {
+  background-color: #000 !important;
+  opacity: .9 !important;
+  z-index: 9999;
+} 
+
+.ReactModal__Content {
+  padding: 0 !important;
+  background-color: white !important;
+}
