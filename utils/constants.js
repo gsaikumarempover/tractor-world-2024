@@ -36,6 +36,8 @@ export const GET_LIVE_INVENTORY = gql`
             imageLinks
             brand
           }
+          slug 
+          id 
         }
       }
     }

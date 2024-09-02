@@ -9,8 +9,11 @@ import DefaultTractor from '@Images/default_tractor.svg';
 import { useTranslation } from 'next-i18next';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from 'next/link';
 
 const SlickCarousel = ({ items, settings }) => {
+
+ 
   const { t } = useTranslation();
   const CheckTractorDetails = t('CheckTractorDetails');
   return (
@@ -47,13 +50,15 @@ const SlickCarousel = ({ items, settings }) => {
                   <Image src={HP} alt='HP'></Image> {item.enginePower}
                 </div>
                 )}
-              </div>
+              </div> 
             </div>
+            <Link href={'/tractor-details/?id='+item.id+"&s="+item.slug}>
             <div className='border-t-[1px] border-[#D9D9D9] relative bottom-0'>
               <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                 <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">{CheckTractorDetails}</span>
               </div>
             </div>
+            </Link>
           </div>
         ))}
       </Slider>

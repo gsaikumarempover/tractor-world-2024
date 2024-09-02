@@ -53,7 +53,9 @@ const LiveInventoryContainer = ({ locale }) => {
     price: node.liveInventoryData.maxPrice,
     hours: node.liveInventoryData.engineHours,
     driveType: node.liveInventoryData.driveType,
-    enginePower: node.liveInventoryData.enginePower // Assuming hp is similar to driveType; adjust if needed
+    enginePower: node.liveInventoryData.enginePower,
+    slug: node.slug,
+    id:node.id
   }));
 
   const slickSettings = {
@@ -99,7 +101,7 @@ const LiveInventoryContainer = ({ locale }) => {
     <div className="liveInventoryData relative" id="inventorySlide">
       <SlickCarousel settings={slickSettings} items={liveInventoryData} />
       <Btn text={'View all'} viewAll={true} />
-    </div>
+    </div> 
   );
 };
 export default LiveInventoryContainer;

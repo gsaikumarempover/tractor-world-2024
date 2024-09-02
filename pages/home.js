@@ -17,7 +17,7 @@ import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
 import HomeBanner from '@Images/home/HomeBanner.svg';
-import Call from '@Images/home/call.svg';
+import Call from '@Images/home/call.svg'; 
 import Share from '@Images/home/share.svg';
 import Thumb from '@Images/home/thumb.svg';
 import Tractor from '@Images/home/tractor.svg';
