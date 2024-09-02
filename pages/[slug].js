@@ -7,18 +7,22 @@ export async function getStaticProps({ params }) {
 
   const { data } = await client.query({
     query: gql`
-      query GetPage($slug: String!) {
-        pageBy(uri: $slug) {
+     query PostBySlug($slug: String!) {
+      generalSettings {
+        title
+      }
+      postBy(slug: $slug) {
+        id
+        content
+        title
+        slug
+        seo {
+          metaDesc
           title
-          content
-          seo {
-            title
-            metaDesc
-            opengraphTitle
-            opengraphDescription
-          }
+          fullHead
         }
       }
+    }
     `,
     variables: {
       slug: params.slug,
