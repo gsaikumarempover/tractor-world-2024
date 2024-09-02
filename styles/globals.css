@@ -389,7 +389,7 @@ body {
   cursor: pointer;
 }
 
-#niha>.slick-slider>span:nth-child(1) {
+#contentGallery>.slick-slider>span:nth-child(1) {
   position: absolute !important;
   z-index: 99 !important;
   cursor: pointer !important;
@@ -398,7 +398,7 @@ body {
   transform: translate(50%) !important;
 } 
 
-#niha>.slick-slider>span:nth-child(3) {
+#contentGallery>.slick-slider>span:nth-child(3) {
   position: absolute !important;
   z-index: 99 !important;
   cursor: pointer !important;

@@ -129,7 +129,7 @@ export default function ContentGallery() {
                     <Heading heading={"Tractor World Content Gallery"} />
                     <hr className="mt-2 mx-2"></hr>
                     <div className="mb-4 p-2">
-                        <MultipleItemsSlide settings={contentGallerysettings} id={'niha'} items={contentGalleryitems} />
+                        <MultipleItemsSlide settings={contentGallerysettings} id={'contentGallery'} items={contentGalleryitems} />
                     </div>
 
                     <div className="bg-[#F3F3F4] sm:pt-3 pt-2 py-3 my-6"></div>
