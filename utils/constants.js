@@ -37,7 +37,7 @@ export const GET_LIVE_INVENTORY = gql`
             brand
           }
           slug 
-          id
+          id 
         }
       }
     }

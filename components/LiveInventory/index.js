@@ -101,7 +101,7 @@ const LiveInventoryContainer = ({ locale }) => {
     <div className="liveInventoryData relative" id="inventorySlide">
       <SlickCarousel settings={slickSettings} items={liveInventoryData} />
       <Btn text={'View all'} viewAll={true} />
-    </div>
+    </div> 
   );
 };
 export default LiveInventoryContainer;

@@ -18,7 +18,7 @@ export async function getStaticProps({ params }) {
         slug
         seo {
           metaDesc
-          title
+          title 
           fullHead
         }
       }

@@ -50,7 +50,7 @@ const SlickCarousel = ({ items, settings }) => {
                   <Image src={HP} alt='HP'></Image> {item.enginePower}
                 </div>
                 )}
-              </div>
+              </div> 
             </div>
             <Link href={'/tractor-details/?id='+item.id+"&s="+item.slug}>
             <div className='border-t-[1px] border-[#D9D9D9] relative bottom-0'>
