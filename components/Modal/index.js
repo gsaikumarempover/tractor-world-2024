@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal';
 import Image from 'next/image'; 
-import CloseIcon from '@Images/CloseIcon.svg';
+import CloseIcon from '@Images/closeIcon.svg';
 
 
 export default function ModalComponent({ showModal, handleClose,customStyles,content }) {
