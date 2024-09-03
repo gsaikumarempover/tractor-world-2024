@@ -79,18 +79,18 @@ export default function about() {
           </div>
         </form> */}
         <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4 mt-6">
-          <Image width={259} height={252}  src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full" />
-           <Image width={259} height={252}  src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/escorts.svg" alt="escorts" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/kartar.svg" alt="kartar" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/captain.svg" alt="captain" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/preet.svg" alt="preet" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/escorts.svg" alt="escorts" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/kartar.svg" alt="kartar" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/captain.svg" alt="captain" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/preet.svg" alt="preet" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full" />
+          <Image width={259} height={252} src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full" />
         </div>
         <div className="my-4 sm:hidden block">
           <Btn text={'view all'} />
@@ -101,10 +101,22 @@ export default function about() {
       <div className="bg-white my-4 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4">
         <p className="text-[#888888] text-sm mb-3">We Promise To Find You The Right Equipment</p>
         <Heading heading={'Get Your Rentals In Easy Steps'} />
-        <div className="image-wrapper overflow-x-auto">
-          <Image src='/images/about/rentalSteps.svg' width={1673} height={493}  alt="rentalSteps" className="w-full" />
+
+        <div className="image-wrapper sm:overflow-hidden overflow-x-auto">
+          <div className="sm:min-w-full min-w-[586px]">
+            <Image
+              src='/images/about/rentalSteps.svg'
+              layout="responsive"
+              width={1673}
+              height={493}
+              alt="rentalSteps"
+              className="w-full"
+            />
+          </div>
         </div>
-       </div>
+
+
+      </div>
 
     </Layout >
   )
