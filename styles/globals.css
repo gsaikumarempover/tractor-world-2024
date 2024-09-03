@@ -393,16 +393,16 @@ body {
   position: absolute !important;
   z-index: 99 !important;
   cursor: pointer !important;
-  top: 50% !important; 
+  top: 50% !important;
   left: -42px !important;
   transform: translate(50%) !important;
-} 
+}
 
 #contentGallery>.slick-slider>span:nth-child(3) {
   position: absolute !important;
   z-index: 99 !important;
   cursor: pointer !important;
-  top: 50% !important; 
+  top: 50% !important;
   right: -42px !important;
   transform: translate(-50%) !important;
 }
@@ -595,4 +595,16 @@ input[type="radio"] + label {
 
 .detailsSlideImg {
   margin-bottom: 2.3rem !important;
+} 
+
+.storeInventoryBannerImg::-webkit-scrollbar {
+  height: 5px;
+}
+
+.storeInventoryBannerImg::-webkit-scrollbar-thumb {
+  background-color: gray;
+}
+
+.storeInventoryBannerImg::-webkit-scrollbar-track {
+  background-color: #EBEBEB;
 }

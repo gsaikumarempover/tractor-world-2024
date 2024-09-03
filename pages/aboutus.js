@@ -80,8 +80,7 @@ export default function about() {
         </form> */}
         <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4 mt-6">
           <Image width={259} height={252}  src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full" />
-          <Image width={259} height={252}  src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full" />
+           <Image width={259} height={252}  src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full" />
           <Image width={259} height={252}  src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full" />
           <Image width={259} height={252}  src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full" />
           <Image width={259} height={252}  src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full" />
