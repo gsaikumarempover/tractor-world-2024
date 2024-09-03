@@ -28,7 +28,10 @@ import Btn from '@components/Btn';
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import { useRouter } from 'next/router';
-
+import Gallery1 from '@Images/conentGallery/1.svg';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import MultipleItemsSlide from "../components/SingleItemsSlide";
 
 export default function HomePage({ locale }) {
 
@@ -53,19 +56,7 @@ export default function HomePage({ locale }) {
         { src: Finance, alt: "Finance", label: "Mahendra Financing" }
     ];
 
-    useEffect(() => {
-        const carouselElement = document.getElementById('Testimonials-carousel');
-        if (carouselElement) {
-            const carousel = new Carousel(carouselElement, {
-                interval: 5000,
-                indicators: {
-                    activeClasses: 'bg-blue-500',
-                    inactiveClasses: 'bg-gray-300',
-                },
-                autoplay: true,
-            });
-        }
-    }, []);
+ 
 
     const exploreimages = [
         {
@@ -97,7 +88,8 @@ export default function HomePage({ locale }) {
     const [activeTab, setActiveTab] = useState("oneData");
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
-    };
+    }; 
+    
 
     const compareTractorData = {
 
@@ -270,6 +262,45 @@ export default function HomePage({ locale }) {
 
         ]
     };
+ 
+
+    const contentGallerysettings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        adaptiveHeight: true, 
+    };
+
+    const contentGalleryimages = [
+        {
+            image: slide1,
+            name: "Sonalika Tractor",
+        },
+        {
+            image: slide1,
+            name: "Sonalika Tractor",
+        }, 
+    ];
+
+    const contentGalleryitems = contentGalleryimages.map((src, index) => (
+        <div key={index} className="relative">
+            <Image src={src.image} width={1644} height={640} layout="responsive" alt={`Explore item ${index + 1}`} />
+  
+            <p className='z-40 absolute sm:top-14 top-6 sm:text-base text-sm sm:left-14 left-3
+              text-white sm:w-[300px] w-[247px] font-bold testimonials'>
+                        Mr. Sujit Majumdar from Cooch Behar,
+                        West Bengal: Rising from financial
+                        hardships to owning multiple
+                        tractors
+                    </p>
+
+                    <div className='z-40 absolute sm:bottom-8 bottom-4 sm:left-14 left-3
+             bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
+
+         </div>
+    )); 
 
     return (
         <>
@@ -507,7 +538,12 @@ export default function HomePage({ locale }) {
                 <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
                     <Heading heading={'Testimonials'} viewButton={true} />
                 </div>
-                <div className='relative'>
+
+                <div className="mb-4">
+                        <MultipleItemsSlide settings={contentGallerysettings} id={'contentGallery'} items={contentGalleryitems} />
+                    </div>
+
+                {/* <div className='relative'>
                     <div id="Testimonials-carousel" className="relative w-full" data-carousel="slide">
                         <div className="relative h-36 overflow-hidden md:h-[30rem]">
                             <div className="hidden duration-700 ease-in-out" data-carousel-item>
@@ -522,7 +558,7 @@ export default function HomePage({ locale }) {
                                 <Image src={slide1} alt="Slide 3" />
                             </div>
                         </div>
-                        {/* w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 */}
+                        w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800
                         <div className="absolute z-30 flex bottom-4 sm:left-14
                         left-[46%] space-x-1 rtl:space-x-reverse">
                             <button type="button" className="w-[6px] h-[6px] rounded-full" aria-current="true"
@@ -546,7 +582,7 @@ export default function HomePage({ locale }) {
              bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
 
 
-                </div>
+                </div> */}
             </div>
 
             {/* Latest News & Updates */}

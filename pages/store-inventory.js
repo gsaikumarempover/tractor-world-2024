@@ -8,8 +8,9 @@ import MapIcon from '@Images/dealerLocator/mapIcon.svg';
 import PhnIcon from '@Images/dealerLocator/phnIcon.svg';
 import ClockIcon from '@Images/dealerLocator/clock.svg';
 import Location from '@Images/dealer/location.svg';
+import LiveInventoryContainer from '@components/LiveInventory';
 
-export default function StoreInventory() {
+export default function StoreInventory({ locale }) {
     const breadcrumbData = [
         { label: 'Home', link: '/' },
         { label: 'Dealers Locater', link: '/dealer-locator' },
@@ -93,6 +94,12 @@ export default function StoreInventory() {
                             <p>Srinivasa Motors in Kutbullapur, Hyderabad is known to satisfactorily cater to the demands of its customer base. The business came into existence in 2003 and has, since then, been a known name in its field. It stands located at Plot No 26, Survey No.62/A, Gandimaisamma X Roads, Kutbullapur-500055.</p>
                         </div>
                     </div>
+
+
+                         {/* Live Inventory */}
+            <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white ">
+                 <LiveInventoryContainer locale={locale} />
+            </div>
 
                 </div>
             </Layout>

@@ -382,12 +382,24 @@ body {
 
 /* 
 /// SLick*/
-.custom-arrow {
-  position: absolute;
-  bottom: 0;
-  z-index: 99;
-  cursor: pointer;
+
+
+#inventorySlide>.slider-container>.slick-slider>span:nth-child(1) {  
+  position: absolute !important;
+  z-index: 99 !important;
+  cursor: pointer !important;
+  bottom: 0 !important;
+  right: 100px !important; 
 }
+
+#inventorySlide>.slider-container>.slick-slider>span:nth-child(3) { 
+  position: absolute !important;
+  z-index: 99 !important;
+  cursor: pointer !important;
+  bottom: 0 !important;
+  right: 0px !important;
+}
+
 
 #contentGallery>.slick-slider>span:nth-child(1) {
   position: absolute !important;
@@ -407,13 +419,6 @@ body {
   transform: translate(-50%) !important;
 }
 
-.next-arrow {
-  right: 10px;
-}
-
-.prev-arrow {
-  right: 100px;
-}
 
 
 
@@ -595,7 +600,7 @@ input[type="radio"] + label {
 
 .detailsSlideImg {
   margin-bottom: 2.3rem !important;
-} 
+}
 
 .storeInventoryBannerImg::-webkit-scrollbar {
   height: 5px;
@@ -607,4 +612,9 @@ input[type="radio"] + label {
 
 .storeInventoryBannerImg::-webkit-scrollbar-track {
   background-color: #EBEBEB;
+}
+
+::placeholder {
+  color: #B9B9B9 !important;
+  font-size: 14px !important;
 }

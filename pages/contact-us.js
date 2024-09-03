@@ -9,6 +9,7 @@ import Facebook from "@Images/contactus/facebook.svg";
 import Twitter from "@Images/contactus/twitter.svg";
 import Instagram from "@Images/contactus/instagram.svg";
 import bannerImg from "@Images/contactus/contactus-banner.svg";
+import Link from "next/link";
 export default function ContactUs() {
   const breadcrumbData = [
     { label: "Home", link: "/" },
@@ -19,9 +20,9 @@ export default function ContactUs() {
       <Layout currentPage={"contact"}>
         <Banner
           breadcrumbs={breadcrumbData}
-          heading={""}
+          heading={"Contact Us"}
           bannerImg={bannerImg}
-          BannerUnderlineImg={false}
+        // BannerUnderlineImg={}
         />
         <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
           <Heading heading="Contact Us" />
@@ -33,30 +34,34 @@ export default function ContactUs() {
                   support team will assist you within 24 hours.
                 </p>
 
-                <div className="flex space-x-2 float-left">
+                <Link href="tel:9553353077">
+                <div className="flex space-x-2 float-left cursor-pointer">
                   <div className="w-[3%]">
                     <Image src={CallImg} alt="CallImg" />
                   </div>
-                  <p className="text-gray-700 ">+91 95533 53077</p>
+               <p className="text-gray-700">+91 95533 53077</p>
                 </div>
+                </Link>
 
-                <div className="flex space-x-2 float-left">
+                <Link href="mailto:tractorworld.in">
+                <div className="flex space-x-2 float-left cursor-pointer">
                   <div className="w-[3%]">
                     <Image src={Mail} alt="Mail" />
                   </div>
                   <p className="text-gray-700">tractorworld.in</p>
                 </div>
+                </Link>
 
                 <div className="flex items-center">
-                  <div>
+                  <div className="cursor-pointer">
                     <Image src={Facebook} alt="Facebook" />
                   </div>
 
-                  <div>
+                  <div className="cursor-pointer">
                     <Image src={Twitter} alt="Twitter" />
                   </div>
 
-                  <div>
+                  <div className="cursor-pointer">
                     <Image src={Instagram} alt="Instagram" />
                   </div>
                 </div>
@@ -65,7 +70,7 @@ export default function ContactUs() {
               <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
                 <form className="flex flex-col space-y-4">
                   <div className="flex flex-col">
-                    <label htmlFor="name" className="sm:block md:hidden lg:hidden">
+                    <label htmlFor="name" className="mb-2 text-[15px]">
                       Name
                     </label>
                     <input
@@ -77,8 +82,8 @@ export default function ContactUs() {
                   </div>
 
                   <div className="flex flex-col">
-                    <label htmlFor="email" className="sm:block md:hidden lg:hidden">
-                      Email
+                    <label htmlFor="email" className="mb-2 text-[15px]">
+                      Email ID
                     </label>
                     <input
                       placeholder="Enter Your Email ID"
@@ -89,7 +94,7 @@ export default function ContactUs() {
                   </div>
 
                   <div className="flex flex-col">
-                    <label htmlFor="phone" className="sm:block md:hidden lg:hidden">
+                    <label htmlFor="phone" className="mb-2 text-[15px]">
                       Mobile Number
                     </label>
                     <input
@@ -101,7 +106,7 @@ export default function ContactUs() {
                   </div>
 
                   <div className="flex flex-col">
-                    <label htmlFor="message" className="sm:block md:hidden lg:hidden">
+                    <label htmlFor="message" className="mb-2 text-[15px]">
                       Message
                     </label>
                     <textarea

@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
  
-const MultipleItemsSlide = ({ items,settings,id }) => {
+const SingleItemsSlide = ({ items,settings,id }) => {
     const { t } = useTranslation(); 
     return (
         <div className="slider-container mt-4 bg-white" id={id}>
@@ -17,4 +17,4 @@ const MultipleItemsSlide = ({ items,settings,id }) => {
     );
 };
 
-export default MultipleItemsSlide;
+export default SingleItemsSlide;

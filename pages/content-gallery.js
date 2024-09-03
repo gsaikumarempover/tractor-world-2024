@@ -6,7 +6,7 @@ import Heading from "@components/Heading";
 import Gallery1 from '@Images/conentGallery/1.svg';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import MultipleItemsSlide from "../components/MultipleItemsSlide";
+import MultipleItemsSlide from "../components/SingleItemsSlide";
 import bannerImg from "@Images/sellTractor/engineering-excellence-banner.svg";
 
 export default function ContentGallery() {
