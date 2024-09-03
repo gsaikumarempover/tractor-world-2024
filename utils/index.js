@@ -1,4 +1,7 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useDispatch } from 'react-redux';
+import { setAddressData } from '../store/slices/userDataSlice';
+import { useEffect } from 'react';
 
 export async function getLocaleProps(context) { 
   const locale = context.locale;   
@@ -11,4 +14,5 @@ export async function getLocaleProps(context) {
     } 
   };
 }
- 
+
+

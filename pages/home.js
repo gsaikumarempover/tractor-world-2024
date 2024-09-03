@@ -36,6 +36,7 @@ import Link from 'next/link';
 
 export default function HomePage({ locale }) {
 
+
     const router = useRouter();
 
     const handleCompareAll = () => {
@@ -68,6 +69,8 @@ export default function HomePage({ locale }) {
     ];
 
  
+
+    
 
     const exploreimages = [
         {
@@ -668,5 +671,6 @@ export default function HomePage({ locale }) {
 
             </div>
         </>
+        
     )
 }
