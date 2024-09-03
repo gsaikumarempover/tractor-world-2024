@@ -17,13 +17,25 @@ export default function Home({ locale }) {
     setSelectedLanguage(event.target.value);
   };
 
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  }; 
+
   return (
 
     <>
       <Layout currentPage={"home"}>
         <HomePage locale={locale} />
       </Layout>
-      <Modal showModal={showModal} handleClose={handleClose} content={
+
+      <Modal showModal={showModal} customStyles={customStyles} handleClose={handleClose} content={
         <div className='flex items-center sm:flex-row flex-col-reverse w-full'>
           <div className='px-4 py-10'>
             <p className='font-bold  text-xl'>Select your preferred<br></br> Language</p>

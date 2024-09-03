@@ -46,6 +46,10 @@ export default function HomePage({ locale }) {
          router.push('/exclusive-offers');
     };
 
+    const handleAllLiveInventory = () => {
+        router.push('/inventory');
+   };
+
     const handleAllContentHub = () => {
          router.push('/content-hub');
    };
@@ -355,7 +359,7 @@ export default function HomePage({ locale }) {
 
             {/* Live Inventory */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white ">
-                <Heading heading={'Live Inventory'} viewButton={true} className='mt-8' />
+                <Heading heading={'Live Inventory'} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
                 <LiveInventoryContainer locale={locale} />
             </div>
 

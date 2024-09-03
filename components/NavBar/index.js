@@ -21,9 +21,9 @@ import Logo from '@Images/navbar/logo.svg';
 import NavbarSearch from '@Images/navbar/search.svg'
 import MblLogo from '@Images/navbar/mblLogo.svg'
 import EndTractor from '@Images/navbar/endTractor.png'
- 
 
-export default function Navbar({ currentPage }) {
+
+export default function Navbar({ currentPage, onClick }) {
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const openNavbar = () => {
@@ -53,20 +53,18 @@ export default function Navbar({ currentPage }) {
             <Image src={Logo} alt="Tractor World Logo" />
           </a>
 
-          <span className="sm:hidden ml-auto mr-2 mt-1">
+          <span className="sm:hidden ml-auto mr-2 mt-1" onClick={onClick}>
             <Image src={Search} alt="Search" />
           </span>
 
-          <div className="sm:hidden items-center flex bg-secondaryColor px-4 py-1
+          <Link href="/sell-tractor">
+            <div className="sm:hidden items-center flex bg-secondaryColor px-4 py-1
          text-white text-sm mr-2 border-gradient">
-            {/* <div><img src="/images/navbar/calculator.png" alt="Sell"
-              className="w-3 mr-1" /></div> */}
-            {/* <a href="/sell-tractor">Sell</a> */}
 
-            <Link href="/sell-tractor" >
-                    <a>Sell</a>
-             </Link>
+              Sell
+
             </div>
+          </Link>
 
           <div className={`${isNavbarOpen ? 'block' : 'hidden'} transition-max-height duration-300 
         ease-in-out w-full sm:block sm:w-auto`} id="navbar-default">
@@ -295,25 +293,25 @@ export default function Navbar({ currentPage }) {
                   </a>
                 </Link>
 
-                <li className="sm:block hidden">
+                <li className="sm:block hidden" onClick={onClick}>
                   <div className="flex items-center relative top-[.15rem]">
                     <Image src={NavbarSearch} className="cursor-pointer" alt="NavbarSearch"
                       width={45} height={45} />
                   </div>
                 </li>
 
-                <li className="sm:block hidden">
+                <Link href="/sell-tractor">
+                 <li className="sm:block hidden">
                   <div className="items-center flex bg-secondaryColor px-6 py-[0.3rem] text-white 
                    border-gradient xl:text-base lg:text-sm cursor-pointer
                   sm:text-xs text-sm">
-                    {/* <div>
-                      <img src="/images/navbar/calculator.png" alt="EMI Calculator" className="w-3 mr-1" /></div> */}
-                    {/* <a href="/sell-tractor"> Sell </a> */}
-                    <Link href="/sell-tractor">
+                    
+
                     <a>Sell</a>
-                  </Link>
-                    </div>
+
+                  </div>
                 </li>
+                </Link>
               </ul>
 
               <div className="sm:hidden block mt-3 px-4 ">

@@ -8,6 +8,8 @@ import { GET_LIVE_INVENTORY } from "@utils/constants";
 import SlickCarousel from '@components/SlickCarousel';
 import Btn from '@components/Btn';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -24,6 +26,7 @@ function SamplePrevArrow(props) {
 }
 
 const LiveInventoryContainer = ({ locale }) => {
+  const router = useRouter(); 
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -97,10 +100,14 @@ const LiveInventoryContainer = ({ locale }) => {
     ]
   };
 
+  const handleAllLiveInventory = () => {
+    router.push('/inventory');
+};
+
   return (
     <div className="liveInventoryData relative" id="inventorySlide">
       <SlickCarousel settings={slickSettings} items={liveInventoryData} />
-      <Btn text={'View all'} viewAll={true} />
+      <Btn text={'View all'} viewAll={true} onClick={handleAllLiveInventory} />
     </div> 
   );
 };
