@@ -42,5 +42,4 @@ export const GET_LIVE_INVENTORY = gql`
       }
     }
   }
-`;  
- 
+`;   
