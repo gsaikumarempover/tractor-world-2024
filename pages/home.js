@@ -32,6 +32,7 @@ import Gallery1 from '@Images/conentGallery/1.svg';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "../components/SingleItemsSlide";
+import Link from 'next/link';
 
 export default function HomePage({ locale }) {
 
@@ -48,6 +49,12 @@ export default function HomePage({ locale }) {
     const handleAllContentHub = () => {
          router.push('/content-hub');
    };
+
+     const handleShareClick = () => {
+      const message = encodeURIComponent("Check out Tractor World! https://tractor-world-2024.vercel.app/");
+      const whatsappURL = `https://api.whatsapp.com/send?text=${message}`; 
+      window.open(whatsappURL, '_blank');
+    };
  
     const WhyChooseItems = [
         { src: Warranty, alt: "choose1", label: "Warranty" },
@@ -296,7 +303,7 @@ export default function HomePage({ locale }) {
                         tractors
                     </p>
 
-                    <div className='z-40 absolute sm:bottom-8 bottom-4 sm:left-14 left-3
+                    <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
              bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
 
          </div>
@@ -310,10 +317,10 @@ export default function HomePage({ locale }) {
             <div className='relative'>
                 <Image src={HomeBanner} alt='HomeBanner' className='w-full' />
 
-                <div className="fixed z-10 top-1/2 right-0 transform -translate-y-1/2 flex flex-col items-center justify-center rounded-md shadow-sm" role="group">
+                <div className="fixed z-[99] top-1/2 right-0 transform -translate-y-1/2 flex flex-col items-center justify-center rounded-md shadow-sm" role="group">
 
                     <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-primaryColor">
-                        <Image src={Call} alt='call' className='w-full' />
+                    <Link href="tel:18006669999"><Image src={Call} alt='call' className='w-full' /></Link>
                     </button>
 
                     <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-primaryColor">
@@ -323,7 +330,8 @@ export default function HomePage({ locale }) {
                     <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-primaryColor">
                         <Image src={Thumb} alt='thumb' className='w-full' />
                     </button>
-                    <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-b-[1px] border-primaryColor">
+
+                    <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-b-[1px] border-primaryColor" onClick={handleShareClick}>
                         <Image src={Share} alt='Share' className='w-full' />
                     </button>
 

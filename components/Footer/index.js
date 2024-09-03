@@ -64,7 +64,7 @@ export default function Footer() {
                     <div className="border-r"></div>
                     <div className="flex items-center">
                         <Image src={Call} className="mt-4" alt="call-image" />
-                        <span className="ml-2">Call Us Now</span>
+                        <span className="ml-2"><Link href="tel:18006669999"> Call Us Now</Link></span>
                     </div>
                 </div>
             </div>
@@ -83,11 +83,11 @@ export default function Footer() {
                         <p className="text-sm py-1">Advertise With Us  -  Privacy Policy  -  Sitemap</p>
 
                         <div className="mt-3 flex gap-3">
-                            <Image src={Facebook} alt="facebook" />
-                            <Image src={Twitter} alt="facebook" />
-                            <Image src={Linkdin} alt="linkdin" />
-                            <Image src={Instagram} alt="instagram" />
-                            <Image src={Youtube} alt="youtube" />
+                            <Image src={Facebook} className="cursor-pointer" alt="facebook" />
+                            <Image src={Twitter} className="cursor-pointer" alt="facebook" />
+                            <Image src={Linkdin} className="cursor-pointer" alt="linkdin" />
+                            <Image src={Instagram} className="cursor-pointer" alt="instagram" />
+                            <Image src={Youtube} className="cursor-pointer" alt="youtube" />
                         </div>
                     </div>
 
@@ -119,7 +119,7 @@ export default function Footer() {
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="mb-1  text-white opacity-60">Toll Free Number</span>
-                                    <span>1800 666 9999</span>
+                                    <Link href="tel:18006669999">1800 666 9999</Link> 
                                 </div>
                             </div>
 
@@ -140,7 +140,7 @@ export default function Footer() {
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="mb-1 text-white opacity-60">Send Us Email</span>
-                                    <span>tractorworld@domain.net</span>
+                                    <Link href="mailto:tractorworld@domain.net">tractorworld@domain.net</Link>
                                 </div>
                             </div>
 
