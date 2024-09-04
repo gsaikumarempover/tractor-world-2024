@@ -4,7 +4,7 @@ import Image from 'next/image';
 import CloseIcon from '@Images/closeIcon.svg';
 
 
-export default function ModalComponent({ showModal, handleClose,customStyles,content }) {
+export default function ModalComponent({ showModal, handleClose,customStyles,content, CloseIconShow =true }) {
  
      return (
         <div>
@@ -12,9 +12,9 @@ export default function ModalComponent({ showModal, handleClose,customStyles,con
                 isOpen={showModal}
                 style={customStyles}
                 contentLabel="languageSelectionModal">
-                <button className='absolute right-2 top-2 z-50' onClick={handleClose}>
+             {CloseIconShow && (<button className='absolute right-2 top-2 z-50' onClick={handleClose}>
                     <Image src={CloseIcon} alt='closeIcon' width={19} height={19} /> 
-                </button>
+                </button> )}
                 <div className='w-full'>
                    {content}
                 </div>

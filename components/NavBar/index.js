@@ -27,7 +27,7 @@ import { useTranslation } from 'next-i18next';
 
 
 export default function Navbar({ currentPage, onClick }) {
-  const { locale: activeLocale, locales, asPath } = useRouter();  
+  const { locale: activeLocale, locales, asPath } = useRouter();
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const openNavbar = () => {
@@ -37,22 +37,25 @@ export default function Navbar({ currentPage, onClick }) {
     setIsNavbarOpen(false);
   };
 
-  const { t, i18n } = useTranslation(); 
+  const { t, i18n } = useTranslation();
 
   const handleLocaleChange = (locale) => {
-      i18n.changeLanguage(locale); 
+    i18n.changeLanguage(locale);
   };
 
   const localeNames = {
-      en: 'English',
-      hi: 'Hindi',
-      mr: 'Marathi',
-      // Add more locale codes and their corresponding languages as needed
-  }; 
+    en: 'English',
+    hi: 'Hindi',
+    mr: 'Marathi',
+    // Add more locale codes and their corresponding languages as needed
+  };
 
   return (
     <>
       {/* <Topbar /> */}
+
+      <div className={`${isNavbarOpen ? 'overlay' : 'hidden'}`}></div>
+
       <nav className=" bg-white z-10 sm:py-0 py-2">
         <div className="flex sm:flex-nowrap flex-wrap items-center sm:justify-between mx-auto sm:py-1
          py-0 lg:px-14 md:px-6 sm:px-3">
@@ -99,20 +102,20 @@ export default function Navbar({ currentPage, onClick }) {
                   <div>
                     <Image src={Crossmark} onClick={hideNavbar} className="crossIcon" alt="Crossmark" /></div>
                 </div>
-                <div className="flex my-3 w-full"> 
+
+                <div>
+                  <span className="text-[.84rem] pr-3">Toll Free Number</span>
+                  <Link href="tel:18006669999">
+                    <a className="text-[.84rem]">
+                      1800 666 9999</a></Link>
+                </div>
+                <div className="flex my-3 w-full">
                   <div className="relative w-full">
                     <input type="text" placeholder="search..." className="w-full rounded border-[1px] border-[#D0D0D0] py-3" />
                     <div className="absolute top-[55%] transform -translate-y-1/2 right-2">
-                    <Image src={Search} alt="search" />
+                      <Image src={Search} alt="search" />
                     </div>
                   </div>
-                  {/* <Link href="/tractor-details#compareTractor" >
-                    <a className="text-[.84rem] pr-4">Compare Tractor</a>
-                  </Link>
-
-                  <Link href="#testimonials" >
-                    <a className="text-[.84rem] pl-4 border-l border-[#EFEAEA]">
-                      Testimonials</a></Link> */}
 
                 </div>
                 <hr className=" border-l border-[#EFEAEA]" />
@@ -184,7 +187,7 @@ export default function Navbar({ currentPage, onClick }) {
                       <span className={`md:ml-0 ml-2 ${currentPage == "language" ? 'active' : ''}`}>Language</span>
                     </div>
                   </a>
-                </div> 
+                </div>
 
                 <Link href="/contact-us">
                   <a className={`${currentPage == "contact" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>

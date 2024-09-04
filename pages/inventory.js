@@ -12,8 +12,8 @@ import filterIcon from '@Images/inventory/filterIcon.svg'
 import sortIcon from '@Images/inventory/sortIcon.svg'
 import Crossmark from '@Images/inventory/closeIcon.svg';
 import mapIcon from '@Images/inventory/mapIcon.svg';
-import Search from '@Images/topbar/search.svg';
- 
+import Modal from "@components/Modal";
+
 export default function Inventory() {
   //// apply,reset btns active 
   const [resetBgColor, setResetBgColor] = useState(false);
@@ -307,18 +307,47 @@ export default function Inventory() {
   const isShowFilter = () => {
     setShowFilter(true);
   };
+
   const isHideFilter = () => {
     setShowFilter(false);
   };
 
+  const [showModal, setShowModal] = useState(false);
+
+  const isShowSorting = () => {
+    setShowModal(true);
+  }
+
+  const handleClose = () => {
+    setShowModal(false);
+  }
+
+  const customStyles = {
+    content: {
+      top: 'auto',
+      left: 'auto',
+      right: 'auto',
+      bottom: '0',
+      width: '100%',
+      borderTopLeftRadius: '15px',
+      borderTopRightRadius: '15px',
+      backgroundColor: 'rgba(255, 255, 255, 0)',
+      border: 'none',
+    },
+  };
+
+
   return (
     <div>
+      <div className={`${showFilter ? 'overlay' : 'hidden'}`}></div>
+
       <Layout>
         <Banner
           breadcrumbs={breadcrumbData}
           heading={"Live Inventory - June 2024"}
           bannerImg={bannerImg}
         />
+
         {isVisible && (
           <div className='sm:hidden block'>
             <div className='fixed bottom-0 w-full z-40
@@ -329,24 +358,23 @@ export default function Inventory() {
                   <p>Filter</p>
                 </div>
 
-                <div className='text-center w-1/2'>
+                <div className='text-center w-1/2' onClick={isShowSorting}>
                   <Image src={sortIcon} alt="sortIcon" width={25} height={25} />
                   <p>Sort</p>
-                </div> 
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        <div className={`${showFilter ? 'block' : 'hidden'} transition-max-height duration-300 
-        ease-in-out w-full sm:block sm:w-auto`} id="navbar-default">
-          <div className="sm:w-auto w-[280px] sm:h-auto h-screen
-         sm:bg-transparent bg-white z-50 sm:relative fixed top-0 sm:pb-4 pt-4 Navbar">
-            <div className="px-4">
-                 <div className="absolute right-0 top-0 z-50">
-                  <Image src={Crossmark} width={35} height={35} onClick={isHideFilter}  alt="Crossmark" />
-                  </div>
- 
+        <div className={`${showFilter ? 'sm:hidden block' : 'hidden'} transition-max-height duration-300 
+        ease-in-out w-full  sm:w-auto`} id="navbar-default">
+          <div className="sm:w-auto w-[280px]
+         sm:bg-transparent z-50 sm:relative flex fixed top-0 sm:pb-4 sm:pt-4 Navbar"> 
+           
+
+            <div className="px-4 py-4 sm:h-auto h-screen bg-white"> 
+
               <div className="flex">
                 <div className="w-1/2">
                   <Btn text={'Reset'} bgColor={resetBgColor}
@@ -427,23 +455,26 @@ export default function Inventory() {
 
 
             </div>
+
+            <div className="right-0 top-0 z-50 pt-4 pl-2">
+                <Image src={Crossmark} width={35} height={35} onClick={isHideFilter} alt="Crossmark" />
+              </div>
           </div>
         </div>
 
         <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
           <div className="flex sm:flex-row flex-col gap-2">
 
- 
-          <div className="relative w-full">
-                    <input type="text" placeholder="search..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] py-3" />
-                    <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
-                    <Image src={mapIcon} alt="search" width={22} height={22} />
-                    </div>
+            <div className="relative w-full sm:hidden block">
+              <input type="text" placeholder="search..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] py-3" />
+              <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                <Image src={mapIcon} alt="search" width={22} height={22} />
+              </div>
 
-                    <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
-                    <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
-                    </div>
-                  </div> 
+              <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
+                <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
+              </div>
+            </div>
 
 
             <div className="bg-[#F6F6F6] p-4 sm:w-[25%] w-full sm:block hidden">
@@ -585,7 +616,7 @@ export default function Inventory() {
                 </div>
               </div>
 
-              <Heading heading={'Tractors Dealers by Brands '} viewButton={false} />
+              <Heading heading={'Tractors by Brands '} viewButton={false} />
 
               <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">
                 <Image width={100} height={100} layout="responsive" src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
@@ -687,6 +718,35 @@ export default function Inventory() {
           </div>
         </div>
       </Layout>
+
+      <Modal
+        CloseIconShow={false}
+        showModal={showModal}
+        customStyles={customStyles}
+        handleClose={handleClose}
+        content={
+          <>
+            <div className="block mb-4 text-center mx-auto" onClick={handleClose} >
+              <Image
+                src={Crossmark}
+                width={35}
+                height={35}
+                alt="Close Icon"
+                className="cursor-pointer"
+              />
+            </div>
+
+            {/* Modal Content */}
+            <div className="rounded-tl-[20px] rounded-tr-[20px] bg-white py-10 px-4 flex flex-col items-center sm:flex-row sm:items-start">
+              <div className="text-xl">
+                <p className="font-bold">Price - High to Low</p>
+                <p className="font-bold mt-6">Price - Low to High</p>
+              </div>
+            </div>
+          </>
+        }
+      />
+
     </div>
   );
 }

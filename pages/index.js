@@ -65,8 +65,7 @@ export default function Home({ locale }) {
 
   const showLanguageModal = () => {
     setShowModal(true); 
-    alert("modal");
-  }
+   }
 
   const customStyles = {
     content: {
