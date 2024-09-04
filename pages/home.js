@@ -17,11 +17,15 @@ import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
 import HomeBanner from '@Images/home/HomeBanner.svg';
-import Call from '@Images/home/call.svg'; 
+import Call from '@Images/home/call.svg';
 import Share from '@Images/home/share.svg';
 import Thumb from '@Images/home/thumb.svg';
 import Tractor from '@Images/home/tractor.svg';
 import slide1 from '@Images/testimonials/slide1.svg'
+import homeIcon from '@Images/footer/homeIcon.svg'
+import callIcon from '@Images/footer/callIcon.svg'
+import enquiryIcon from '@Images/footer/enquiryIcon.svg'
+import shareIcon from '@Images/footer/shareIcon.svg'
 import 'flowbite';
 import { Carousel } from 'flowbite';
 import Btn from '@components/Btn';
@@ -40,37 +44,33 @@ export default function HomePage({ locale }) {
     const router = useRouter();
 
     const handleCompareAll = () => {
-         router.push('/compare-tractors');
+        router.push('/compare-tractors');
     };
 
     const handleAllExclusiveOffers = () => {
-         router.push('/exclusive-offers');
+        router.push('/exclusive-offers');
     };
 
     const handleAllLiveInventory = () => {
         router.push('/inventory');
-   };
+    };
 
     const handleAllContentHub = () => {
-         router.push('/content-hub');
-   };
-
-     const handleShareClick = () => {
-      const message = encodeURIComponent("Check out Tractor World! https://tractor-world-2024.vercel.app/");
-      const whatsappURL = `https://api.whatsapp.com/send?text=${message}`; 
-      window.open(whatsappURL, '_blank');
+        router.push('/content-hub');
     };
- 
+
+    const handleShareClick = () => {
+        const message = encodeURIComponent("Check out Tractor World! https://tractor-world-2024.vercel.app/");
+        const whatsappURL = `https://api.whatsapp.com/send?text=${message}`;
+        window.open(whatsappURL, '_blank');
+    };
+
     const WhyChooseItems = [
         { src: Warranty, alt: "choose1", label: "Warranty" },
         { src: EasyEMI, alt: "EasyEMI", label: "Easy EMi & Pricing" },
         { src: Documenting, alt: "Documenting", label: "Documenting" },
         { src: Finance, alt: "Finance", label: "Mahendra Financing" }
     ];
-
- 
-
-    
 
     const exploreimages = [
         {
@@ -102,8 +102,8 @@ export default function HomePage({ locale }) {
     const [activeTab, setActiveTab] = useState("oneData");
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
-    }; 
-    
+    };
+
 
     const compareTractorData = {
 
@@ -276,7 +276,7 @@ export default function HomePage({ locale }) {
 
         ]
     };
- 
+
 
     const contentGallerysettings = {
         dots: true,
@@ -284,7 +284,7 @@ export default function HomePage({ locale }) {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        adaptiveHeight: true, 
+        adaptiveHeight: true,
     };
 
     const contentGalleryimages = [
@@ -295,26 +295,52 @@ export default function HomePage({ locale }) {
         {
             image: slide1,
             name: "Sonalika Tractor",
-        }, 
+        },
     ];
 
     const contentGalleryitems = contentGalleryimages.map((src, index) => (
         <div key={index} className="relative">
             <Image src={src.image} width={1644} height={640} layout="responsive" alt={`Explore item ${index + 1}`} />
-  
+
             <p className='z-40 absolute sm:top-14 top-6 sm:text-base text-sm sm:left-14 left-3
               text-white sm:w-[300px] w-[247px] font-bold testimonials'>
-                        Mr. Sujit Majumdar from Cooch Behar,
-                        West Bengal: Rising from financial
-                        hardships to owning multiple
-                        tractors
-                    </p>
+                Mr. Sujit Majumdar from Cooch Behar,
+                West Bengal: Rising from financial
+                hardships to owning multiple
+                tractors
+            </p>
 
-                    <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
+            <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
              bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
 
-         </div>
-    )); 
+        </div>
+    ));
+
+   
+
+    const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (typeof window !== 'undefined') {
+        if (window.scrollY > lastScrollY) {
+          // Scrolling down
+          setIsVisible(false);
+        } else {
+          // Scrolling up
+          setIsVisible(true);
+        }
+        setLastScrollY(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
 
     return (
         <>
@@ -324,10 +350,10 @@ export default function HomePage({ locale }) {
             <div className='relative'>
                 <Image src={HomeBanner} alt='HomeBanner' className='w-full' />
 
-                <div className="fixed z-[99] top-1/2 right-0 transform -translate-y-1/2 flex flex-col items-center justify-center rounded-md shadow-sm" role="group">
+                <div className=" sm:flex hidden fixed z-[99] top-1/2 right-0 transform -translate-y-1/2  flex-col items-center justify-center rounded-md shadow-sm" role="group">
 
                     <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-primaryColor">
-                    <Link href="tel:18006669999"><Image src={Call} alt='call' className='w-full' /></Link>
+                        <Link href="tel:18006669999"><Image src={Call} alt='call' className='w-full' /></Link>
                     </button>
 
                     <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-primaryColor">
@@ -346,28 +372,59 @@ export default function HomePage({ locale }) {
 
             </div>
 
+         {isVisible && (
+        <div className='sm:hidden block'>
+          <div className='fixed bottom-0 w-full z-40
+           bg-secondaryColor rounded-tl-2xl rounded-tr-2xl text-white'>
+            <div className='flex text-[15px]'> 
+                <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
+                    <Image src={homeIcon} alt="homeIcon" width={20} height={20} /> 
+                    <p>Home</p>
+                    </div>
+
+                    <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
+                    <Image src={callIcon} alt="callIcon" width={20} height={20} /> 
+                    <p>Call</p>
+                    </div>
+
+                    <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
+                    <Image src={enquiryIcon} alt="enquiryIcon" width={20} height={20} /> 
+                    <p>Enquiry</p>
+                    </div>
+
+                    <div className='text-center px-4 py-3 w-1/4'>
+                    <Image src={shareIcon} alt="shareIcon" width={20} height={20} /> 
+                    <p>Share</p>
+                    </div>
+
+                  
+                </div>
+          </div>
+        </div>
+      )}
+
             {/* Explore Tractor World  */}
-            <div className="lg:px-14 md:px-6 sm:px-3 px-2 mb-3 pt-4 bg-white ">
+            < div className="lg:px-14 md:px-6 sm:px-3 px-2 mb-3 pt-4 bg-white " >
                 <Heading heading={'Explore Tractor World'} viewButton={false} />
                 <div className='grid sm:grid-cols-6 gap-4 grid-cols-3 pb-4'>
                     {exploreimages.map((item, index) => (
-                        <a href={item.url} key={index}> 
-                        <Image src={item.image} className='cursor-pointer' alt={`Explore item ${index + 1}`} />
+                        <a href={item.url} key={index}>
+                            <Image src={item.image} className='cursor-pointer' alt={`Explore item ${index + 1}`} />
                         </a>
                     ))
                     }
                 </div>
 
-            </div>
+            </div >
 
             {/* Live Inventory */}
-            <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white ">
+            < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
                 <Heading heading={'Live Inventory'} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
                 <LiveInventoryContainer locale={locale} />
-            </div>
+            </div >
 
             {/* why choose us */}
-            <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 relative bg-white mt-3">
+            < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 relative bg-white mt-3" >
                 <Heading heading={'Why Choose Us'} viewButton={false} />
                 <div className="flex md:flex-row flex-col justify-between md:gap-16 gap-4 mt-4">
                     <div className="md:w-[40%]">
@@ -403,11 +460,11 @@ export default function HomePage({ locale }) {
                         ))}
                     </div>
                 </div>
-            </div>
+            </div >
 
             {/* Compare To Buy The Right Tractor sec */}
-            <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 bg-white mt-3">
-                <div className="font-bold xl:text-xl lg:text-lg md:text-base">
+            < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 bg-white mt-3" >
+                <div className="font-bold xl:text-xl lg:text-lg md:text-base text-xl">
                     <p className="mb-[-5px]">Compare To Buy The Right Tractor</p>
                 </div>
 
@@ -421,14 +478,14 @@ export default function HomePage({ locale }) {
                     <Tab id="SixthData" activeTab={activeTab} onClick={handleTabClick}>Above 50 HP</Tab>
                 </div>
 
-                <div className="overflow-x-auto sm:overflow-visible">
-                    <div className='flex sm:grid sm:grid-cols-3 xl:gap-8 gap-4'>
+                <div className="">
+                    <div className='grid sm:grid-cols-3 xl:gap-8 gap-4'>
                         {Object.keys(compareTractorData).map((key) =>
                             activeTab === key ? (
                                 <>
                                     {compareTractorData[key].map((item, index) => (
-                                        <div key={index} className='overflow-hidden flex-none w-80 sm:w-auto'>
-                                            <Image src={CompareImage} alt='compareImage' />
+                                        <div key={index} className='overflow-hidden flex-none'>
+                                            <Image src={CompareImage} alt='compareImage' layout='responsive' />
                                             <div className='flex justify-between px-3 mb-3'>
                                                 <div>
                                                     <div>{item.brand1}</div>
@@ -454,25 +511,37 @@ export default function HomePage({ locale }) {
 
                     </div>
                 </div>
-            </div>
+            </div >
 
             <div className='justify-center flex mt-2'>
                 <Btn text={'View all tractor comparisons'} onClick={handleCompareAll} bgColor={true}
                 />
             </div>
 
-            {/*exclusive offers */}
+            {/*testimonials */}
+            <div id="testimonials">
+                <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
+                    <Heading heading={'Testimonials'} viewButton={true} />
+                </div>
+
+                <div className="mb-4">
+                    <MultipleItemsSlide settings={contentGallerysettings} id={'contentGallery'} items={contentGalleryitems} />
+                </div>
+            </div>
+
+
+            {/*Content Gallery */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2" style={{
                 backgroundImage: `url('/images/exclusiveOffersBG.svg')`,
                 backgroundPosition: 'right',
                 backgroundRepeat: 'no-repeat'
             }}>
 
-                <Heading heading={'Exclusive Offers'} viewButton={true} onClick={handleAllExclusiveOffers} />
+                <Heading heading={'Content Gallery'} viewButton={true} onClick={handleAllExclusiveOffers} />
 
-                <div className="overflow-x-auto sm:overflow-visible">
-                    <div className="flex sm:grid sm:grid-cols-3 xl:gap-8 gap-4 mt-4">
-                        <div className="bg-white overflow-hidden shadow-lg flex-none w-80 sm:w-auto">
+                <div className="">
+                    <div className="grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4 mt-4">
+                        <div className="bg-white overflow-hidden shadow-lg flex-none">
                             <div className="relative">
                                 <Image
                                     className="w-full"
@@ -495,7 +564,7 @@ export default function HomePage({ locale }) {
                             <ReadMore />
                         </div>
 
-                        <div className="bg-white overflow-hidden shadow-lg flex-none w-80 sm:w-auto">
+                        <div className="bg-white overflow-hidden shadow-lg flex-none">
                             <div className="relative">
                                 <Image
                                     className="w-full"
@@ -518,7 +587,7 @@ export default function HomePage({ locale }) {
                             <ReadMore />
                         </div>
 
-                        <div className="bg-white overflow-hidden shadow-lg flex-none w-80 sm:w-auto">
+                        <div className="bg-white overflow-hidden shadow-lg flex-none">
                             <div className="relative">
                                 <Image
                                     className="w-full"
@@ -548,65 +617,14 @@ export default function HomePage({ locale }) {
                 </div>
             </div>
 
-            {/*testimonials */}
-            <div id="testimonials">
-                <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
-                    <Heading heading={'Testimonials'} viewButton={true} />
-                </div>
-
-                <div className="mb-4">
-                        <MultipleItemsSlide settings={contentGallerysettings} id={'contentGallery'} items={contentGalleryitems} />
-                    </div>
-
-                {/* <div className='relative'>
-                    <div id="Testimonials-carousel" className="relative w-full" data-carousel="slide">
-                        <div className="relative h-36 overflow-hidden md:h-[30rem]">
-                            <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                <Image src={slide1}
-                                    className="w-full"
-                                    alt="Slide 1" />
-                            </div>
-                            <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                <Image src={slide1} alt="Slide 2" />
-                            </div>
-                            <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                <Image src={slide1} alt="Slide 3" />
-                            </div>
-                        </div>
-                        w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800
-                        <div className="absolute z-30 flex bottom-4 sm:left-14
-                        left-[46%] space-x-1 rtl:space-x-reverse">
-                            <button type="button" className="w-[6px] h-[6px] rounded-full" aria-current="true"
-                                aria-label="Slide 1" data-carousel-slide-to="0"></button>
-
-                            <button type="button" className="w-[6px] h-[6px] rounded-full" aria-current="false"
-                                aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                            <button type="button" className="w-[6px] h-[6px] rounded-full" aria-current="false"
-                                aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                        </div>
-                    </div>
-                    <p className='z-40 absolute sm:top-14 top-6 sm:text-base text-sm sm:left-14 left-3
-              text-white sm:w-[300px] w-[247px] font-bold testimonials'>
-                        Mr. Sujit Majumdar from Cooch Behar,
-                        West Bengal: Rising from financial
-                        hardships to owning multiple
-                        tractors
-                    </p>
-
-                    <div className='z-40 absolute sm:bottom-8 bottom-4 sm:left-14 left-3
-             bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
-
-
-                </div> */}
-            </div>
 
             {/* Latest News & Updates */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2">
-                <Heading heading={'Latest News & Updates'} viewButton={true}   onClick={handleAllContentHub}/>
+                <Heading heading={'Latest News & Updates'} viewButton={true} onClick={handleAllContentHub} />
 
-                <div className="overflow-x-auto sm:overflow-visible">
-                    <div className="flex sm:grid sm:grid-cols-3 xl:gap-8 gap-4 mt-4">
-                        <div className="bg-white overflow-hidden shadow-lg flex-none w-80 sm:w-auto">
+                <div className="">
+                    <div className="grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4 mt-4">
+                        <div className="bg-white overflow-hidden shadow-lg flex-none">
                             <div className="relative">
                                 <Image className="w-full" src={CardImage} alt="cardImage" layout="responsive" width={100} height={70} />
                                 <div className="bg-white px-4 py-2 text-black text-sm absolute top-4 right-4 uppercase font-bold">
@@ -625,7 +643,7 @@ export default function HomePage({ locale }) {
                             <ReadMore />
                         </div>
 
-                        <div className="bg-white overflow-hidden shadow-lg flex-none w-80 sm:w-auto">
+                        <div className="bg-white overflow-hidden shadow-lg flex-none">
                             <div className="relative">
                                 <Image className="w-full" src={CardImage} alt="cardImage" layout="responsive" width={100} height={70} />
                                 <div className="bg-white px-4 py-2 text-black text-sm absolute top-4 right-4 uppercase font-bold">
@@ -644,7 +662,7 @@ export default function HomePage({ locale }) {
                             <ReadMore />
                         </div>
 
-                        <div className="bg-white overflow-hidden shadow-lg flex-none w-80 sm:w-auto">
+                        <div className="bg-white overflow-hidden shadow-lg flex-none">
                             <div className="relative">
                                 <Image className="w-full" src={CardImage} alt="cardImage" layout="responsive" width={100} height={70} />
                                 <div className="bg-white px-4 py-2 text-black text-sm absolute top-4 right-4 uppercase font-bold">
@@ -666,11 +684,11 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className='mt-4'>
-                    <Btn text={'View all'} viewAll={true}/>
+                    <Btn text={'View all'} viewAll={true} />
                 </div>
 
             </div>
         </>
-        
+
     )
 }

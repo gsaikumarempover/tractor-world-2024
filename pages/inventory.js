@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Btn from '@components/Btn';
@@ -8,9 +8,12 @@ import Heading from "@components/Heading";
 import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
 import bannerImg from "@Images/inventory/inventory-banner.svg";
-// import Banner1 from '@Images/Banner1.svg';
-// import Banner2 from '@Images/Banner2.svg';
-
+import filterIcon from '@Images/inventory/filterIcon.svg'
+import sortIcon from '@Images/inventory/sortIcon.svg'
+import Crossmark from '@Images/inventory/closeIcon.svg';
+import mapIcon from '@Images/inventory/mapIcon.svg';
+import Search from '@Images/topbar/search.svg';
+ 
 export default function Inventory() {
   //// apply,reset btns active 
   const [resetBgColor, setResetBgColor] = useState(false);
@@ -275,6 +278,38 @@ export default function Inventory() {
     );
   };
 
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (typeof window !== 'undefined') {
+        if (window.scrollY > lastScrollY) {
+          // Scrolling down
+          setIsVisible(false);
+        } else {
+          // Scrolling up
+          setIsVisible(true);
+        }
+        setLastScrollY(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
+  const [showFilter, setShowFilter] = useState(false);
+
+  const isShowFilter = () => {
+    setShowFilter(true);
+  };
+  const isHideFilter = () => {
+    setShowFilter(false);
+  };
 
   return (
     <div>
@@ -284,9 +319,135 @@ export default function Inventory() {
           heading={"Live Inventory - June 2024"}
           bannerImg={bannerImg}
         />
+        {isVisible && (
+          <div className='sm:hidden block'>
+            <div className='fixed bottom-0 w-full z-40
+           bg-white rounded-tl-3xl rounded-tr-3xl text-secondaryColor'>
+              <div className='flex text-[15px] p-3'>
+                <div className='text-center border-r border-[#F37021] border-opacity-25 w-1/2' onClick={isShowFilter}>
+                  <Image src={filterIcon} alt="filterIcon" width={25} height={25} />
+                  <p>Filter</p>
+                </div>
+
+                <div className='text-center w-1/2'>
+                  <Image src={sortIcon} alt="sortIcon" width={25} height={25} />
+                  <p>Sort</p>
+                </div> 
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className={`${showFilter ? 'block' : 'hidden'} transition-max-height duration-300 
+        ease-in-out w-full sm:block sm:w-auto`} id="navbar-default">
+          <div className="sm:w-auto w-[280px] sm:h-auto h-screen
+         sm:bg-transparent bg-white z-50 sm:relative fixed top-0 sm:pb-4 pt-4 Navbar">
+            <div className="px-4">
+                 <div className="absolute right-0 top-0 z-50">
+                  <Image src={Crossmark} width={35} height={35} onClick={isHideFilter}  alt="Crossmark" />
+                  </div>
+ 
+              <div className="flex">
+                <div className="w-1/2">
+                  <Btn text={'Reset'} bgColor={resetBgColor}
+                    roundednone={true} onClick={handleResetClick} />
+                </div>
+                <div className="w-1/2">
+                  <Btn text={'Apply Filter'} bgColor={applyBgColor} roundednone={true} onClick={handleApplyClick} />
+                </div>
+              </div>
+
+              <div className="mt-2 w-full">
+                <div className="w-full flex">
+                  <input type="search" placeholder="Type Here"
+                    className="border-secondaryColor border-r-0 w-full" />
+                  <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
+                </div>
+              </div>
+
+              <div className="border mt-4 bg-white">
+                {filters.map((filter) => (
+                  <div key={filter.title}>
+                    <div
+                      className="bg-[#EEEEEE] cursor-pointer m-[2px] font-semibold p-2 flex items-center justify-between"
+                      onClick={() => onToggle(filter.showKey)}
+                    >
+                      <div>{filter.title}</div>
+                      <div>
+                        {showStates[filter.showKey] ? (
+                          <svg
+                            data-accordion-icon
+                            className="w-5"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M5 12h14"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            data-accordion-icon
+                            className="w-3 h-3 rotate-180"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 10 6"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M9 5 5 1 1 5"
+                            />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+                    {showStates[filter.showKey] && (
+                      <div className="p-2 flex flex-col w-full gap-2">
+                        {filter.options.map((option, index) => (
+                          <div key={index}>
+                            <input type="radio" name={filter.title.toLowerCase()} value={option.value} />
+                            <label className="ml-2">{option.label}</label>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
         <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
           <div className="flex sm:flex-row flex-col gap-2">
-            <div className="bg-[#F6F6F6] p-4 sm:w-[25%] w-full">
+
+ 
+          <div className="relative w-full">
+                    <input type="text" placeholder="search..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] py-3" />
+                    <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                    <Image src={mapIcon} alt="search" width={22} height={22} />
+                    </div>
+
+                    <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
+                    <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
+                    </div>
+                  </div> 
+
+
+            <div className="bg-[#F6F6F6] p-4 sm:w-[25%] w-full sm:block hidden">
+
               <div className="flex">
                 <div className="w-1/2">
                   <Btn text={'Reset'} bgColor={resetBgColor}
@@ -365,18 +526,17 @@ export default function Inventory() {
                 ))}
               </div>
             </div>
-
             <div className="sm:w-[75%] w-full">
 
               <Heading heading={'Popular Tractors'} />
 
-              <div className="overflow-x-auto sm:overflow-visible">
-                <div className="flex sm:grid sm:grid-cols-3 gap-4 my-6">
+              <div className="">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                   {
                     currentCards.slice(0, 3).map((item, idx) => (
                       <div
                         key={idx}
-                        className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none w-80 sm:w-auto"
+                        className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none"
                       >
                         <div className="relative">
                           <Image
@@ -396,7 +556,7 @@ export default function Inventory() {
                             {item.price}
                           </div>
                         </div>
-                        <div className="xl:px-4 lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                        <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
                           <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                             {item.title}
                           </div>
@@ -406,7 +566,7 @@ export default function Inventory() {
                                 key={fIdx}
                                 className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                               >
-                                <Image  src={feature.icon} alt={feature.icon} width={10} height={10} />
+                                <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                 <span>{feature.text}</span>
                               </div>
                             ))}
@@ -415,7 +575,7 @@ export default function Inventory() {
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
-                              <Image src='/images/phnIcon.svg'  width={15} height={15}  className="w-4 mr-1"  alt="phnIcon"/> Interested{" "}
+                              <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
                             </span>
                           </div>
                         </div>
@@ -483,7 +643,7 @@ export default function Inventory() {
                                 key={fIdx}
                                 className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                               >
-                                <Image src={feature.icon} alt={feature.icon} width={10} height={10}  />
+                                <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                 <span>{feature.text}</span>
                               </div>
                             ))}
@@ -517,12 +677,12 @@ export default function Inventory() {
                 </button>
               </div>
 
-              <div className="overflow-x-auto sm:overflow-visible"> 
+              {/* <div className="overflow-x-auto sm:overflow-visible"> 
               <div className="flex sm:grid sm:grid-cols-2 gap-4"> 
                 <Image src="/images/banner2.svg" width={708} height={366} className="flex-none w-80 sm:w-auto" alt="banner1" />
                 <Image src="/images/banner2.svg" width={708} height={366} className="flex-none w-80 sm:w-auto" alt="banner2" />  
               </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

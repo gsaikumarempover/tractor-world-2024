@@ -33,7 +33,8 @@ const Layout = ({ children, currentPage }) => {
       </div>
       <div className='main'>
         <main>
-          {children} 
+          {children}  
+          
           <Modal customStyles={customStyles} showModal={showModal} handleClose={handleClose}
             content={
               <>

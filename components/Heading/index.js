@@ -10,7 +10,7 @@ export default function Heading({ heading, viewButton, onClick }) {
             <div className="flex sm:flex-nowrap flex-wrap items-center
                  sm:justify-between mx-auto">
                 <div className="flex justify-between w-full sm:items-center">
-                    <div className="font-bold xl:text-xl lg:text-lg md:text-base">
+                    <div className="sm:mt-0 mt-2 font-bold xl:text-xl lg:text-lg md:text-base text-xl">
                         <p className="mb-[-5px]">{heading}</p>
                         <Image src={Underline} alt="underline" width={50}/>
                     </div> 

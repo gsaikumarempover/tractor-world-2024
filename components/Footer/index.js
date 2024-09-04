@@ -101,7 +101,7 @@ export default function Footer() {
                             <li className="mb-3 cursor-pointer"> Latest News</li>
                             <Link href="/exclusive-offers"><li className="mb-3 cursor-pointer"> Offers</li></Link>
                             <Link href="/inventory"><li className="mb-3 cursor-pointer"> Live inventory</li></Link>
-                            <li className="mb-3 cursor-pointer"> Terms and conduction</li>
+                            <li className="mb-3 cursor-pointer"> Terms and conditions</li>
                         </ul>
 
                     </div>

@@ -66,7 +66,7 @@ const LiveInventoryContainer = ({ locale }) => {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 1000,
     slidesToScroll: 1,
     adaptiveHeight: true,

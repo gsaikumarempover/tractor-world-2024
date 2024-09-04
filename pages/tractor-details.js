@@ -698,7 +698,7 @@ export default function TractorDetails({ locale }) {
 
             {/* Compare To Buy The Right Tractor sec */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 bg-white mt-3">
-                <div className="font-bold xl:text-xl lg:text-lg md:text-base">
+                <div className="font-bold xl:text-xl lg:text-lg md:text-base text-xl">
                     <p className="mb-[-5px]">Compare To Buy The Right Tractor</p>
                 </div>
 

@@ -13,9 +13,9 @@ import { useGeolocation } from '../utilities';
 import { setModalStatus } from '../store/slices/userDataSlice';
 
 export default function Home({ locale }) {
-  // const {error, getLocation } = useGeolocation();
+  const { error, getLocation } = useGeolocation();
   const dispatch = useDispatch()
-  const router = useRouter(); 
+  const router = useRouter();
   const { i18n } = useTranslation();
   const addressFromStore = useSelector((state) => state.user.addressData.state)
   const modalStatus = useSelector((state) => state.user.modalStatus)
@@ -24,12 +24,12 @@ export default function Home({ locale }) {
   const handleClose = () => setShowModal(false);
   const [selectedLanguage, setSelectedLanguage] = useState('');
 
-  console.log(modalStatus,"modalStatus from store")
+  console.log(modalStatus, "modalStatus from store")
 
   const languageMap = [
-    {label:"English",value:"english"},
-    {label:"Hindi",value:"hindi"},
-    {label:"Marathi",value:"marathi"},
+    { label: "English", value: "english" },
+    { label: "Hindi", value: "hindi" },
+    { label: "Marathi", value: "marathi" },
   ]
 
   const localeNames = {
@@ -40,15 +40,15 @@ export default function Home({ locale }) {
 
 
   const determineLanguage = (state) => {
-    debugger;
+    // debugger;
     if (state === 'Madhya Pradesh') {
       return 'hindi';
-    } 
+    }
     else if (state === 'Maharashtra') {
-      return 'marathi'; 
+      return 'marathi';
     }
     else {
-      return 'english'; 
+      return 'english';
     }
   };
 
@@ -63,6 +63,11 @@ export default function Home({ locale }) {
     setSelectedLanguage(event.target.value);
   };
 
+  const showLanguageModal = () => {
+    setShowModal(true); 
+    alert("modal");
+  }
+
   const customStyles = {
     content: {
       top: '50%',
@@ -72,28 +77,28 @@ export default function Home({ locale }) {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
     },
-  }; 
+  };
 
   const handleSubmit = () => {
     debugger;
     const newLocale = localeNames[selectedLanguage];
-    i18n.changeLanguage(newLocale); 
-    router.push(router.asPath, router.asPath, { locale: newLocale }); 
+    i18n.changeLanguage(newLocale);
+    router.push(router.asPath, router.asPath, { locale: newLocale });
     setShowModal(false);
-    dispatch(setModalStatus({modalStatus:true}))
+    dispatch(setModalStatus({ modalStatus: true }))
   };
 
-//   useEffect(()=>{
-//     getLocation()
-// },[])
+  useEffect(() => {
+    getLocation()
+  }, [])
 
-  console.log(addressFromStore,"address from pages")
-  console.log(selectedLanguage,"selectedLanguage from pages")
+  console.log(addressFromStore, "address from pages")
+  console.log(selectedLanguage, "selectedLanguage from pages")
 
   return (
 
     <>
-      <Layout currentPage={"home"}>
+      <Layout currentPage={"home"} onClick={showLanguageModal}>
         <HomePage locale={locale} />
       </Layout>
 
@@ -103,29 +108,29 @@ export default function Home({ locale }) {
             <p className='font-bold  text-xl'>Select your preferred<br></br> Language</p>
             <span className='mt-6 block text-sm'>Select Language</span>
             <div className='flex gap-4 my-4'>
-               {languageMap && languageMap?.map((lang) => (
-                  <div
-                    key={lang}
-                    className={`radio-group border-[1px] border-black px-2 py-1 rounded ${selectedLanguage === lang ? 'border-secondaryColor' : ''}`}
-                  >
-                    <input
-                      type="radio"
-                      name="language"
-                      value={lang.value}
-                      id={lang.value}
-                      checked={selectedLanguage === lang.value}
-                      className=""
-                      onChange={handleLanguageChange}
-                    />
-                    <label htmlFor={lang.value} className={`ml-2 ${selectedLanguage === lang.value ? 'text-secondaryColor' : ''} font-medium`}>
-                      {lang.label}
-                    </label>
-                  </div>
-                ))}
+              {languageMap && languageMap?.map((lang) => (
+                <div
+                  key={lang}
+                  className={`radio-group border-[1px] border-black px-2 py-1 rounded ${selectedLanguage === lang ? 'border-secondaryColor' : ''}`}
+                >
+                  <input
+                    type="radio"
+                    name="language"
+                    value={lang.value}
+                    id={lang.value}
+                    checked={selectedLanguage === lang.value}
+                    className=""
+                    onChange={handleLanguageChange}
+                  />
+                  <label htmlFor={lang.value} className={`ml-2 ${selectedLanguage === lang.value ? 'text-secondaryColor' : ''} font-medium`}>
+                    {lang.label}
+                  </label>
+                </div>
+              ))}
             </div>
 
             <div>
-              <Btn text={'Submit'} bgColor={true} onClick={handleSubmit}/>
+              <Btn text={'Submit'} bgColor={true} onClick={handleSubmit} />
             </div>
           </div>
           <div className="sm:relative sm:w-[300px] sm:h-[300px] w-full h-auto">
