@@ -28,6 +28,8 @@ export const useGeolocation = () => {
   
     const getAddress = useCallback(async (latitude, longitude) => {
       try {
+
+        if (typeof window !== 'undefined') {
         const response = await fetch(
           `${process.env.LOCATION_GET_API}?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
         );
@@ -37,6 +39,10 @@ export const useGeolocation = () => {
           dispatch(setAddressData({ addressData: data.address }));
         } else {
           setError('Address not found');
+        }
+       }
+        else {
+          console.log('Skipping fetch during build');
         }
       } catch (err) {
         setError('Failed to fetch address');
