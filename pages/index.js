@@ -13,7 +13,7 @@ import { useGeolocation } from '../utilities';
 import { setModalStatus } from '../store/slices/userDataSlice';
 
 export default function Home({ locale }) {
-  const {error, getLocation } = useGeolocation();
+  // const {error, getLocation } = useGeolocation();
   const dispatch = useDispatch()
   const router = useRouter(); 
   const { i18n } = useTranslation();
@@ -83,9 +83,9 @@ export default function Home({ locale }) {
     dispatch(setModalStatus({modalStatus:true}))
   };
 
-  useEffect(()=>{
-    getLocation()
-},[])
+//   useEffect(()=>{
+//     getLocation()
+// },[])
 
   console.log(addressFromStore,"address from pages")
   console.log(selectedLanguage,"selectedLanguage from pages")
