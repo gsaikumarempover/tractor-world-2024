@@ -369,7 +369,7 @@ export default function Inventory() {
 
         <div className={`${showFilter ? 'sm:hidden block' : 'hidden'} transition-max-height duration-300 
         ease-in-out w-full  sm:w-auto`} id="navbar-default">
-          <div className="sm:w-auto w-[280px]
+          <div className="sm:w-auto w-[312px]
          sm:bg-transparent z-50 sm:relative flex fixed top-0 sm:pb-4 sm:pt-4 Navbar"> 
            
 

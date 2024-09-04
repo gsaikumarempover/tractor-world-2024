@@ -5,7 +5,7 @@ import BannerUnderline from '@Images/bannerUnderline.svg'
 export default function Banner({breadcrumbs, bannerImg, heading,BannerUnderlineImg = true }) {
     return (
         <>
-            <div className='bg-secondaryColor text-[14px] uppercase px-2 py-3 text-center text-white font-bold'>
+            <div className='bg-secondaryColor sm:text-[14px] text-[13px] uppercase px-2 sm:py-3 py-2 sm:text-center text-start text-white font-bold'>
                 {breadcrumbs.map((breadcrumb, index) => (
                     <span key={index} className='font-bold'>
                         <a href={breadcrumb.link} className='text-white'>
