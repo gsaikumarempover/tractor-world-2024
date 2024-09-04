@@ -26,23 +26,23 @@ export const useGeolocation = () => {
       }
     }, []);
   
-    // const getAddress = useCallback(async (latitude, longitude) => {
-    //   try {
-    //     const response = await fetch(
-    //       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
-    //     );
-    //     const data = await response.json();
-    //     if (data && data.address) {
-    //       console.log(data.address, 'address from API');
-    //       dispatch(setAddressData({ addressData: data.address }));
-    //     } else {
-    //       setError('Address not found');
-    //     }
-    //   } catch (err) {
-    //     setError('Failed to fetch address');
-    //   }
-    // }, [dispatch]);
+    const getAddress = useCallback(async (latitude, longitude) => {
+      try {
+        const response = await fetch(
+          `${process.env.LOCATION_GET_API}?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
+        );
+        const data = await response.json();
+        if (data && data.address) {
+          console.log(data.address, 'address from API');
+          dispatch(setAddressData({ addressData: data.address }));
+        } else {
+          setError('Address not found');
+        }
+      } catch (err) {
+        setError('Failed to fetch address');
+      }
+    }, [dispatch]);
   
-    // return {error, getLocation };
+    return {error, getLocation };
   };
   

@@ -11,5 +11,8 @@ const { i18n } = require('./next-i18next.config');
     config.resolve.alias['@service'] = path.join(__dirname, 'lib');
     config.resolve.alias['@utils'] = path.join(__dirname, 'utils');
     return config;
-  }
+  },
+  env: {
+    LOCATION_GET_API: process.env.LOCATION_GET_API,
+  },
 };
