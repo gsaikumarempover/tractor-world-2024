@@ -17,7 +17,7 @@ export default function Banner({breadcrumbs, bannerImg, heading,BannerUnderlineI
             </div>
             <div className='relative'>
                {bannerImg &&( <Image src={bannerImg} layout="responsive" className='mt-[-1px] w-full' alt='banner-image'/> )}
-                <div className='absolute top-4 left-14 text-white font-semibold text-xl'>
+                <div className=' sm:block hidden absolute top-4 left-14 text-white font-semibold text-xl'>
                     {heading}
                     {BannerUnderlineImg && (
                         <div>

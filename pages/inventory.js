@@ -578,7 +578,7 @@ export default function Inventory() {
                     {activeTab === "listData" ? <Image src={listActiveView} alt="listActiveView" /> : <Image src={listView} alt="listView" />}
                   </Tab>
 
-                  <Tab id="gridData"  image={true} activeTab={activeTab} onClick={handleTabClick}>
+                  <Tab id="gridData" image={true} activeTab={activeTab} onClick={handleTabClick}>
                     {activeTab === "gridData" ? <Image src={gridActiveView} alt="gridActiveView" /> : <Image src={gridView} alt="gridView" />}
 
                   </Tab>
@@ -586,18 +586,170 @@ export default function Inventory() {
 
               </div>
 
+              <div className="sm:hidden block">
+                {activeTab == 'gridData' && (
+                  <div className="">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
+                      {
+                        currentCards.slice(0, 3).map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none"
+                          >
+                            <div className="relative">
+                              <Image
+                                className="w-full"
+                                src={DefaultTractor}
+                                alt="cardImage"
+                                layout="responsive"
+                                width={100}
+                                height={70}
+                              />
+                              {item.certified && (
+                                <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
+                                  CERTIFIED
+                                </div>
+                              )}
+                              <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
+                                {item.price}
+                              </div>
+                            </div>
+                            <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                {item.title}
+                              </div>
+                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
+                                {item.features.map((feature, fIdx) => (
+                                  <div
+                                    key={fIdx}
+                                    className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                  >
+                                    <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
+                                    <span>{feature.text}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
+                              <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
+                                <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
+                                  <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </div>
+                )}
 
+                {activeTab == 'listData' && (
+                  <div className="">
+                    <div className="grid grid-cols-1 gap-4 my-6">
+                      {
+                        currentCards.slice(0, 3).map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none">
 
-              {activeTab == 'gridData' && (
-                <p>gridData</p>
-              )}
+                            <div className="flex">
+                              <div className="w-1/2 relative">
+                                <Image
+                                  className="w-full"
+                                  src={DefaultTractor}
+                                  alt="cardImage"
+                                  layout="responsive"
+                                  width={100}
+                                  height={100} />
 
-              {activeTab == 'listData' && (
-                <p>listData</p>
-              )}
+                                {item.certified && (
+                                  <div className="bg-secondaryColor px-2
+                                   text-white text-sm absolute top-2 left-2 uppercase font-medium border-gradient">
+                                    CERTIFIED
+                                  </div>
+                                )}
+                              </div>
+                              <div className="w-1/2">
 
-              {/* 
-              <div className="">
+                                <div className="p-2">
+
+                                  <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                    {item.title}
+                                  </div>
+
+                                  <div className="bg-black font-semibold text-white w-max px-2 py-1 mt-2">
+                                    {item.price}
+                                  </div>
+
+                                  <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                    {item.features.slice(0, -1).map((feature, fIdx) => (
+                                      <div
+                                        key={fIdx}
+                                        className={`flex gap-1 items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                      >
+                                        <div className="w-2 h-2 sm:w-3 sm:h-3">
+                                          <Image
+                                            src={feature.icon}
+                                            alt={feature.icon}
+                                            layout="responsive"
+                                            width={2}
+                                            height={2}
+                                          />
+                                        </div>
+                                        <span>{feature.text}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  {item.features.slice(-1).map((feature, fIdx) => (
+                                    <>                    
+                                    <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                      <div
+                                        key={fIdx}
+                                        className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                        <div className="w-3 h-3 sm:w-3 sm:h-3">
+                                          <Image
+                                            src={feature.icon}
+                                            alt={feature.icon}
+                                            layout="responsive"
+                                            width={2}
+                                            height={2}
+                                          />
+                                        </div>
+                                        <span>{feature.text}</span>
+                                      </div>
+                                    </div>
+                                      <div className="cursor-pointer">
+                                        <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
+                                          {/* Wrapping the Image component for responsive styling */}
+                                          <div className="w-3 h-3 sm:w-3 sm:h-3 mr-1">
+                                            <Image
+                                              src="/images/inventory/ActiveCallIcon.svg"
+                                              alt="phnIcon"
+                                              layout="responsive"
+                                              width={2}
+                                              height={2}
+                                            />
+                                          </div>
+                                          Interested{" "}
+                                        </span>
+                                      </div>
+
+                                    </>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="sm:block hidden">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                   {
                     currentCards.slice(0, 3).map((item, idx) => (
@@ -623,7 +775,7 @@ export default function Inventory() {
                             {item.price}
                           </div>
                         </div>
-                        <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                        <div className="xl:px-4 sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
                           <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                             {item.title}
                           </div>
@@ -650,7 +802,7 @@ export default function Inventory() {
                     ))
                   }
                 </div>
-              </div> */}
+              </div>
 
               <Heading heading={'Tractors by Brands '} viewButton={false} />
 
@@ -673,7 +825,7 @@ export default function Inventory() {
                 <Btn text={'view all'} />
               </div>
 
-              {/* <div className="">
+              <div className="sm:block hidden">
                 <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 my-6">
 
                   {
@@ -700,7 +852,7 @@ export default function Inventory() {
                             {item.price}
                           </div>
                         </div>
-                        <div className="xl:px-4 lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                        <div className="xl:px-4  sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
                           <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                             {item.title}
                           </div>
@@ -728,7 +880,176 @@ export default function Inventory() {
                   }
 
                 </div>
-              </div> */}
+              </div>
+
+              <div className="sm:hidden block">
+                {activeTab == 'gridData' && (
+                  <div className="">
+                    <div className="grid grid-cols-1 gap-4 my-6">
+                      {
+                        currentCards.slice(3).map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none"
+                          >
+                            <div className="relative">
+                              <Image
+                                className="w-full"
+                                src={DefaultTractor}
+                                alt="cardImage"
+                                layout="responsive"
+                                width={100}
+                                height={70}
+                              />
+                              {item.certified && (
+                                <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
+                                  CERTIFIED
+                                </div>
+                              )}
+                              <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
+                                {item.price}
+                              </div>
+                            </div>
+                            <div className="xl:px-4 lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                {item.title}
+                              </div>
+                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
+                                {item.features.map((feature, fIdx) => (
+                                  <div
+                                    key={fIdx}
+                                    className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                  >
+                                    <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
+                                    <span>{feature.text}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
+                              <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
+                                <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
+                                  <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      }
+
+                    </div>
+                  </div>
+                )}
+                {activeTab == 'listData' && (
+                   <div className="grid grid-cols-1 gap-4 my-6">
+                   {
+                     currentCards.slice(0, 3).map((item, idx) => (
+                      <div className="">
+                    <div className="grid grid-cols-1 gap-4 my-6">
+                      {
+                        currentCards.slice(0, 3).map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none">
+
+                            <div className="flex">
+                              <div className="w-1/2 relative">
+                                <Image
+                                  className="w-full"
+                                  src={DefaultTractor}
+                                  alt="cardImage"
+                                  layout="responsive"
+                                  width={100}
+                                  height={100} />
+
+                                {item.certified && (
+                                  <div className="bg-secondaryColor px-2
+                                   text-white text-sm absolute top-2 left-2 uppercase font-medium border-gradient">
+                                    CERTIFIED
+                                  </div>
+                                )}
+                              </div>
+                              <div className="w-1/2">
+
+                                <div className="p-2">
+
+                                  <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                    {item.title}
+                                  </div>
+
+                                  <div className="bg-black font-semibold text-white w-max px-2 py-1 mt-2">
+                                    {item.price}
+                                  </div>
+
+                                  <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                    {item.features.slice(0, -1).map((feature, fIdx) => (
+                                      <div
+                                        key={fIdx}
+                                        className={`flex gap-1 items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                      >
+                                        <div className="w-2 h-2 sm:w-3 sm:h-3">
+                                          <Image
+                                            src={feature.icon}
+                                            alt={feature.icon}
+                                            layout="responsive"
+                                            width={2}
+                                            height={2}
+                                          />
+                                        </div>
+                                        <span>{feature.text}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  {item.features.slice(-1).map((feature, fIdx) => (
+                                    <>                    
+                                    <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                      <div
+                                        key={fIdx}
+                                        className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                        <div className="w-3 h-3 sm:w-3 sm:h-3">
+                                          <Image
+                                            src={feature.icon}
+                                            alt={feature.icon}
+                                            layout="responsive"
+                                            width={2}
+                                            height={2}
+                                          />
+                                        </div>
+                                        <span>{feature.text}</span>
+                                      </div>
+                                    </div>
+                                      <div className="cursor-pointer">
+                                        <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
+                                          {/* Wrapping the Image component for responsive styling */}
+                                          <div className="w-3 h-3 sm:w-3 sm:h-3 mr-1">
+                                            <Image
+                                              src="/images/inventory/ActiveCallIcon.svg"
+                                              alt="phnIcon"
+                                              layout="responsive"
+                                              width={2}
+                                              height={2}
+                                            />
+                                          </div>
+                                          Interested{" "}
+                                        </span>
+                                      </div>
+
+                                    </>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </div>
+                     ))
+                   }
+                 </div>
+                )}
+              </div>
 
               <div className="pagination my-4 flex justify-center items-center space-x-2">
                 <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>
