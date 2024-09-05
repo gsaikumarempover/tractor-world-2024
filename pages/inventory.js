@@ -13,6 +13,11 @@ import sortIcon from '@Images/inventory/sortIcon.svg'
 import Crossmark from '@Images/inventory/closeIcon.svg';
 import mapIcon from '@Images/inventory/mapIcon.svg';
 import Modal from "@components/Modal";
+import Tab from "@components/Tab";
+import listView from "@Images/inventory/listView.svg";
+import listActiveView from "@Images/inventory/listActiveView.svg";
+import gridActiveView from "@Images/inventory/gridActiveView.svg";
+import gridView from "@Images/inventory/gridView.svg";
 
 export default function Inventory() {
   //// apply,reset btns active 
@@ -336,6 +341,10 @@ export default function Inventory() {
     },
   };
 
+  const [activeTab, setActiveTab] = useState("gridData");
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };
 
   return (
     <div>
@@ -370,10 +379,10 @@ export default function Inventory() {
         <div className={`${showFilter ? 'sm:hidden block' : 'hidden'} transition-max-height duration-300 
         ease-in-out w-full  sm:w-auto`} id="navbar-default">
           <div className="sm:w-auto w-[312px]
-         sm:bg-transparent z-50 sm:relative flex fixed top-0 sm:pb-4 sm:pt-4 Navbar"> 
-           
+         sm:bg-transparent z-50 sm:relative flex fixed top-0 sm:pb-4 sm:pt-4 Navbar">
 
-            <div className="px-4 py-4 sm:h-auto h-screen bg-white"> 
+
+            <div className="px-4 py-4 sm:h-auto h-screen bg-white">
 
               <div className="flex">
                 <div className="w-1/2">
@@ -457,8 +466,8 @@ export default function Inventory() {
             </div>
 
             <div className="right-0 top-0 z-50 pt-4 pl-2">
-                <Image src={Crossmark} width={35} height={35} onClick={isHideFilter} alt="Crossmark" />
-              </div>
+              <Image src={Crossmark} width={35} height={35} onClick={isHideFilter} alt="Crossmark" />
+            </div>
           </div>
         </div>
 
@@ -558,9 +567,36 @@ export default function Inventory() {
               </div>
             </div>
             <div className="sm:w-[75%] w-full">
+              <div className="flex justify-between items-center">
+                <div className="w-auto">
+                  <Heading heading={'Popular Tractors'} />
+                </div>
 
-              <Heading heading={'Popular Tractors'} />
+                <div className="sm:hidden flex">
 
+                  <Tab id="listData" image={true} activeTab={activeTab} onClick={handleTabClick}>
+                    {activeTab === "listData" ? <Image src={listActiveView} alt="listActiveView" /> : <Image src={listView} alt="listView" />}
+                  </Tab>
+
+                  <Tab id="gridData"  image={true} activeTab={activeTab} onClick={handleTabClick}>
+                    {activeTab === "gridData" ? <Image src={gridActiveView} alt="gridActiveView" /> : <Image src={gridView} alt="gridView" />}
+
+                  </Tab>
+                </div>
+
+              </div>
+
+
+
+              {activeTab == 'gridData' && (
+                <p>gridData</p>
+              )}
+
+              {activeTab == 'listData' && (
+                <p>listData</p>
+              )}
+
+              {/* 
               <div className="">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                   {
@@ -614,7 +650,7 @@ export default function Inventory() {
                     ))
                   }
                 </div>
-              </div>
+              </div> */}
 
               <Heading heading={'Tractors by Brands '} viewButton={false} />
 
@@ -637,8 +673,8 @@ export default function Inventory() {
                 <Btn text={'view all'} />
               </div>
 
-              <div className="overflow-x-auto sm:overflow-visible">
-                <div className="flex sm:grid sm:grid-cols-3 gap-4 my-6">
+              {/* <div className="">
+                <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 my-6">
 
                   {
                     currentCards.slice(3).map((item, idx) => (
@@ -692,7 +728,7 @@ export default function Inventory() {
                   }
 
                 </div>
-              </div>
+              </div> */}
 
               <div className="pagination my-4 flex justify-center items-center space-x-2">
                 <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>

@@ -144,8 +144,8 @@ export default function Navbar({ currentPage, onClick }) {
                   </a>
                 </Link>
 
-                <Link href="/sell-tractor" >
-                  <a className={`${currentPage == "sellTractor" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
+                <Link href="/sell-tractor">
+                  <a className={`${currentPage == "sellTractor" ? 'text-secondaryColor font-bold' : ''} sm:hidden hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={sellatractor} alt="location" /></span>
                       <span className={`md:ml-0 ml-2 ${currentPage == "sellTractor" ? 'active' : ''}`}>Sell Tractor</span>
@@ -181,7 +181,7 @@ export default function Navbar({ currentPage, onClick }) {
                 </Link>
 
                 <div onClick={onClick} >
-                  <a className={`${currentPage == "language" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
+                  <a className={`${currentPage == "language" ? 'text-secondaryColor font-bold' : ''} sm:hidden hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={Language} alt="ContentGallery" /></span>
                       <span className={`md:ml-0 ml-2 ${currentPage == "language" ? 'active' : ''}`}>Language</span>

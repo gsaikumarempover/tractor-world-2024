@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Tab = ({ id, activeTab, onClick, children }) => {
+const Tab = ({ id, activeTab, onClick, children, image = false }) => {
     return (
         <div
-            className={`${activeTab === id ? 'text-secondaryColor border-b-2 border-secondaryColor' : 'text-[#00000080]'} sm:text-[15px] text-[11px] cursor-pointer`}
+            className={`${(activeTab === id && !image) ? 'text-secondaryColor border-b-2 border-secondaryColor' : 'text-[#00000080]'} sm:text-[15px] text-[11px] cursor-pointer`}
             onClick={() => onClick(id)}
         >
             {children}
