@@ -474,6 +474,7 @@ export default function Inventory() {
         <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
           <div className="flex sm:flex-row flex-col gap-2">
 
+            <label className="mb-1 sm:hidden block">Your Location</label>
             <div className="relative w-full sm:hidden block">
               <input type="text" placeholder="search..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] py-3" />
               <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
@@ -582,6 +583,31 @@ export default function Inventory() {
                     {activeTab === "gridData" ? <Image src={gridActiveView} alt="gridActiveView" /> : <Image src={gridView} alt="gridView" />}
 
                   </Tab>
+                </div>
+
+                <div className="sm:flex hidden items-center gap-3">
+                  <div>
+                    {/* <label className="mb-1 block text-sm">Your Location</label> */}
+                    <div className="relative w-full">
+                      <input type="text" placeholder="search your location..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] sm:py-2 py-3" />
+                      <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                        <Image src={mapIcon} alt="search" width={22} height={22} />
+                      </div>
+
+                      <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
+                        <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>  
+                  <select className="block w-full px-2 py-[7px]   rounded border-[1px] border-[#D0D0D0]  text-[14px] text-secondaryColor">
+                    <option selected value="">Tractor Sort By</option>
+                    <option value="hightolow">Price - High to Low</option>
+                    <option value="lowtohigh">Price - Low to High</option>
+                   </select>
+                  </div>
+
                 </div>
 
               </div>
@@ -703,23 +729,23 @@ export default function Inventory() {
                                   </div>
 
                                   {item.features.slice(-1).map((feature, fIdx) => (
-                                    <>                    
-                                    <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
-                                      <div
-                                        key={fIdx}
-                                        className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
-                                        <div className="w-3 h-3 sm:w-3 sm:h-3">
-                                          <Image
-                                            src={feature.icon}
-                                            alt={feature.icon}
-                                            layout="responsive"
-                                            width={2}
-                                            height={2}
-                                          />
+                                    <>
+                                      <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                        <div
+                                          key={fIdx}
+                                          className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                          <div className="w-3 h-3 sm:w-3 sm:h-3">
+                                            <Image
+                                              src={feature.icon}
+                                              alt={feature.icon}
+                                              layout="responsive"
+                                              width={2}
+                                              height={2}
+                                            />
+                                          </div>
+                                          <span>{feature.text}</span>
                                         </div>
-                                        <span>{feature.text}</span>
                                       </div>
-                                    </div>
                                       <div className="cursor-pointer">
                                         <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
                                           {/* Wrapping the Image component for responsive styling */}
@@ -807,18 +833,53 @@ export default function Inventory() {
               <Heading heading={'Tractors by Brands '} viewButton={false} />
 
               <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
-                <Image width={100} height={100} layout="responsive" src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
+
+                <div className="w-full cursor-pointer">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer  sm:block hidden">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer sm:block hidden">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer sm:block hidden">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
+                </div>
+                <div className="w-full cursor-pointer sm:block hidden">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
+                </div>
+
+                <div className="w-full cursor-pointer sm:block hidden">
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
+                </div>
+                <div className="w-full cursor-pointer sm:block hidden">
+
+                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
+                </div>
               </div>
 
               <div className="my-4 sm:hidden block">
@@ -941,13 +1002,10 @@ export default function Inventory() {
                   </div>
                 )}
                 {activeTab == 'listData' && (
-                   <div className="grid grid-cols-1 gap-4 my-6">
-                   {
-                     currentCards.slice(0, 3).map((item, idx) => (
-                      <div className="">
+                  <div className="">
                     <div className="grid grid-cols-1 gap-4 my-6">
                       {
-                        currentCards.slice(0, 3).map((item, idx) => (
+                        currentCards.slice(3).map((item, idx) => (
                           <div
                             key={idx}
                             className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none">
@@ -1002,23 +1060,23 @@ export default function Inventory() {
                                   </div>
 
                                   {item.features.slice(-1).map((feature, fIdx) => (
-                                    <>                    
-                                    <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
-                                      <div
-                                        key={fIdx}
-                                        className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
-                                        <div className="w-3 h-3 sm:w-3 sm:h-3">
-                                          <Image
-                                            src={feature.icon}
-                                            alt={feature.icon}
-                                            layout="responsive"
-                                            width={2}
-                                            height={2}
-                                          />
+                                    <>
+                                      <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                        <div
+                                          key={fIdx}
+                                          className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                          <div className="w-3 h-3 sm:w-3 sm:h-3">
+                                            <Image
+                                              src={feature.icon}
+                                              alt={feature.icon}
+                                              layout="responsive"
+                                              width={2}
+                                              height={2}
+                                            />
+                                          </div>
+                                          <span>{feature.text}</span>
                                         </div>
-                                        <span>{feature.text}</span>
                                       </div>
-                                    </div>
                                       <div className="cursor-pointer">
                                         <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
                                           {/* Wrapping the Image component for responsive styling */}
@@ -1045,9 +1103,6 @@ export default function Inventory() {
                       }
                     </div>
                   </div>
-                     ))
-                   }
-                 </div>
                 )}
               </div>
 

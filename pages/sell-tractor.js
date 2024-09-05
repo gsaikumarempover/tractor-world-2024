@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Heading from "../components/Heading";
@@ -11,12 +11,16 @@ import Notifications from "@Images/sellTractor/notifications.svg";
 import Support from "@Images/sellTractor/support.svg";
 import BannerStrip from "../components/BannerStrip";
 import bannerImg from "@Images/sellTractor/engineering-excellence-banner.svg";
+import mblBannerImg from "@Images/sellTractor/mblBanner.svg";
+
 
 export default function SellTractor() {
   const breadcrumbData = [
     { label: 'Home', link: '/' },
     { label: 'Sell Tractor', link: '#' },
   ];
+  const [isMobile, setIsMobile] = useState(false);
+
 
   const features = [
     {
@@ -56,13 +60,28 @@ export default function SellTractor() {
       description: "Call us at +91-97709-74974.",
     },
   ];
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsMobile(window.innerWidth <= 768); 
+     const handleResize = () => {
+       setIsMobile(window.innerWidth <= 768);
+     }; 
+     window.addEventListener('resize', handleResize); 
+      return () => {
+       window.removeEventListener('resize', handleResize);
+     };
+   }
+ }, []);
+
+
   return (
     <div>
       <Layout currentPage={"sellTractor"}>
         <Banner
           breadcrumbs={breadcrumbData}
           heading={""}
-          bannerImg={bannerImg}
+          bannerImg={!isMobile ? bannerImg : mblBannerImg}
           BannerUnderlineImg={false} />
 
         <BannerStrip heading={'Sell Your Used Tractor'}
@@ -114,8 +133,8 @@ export default function SellTractor() {
         <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
           <Heading heading={"Why Tractor World ?"} />
 
-          <div className="overflow-x-scroll md:overflow-x-auto">
-            <div className="flex md:grid md:grid-cols-3 gap-4">
+          <div className="">
+            <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
               {features.map((feature, index) => (
                 <div
                   key={index}
@@ -127,8 +146,8 @@ export default function SellTractor() {
                       alt={feature.alt}
                       className="max-w-full h-auto"
                     />
-                    <span className="text-sm text-center">{feature.title}</span>
-                    <span className="text-sm">{feature.description}</span>
+                    <span className="text-base font-semibold text-center">{feature.title}</span>
+                    <span className="text-base">{feature.description}</span>
                   </div>
                 </div>
               ))}
@@ -140,18 +159,20 @@ export default function SellTractor() {
               heading={"Tractor World is best place to sell your tractor"}
             />
             {/* <div BannerUnderlineImg={true}> */}
-            <div>
-              <p className="text-sm my-2 font-bold text-black">
+            <div className="sm:text-base text-[13px]">
+              <p className="my-1 font-bold text-black">
                 Thinking to upgrade your old tractor with a new one?
               </p>
-              <p className="text-sm my-2 font-bold text-black">
+
+              <p className="my-1 font-bold text-black">
                 Waiting for the best offers and schemes?
               </p>
-              <p className="text-sm my-2 font-bold text-black">
+
+              <p className="my-1 font-bold text-black">
                 Have an used tractor to sell out?
               </p>
             </div>
-            <p className="text-sm my-2">
+            <p className="sm:text-medium text-[13px] my-2">
               If any of the above questions halt your moving eyeballs, then yes,
               you have come to the right place. Many questions, one answer –
               Tractor Junction. We at Tractor Junction know what does a tractor

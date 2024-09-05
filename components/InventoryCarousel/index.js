@@ -2,7 +2,8 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Image from 'next/image';
+import Image from 'next/image'; 
+import shareIcon from '@Images/tractordetails/shareIcon.svg';
 
 export default function InventoryCarousel() {
     const baseUrl = '/images/liveInventory'
@@ -26,17 +27,28 @@ export default function InventoryCarousel() {
         <>
             <div className="slider-container" id="inventoryCarousel">
                 <Slider {...settings}>
-                    <div>
+                    <div className='relative'>
                         <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide01.svg"} className='detailsSlideImg' alt='slide01' />
+                        <div className='absolute top-4 right-4'>
+                            <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
+                        </div>
                     </div>
-                    <div>
+                    <div className='relative'>
                         <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide02.svg"} className='detailsSlideImg' alt='slide02 ' />
-                    </div>
-                    <div>
+                        <div className='absolute top-4 right-4'>
+                            <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
+                        </div>                    </div>
+                    <div className='relative'>
                         <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide03.svg"} className='detailsSlideImg' alt='slide03' />
+                        <div className='absolute top-4 right-4'>
+                            <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
+                        </div>
                     </div>
-                    <div>
+                    <div className='relative'>
                         <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide04.svg"} className='detailsSlideImg' alt='slide04' />
+                        <div className='absolute top-4 right-4'>
+                            <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
+                        </div>
                     </div>
                 </Slider>
             </div>

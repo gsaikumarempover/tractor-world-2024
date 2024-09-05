@@ -105,54 +105,7 @@ const Layout = ({ children, currentPage }) => {
             }
           />
 
-          {/* //language modal from here */}
-          <Modal
-          showModal={languageModalShow} s
-          customStyles={customStylesForLanguage} 
-          handleClose={handleLanguageModalClose} 
-          content={
-          <div className='flex items-center sm:flex-row flex-col-reverse w-full'>
-            <div className='px-4 py-10'>
-              <p className='font-bold text-xl'>Select your preferred<br /> Language</p>
-              <span className='mt-6 block text-sm'>Select Language</span>
-              <div className='flex gap-4 my-4'>
-                {languageMap.map((lang) => (
-                  <div
-                    key={lang.value}
-                    className={`radio-group border-[1px] border-black px-2 py-1 rounded ${selectedLanguage === lang.value ? 'border-secondaryColor' : ''}`}
-                  >
-                    <input
-                      type="radio"
-                      name="language"
-                      value={lang.value}
-                      id={lang.value}
-                      checked={selectedLanguage === lang.value}
-                      onChange={handleLanguageChange}
-                    />
-                    <label htmlFor={lang.value} className={`ml-2 ${selectedLanguage === lang.value ? 'text-secondaryColor' : ''} font-medium`}>
-                      {lang.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-
-              <div>
-                <Btn text={'Submit'} bgColor={true} onClick={handleSubmit} />
-              </div>
-            </div>
-            <div className="sm:relative sm:w-[300px] sm:h-[300px] w-full h-auto">
-              <Image
-                src={languagePopupImg}
-                layout='responsive'
-                width={300}
-                height={300}
-                className='languagePopupImg'
-                alt='languagePopupImg'
-              />
-            </div>
-          </div>
-        } 
-      />
+       
         </main>
       </div>
       <div className='footer'>
