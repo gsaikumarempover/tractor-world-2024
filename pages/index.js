@@ -88,7 +88,7 @@ export default function Home({ locale }) {
   };
 
   useEffect(() => {
-    getLocation()
+    getLocation();
   }, [])
 
   console.log(addressFromStore, "address from pages")
