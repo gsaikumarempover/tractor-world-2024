@@ -4,67 +4,84 @@ import { getApolloClient } from '../lib/apollo-client';
 
 export async function getStaticProps({ params }) {
   const client = getApolloClient(); // Get the Apollo Client
-
-  const { data } = await client.query({
-    query: gql`
-     query PostBySlug($slug: String!) {
-      generalSettings {
-        title
-      }
-      postBy(slug: $slug) {
-        id
-        content
-        title
-        slug
-        seo {
-          metaDesc
-          title 
-          fullHead
+  try {
+    const { data } = await client.query({
+      query: gql`
+        query PostBySlug($slug: String!) {
+          generalSettings {
+            title
+          }
+          postBy(slug: $slug) {
+            id
+            content
+            title
+            slug
+            seo {
+              metaDesc
+              title 
+              fullHead
+            }
+          }
         }
-      }
-    }
-    `,
-    variables: {
-      slug: params.slug,
-    },
-  });
+      `,
+      variables: {
+        slug: params.slug,
+      },
+    });
 
-  // Console log the data to verify it's being fetched correctly
-  console.log('Fetched data:', data);
+    console.log('Fetched data:', data);
 
-  // Pass the data as props to the page component
-  return {
-    props: {
-      page: data.pageBy,
-    },
-  };
+    // Handle the case where `postBy` might be undefined or null
+    return {
+      props: {
+        post: data.postBy || null,
+        generalSettings: data.generalSettings || null,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error); 
+    return {
+      props: {
+        post: null,
+        generalSettings: null,
+      },
+    };
+  }
 }
 
 export async function getStaticPaths() {
   const client = getApolloClient();
 
-  const { data } = await client.query({
-    query: gql`
-      query AllPages {
-        pages {
-          nodes {
-            uri
+  try {
+    const { data } = await client.query({
+      query: gql`
+        query AllPages {
+          pages {
+            nodes {
+              uri
+            }
           }
         }
-      }
-    `,
-  });
+      `,
+    });
 
-  const paths = data.pages.nodes.map((page) => ({
-    params: { slug: page.uri },
-  }));
+    const paths = data.pages.nodes.map((page) => ({
+      params: { slug: page.uri },
+    }));
 
-  return {
-    paths,
-    fallback: false,
-  };
+    return {
+      paths,
+      fallback: false,
+    };
+  } catch (error) {
+    console.error('Error fetching paths:', error);
+
+    return {
+      paths: [],
+      fallback: false,
+    };
+  }
 }
-
 const Page = ({ page }) => {
   return (
     <>
