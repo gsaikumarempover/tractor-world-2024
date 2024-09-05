@@ -26,7 +26,7 @@ import Language from '@Images/topbar/language.svg'
 import { useTranslation } from 'next-i18next';
 
 
-export default function Navbar({ currentPage, onClick }) {
+export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
   const { locale: activeLocale, locales, asPath } = useRouter();
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
@@ -180,7 +180,7 @@ export default function Navbar({ currentPage, onClick }) {
                   </a>
                 </Link>
 
-                <div onClick={onClick} >
+                <div onClick={onClickForLanguage} >
                   <a className={`${currentPage == "language" ? 'text-secondaryColor font-bold' : ''} sm:hidden hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={Language} alt="ContentGallery" /></span>
