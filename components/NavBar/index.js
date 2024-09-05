@@ -103,12 +103,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
                     <Image src={Crossmark} onClick={hideNavbar} className="crossIcon" alt="Crossmark" /></div>
                 </div>
 
-                <div>
-                  <span className="text-[.84rem] pr-3">Toll Free Number</span>
-                  <Link href="tel:18006669999">
-                    <a className="text-[.84rem]">
-                      1800 666 9999</a></Link>
-                </div>
+                
                 <div className="flex my-3 w-full">
                   <div className="relative w-full">
                     <input type="text" placeholder="search..." className="w-full rounded border-[1px] border-[#D0D0D0] py-3" />
@@ -180,14 +175,14 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
                   </a>
                 </Link>
 
-                <div onClick={onClickForLanguage} >
+                {/* <div onClick={onClickForLanguage} >
                   <a className={`${currentPage == "language" ? 'text-secondaryColor font-bold' : ''} sm:hidden hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={Language} alt="ContentGallery" /></span>
                       <span className={`md:ml-0 ml-2 ${currentPage == "language" ? 'active' : ''}`}>Language</span>
                     </div>
                   </a>
-                </div>
+                </div> */}
 
                 <Link href="/contact-us">
                   <a className={`${currentPage == "contact" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
@@ -197,6 +192,9 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
                     </div>
                   </a>
                 </Link>
+
+                
+
 
                 <li className="sm:block hidden" onClick={onClick}>
                   <div className="flex items-center relative top-[.15rem]">
@@ -220,7 +218,28 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
               </ul>
 
               <div className="sm:hidden block mt-3 px-4 ">
-                <hr></hr>
+              <hr className="border-[#EFEAEA]"></hr> 
+                <div className="pt-3">
+                  {/* <div className="">Toll Free Number</div> */}
+
+                  <div className="flex items-center mb-1">
+                      <span className="text-[15px] text-secondaryColor">Toll Free Number</span>
+                    </div> 
+
+                 <div className="flex items-center mb-1">     
+                        <span className="w-[5%]">
+                    <Image src={Contact} alt="Contact-image" width={14} height={14} />
+                    </span>
+                    <span className="text-[.84rem] ml-2 block">
+                    <Link href="tel:18006669999">  
+                    1800 666 9999</Link></span>
+                    </div>
+
+                </div>
+                </div>
+
+              <div className="sm:hidden block mt-3 px-4 ">
+                <hr className="border-[#EFEAEA]"></hr>
                 <p className="my-3 text-[0.84rem">Social Media Links</p>
                 <div className="my-4 flex gap-2">
                   <Image src={Facebook} alt="facebook" />

@@ -468,7 +468,7 @@ export default function HomePage({ locale }) {
                     <p className="mb-[-5px]">Compare To Buy The Right Tractor</p>
                 </div>
 
-                <div className='flex sm:gap-4 gap-2 my-3 font-medium'>
+                <div className='flex sm:gap-4 gap-2 my-3 font-medium relative z-20'>
                     <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}>
                         Under 20 HP</Tab>
                     <Tab id="twoData" activeTab={activeTab} onClick={handleTabClick}>21 - 30 HP</Tab>
@@ -511,12 +511,14 @@ export default function HomePage({ locale }) {
 
                     </div>
                 </div>
-            </div >
 
-            <div className='justify-center flex mt-2'>
+                <div className='justify-center flex mt-2'>
                 <Btn text={'View all tractor comparisons'} onClick={handleCompareAll} bgColor={true}
                 />
             </div>
+            </div >
+
+          
 
             {/*testimonials */}
             <div id="testimonials">

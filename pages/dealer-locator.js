@@ -44,12 +44,12 @@ export default function DealerLocator() {
           <div className="flex sm:flex-row flex-col gap-2">
             <div className="bg-white p-4 sm:w-[25%] w-full">
               <div>
-                <p className="font-bold mb-3 text-[17px]">Tractor DEALERS LOCATION</p>
+                <p className="font-bold mb-3 text-[17px]">Search Nearest Dealer</p>
                 <div className="mb-4">
-                  <label className="form-label">Taluka</label>
+                  <label className="form-label">State</label>
                   <select className="block w-full px-2 py-[7px] border 
                     border-gray-300 rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                    <option selected>Select Taluka</option>
+                    <option selected>Select State</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -68,10 +68,10 @@ export default function DealerLocator() {
                 </div>
 
                 <div className="mb-4">
-                  <label className="form-label">Sub-District (Tehsil or Taluka)</label>
+                  <label className="form-label">Tehsil or Taluka</label>
                   <select className="block w-full px-2 py-[7px] border border-gray-300 
                     rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                    <option selected>Select Sub-District (Tehsil or Taluka)</option>
+                    <option selected>Select Tehsil or Taluka</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>

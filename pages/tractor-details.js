@@ -445,9 +445,15 @@ export default function TractorDetails({ locale }) {
                 bannerImg={bannerImg}
                 heading={'Tractor Details'} />
 
+            
+
             {/* slide sec */}
             <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2
              bg-white w-full flex sm:flex-row flex-col gap-4'>
+
+            <div className='sm:hidden block'> 
+                <Heading  heading={'Tractor Details'} />
+                </div>
 
                 {/* slide */}
                 <div className='sm:w-1/2 w-full border'>
@@ -712,14 +718,14 @@ export default function TractorDetails({ locale }) {
                     <Tab id="SixthData" activeTab={activeTab} onClick={handleTabClick}>Above 50 HP</Tab>
                 </div>
 
-                <div className="overflow-x-auto sm:overflow-visible">
-                    <div className='flex sm:grid sm:grid-cols-3 xl:gap-8 gap-4'>
+                <div className="">
+                    <div className=' grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4'>
                         {Object.keys(compareTractorData).map((key) =>
                             activeTab === key ? (
                                 <>
                                     {compareTractorData[key].map((item, index) => (
-                                        <div key={index} className='overflow-hidden flex-none w-80 sm:w-auto'>
-                                            <Image src={CompareImage} alt='compareImage' />
+                                        <div key={index} className='overflow-hidden w-full flex-none'>
+                                            <Image src={CompareImage} alt='compareImage' layout='responsive' />
                                             <div className='flex justify-between px-3 mb-3'>
                                                 <div>
                                                     <div>{item.brand1}</div>
