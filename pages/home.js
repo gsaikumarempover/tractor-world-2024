@@ -45,13 +45,9 @@ export default function HomePage({ locale }) {
     const router = useRouter();
 
 
-    // useEffect(() => {
-
-    // }, []);
-
     useEffect(() => {
-        //moble web devide
-        if (typeof window !== 'undefined') {
+          //moble web devide
+          if (typeof window !== 'undefined') {
             setIsMobile(window.innerWidth <= 768);
             const handleResize = () => {
                 setIsMobile(window.innerWidth <= 768);
@@ -60,8 +56,11 @@ export default function HomePage({ locale }) {
             return () => {
                 window.removeEventListener('resize', handleResize);
             };
-        }
+        } 
 
+    }, []);
+
+    useEffect(() => { 
         const handleScroll = () => {
             if (typeof window !== 'undefined') {
                 if (window.scrollY > lastScrollY) {
@@ -73,8 +72,7 @@ export default function HomePage({ locale }) {
                 }
                 setLastScrollY(window.scrollY);
             }
-        };
-
+        }; 
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
