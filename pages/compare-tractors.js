@@ -220,14 +220,14 @@ export default function CompareTractor() {
                         <Tab id="SixthData" activeTab={activeTab} onClick={handleTabClick}>Above 50 HP</Tab>
                     </div>
 
-                    <div className="overflow-x-auto sm:overflow-visible">
-                        <div className='flex sm:grid sm:grid-cols-3 xl:gap-8 gap-4'>
+                    <div className="">
+                        <div className='grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4'>
                             {Object.keys(compareTractorData).map((key) =>
                                 activeTab === key ? (
                                     <>
                                         {compareTractorData[key].map((item, index) => (
-                                            <div key={index} className=' shadow p-2 overflow-hidden flex-none w-80 sm:w-auto'>
-                                                <Image src={CompareImage} alt='compareImage' />
+                                            <div key={index} className=' shadow p-2 overflow-hidden flex-none'>
+                                                <Image src={CompareImage} alt='compareImage' layout='responsive' />
                                                 <div className='flex justify-between px-3 mb-3'>
                                                     <div>
                                                         <div>{item.brand1}</div>
@@ -255,13 +255,13 @@ export default function CompareTractor() {
                             <Btn text={'View all tractor comparisons'} bgColor={true} />
                             </div>
                     </div>
-
+{/* 
                     <div className='my-4'>
                         <Heading heading={'About Compare Tractors'} />
                         <p className="text-[14px] mb-3">Tractorworld.com is a one-stop authentic online destination where you can compare a variety of Tractors and Farm Implements. All top tractor brands are available here including Mahindra, John Deere, Escorts, Sonalika, Eicher, TAFE, New Holland and many more. The information displayed on Tractor Junction is believed to be accurate, unbiased and correct. Choose at least two tractors as per your choice to compare based on their specifications, features, mileage, Price, overall performance and warranty. All Indian Farmers can easily compare tractors of distinct varieties just in a few clicks. Tractorworld brings a welfare opportunity to compare tractor price in India. This allows farmers from every region to compare tractors in India.</p>
                          <p className="text-[14px] mb-3">Tractorworld provides the most comprehensive tractor comparison tool in India on which you can select at least two or more tractors of your choice for comparison. This online platform provides all the useful guidelines for tractor comparison India. Tractorworld always works to empower Indian farmers with a new tractor compare section.</p>
                          <p className="text-[14px] mb-3">Compare tractor prices in India, specifications, warranty and many more at one place and then select your dream tractor. For Further more inquiries stay tuned with Tractorworld.</p>
-                    </div>
+                    </div> */}
 
                 </div>
 

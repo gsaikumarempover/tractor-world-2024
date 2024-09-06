@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
-import Heading from "../components/Heading";
+import Heading from "@components/Heading";
 import Image from "next/image";
 import personalInfo from "@Images/newTractorLoan/personal-info.svg";
 import OfferIcon from "@Images/newTractorLoan/offer-icon.svg";
@@ -11,8 +11,8 @@ import MahindraFinance from "@Images/bank/mahindraFinance.svg";
 import CanaraBank from "@Images/bank/canaraBank.svg";
 import Yesbank from "@Images/bank/yesbank.svg";
 import Axis from "@Images/bank/axis.svg";
-import Table from "@components/Table";
-import BannerStrip from "../components/BannerStrip";
+import videoThumbnail from "@Images/loan/videoThumbnail.svg";
+import BannerStrip from "@components/BannerStrip";
 import bannerImg from '@Images/sellTractor/engineering-excellence-banner.svg';
 export default function ApplyNewTractorLoan() {
   const breadcrumbData = [
@@ -20,79 +20,38 @@ export default function ApplyNewTractorLoan() {
     { label: "Loan", link: "#" },
   ];
 
-  // Specifications data
-  const [engineData, setEngineData] = useState([
-    {
-      tablData: [
-        { td: "Engine HP" },
-        { td: "49 HP" },
-      ]
-    },
-    {
-      tablData: [
-        { td: "Engine HP" },
-        { td: "49 HP" },
-      ]
-    },
-    {
-      tablData: [
-        { td: "Engine HP" },
-        { td: "49 HP" },
-      ]
-    },
-    {
-      tablData: [
-        { td: "Engine HP" },
-        { td: "49 HP" },
-      ]
-    },
-    // { label: "", value: "49 HP" },
-    // { label: "PTO HP", value: "44.9 HP" },
-    // { label: "Wheel drive", value: "2WD" },
-    // { label: "Forward Gears", value: "2" },
-    // { label: "Reverse Gears", value: "2" },
-    // { label: "Brake Type", value: "Oil Immersed" },
-    // { label: "Price", value: "Check Price" },
-  ]);
+  function TractorLoanEMIContent() {
+    return <div>
+      <p>A Tractor Loan EMI (Equated Monthly Instalment) is the monthly payment you make until your tractor loan is fully repaid. This amount comprises both the principal loan amount and the interest accrued.</p>
+      <div className="grid sm:grid-cols-4 grid-cols-1 mt-2 gap-2">
+        <div className="border">
+          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
+        </div>
+        <div className="border">
+          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
+        </div>
+        <div className="border">
+          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
+        </div>
+        <div className="border">
+          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
+        </div>
+        
+      </div>
+    </div>;
+  }
 
-  const [steeringData, setSteeringData] = useState([
-    {
-      tablData: [
-        { td: "Engine HP" },
-        { td: "49 HP" },
-      ]
-    },
-    {
-      tablData: [
-        { td: "Engine HP" },
-        { td: "49 HP" },
-      ]
-    },
-    {
-      tablData: [
-        { td: "Engine HP" },
-        { td: "49 HP" },
-      ]
-    },
-    {
-      tablData: [
-        { td: "Engine HP" },
-        { td: "49 HP" },
-      ]
-    },
-  ]);
-  // end Specifications
-
+  // end Specifications 
   const accordionData = [
-    { id: 1, heading: "Tractor Loan EMI: What Is It?", content: { data: engineData } },
-    { id: 2, heading: "Tractor Loan EMI: How Is It Calculated?", content: { data: engineData } },
-    { id: 3, heading: "Benefits of Using a Tractor Loan EMI Calculator", content: { data: engineData } },
-    { id: 4, heading: "How to Use Mahindra Finance Tractor Loan EMI Calculator?", content: { data: engineData }, },
-    { id: 5, heading: "Loan Eligibility", content: { data: steeringData }, },
-    { id: 6, heading: "Loan Documents", content: { data: steeringData }, },
-    { id: 7, heading: "Interest Rate All Bank 2024", content: { data: steeringData }, },
-    { id: 8, heading: "Why Is Tractor World Best For Tractor Loans?", content: { data: steeringData }, },
-    { id: 9, heading: "Get your Tractor Loan from leading lenders today!", content: { data: steeringData }, },
+    { id: 1, heading: "Tractor Loan EMI: What Is It?", content: TractorLoanEMIContent(), },
+    { id: 2, heading: "Tractor Loan EMI: How Is It Calculated?", content: TractorLoanEMIContent(), },
+    { id: 3, heading: "Benefits of Using a Tractor Loan EMI Calculator", content: TractorLoanEMIContent(), },
+    { id: 4, heading: "How to Use Mahindra Finance Tractor Loan EMI Calculator?", content: TractorLoanEMIContent(), },
+    { id: 5, heading: "Loan Eligibility", content: TractorLoanEMIContent(), },
+    { id: 6, heading: "Loan Documents", content: TractorLoanEMIContent(), },
+    { id: 7, heading: "Interest Rate All Bank 2024", content: TractorLoanEMIContent(), },
+    { id: 8, heading: "Why Is Tractor World Best For Tractor Loans?", content: TractorLoanEMIContent(), },
+    { id: 9, heading: "Get your Tractor Loan from leading lenders today!", content: TractorLoanEMIContent(), },
 
   ];
 
@@ -232,7 +191,7 @@ export default function ApplyNewTractorLoan() {
                         className="bg-secondaryColor px-2 py-3 text-white 
                         text-center rounded-md font-semibold cursor-pointer"
                       >
-                       Apply Now
+                        Apply Now
                       </div>
                     </div>
                   </div>
@@ -274,7 +233,7 @@ export default function ApplyNewTractorLoan() {
                 <Image
                   src={OfferIcon}
                   alt="offer-icon"
-                  className="max-w-full h-auto"  width={120}
+                  className="max-w-full h-auto" width={120}
                   height={120}
                 />
                 <span className="sm:text-medium text-medium text-center">
@@ -291,7 +250,7 @@ export default function ApplyNewTractorLoan() {
                 <Image
                   src={HassleFree}
                   alt="hassle-free-icon"
-                  className="max-w-full h-auto"  width={120}
+                  className="max-w-full h-auto" width={120}
                   height={120}
                 />
                 <span className="sm:text-medium text-sm text-center">
@@ -317,7 +276,7 @@ export default function ApplyNewTractorLoan() {
                 </span>
               </div>
             </div>
-            
+
           </div>
 
           <div className="py-4">
@@ -326,10 +285,10 @@ export default function ApplyNewTractorLoan() {
               BannerUnderlineImg={false}
             />
             <p className="text-sm">
-            Tractors are essential tools for farmers, aiding in various tasks, from planting seeds to transporting harvested crops. For many
-    small-scale farmers in India, purchasing a tractor can be financially challenging. Tractor loans or finances become a crucial
-    solution in such situations. Tractor loans fall under the agricultural loan category and are provided by leading banks, government financial bodies, and non-banking financial companies (NBFCs). These loans facilitate the easy acquisition of new and mini.  Individuals or groups can apply, and repayment, managed through equated monthly instalments (EMIs), can be collective or individual within the group. Before buying a tractor for your farm, knowing the interest rates on tractor loans from various banks is vital. This helps you make an informed decision and find the best financing option for your agricultural investment. Compare rates
-    to find the most suitable choice. Also, the Tractor Loan EMI Calculator tool is a perfect way to calculate your tractor loan EMI.            {/* <span className="cursor-pointer text-secondaryColor block">Read More..</span> */}
+              Tractors are essential tools for farmers, aiding in various tasks, from planting seeds to transporting harvested crops. For many
+              small-scale farmers in India, purchasing a tractor can be financially challenging. Tractor loans or finances become a crucial
+              solution in such situations. Tractor loans fall under the agricultural loan category and are provided by leading banks, government financial bodies, and non-banking financial companies (NBFCs). These loans facilitate the easy acquisition of new and mini.  Individuals or groups can apply, and repayment, managed through equated monthly instalments (EMIs), can be collective or individual within the group. Before buying a tractor for your farm, knowing the interest rates on tractor loans from various banks is vital. This helps you make an informed decision and find the best financing option for your agricultural investment. Compare rates
+              to find the most suitable choice. Also, the Tractor Loan EMI Calculator tool is a perfect way to calculate your tractor loan EMI.            {/* <span className="cursor-pointer text-secondaryColor block">Read More..</span> */}
             </p>
           </div>
 
@@ -360,7 +319,7 @@ export default function ApplyNewTractorLoan() {
             </span>
           </div>
 
-         
+
           <div
             className="mt-4"
             id="accordion-collapse"
@@ -374,8 +333,7 @@ export default function ApplyNewTractorLoan() {
                 >
                   <button
                     type="button"
-                    className="flex  justify-between w-full p-3
-                                font-semibold rtl:text-right border bg-[#EEEEF0]
+                    className="flex justify-between w-full p-3 font-semibold text-left border bg-[#EEEEF0]
                                 border-gray-200 focus:ring-4 focus:ring-gray-200
                                 dark:focus:ring-gray-800 dark:border-gray-700
                                 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800
@@ -411,7 +369,10 @@ export default function ApplyNewTractorLoan() {
                   aria-labelledby={`accordion-collapse-heading-${item.id}`}
                 >
                   <div className="border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                    <Table data={item.content.data} />
+                    {/* <Table data={item.content.data} /> */}
+                    <div className="p-3">
+                      {item.content}
+                    </div>
                   </div>
                 </div>
               </div>
