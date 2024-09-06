@@ -34,25 +34,67 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "../components/SingleItemsSlide";
 import Link from 'next/link';
+import { useQuery } from "@apollo/client";
+import { HOME_SLIDERS } from "@utils/constants";
 
 export default function HomePage({ locale }) {
+    const [isMobile, setIsMobile] = useState(false);
+    const [activeTab, setActiveTab] = useState("oneData");
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
 
-const [isMobile, setIsMobile] = useState(false);
+    // useEffect(() => {
 
-useEffect(() => {
-    if (typeof window !== 'undefined') {
-        setIsMobile(window.innerWidth <= 768);
-        const handleResize = () => {
+    // }, []);
+
+    useEffect(() => {
+        //moble web devide
+        if (typeof window !== 'undefined') {
             setIsMobile(window.innerWidth <= 768);
+            const handleResize = () => {
+                setIsMobile(window.innerWidth <= 768);
+            };
+            window.addEventListener('resize', handleResize);
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }
+
+        const handleScroll = () => {
+            if (typeof window !== 'undefined') {
+                if (window.scrollY > lastScrollY) {
+                    // Scrolling down
+                    setIsVisible(false);
+                } else {
+                    // Scrolling up
+                    setIsVisible(true);
+                }
+                setLastScrollY(window.scrollY);
+            }
         };
-        window.addEventListener('resize', handleResize);
+
+        window.addEventListener('scroll', handleScroll);
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('scroll', handleScroll);
         };
-    }
-}, []);
 
+    }, [lastScrollY]);
 
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const isFirstSlide = currentIndex === 0;
+    const language = locale?.toUpperCase();
+    const { loading, error, data } = useQuery(HOME_SLIDERS, {
+        variables: { lang: language }
+    });
+
+    if (loading) return <p>Loading Banners...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    const slides = data.homeSliders.nodes.map(node => {
+        const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
+        const mobileUrl = node.homesliders.mobilesliderimage.node.mediaItemUrl;
+        return { desktopUrl, mobileUrl };
+    });
 
     const router = useRouter();
 
@@ -112,7 +154,6 @@ useEffect(() => {
         },
     ];
 
-    const [activeTab, setActiveTab] = useState("oneData");
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
     };
@@ -305,7 +346,7 @@ useEffect(() => {
             name: "Sonalika Tractor",
         },
         {
-            image:  !isMobile ? slide1 : mblSlide1,
+            image: !isMobile ? slide1 : mblSlide1,
             name: "Sonalika Tractor",
         },
     ];
@@ -328,39 +369,21 @@ useEffect(() => {
         </div>
     ));
 
-
-
-    const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (typeof window !== 'undefined') {
-                if (window.scrollY > lastScrollY) {
-                    // Scrolling down
-                    setIsVisible(false);
-                } else {
-                    // Scrolling up
-                    setIsVisible(true);
-                }
-                setLastScrollY(window.scrollY);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [lastScrollY]);
-
+    const bannerGalleryitems = slides.map((src, index) => (
+        <div key={index} className="relative sm:w-[1921] sm:h-[629] w-[750] h-[387] overflow-hidden">
+            <Image width={isMobile ? 750 : 1921} height={isMobile ? 387 : 629}
+             className="w-full h-full"  src={isMobile ? src.mobileUrl : src.desktopUrl} layout="responsive" alt={`Banner${index + 1}`} /> 
+        </div>
+    )); 
+    
     return (
         <>
             {/* Home SLider */}
             {/* <HomeSliders locale={locale} /> */}
 
-            <div className='relative'>
-                <Image src={HomeBanner} alt='HomeBanner' className='w-full' />
+            <div className='relative'> 
+
+                <MultipleItemsSlide settings={contentGallerysettings} id={'bannerGallery'} items={bannerGalleryitems} /> 
 
                 <div className=" sm:flex hidden fixed z-[99] top-1/2 right-0 transform -translate-y-1/2  flex-col items-center justify-center rounded-md shadow-sm" role="group">
 

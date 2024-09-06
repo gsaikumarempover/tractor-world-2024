@@ -84,12 +84,16 @@ export default function ApplyNewTractorLoan() {
   // end Specifications
 
   const accordionData = [
-    { id: 1, heading: "New Tractor Loan Eligibility", content: { data: engineData } },
-    { id: 2, heading: "BRAKES", content: { data: engineData } },
-    { id: 3, heading: "TRACTOR LOAN DOCUMENTS", content: { data: engineData } },
-    { id: 4, heading: "TRACTOR LOAN INTEREST RATE ALL BANK 2024", content: { data: engineData }, },
-    { id: 5, heading: "WHY IS TRACTOR WORLD BEST FOR TRACTOR LOANS?", content: { data: steeringData }, },
-    { id: 6, heading: "GET YOUR TRACTOR LOAN FROM LEADING LENDERS TODAY!", content: { data: steeringData }, },
+    { id: 1, heading: "Tractor Loan EMI: What Is It?", content: { data: engineData } },
+    { id: 2, heading: "Tractor Loan EMI: How Is It Calculated?", content: { data: engineData } },
+    { id: 3, heading: "Benefits of Using a Tractor Loan EMI Calculator", content: { data: engineData } },
+    { id: 4, heading: "How to Use Mahindra Finance Tractor Loan EMI Calculator?", content: { data: engineData }, },
+    { id: 5, heading: "Loan Eligibility", content: { data: steeringData }, },
+    { id: 6, heading: "Loan Documents", content: { data: steeringData }, },
+    { id: 7, heading: "Interest Rate All Bank 2024", content: { data: steeringData }, },
+    { id: 8, heading: "Why Is Tractor World Best For Tractor Loans?", content: { data: steeringData }, },
+    { id: 9, heading: "Get your Tractor Loan from leading lenders today!", content: { data: steeringData }, },
+
   ];
 
   // for accordion
@@ -172,7 +176,7 @@ export default function ApplyNewTractorLoan() {
         />
 
         <BannerStrip
-          heading={"Apply for New Tractor Loan"}
+          heading={"Apply for Loan"}
           content={
             <>
               <div>
@@ -228,7 +232,7 @@ export default function ApplyNewTractorLoan() {
                         className="bg-secondaryColor px-2 py-3 text-white 
                         text-center rounded-md font-semibold cursor-pointer"
                       >
-                        Sell Now
+                       Apply Now
                       </div>
                     </div>
                   </div>
@@ -254,8 +258,10 @@ export default function ApplyNewTractorLoan() {
                   src={personalInfo}
                   alt="personal-info"
                   className="max-w-full h-auto"
+                  width={120}
+                  height={120}
                 />
-                <span className="text-sm text-center">
+                <span className="sm:text-medium text-sm text-center">
                   Fill the Form <br />
                   These details make the
                   <br /> process quick.{" "}
@@ -268,9 +274,10 @@ export default function ApplyNewTractorLoan() {
                 <Image
                   src={OfferIcon}
                   alt="offer-icon"
-                  className="max-w-full h-auto"
+                  className="max-w-full h-auto"  width={120}
+                  height={120}
                 />
-                <span className="text-sm text-center">
+                <span className="sm:text-medium text-medium text-center">
                   Compare Offers
                   <br />
                   Choose the best loan offer
@@ -284,9 +291,10 @@ export default function ApplyNewTractorLoan() {
                 <Image
                   src={HassleFree}
                   alt="hassle-free-icon"
-                  className="max-w-full h-auto"
+                  className="max-w-full h-auto"  width={120}
+                  height={120}
                 />
-                <span className="text-sm text-center">
+                <span className="sm:text-medium text-sm text-center">
                   Instant Approval
                   <br /> Get immediate approval from <br />
                   the bank.{" "}
@@ -299,15 +307,17 @@ export default function ApplyNewTractorLoan() {
                 <Image
                   src={BankIcon}
                   alt="bank-icon"
-                  className="max-w-full h-auto"
+                  className="max-w-full h-auto" width={120}
+                  height={120}
                 />
-                <span className="text-sm text-center">
+                <span className="sm:text-medium text-sm text-center">
                   Money in your Account
                   <br /> You can get instant money in an
                   <br /> account.{" "}
                 </span>
               </div>
             </div>
+            
           </div>
 
           <div className="py-4">
@@ -316,15 +326,17 @@ export default function ApplyNewTractorLoan() {
               BannerUnderlineImg={false}
             />
             <p className="text-sm">
-              Tractors are essential tools for farmers, aiding in various tasks, from planting seeds to transporting harvested crops. For many
-              small-scale farmers in India, purchasing a tractor can be financially challenging. Tractor loans or finances become a crucial
-              solution in such situations. Tractor loans fall under the agricultural loan category and are provided by leading banks, government financial bodies, and non-banking financial companies (NBFCs). These loans facilitate the easy acquisition of new and mini.  Individuals or groups can apply, and repayment, managed through equated monthly instalments (EMIs), can be collective or individual within the group. Before buying a tractor for your farm, knowing the interest rates on tractor loans from various banks is vital. This helps you make an informed decision and find the best financing option for your agricultural investment. Compare rates
-              to find the most suitable choice. Also, the Tractor Loan EMI Calculator tool is a perfect way to calculate your tractor loan EMI.
+            Tractors are essential tools for farmers, aiding in various tasks, from planting seeds to transporting harvested crops. For many
+    small-scale farmers in India, purchasing a tractor can be financially challenging. Tractor loans or finances become a crucial
+    solution in such situations. Tractor loans fall under the agricultural loan category and are provided by leading banks, government financial bodies, and non-banking financial companies (NBFCs). These loans facilitate the easy acquisition of new and mini.  Individuals or groups can apply, and repayment, managed through equated monthly instalments (EMIs), can be collective or individual within the group. Before buying a tractor for your farm, knowing the interest rates on tractor loans from various banks is vital. This helps you make an informed decision and find the best financing option for your agricultural investment. Compare rates
+    to find the most suitable choice. Also, the Tractor Loan EMI Calculator tool is a perfect way to calculate your tractor loan EMI.            {/* <span className="cursor-pointer text-secondaryColor block">Read More..</span> */}
             </p>
           </div>
 
+          <p>EMI cal</p>
+
           <div className="overflow-x-auto sm:overflow-visible">
-            <div className="py-4 flex sm:grid sm:grid-cols-8 gap-3">
+            <div className="py-4 grid sm:grid-cols-8 grid-cols-4 gap-3">
 
               {bankImgs.map((image, index) => (
                 <Image
@@ -348,54 +360,7 @@ export default function ApplyNewTractorLoan() {
             </span>
           </div>
 
-          <table className="min-w-full border border-gray-300">
-            <thead className=" bg-[#EEEEF0]">
-              <tr>
-                <th className="px-4 py-2 border border-gray-300 text-left">
-                  Bank Name
-                </th>
-                <th className="px-4 py-2 border border-gray-300 text-left">
-                  Interest Rate
-                </th>
-                <th className="px-4 py-2 border border-gray-300 text-left">
-                  Loan Amount
-                </th>
-                <th className="px-4 py-2 border border-gray-300 text-left">
-                  Loan Tenure
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {loanInterest.map((row, index) => (
-                <tr key={index}>
-                  <td className="px-4 py-2 border border-gray-300 text-sm">{row.bank}</td>
-                  <td className="px-4 py-2 border border-gray-300 text-sm">{row.interestRate}</td>
-                  <td className="px-4 py-2 border border-gray-300 text-sm">{row.finance}</td>
-                  <td className="px-4 py-2 border border-gray-300 text-sm">{row.tenure}</td>
-                </tr>
-              ))}
-
-            </tbody>
-          </table>
-          {/* 
-          <div className="py-4 ">
-            <h6 className="font-bold bg-[#DEE2E6] text-sm p-2 border border-gray-200">
-              NEW TRACTOR LOAN ELIGIBILITY
-            </h6>
-            <div className=" border border-gray-200">
-              <span className="text-sm ml-2">
-                Check down below eligibility for a new tractor loan.
-              </span>
-              <ul className="text-sm list-disc pl-5 ml-8">
-                <li>Minimum Age: 18 years</li>
-                <li>Income Proof and Minimum Land Holding of 2 Acres</li>
-                <li>Maximum Age: 65 Years</li>
-              </ul>
-            </div>
-          </div> */}
-
-          {/* <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4  py-2"> */}
+         
           <div
             className="mt-4"
             id="accordion-collapse"
@@ -409,7 +374,7 @@ export default function ApplyNewTractorLoan() {
                 >
                   <button
                     type="button"
-                    className="flex items-center justify-between w-full p-3
+                    className="flex  justify-between w-full p-3
                                 font-semibold rtl:text-right border bg-[#EEEEF0]
                                 border-gray-200 focus:ring-4 focus:ring-gray-200
                                 dark:focus:ring-gray-800 dark:border-gray-700
