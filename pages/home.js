@@ -42,6 +42,8 @@ export default function HomePage({ locale }) {
     const [activeTab, setActiveTab] = useState("oneData");
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const router = useRouter();
+
 
     // useEffect(() => {
 
@@ -96,7 +98,6 @@ export default function HomePage({ locale }) {
         return { desktopUrl, mobileUrl };
     });
 
-    const router = useRouter();
 
     const handleCompareAll = () => {
         router.push('/compare-tractors');
