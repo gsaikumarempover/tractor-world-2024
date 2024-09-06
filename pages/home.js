@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router'; 
 import Image from 'next/image';
 import CardImage from '@Images/card1.svg';
 import Heading from "@components/Heading";
@@ -29,7 +30,6 @@ import shareIcon from '@Images/footer/shareIcon.svg'
 import Btn from '@components/Btn';
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
-import { useRouter } from 'next/router';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "../components/SingleItemsSlide";
