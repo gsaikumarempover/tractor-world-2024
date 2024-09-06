@@ -10,7 +10,6 @@ import ContentHub from '@Images/home/ContentHub.svg';
 import Compare from '@Images/home/compare.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
 import { ReadMore } from '@components/ReadMore';
-import HomeSliders from '@components/HomeSlider';
 import LiveInventoryContainer from '@components/LiveInventory';
 import Warranty from '@Images/home/warranty.svg';
 import EasyEMI from '@Images/home/easyEMI.svg';
@@ -22,23 +21,37 @@ import Share from '@Images/home/share.svg';
 import Thumb from '@Images/home/thumb.svg';
 import Tractor from '@Images/home/tractor.svg';
 import slide1 from '@Images/testimonials/slide1.svg'
+import mblSlide1 from '@Images/testimonials/mblSlide.svg'
 import homeIcon from '@Images/footer/homeIcon.svg'
 import callIcon from '@Images/footer/callIcon.svg'
 import enquiryIcon from '@Images/footer/enquiryIcon.svg'
 import shareIcon from '@Images/footer/shareIcon.svg'
-import 'flowbite';
-import { Carousel } from 'flowbite';
 import Btn from '@components/Btn';
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import { useRouter } from 'next/router';
-import Gallery1 from '@Images/conentGallery/1.svg';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "../components/SingleItemsSlide";
 import Link from 'next/link';
 
 export default function HomePage({ locale }) {
+
+const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+    if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth <= 768);
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }
+}, []);
+
 
 
     const router = useRouter();
@@ -102,7 +115,7 @@ export default function HomePage({ locale }) {
     const [activeTab, setActiveTab] = useState("oneData");
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
-    }; 
+    };
 
     const compareTractorData = {
 
@@ -288,18 +301,18 @@ export default function HomePage({ locale }) {
 
     const contentGalleryimages = [
         {
-            image: slide1,
+            image: !isMobile ? slide1 : mblSlide1,
             name: "Sonalika Tractor",
         },
         {
-            image: slide1,
+            image:  !isMobile ? slide1 : mblSlide1,
             name: "Sonalika Tractor",
         },
     ];
 
     const contentGalleryitems = contentGalleryimages.map((src, index) => (
         <div key={index} className="relative">
-            <Image src={src.image} width={1644} height={640} layout="responsive" alt={`Explore item ${index + 1}`} />
+            <Image src={src.image} layout="responsive" alt={`Explore item ${index + 1}`} />
 
             <p className='z-40 absolute sm:top-14 top-6 sm:text-base text-sm sm:left-14 left-3
               text-white sm:w-[300px] w-[247px] font-bold testimonials'>
@@ -315,31 +328,31 @@ export default function HomePage({ locale }) {
         </div>
     ));
 
-   
+
 
     const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+    const [lastScrollY, setLastScrollY] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (typeof window !== 'undefined') {
-        if (window.scrollY > lastScrollY) {
-          // Scrolling down
-          setIsVisible(false);
-        } else {
-          // Scrolling up
-          setIsVisible(true);
-        }
-        setLastScrollY(window.scrollY);
-      }
-    };
+    useEffect(() => {
+        const handleScroll = () => {
+            if (typeof window !== 'undefined') {
+                if (window.scrollY > lastScrollY) {
+                    // Scrolling down
+                    setIsVisible(false);
+                } else {
+                    // Scrolling up
+                    setIsVisible(true);
+                }
+                setLastScrollY(window.scrollY);
+            }
+        };
 
-    window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollY]);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollY]);
 
     return (
         <>
@@ -371,36 +384,36 @@ export default function HomePage({ locale }) {
 
             </div>
 
-         {isVisible && (
-        <div className='sm:hidden block'>
-          <div className='fixed bottom-0 w-full z-40
+            {isVisible && (
+                <div className='sm:hidden block'>
+                    <div className='fixed bottom-0 w-full z-40
            bg-secondaryColor rounded-tl-2xl rounded-tr-2xl text-white'>
-            <div className='flex text-[15px]'> 
-                <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
-                    <Image src={homeIcon} alt="homeIcon" width={20} height={20} /> 
-                    <p>Home</p>
-                    </div>
+                        <div className='flex text-[15px]'>
+                            <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
+                                <Image src={homeIcon} alt="homeIcon" width={20} height={20} />
+                                <p>Home</p>
+                            </div>
 
-                    <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
-                    <Image src={callIcon} alt="callIcon" width={20} height={20} /> 
-                    <p>Call</p>
-                    </div>
+                            <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
+                                <Image src={callIcon} alt="callIcon" width={20} height={20} />
+                                <p>Call</p>
+                            </div>
 
-                    <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
-                    <Image src={enquiryIcon} alt="enquiryIcon" width={20} height={20} /> 
-                    <p>Enquiry</p>
-                    </div>
+                            <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
+                                <Image src={enquiryIcon} alt="enquiryIcon" width={20} height={20} />
+                                <p>Enquiry</p>
+                            </div>
 
-                    <div className='text-center px-4 py-3 w-1/4'>
-                    <Image src={shareIcon} alt="shareIcon" width={20} height={20} /> 
-                    <p>Share</p>
-                    </div>
+                            <div className='text-center px-4 py-3 w-1/4'>
+                                <Image src={shareIcon} alt="shareIcon" width={20} height={20} />
+                                <p>Share</p>
+                            </div>
 
-                  
+
+                        </div>
+                    </div>
                 </div>
-          </div>
-        </div>
-      )}
+            )}
 
             {/* Explore Tractor World  */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 mb-3 pt-4 bg-white " >
@@ -512,12 +525,12 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className='justify-center flex mt-2'>
-                <Btn text={'View all tractor comparisons'} onClick={handleCompareAll} bgColor={true}
-                />
-            </div>
+                    <Btn text={'View all tractor comparisons'} onClick={handleCompareAll} bgColor={true}
+                    />
+                </div>
             </div >
 
-          
+
 
             {/*testimonials */}
             <div id="testimonials">
