@@ -131,12 +131,12 @@ export default function Home({ locale }) {
               <Btn text={'Submit'} bgColor={true} onClick={handleSubmit} />
             </div>
           </div>
-          <div className="sm:relative sm:w-[300px] sm:h-[300px] w-full h-auto">
+          <div className="sm:relative sm:w-[400px] sm:h-[288px] w-full h-[238px] overflow-hidden">
             <Image
               src={languagePopupImg}
               layout='responsive'
-              width={300}
-              height={300}
+              width={400}
+              height={340}
               className='languagePopupImg'
               alt='languagePopupImg'
             />
