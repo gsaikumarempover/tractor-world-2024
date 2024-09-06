@@ -1153,8 +1153,8 @@ export default function Inventory() {
             {/* Modal Content */}
             <div className="rounded-tl-[20px] rounded-tr-[20px] bg-white py-10 px-4 flex flex-col items-center sm:flex-row sm:items-start">
               <div className="text-xl">
-                <p className="font-bold">Price - High to Low</p>
-                <p className="font-bold mt-6">Price - Low to High</p>
+                <p className="font-bold text-medium">Price - High to Low</p>
+                <p className="font-bold mt-6 text-medium">Price - Low to High</p>
               </div>
             </div>
           </>

@@ -255,13 +255,7 @@ export default function CompareTractor() {
                             <Btn text={'View all tractor comparisons'} bgColor={true} />
                             </div>
                     </div>
-{/* 
-                    <div className='my-4'>
-                        <Heading heading={'About Compare Tractors'} />
-                        <p className="text-[14px] mb-3">Tractorworld.com is a one-stop authentic online destination where you can compare a variety of Tractors and Farm Implements. All top tractor brands are available here including Mahindra, John Deere, Escorts, Sonalika, Eicher, TAFE, New Holland and many more. The information displayed on Tractor Junction is believed to be accurate, unbiased and correct. Choose at least two tractors as per your choice to compare based on their specifications, features, mileage, Price, overall performance and warranty. All Indian Farmers can easily compare tractors of distinct varieties just in a few clicks. Tractorworld brings a welfare opportunity to compare tractor price in India. This allows farmers from every region to compare tractors in India.</p>
-                         <p className="text-[14px] mb-3">Tractorworld provides the most comprehensive tractor comparison tool in India on which you can select at least two or more tractors of your choice for comparison. This online platform provides all the useful guidelines for tractor comparison India. Tractorworld always works to empower Indian farmers with a new tractor compare section.</p>
-                         <p className="text-[14px] mb-3">Compare tractor prices in India, specifications, warranty and many more at one place and then select your dream tractor. For Further more inquiries stay tuned with Tractorworld.</p>
-                    </div> */}
+ 
 
                 </div>
 
