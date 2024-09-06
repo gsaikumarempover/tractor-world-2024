@@ -102,8 +102,7 @@ export default function HomePage({ locale }) {
     const [activeTab, setActiveTab] = useState("oneData");
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
-    };
-
+    }; 
 
     const compareTractorData = {
 

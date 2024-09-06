@@ -37,7 +37,9 @@ const Layout = ({ children, currentPage }) => {
       left: 'auto',
       right: 'auto',
       bottom: 'auto', 
-      width: '100%'
+      width: '100%',
+      borderBottomLeftRadius: '15px',
+      borderBottomRightRadius: '15px',
     },
   };
 
@@ -58,17 +60,7 @@ const Layout = ({ children, currentPage }) => {
     router.push(router.asPath, router.asPath, { locale: newLocale });
     setLanguageModalShow(false);
   };
-
-  const customStylesForLanguage = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
+ 
 
 
   return (
@@ -90,7 +82,7 @@ const Layout = ({ children, currentPage }) => {
                 <Image src={Logo} alt="Tractor World Logo" /> 
                 </div>
 
-                <div className='sm:hidden block'>
+                <div className='sm:hidden block mt-2 ml-3'>
                 <Image src={MblLogo} alt="Tractor World Logo" /> 
                 </div>
                 
