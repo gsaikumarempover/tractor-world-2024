@@ -46,7 +46,7 @@ export default function Footer() {
     return (
         <>
             <div className="relative mb-[-10px] z-[10]">
-                <div className="bg-primaryColor xl:w-1/3 sm:w-1/2 w-[95%] mx-auto mb-[-10px] 
+                <div className="bg-primaryColor xl:w-[33%] lg:w-[40%] md:w-[45%] sm:w-[55%] w-[95%] mx-auto mb-[-10px] 
         relative sm:px-8 px-4 py-4 rounded-md text-white sm:text-sm text-xs flex justify-between">
                     <Link href='./dealers' legacyBehavior>
                         <a className="flex items-center">
@@ -56,10 +56,10 @@ export default function Footer() {
                     </Link>
                     <div className="border-r"></div>
                     <Link href='./contact-us' legacyBehavior>
-                    <a className="flex items-center">
-                        <Image src={Enquiry} className="mt-4" alt="enquiry" />
-                        <span className="ml-2">Make an Enquiry</span>
-                    </a>
+                        <a className="flex items-center">
+                            <Image src={Enquiry} className="mt-4" alt="enquiry" />
+                            <span className="ml-2">Make an Enquiry</span>
+                        </a>
                     </Link>
                     <div className="border-r"></div>
                     <div className="flex items-center">
@@ -119,7 +119,7 @@ export default function Footer() {
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="mb-1  text-white opacity-60">Toll Free Number</span>
-                                    <Link href="tel:18006669999">1800 666 9999</Link> 
+                                    <Link href="tel:18006669999">1800 666 9999</Link>
                                 </div>
                             </div>
 

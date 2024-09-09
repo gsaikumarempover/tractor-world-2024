@@ -24,16 +24,16 @@ export default function ApplyNewTractorLoan() {
     return <div>
       <p>A Tractor Loan EMI (Equated Monthly Instalment) is the monthly payment you make until your tractor loan is fully repaid. This amount comprises both the principal loan amount and the interest accrued.</p>
       <div className="grid sm:grid-cols-4 grid-cols-1 mt-2 gap-2">
-        <div className="border">
+        <div className="border cursor-pointer">
           <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
         </div>
-        <div className="border">
+        <div className="border cursor-pointer">
           <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
         </div>
-        <div className="border">
+        <div className="border cursor-pointer">
           <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
         </div>
-        <div className="border">
+        <div className="border cursor-pointer">
           <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
         </div>
         

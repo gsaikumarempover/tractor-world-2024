@@ -270,6 +270,7 @@ export default function ContentGallery() {
                                 <p className="sm:mt-0 mt-2 sm:text-base text-sm">{item.description}<span className="text-[#407BD2] sm:uppercase text-sm cursor-pointer">Read more »</span></p>
                             </div>
                         ))}
+                        
                         <div className="pagination my-4 flex justify-center items-center space-x-2">
                             <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>
                                 <Image src={Leftarrow} alt='left' />
