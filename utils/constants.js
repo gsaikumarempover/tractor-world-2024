@@ -131,3 +131,53 @@ query AllTestimonails($lang: LanguageCodeFilterEnum!) {
 }
 `; 
 
+///all content gallery
+
+
+export const GET_ALL_CONTENT_GALLERY = gql`
+query AllContentGallery($lang: [LanguageCodeEnum!]) {
+  contentgallerys(where: {orderby: {field: DATE, order: ASC}, languages: $lang}) {
+    nodes {
+      contentGalleryFields {
+        badge
+        description
+        image {
+          node {
+            mediaItemUrl
+            sourceUrl
+          }
+        }
+      }
+      date
+      title
+      uri
+    }
+  }
+}
+`; 
+
+//all latest news
+
+export const GET_ALL_LATEST_NEWS= gql`
+query AllLatestNews($lang: [LanguageCodeEnum!]) {
+  latestnews(where: {orderby: {field: TITLE, order: ASC}, languages: $lang}) {
+    edges {
+      node {
+        contentGalleryFields {
+          badge
+          description
+          image {
+            node {
+              mediaItemUrl
+            }
+          }
+        }
+        title
+        uri
+        date
+      }
+    }
+  }
+}
+`; 
+
