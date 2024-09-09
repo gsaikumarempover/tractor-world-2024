@@ -7,6 +7,8 @@ import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import Btn from '@components/Btn';
 import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
+import CompareImg from '@Images/compareTractorImg/compareImg.svg';
+import vs from '@Images/compareTractorImg/vs.svg';
 
 
 export default function CompareTractor() {
@@ -205,6 +207,37 @@ export default function CompareTractor() {
                 <div className="bg-white mb-3 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
                     <Heading heading={'Compare Tractors'} />
 
+                    <div className='flex items-center gap-4 justify-between'>
+                        <div className='text-center cursor-pointer'>
+                            <Image src={CompareImg} alt='compareImg' />
+                            <p className='mt-1 sm:ont-semibold sm:text-base text-sm'>Select Tractor</p>
+                        </div>
+
+
+                        <div>
+                            <Image src={vs} alt='vs' />
+                        </div>
+
+                        <div className='text-center cursor-pointer'>
+                            <Image src={CompareImg} alt='compareImg' />
+                            <p className='mt-1 sm:font-semibold sm:text-base text-sm'>Select Tractor</p>
+                        </div>
+
+
+                        <div>
+                            <Image src={vs} alt='vs' />
+                        </div>
+
+                        <div className='text-center cursor-pointer'>
+                            <Image src={CompareImg} alt='compareImg' />
+                            <p className='mt-1 sm:font-semibold sm:text-base text-sm'>Select Tractor</p>
+                        </div>
+
+
+
+
+                    </div>
+
                 </div>
 
                 <div className="bg-white mb-3 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
@@ -241,21 +274,21 @@ export default function CompareTractor() {
                                                         <div className='font-semibold my-1'>{item.brand2price}</div>
 
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <Btn className="uppercase" text={'COMPARE'} />
                                             </div>
                                         ))}
 
                                     </>
                                 ) : null
-                            )} 
+                            )}
                         </div>
 
-                        <div className='flex justify-center my-6'> 
+                        <div className='flex justify-center my-6'>
                             <Btn text={'View all tractor comparisons'} bgColor={true} />
-                            </div>
+                        </div>
                     </div>
- 
+
 
                 </div>
 

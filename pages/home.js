@@ -16,7 +16,6 @@ import Warranty from '@Images/home/warranty.svg';
 import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
-import HomeBanner from '@Images/home/HomeBanner.svg';
 import Call from '@Images/home/call.svg';
 import Share from '@Images/home/share.svg';
 import Thumb from '@Images/home/thumb.svg';
@@ -327,8 +326,7 @@ export default function HomePage({ locale }) {
             },
 
         ]
-    };
-
+    }; 
 
     const contentGallerysettings = {
         dots: true,
@@ -371,15 +369,14 @@ export default function HomePage({ locale }) {
     const bannerGalleryitems = slides.map((src, index) => (
         <div key={index} className="relative sm:w-[1921] sm:h-[629] w-[750] h-[387] overflow-hidden">
             <Image width={isMobile ? 750 : 1921} height={isMobile ? 387 : 629}
-             className="w-full h-full"  src={isMobile ? src.mobileUrl : src.desktopUrl} layout="responsive" alt={`Banner${index + 1}`} /> 
+             className="w-full h-full" src={isMobile ? src.mobileUrl : src.desktopUrl} layout="responsive" alt={`Banner${index + 1}`} /> 
         </div>
     )); 
     
     return (
         <>
             {/* Home SLider */}
-            {/* <HomeSliders locale={locale} /> */}
-
+ 
             <div className='relative'> 
 
                 <MultipleItemsSlide settings={contentGallerysettings} id={'bannerGallery'} items={bannerGalleryitems} /> 
