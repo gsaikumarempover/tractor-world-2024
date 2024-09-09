@@ -50,10 +50,9 @@ export default function DealerLocator() {
                   <select className="block w-full px-2 py-[7px] border 
                     border-gray-300 rounded-md text-[14px] text-[#B9B9B9] mt-2">
                     <option selected>Select State</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                    <option value="madhyaPradesh">Madhya Pradesh</option>
+                    <option value="maharashtra">Maharashtra</option>
+                   </select>
                 </div>
 
                 <div className="mb-4">
@@ -61,9 +60,9 @@ export default function DealerLocator() {
                   <select className="block w-full px-2 py-[7px] 
                      border border-gray-300 rounded-md  text-[14px] text-[#B9B9B9] mt-2">
                     <option selected>Select District</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="bhopal">Bhopal</option>
+                    <option value="alirajpur">Alirajpur</option>
+                    <option value="barwani">Barwani</option>
                   </select>
                 </div>
 
@@ -72,10 +71,9 @@ export default function DealerLocator() {
                   <select className="block w-full px-2 py-[7px] border border-gray-300 
                     rounded-md text-[14px] text-[#B9B9B9] mt-2">
                     <option selected>Select Tehsil or Taluka</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                    <option value="Berasia">Berasia</option>
+                    <option value="Huzur">Huzur</option>
+                   </select>
                 </div>
                 <Btn text={"Find Dealer"} bgColor={true} onClick={handleAlldealers}/>
 
