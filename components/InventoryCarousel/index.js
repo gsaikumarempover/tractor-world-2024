@@ -28,24 +28,24 @@ export default function InventoryCarousel() {
             <div className="slider-container" id="inventoryCarousel">
                 <Slider {...settings}>
                     <div className='relative'>
-                        <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide01.svg"} className='detailsSlideImg' alt='slide01' />
+                        <Image width={519} height={397} src={baseUrl + "/slide01.svg"} className='detailsSlideImg' alt='slide01' />
                         <div className='absolute top-4 right-4'>
                             <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
                         </div>
                     </div>
                     <div className='relative'>
-                        <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide02.svg"} className='detailsSlideImg' alt='slide02 ' />
+                        <Image width={519} height={397} src={baseUrl + "/slide02.svg"} className='detailsSlideImg' alt='slide02 ' />
                         <div className='absolute top-4 right-4'>
                             <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
                         </div>                    </div>
                     <div className='relative'>
-                        <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide03.svg"} className='detailsSlideImg' alt='slide03' />
+                        <Image width={519} height={397} src={baseUrl + "/slide03.svg"} className='detailsSlideImg' alt='slide03' />
                         <div className='absolute top-4 right-4'>
                             <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
                         </div>
                     </div>
                     <div className='relative'>
-                        <Image width={100} height={100} layout='responsive' src={baseUrl + "/slide04.svg"} className='detailsSlideImg' alt='slide04' />
+                        <Image width={519} height={397} src={baseUrl + "/slide04.svg"} className='detailsSlideImg' alt='slide04' />
                         <div className='absolute top-4 right-4'>
                             <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
                         </div>

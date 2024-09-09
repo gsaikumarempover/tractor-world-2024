@@ -117,16 +117,16 @@ export default function dealers() {
                 />
 
                 <div className='bg-[#EFECEC] mt-4 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'>
-                    <Heading heading={"Tractors Dealers "} viewButton={true} />
-                    <div className='overflow-x-scroll sm:overflow-x-visible'>
-                        <div className='sm:grid sm:grid-cols-4 flex flex-nowrap gap-4'>
+                    <Heading heading={"Mahindra Tractor - Dealers"} viewButton={true} />
+                    <div className=''>
+                        <div className='grid sm:grid-cols-4 grid-cols-1 flex-nowrap gap-4'>
                             {dealerData.map((dealer, index) => (
-                                <div key={index} className='bg-white sm:w-auto w-80 flex-shrink-0'>
+                                <div key={index} className='bg-white flex-shrink-0'>
                                     <div className="slider-container" id="dealerSlide">
                                         <Slider {...settings}>
                                             <div className="relative group">
                                                 <Image src={dealer.image} alt={`Slide 1 for ${dealer.name}`}
-                                                    className="object-cover w-full h-full" />
+                                                    className="object-cover w-full h-full" layout='responsive' />
                                                 <div className="absolute h-[96%] inset-0 bg-black  bg-opacity-70 opacity-0 
                                                 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                                                     <div className="grid grid-cols-3 gap-3">

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router'; 
 import Image from 'next/image';
 import CardImage from '@Images/card1.svg';
 import Heading from "@components/Heading";
@@ -15,7 +16,6 @@ import Warranty from '@Images/home/warranty.svg';
 import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
-import HomeBanner from '@Images/home/HomeBanner.svg';
 import Call from '@Images/home/call.svg';
 import Share from '@Images/home/share.svg';
 import Thumb from '@Images/home/thumb.svg';
@@ -29,32 +29,72 @@ import shareIcon from '@Images/footer/shareIcon.svg'
 import Btn from '@components/Btn';
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
-import { useRouter } from 'next/router';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "../components/SingleItemsSlide";
 import Link from 'next/link';
+import { useQuery } from "@apollo/client";
+import { HOME_SLIDERS } from "@utils/constants";
 
 export default function HomePage({ locale }) {
-
-const [isMobile, setIsMobile] = useState(false);
-
-useEffect(() => {
-    if (typeof window !== 'undefined') {
-        setIsMobile(window.innerWidth <= 768);
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }
-}, []);
-
-
-
+    const [isMobile, setIsMobile] = useState(false);
+    const [activeTab, setActiveTab] = useState("oneData");
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
     const router = useRouter();
+
+
+    useEffect(() => {
+          //moble web devide
+          if (typeof window !== 'undefined') {
+            setIsMobile(window.innerWidth <= 768);
+            const handleResize = () => {
+                setIsMobile(window.innerWidth <= 768);
+            };
+            window.addEventListener('resize', handleResize);
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        } 
+
+    }, []);
+
+    useEffect(() => { 
+        const handleScroll = () => {
+            if (typeof window !== 'undefined') {
+                if (window.scrollY > lastScrollY) {
+                    // Scrolling down
+                    setIsVisible(false);
+                } else {
+                    // Scrolling up
+                    setIsVisible(true);
+                }
+                setLastScrollY(window.scrollY);
+            }
+        }; 
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+
+    }, [lastScrollY]);
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const isFirstSlide = currentIndex === 0;
+    const language = locale?.toUpperCase();
+    const { loading, error, data } = useQuery(HOME_SLIDERS, {
+        variables: { lang: language }
+    });
+
+    if (loading) return <p>Loading Banners...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    const slides = data.homeSliders.nodes.map(node => {
+        const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
+        const mobileUrl = node.homesliders.mobilesliderimage.node.mediaItemUrl;
+        return { desktopUrl, mobileUrl };
+    });
+
 
     const handleCompareAll = () => {
         router.push('/compare-tractors');
@@ -112,7 +152,6 @@ useEffect(() => {
         },
     ];
 
-    const [activeTab, setActiveTab] = useState("oneData");
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
     };
@@ -287,8 +326,7 @@ useEffect(() => {
             },
 
         ]
-    };
-
+    }; 
 
     const contentGallerysettings = {
         dots: true,
@@ -305,7 +343,7 @@ useEffect(() => {
             name: "Sonalika Tractor",
         },
         {
-            image:  !isMobile ? slide1 : mblSlide1,
+            image: !isMobile ? slide1 : mblSlide1,
             name: "Sonalika Tractor",
         },
     ];
@@ -328,39 +366,20 @@ useEffect(() => {
         </div>
     ));
 
-
-
-    const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (typeof window !== 'undefined') {
-                if (window.scrollY > lastScrollY) {
-                    // Scrolling down
-                    setIsVisible(false);
-                } else {
-                    // Scrolling up
-                    setIsVisible(true);
-                }
-                setLastScrollY(window.scrollY);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [lastScrollY]);
-
+    const bannerGalleryitems = slides.map((src, index) => (
+        <div key={index} className="relative sm:w-[1921] sm:h-[629] w-[750] h-[387] overflow-hidden">
+            <Image width={isMobile ? 750 : 1921} height={isMobile ? 387 : 629}
+             className="w-full h-full" src={isMobile ? src.mobileUrl : src.desktopUrl} layout="responsive" alt={`Banner${index + 1}`} /> 
+        </div>
+    )); 
+    
     return (
         <>
             {/* Home SLider */}
-            {/* <HomeSliders locale={locale} /> */}
+ 
+            <div className='relative'> 
 
-            <div className='relative'>
-                <Image src={HomeBanner} alt='HomeBanner' className='w-full' />
+                <MultipleItemsSlide settings={contentGallerysettings} id={'bannerGallery'} items={bannerGalleryitems} /> 
 
                 <div className=" sm:flex hidden fixed z-[99] top-1/2 right-0 transform -translate-y-1/2  flex-col items-center justify-center rounded-md shadow-sm" role="group">
 

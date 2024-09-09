@@ -576,11 +576,11 @@ export default function Inventory() {
                 <div className="sm:hidden flex">
 
                   <Tab id="listData" image={true} activeTab={activeTab} onClick={handleTabClick}>
-                    {activeTab === "listData" ? <Image src={listActiveView} alt="listActiveView" /> : <Image src={listView} alt="listView" />}
+                    {activeTab === "listData" ? <Image src={listActiveView} alt="listActiveView" width={50} height={50} /> : <Image src={listView} alt="listView" width={50} height={50} />}
                   </Tab>
 
                   <Tab id="gridData" image={true} activeTab={activeTab} onClick={handleTabClick}>
-                    {activeTab === "gridData" ? <Image src={gridActiveView} alt="gridActiveView" /> : <Image src={gridView} alt="gridView" />}
+                    {activeTab === "gridData" ? <Image src={gridActiveView} alt="gridActiveView" width={50} height={50} /> : <Image src={gridView} alt="gridView" width={50} height={50} />}
 
                   </Tab>
                 </div>
@@ -600,13 +600,13 @@ export default function Inventory() {
                     </div>
                   </div>
 
-                  <div>  
+                  {/* <div>  
                   <select className="block w-full px-2 py-[7px]   rounded border-[1px] border-[#D0D0D0]  text-[14px] text-secondaryColor">
                     <option selected value="">Tractor Sort By</option>
                     <option value="hightolow">Price - High to Low</option>
                     <option value="lowtohigh">Price - Low to High</option>
                    </select>
-                  </div>
+                  </div> */}
 
                 </div>
 
@@ -680,14 +680,16 @@ export default function Inventory() {
                             className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none">
 
                             <div className="flex">
-                              <div className="w-1/2 relative">
+                              <div className="w-[40%] relative">
+                                <div className="w-full h-[175px]">
                                 <Image
-                                  className="w-full"
+                                  className="w-full h-[600px]"
                                   src={DefaultTractor}
+                                  height={600}                                
                                   alt="cardImage"
                                   layout="responsive"
-                                  width={100}
-                                  height={100} />
+                                  />
+                                  </div>
 
                                 {item.certified && (
                                   <div className="bg-secondaryColor px-2
@@ -696,7 +698,7 @@ export default function Inventory() {
                                   </div>
                                 )}
                               </div>
-                              <div className="w-1/2">
+                              <div className="w-[60%]">
 
                                 <div className="p-2">
 
@@ -1011,7 +1013,7 @@ export default function Inventory() {
                             className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none">
 
                             <div className="flex">
-                              <div className="w-1/2 relative">
+                              <div className="w-[40%] relative">
                                 <Image
                                   className="w-full"
                                   src={DefaultTractor}
@@ -1027,7 +1029,7 @@ export default function Inventory() {
                                   </div>
                                 )}
                               </div>
-                              <div className="w-1/2">
+                              <div className="w-[60%]">
 
                                 <div className="p-2">
 
@@ -1151,8 +1153,8 @@ export default function Inventory() {
             {/* Modal Content */}
             <div className="rounded-tl-[20px] rounded-tr-[20px] bg-white py-10 px-4 flex flex-col items-center sm:flex-row sm:items-start">
               <div className="text-xl">
-                <p className="font-bold">Price - High to Low</p>
-                <p className="font-bold mt-6">Price - Low to High</p>
+                <p className="font-bold text-medium">Price - High to Low</p>
+                <p className="font-bold mt-6 text-medium">Price - Low to High</p>
               </div>
             </div>
           </>

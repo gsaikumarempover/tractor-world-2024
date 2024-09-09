@@ -6,8 +6,10 @@ import Image from "next/image";
 import Table from "@components/Table";
 import Heading from "@components/Heading";
 import Tab from '@components/Tab';
-import CompareImage from '@Images/liveInventory/compareImage.svg'; 
+import CompareImage from '@Images/liveInventory/compareImage.svg';
 import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
+import vs from '@Images/compareTractorImg/vs.svg';
+
 export default function CompareTractorDetails() {
     const breadcrumbData = [
         { label: 'Home', link: '/' },
@@ -288,20 +290,23 @@ export default function CompareTractorDetails() {
                 />
                 <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
 
-                    <div className="flex flex-wrap gap-2 items-center justify-between">
+                    <div className="flex sm:flex-row flex-col gap-2 items-center justify-between">
                         {images.map((tractor, index) => (
                             <>
 
                                 {index > 0 && (<div className="w-7 text-sm h-7 bg-secondaryColor flex leading-3
-                                 text-white items-center justify-center rounded-full font-bold">Vs</div>
+                                 text-white items-center justify-center rounded-full font-bold"> 
+                                    <Image src={vs} alt='vs' />
+
+                                </div>
                                 )}
 
                                 <div>
                                     <div key={index} className="bg-[#FBFBFB] shadow-lg">
-                                        <Image src={tractor.image} 
-                                          alt="image"
-                                          width={301}
-                                          height={173} 
+                                        <Image src={tractor.image}
+                                            alt="image"
+                                            width={301}
+                                            height={173}
                                         />
                                         <div className="p-4 bg-[#FBFBFB]">
                                             <h3 className="text-[14px]  text-[#000000]">{tractor.name}</h3>
@@ -383,9 +388,9 @@ export default function CompareTractorDetails() {
 
                     <div className='flex sm:gap-4 gap-2 my-3 font-medium'>
                         <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}>
-                        Popular</Tab>
+                            Popular</Tab>
                         <Tab id="twoData" activeTab={activeTab} onClick={handleTabClick}>Latest</Tab>
-                        <Tab id="ThreeData" activeTab={activeTab} onClick={handleTabClick}>Upcoming</Tab> 
+                        <Tab id="ThreeData" activeTab={activeTab} onClick={handleTabClick}>Upcoming</Tab>
                     </div>
 
                     <div className="overflow-x-auto sm:overflow-visible">

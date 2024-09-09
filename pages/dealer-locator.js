@@ -83,6 +83,8 @@ export default function DealerLocator() {
                   <p className="font-bold py-3 text-black text-lg">Tractor Dealer List</p>
                 </div>
 
+                <div className="flex flex-col gap-3">
+
                 <div className="slider-container pb-4">
                   <Slider {...settings}> 
                   
@@ -226,6 +228,154 @@ export default function DealerLocator() {
                      
                   </Slider>
                 </div> 
+
+                <div className="slider-container pb-4">
+                  <Slider {...settings}> 
+                  
+                    <div className="card bg-[#EEEEF0] mb-2">
+                      <span className="w-full px-2 py-1 rounded-md inline-block cursor-pointer 
+                    font-bold text-black text-sm" id="location-span">
+                       Ram Motors, Chandrapur
+                      </span> 
+                      <div className="bg-[#F6F6F6] pt-2">
+                        <div className="flex gap-1 mb-2">
+                          <div className="">
+                            <Image src={Men} alt="men" />
+                          </div>
+                          <div> 
+                            <div className="text-[11px]">
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={BrandImg} alt="BrandImg" />
+                                </div>
+                                <p className="w-[90%]">Brand - <b>Sonalika</b></p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={LocationImg} alt="LocationImg" />
+                                </div>
+                                <p className="w-[90%]"> Opposite Government Engineering College </p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={CallImg} alt="callImg" />
+                                </div>
+                                <p className="w-[90%]">+91 95xxxxxx77</p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={MailImg} alt="men" />
+                                </div>
+                                <p className="w-[90%]">Narayana@gmail.com</p>
+                              </div>
+                            </div>
+                          </div> 
+                        </div>
+                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                      </div> 
+                     </div> 
+
+                     <div className="card bg-[#EEEEF0] mb-2">
+                      <span className="w-full px-2 py-1 rounded-md inline-block cursor-pointer 
+                    font-bold text-black text-sm" id="location-span">
+                        Ram Motors, Chandrapur
+                      </span> 
+                      <div className="bg-[#F6F6F6] pt-2">
+                        <div className="flex gap-1 mb-2">
+                          <div className="">
+                            <Image src={Men} alt="men" />
+                          </div>
+                          <div> 
+                            <div className="text-[11px]">
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={BrandImg} alt="BrandImg" />
+                                </div>
+                                <p className="w-[90%]">Brand - <b>Sonalika</b></p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={LocationImg} alt="LocationImg" />
+                                </div>
+                                <p className="w-[90%]"> Opposite Government Engineering College </p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={CallImg} alt="callImg" />
+                                </div>
+                                <p className="w-[90%]">+91 95xxxxxx77</p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={MailImg} alt="men" />
+                                </div>
+                                <p className="w-[90%]">Narayana@gmail.com</p>
+                              </div>
+                            </div>
+                          </div> 
+                        </div>
+                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                      </div> 
+                     </div>   
+                    
+                     <div className="card bg-[#EEEEF0] mb-2">
+                      <span className="w-full px-2 py-1 rounded-md inline-block cursor-pointer 
+                    font-bold text-black text-sm" id="location-span">
+                        Ram Motors, Chandrapur
+                      </span> 
+                      <div className="bg-[#F6F6F6] pt-2">
+                        <div className="flex gap-1 mb-2">
+                          <div className="">
+                            <Image src={Men} alt="men" />
+                          </div>
+                          <div> 
+                            <div className="text-[11px]">
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={BrandImg} alt="BrandImg" />
+                                </div>
+                                <p className="w-[90%]">Brand - <b>Sonalika</b></p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={LocationImg} alt="LocationImg" />
+                                </div>
+                                <p className="w-[90%]"> Opposite Government Engineering College </p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={CallImg} alt="callImg" />
+                                </div>
+                                <p className="w-[90%]">+91 95xxxxxx77</p>
+                              </div>
+
+                              <div className="flex gap-2 mb-1">
+                                <div className="w-[10%]">
+                                  <Image src={MailImg} alt="men" />
+                                </div>
+                                <p className="w-[90%]">Narayana@gmail.com</p>
+                              </div>
+                            </div>
+                          </div> 
+                        </div>
+                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                      </div> 
+                     </div> 
+                     
+                  </Slider>
+                </div> 
+
+                </div>
+
+
                 <div className="mt-2">
                    <Btn text={"View All"} bgColor={false}  onClick={handleAlldealers} />
                    </div>
