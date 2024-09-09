@@ -9,13 +9,46 @@ import Btn from '@components/Btn';
 import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
 import CompareImg from '@Images/compareTractorImg/compareImg.svg';
 import vs from '@Images/compareTractorImg/vs.svg';
-
+import Search from '@Images/compareTractorImg/search.svg';
+import leftArrow from '@Images/compareTractorImg/leftArrow.svg';
+import Modal from "@components/Modal";
 
 export default function CompareTractor() {
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const modalShow = () => setShowModal(true);
+
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setIsMobile(window.innerWidth <= 768);
+            const handleResize = () => {
+                setIsMobile(window.innerWidth <= 768);
+            };
+            window.addEventListener('resize', handleResize);
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }
+    }, []);
+
     const breadcrumbData = [
         { label: 'Home', link: '/' },
         { label: 'Campare Tractor', link: '#' },
     ];
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            width: !isMobile ? '40%' : '90%'
+        },
+    };
 
     const compareTractorData = {
 
@@ -207,41 +240,34 @@ export default function CompareTractor() {
                 <div className="bg-white mb-3 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
                     <Heading heading={'Compare Tractors'} />
 
-                    <div className='flex sm:items-start items-center  gap-4 justify-between'>
-                        <div className='text-center cursor-pointer'>
-                            <Image src={CompareImg} alt='compareImg' />
-                            <p className='mt-1 sm:font-semibold sm:text-base text-sm'>Select Tractor</p>
+                    <div className='flex sm:items-start items-center gap-4 justify-between'>
 
-                            <div className='mt-4 sm:block hidden'>
-                                <Btn text={'compare'} bgColor={true} />
-                            </div>
-                            
+                        <div className='text-center cursor-pointer' onClick={modalShow}>
+                            <Image src={CompareImg} alt='compareImg' width={250} height={250} />
                         </div>
 
-
-                        <div className='my-auto'>
-                            <Image src={vs} alt='vs' />
+                        <div className='my-auto sm:w-[35px] h-auto w-[50px]'>
+                            <Image src={vs} alt='vs' layout='responsive' />
                         </div>
 
                         <div className='text-center cursor-pointer'>
-                            <Image src={CompareImg} alt='compareImg' />
-                            <p className='mt-1 sm:font-semibold sm:text-base text-sm'>Select Tractor</p>
+                            <Image src={CompareImg} alt='compareImg' width={250} height={250} />
                         </div>
 
-
-                        <div className='my-auto'>
-                            <Image src={vs} alt='vs' />
+                        <div className='my-auto sm:w-[35px] h-auto w-[50px]'>
+                            <Image src={vs} alt='vs' layout='responsive' />
                         </div>
 
                         <div className='text-center cursor-pointer'>
-                            <Image src={CompareImg} alt='compareImg' />
-                            <p className='mt-1 sm:font-semibold sm:text-base text-sm'>Select Tractor</p>
-                        </div> 
+                            <Image src={CompareImg} alt='compareImg' width={250} height={250} />
+                        </div>
 
                     </div>
 
-                    <div className='mt-4 sm:hidden block'>
-                        <Btn text={'compare'} bgColor={true} />
+                    <div className='mt-4 w-full flex justify-end'>
+                        <div className='sm:w-[15%] w-full'>
+                            <Btn text={'COMPARE'} bgColor={true} disabled={true} />
+                        </div>
                     </div>
 
                 </div>
@@ -297,6 +323,42 @@ export default function CompareTractor() {
 
 
                 </div>
+
+                <Modal showModal={showModal} customStyles={customStyles} handleClose={handleClose} content={
+                    <div className='flex sm:flex-row flex-col-reverse w-full'>
+                        <div className='px-4 py-4 w-full'>
+                            <div class="flex items-center gap-2">
+                                <Image src={leftArrow} alt='leftArrow' width={15} height={15} className='cursor-pointer' onClick={handleClose} />
+                                <p className='font-bold'>Select Brand</p>
+                            </div>
+
+                            <div className="relative w-full mt-4">
+                                <input type="text" placeholder="Search Tractor Brand by Name" className="w-full rounded border-[1px] border-[#D0D0D0] py-2" />
+                                <div className="absolute top-[58%] transform -translate-y-1/2 right-2">
+                                    <Image src={Search} alt="search" width={40} height={40} />
+                                </div>
+                            </div>
+
+                            <div className='mt-3'>
+                                <input type='radio' />
+                                <label className="ml-2 text-medium">575 DI XP Plus</label>
+                            </div>
+                            <div className='mt-3'>
+                                <input type='radio' />
+                                <label className="ml-2 text-medium">575 DI XP Plus</label>
+                            </div>
+
+                            <div className='mt-3'>
+                                <input type='radio' />
+                                <label className="ml-2 text-medium">575 DI XP Plus</label>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                } />
 
             </Layout>
         </div>

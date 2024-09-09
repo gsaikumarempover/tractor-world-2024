@@ -7,6 +7,7 @@ import Table from "@components/Table";
 import Heading from "@components/Heading";
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
+import closeIcon from '@Images/closeIcon.svg';
 import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
 import vs from '@Images/compareTractorImg/vs.svg';
 
@@ -290,23 +291,28 @@ export default function CompareTractorDetails() {
                 />
                 <div className="w-full bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
 
-                    <div className="w-full flex sm:flex-row sm:items-start items-center flex-col gap-2 justify-between">
+                    <div className="w-full flex sm:flex-row sm:items-start items-center flex-col sm:gap-10 gap-4 justify-between">
                         {images.map((tractor, index) => (
                             <>
-
                                 {index > 0 && (
-                                    <div className='my-auto'>
-                                        <Image src={vs} alt='vs' />
+                                    <div className='my-auto sm:w-[100px] sm:h-[100px] h-[40px] w-[40px]'>
+                                        <Image src={vs} alt='vs' layout="responsive" />
                                     </div>
-                                )} 
+                                )}
+
                                 <div className="w-full">
                                     <div key={index} className="bg-[#FBFBFB] shadow-lg w-full">
-                                        <Image src={tractor.image}
-                                            alt="image"
-                                            width={301}
-                                            height={173}
-                                            layout="responsive"
-                                        />
+                                        <div className="relative">
+                                            <Image src={tractor.image}
+                                                alt="image"
+                                                width={301}
+                                                height={173}
+                                                layout="responsive"
+                                            />
+                                            <div className="absolute top-2 right-2">
+                                                <Image src={closeIcon} width={20} height={20} className="cursor-pointer" />
+                                            </div>
+                                        </div>
                                         <div className="p-4 bg-[#FBFBFB]">
                                             <h3 className="text-[14px]  text-[#000000]">{tractor.name}</h3>
                                             <p className="text-[14px]  text-secondaryColor mt-2">{tractor.emiStartsFrom}</p>
