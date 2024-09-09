@@ -26,7 +26,7 @@ import Language from '@Images/topbar/language.svg'
 import { useTranslation } from 'next-i18next';
 
 
-export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
+export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
   const { locale: activeLocale, locales, asPath } = useRouter();
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
@@ -69,8 +69,13 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
             </svg>
           </button>
 
-          <a href="./" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <Image src={Logo} alt="Tractor World Logo" />
+          <a href="./" className="flex items-center sm:space-x-3 rtl:space-x-reverse"> 
+            <div className="sm:block hidden">
+              <Image src={Logo} alt="Tractor World Logo" />
+            </div> 
+            <div className="sm:hidden block">
+              <Image src={MblLogo} alt="mblLogo"></Image>
+            </div> 
           </a>
 
           <span className="sm:hidden ml-auto mr-2 mt-1" onClick={onClick}>
@@ -82,7 +87,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
          text-white text-sm mr-2 border-gradient">
 
               Sell
- 
+
             </div>
           </Link>
 
@@ -103,7 +108,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
                     <Image src={Crossmark} onClick={hideNavbar} className="crossIcon" alt="Crossmark" /></div>
                 </div>
 
-                
+
                 <div className="flex my-3 w-full">
                   <div className="relative w-full">
                     <input type="text" placeholder="search..." className="w-full rounded border-[1px] border-[#D0D0D0] py-3" />
@@ -175,7 +180,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
                   </a>
                 </Link>
 
-              
+
 
                 <Link href="/contact-us">
                   <a className={`${currentPage == "contact" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
@@ -186,7 +191,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
                   </a>
                 </Link>
 
-                
+
 
 
                 <li className="sm:block hidden" onClick={onClick}>
@@ -211,25 +216,25 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
               </ul>
 
               <div className="sm:hidden block mt-3 px-4 ">
-              <hr className="border-[#EFEAEA]"></hr> 
+                <hr className="border-[#EFEAEA]"></hr>
                 <div className="pt-3">
                   {/* <div className="">Toll Free Number</div> */}
 
                   <div className="flex items-center mb-1">
-                      <span className="text-[15px] text-secondaryColor">Toll Free Number</span>
-                    </div> 
+                    <span className="text-[15px] text-secondaryColor">Toll Free Number</span>
+                  </div>
 
-                 <div className="flex items-center mb-1">     
-                        <span className="w-[5%]">
-                    <Image src={Contact} alt="Contact-image" width={14} height={14} />
+                  <div className="flex items-center mb-1">
+                    <span className="w-[5%]">
+                      <Image src={Contact} alt="Contact-image" width={14} height={14} />
                     </span>
                     <span className="text-[.84rem] ml-2 block">
-                    <Link href="tel:18006669999">  
-                    1800 666 9999</Link></span>
-                    </div>
+                      <Link href="tel:18006669999">
+                        1800 666 9999</Link></span>
+                  </div>
 
                 </div>
-                </div>
+              </div>
 
               <div className="sm:hidden block mt-3 px-4 ">
                 <hr className="border-[#EFEAEA]"></hr>
