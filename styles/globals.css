@@ -386,7 +386,7 @@ body {
 
 #inventorySlide>.slider-container>.slick-slider>span:nth-child(1) {  
   position: absolute !important;
-  z-index: 99 !important;
+  z-index: 50 !important;
   cursor: pointer !important;
   bottom: 0 !important;
   right: 100px !important; 
@@ -394,7 +394,7 @@ body {
 
 #inventorySlide>.slider-container>.slick-slider>span:nth-child(3) { 
   position: absolute !important;
-  z-index: 99 !important;
+  z-index: 50 !important;
   cursor: pointer !important;
   bottom: 0 !important;
   right: 0px !important;
@@ -403,7 +403,7 @@ body {
 
 #contentGallery>.slick-slider>span:nth-child(1) {
   position: absolute !important;
-  z-index: 99 !important;
+  z-index: 50 !important;
   cursor: pointer !important;
   top: 50% !important;
   left: -42px !important;
@@ -412,7 +412,7 @@ body {
 
 #contentGallery>.slick-slider>span:nth-child(3) {
   position: absolute !important;
-  z-index: 99 !important;
+  z-index: 50 !important;
   cursor: pointer !important;
   top: 50% !important;
   right: -42px !important;

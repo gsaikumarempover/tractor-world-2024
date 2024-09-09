@@ -90,7 +90,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
         ease-in-out w-full sm:block sm:w-auto`} id="navbar-default">
 
             <div className="sm:w-auto w-[280px] sm:h-auto h-screen
-         sm:bg-transparent bg-white z-50 sm:relative fixed top-0 sm:pb-4 pt-4 Navbar">
+         sm:bg-transparent bg-white z-[99] sm:relative fixed top-0 sm:pb-4 pt-4 Navbar">
               <div className="sm:hidden block px-4 ">
                 <div className="flex justify-between">
                   <Link href="./" >
@@ -175,14 +175,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
                   </a>
                 </Link>
 
-                {/* <div onClick={onClickForLanguage} >
-                  <a className={`${currentPage == "language" ? 'text-secondaryColor font-bold' : ''} sm:hidden hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
-                    <div className="flex items-center">
-                      <span className="sm:hidden block w-[11%]"><Image src={Language} alt="ContentGallery" /></span>
-                      <span className={`md:ml-0 ml-2 ${currentPage == "language" ? 'active' : ''}`}>Language</span>
-                    </div>
-                  </a>
-                </div> */}
+              
 
                 <Link href="/contact-us">
                   <a className={`${currentPage == "contact" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
@@ -250,7 +243,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
               </div>
 
               <div className="sm:hidden block">
-                <Image src={EndTractor}
+                <Image src={EndTractor} layout="responsive"
                   className="w-full relative bottom-0 left-0" alt="sidebarFooterImage" />
               </div>
             </div>
