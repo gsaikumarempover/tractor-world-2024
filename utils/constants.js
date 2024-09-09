@@ -42,4 +42,92 @@ export const GET_LIVE_INVENTORY = gql`
       }
     }
   }
-`;   
+`;  
+
+export const GET_ALL_STATES = gql`
+  query GetAllStates{
+  allStateTowns(where: {orderby: {order: ASC, field: TITLE}}) {
+    edges {
+      node {
+        stateTownList {
+          state
+        }
+      }
+    }
+  }
+}
+`;  
+//const states = response.data.allStateTowns.edges.map(edge => edge.node.stateTownList.state);
+//console.log(states); 
+
+export const GET_ALL_TOWNS = gql`
+  query GetTownsByState($state: String!) {
+  allStateTowns(where: {name: $state}) {
+    edges {
+      node {
+        stateTownList {
+          townsList
+          state
+        }
+      }
+    }
+  }
+}
+`; 
+//const states = response.data.allStateTowns.edges.map(edge => edge.node.stateTownList.townsList);
+//{ "state": "Maharashtra"}
+
+export const GET_ALL_BRANDS = gql`
+  query GetBrands {
+  brandsmodels(where: {orderby: {field: TITLE, order: ASC}}, first: 50) {
+    edges {
+      node {
+        brandmodelFields {
+          brand
+           models
+        }
+      }
+    }
+  }
+}
+`; 
+//const brands = response.data.brandsmodels.edges.map(edge => edge.node.brandmodelFields.brand);
+
+
+export const GET_ALL_MODELS_BY_BRAND = gql`
+query GetModelsByBrand($brand: String!) {
+  brandsmodels(where: {name: $brand}) {
+    edges {
+      node {
+        brandmodelFields {
+          brand
+          models
+        }
+      }
+    }
+  }
+}
+`; 
+
+
+///get testimonails  
+
+export const GET_ALL_TESTIMONIALS = gql`
+query AllTestimonails{
+  allTestimonial {
+    nodes {
+      testimonials {
+        description
+        tittle
+        videoUrl
+        tesimonialImage {
+          node {
+            mediaItemUrl
+          }
+        }
+      }
+    }
+  }
+}
+`; 
+
