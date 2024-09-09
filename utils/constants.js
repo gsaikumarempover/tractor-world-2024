@@ -113,8 +113,8 @@ query GetModelsByBrand($brand: String!) {
 ///get testimonails  
 
 export const GET_ALL_TESTIMONIALS = gql`
-query AllTestimonails{
-  allTestimonial {
+query AllTestimonails($lang: LanguageCodeFilterEnum!) {
+  allTestimonial(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
     nodes {
       testimonials {
         description
