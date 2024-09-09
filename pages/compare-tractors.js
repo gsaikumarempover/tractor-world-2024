@@ -210,7 +210,7 @@ export default function CompareTractor() {
                     <div className='flex items-center gap-4 justify-between'>
                         <div className='text-center cursor-pointer'>
                             <Image src={CompareImg} alt='compareImg' />
-                            <p className='mt-1 sm:ont-semibold sm:text-base text-sm'>Select Tractor</p>
+                            <p className='mt-1 sm:font-semibold sm:text-base text-sm'>Select Tractor</p>
                         </div>
 
 
