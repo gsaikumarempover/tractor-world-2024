@@ -82,7 +82,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
          text-white text-sm mr-2 border-gradient">
 
               Sell
-
+ 
             </div>
           </Link>
 
@@ -96,7 +96,7 @@ export default function Navbar({ currentPage, onClick,onClickForLanguage }) {
                   <Link href="./" >
                     <a className="self-center text-2xl font-semibold 
               whitespace-nowrap dark:text-white">
-                      <Image src={MblLogo} alt="mblLogo"></Image>
+                      <Image src={MblLogo} alt="mblLogo" width={70} height={70}></Image>
                     </a>
                   </Link>
                   <div>
