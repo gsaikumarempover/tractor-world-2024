@@ -302,7 +302,7 @@ export default function CompareTractorDetails() {
 
                                 <div className="w-full">
                                     <div key={index} className="bg-[#FBFBFB] shadow-lg w-full">
-                                        <div className="relative">
+                                        <div className="relative p-2">
                                             <Image src={tractor.image}
                                                 alt="image"
                                                 width={301}
@@ -317,19 +317,22 @@ export default function CompareTractorDetails() {
                                             <h3 className="text-[14px]  text-[#000000]">{tractor.name}</h3>
                                             <p className="text-[14px]  text-secondaryColor mt-2">{tractor.emiStartsFrom}</p>
                                             <p className="text-[14px] text-[#000000]  mt-2">{tractor.price}</p>
-                                            <p className="text-[14px] text-primaryColor  mt-2 inline-block">
+                                            <p className="text-[14px] text-primaryColor  mt-2 inline-block cursor-pointer">
                                                 Enquire
                                             </p>
                                         </div>
                                     </div>
 
-                                    {index == 0 && (<div className="my-4">
-                                        <Btn text={'COMPARE'} bgColor={true} />
-                                    </div>
-                                    )}
                                 </div>
                             </>
                         ))}
+
+                    </div>
+
+                    <div className='mt-4 w-full flex justify-end'>
+                        <div className='sm:w-[15%] w-full'>
+                            <Btn text={'COMPARE'} bgColor={true} />
+                        </div>
                     </div>
 
                     <div
