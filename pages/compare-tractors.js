@@ -333,7 +333,7 @@ export default function CompareTractor() {
                             </div>
 
                             <div className="relative w-full mt-4">
-                                <input type="text" placeholder="Search Tractor Brand by Name" className="w-full rounded border-[1px] border-[#D0D0D0] py-2" />
+                                <input type="text" placeholder="Search Tractor Brand by Name" className="w-full rounded border-[1px] border-[#D0D0D0] py-2 pr-14" />
                                 <div className="absolute top-[58%] transform -translate-y-1/2 right-2">
                                     <Image src={Search} alt="search" width={40} height={40} />
                                 </div>

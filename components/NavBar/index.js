@@ -111,7 +111,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
 
                 <div className="flex my-3 w-full">
                   <div className="relative w-full">
-                    <input type="text" placeholder="search..." className="w-full rounded border-[1px] border-[#D0D0D0] py-3" />
+                    <input type="text" placeholder="search..." className="w-full rounded border-[1px] border-[#D0D0D0] py-3 pr-10" />
                     <div className="absolute top-[55%] transform -translate-y-1/2 right-2">
                       <Image src={Search} alt="search" />
                     </div>
