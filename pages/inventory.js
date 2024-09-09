@@ -18,11 +18,19 @@ import listView from "@Images/inventory/listView.svg";
 import listActiveView from "@Images/inventory/listActiveView.svg";
 import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
+import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY } from "@utils/constants"; 
+import { useQuery } from '@apollo/client'; 
+import { getLocaleProps } from "@utils";
+import { useTranslation } from 'next-i18next';
 
-export default function Inventory() {
+export default function Inventory({locale}) {
   //// apply,reset btns active 
+  const { t } = useTranslation();
   const [resetBgColor, setResetBgColor] = useState(false);
   const [applyBgColor, setApplyBgColor] = useState(true);
+  const currentLanguage = locale; 
+  const language = locale?.toUpperCase();
+
 
   ///// for collpase
   const [showStates, setShowStates] = useState({
@@ -37,200 +45,41 @@ export default function Inventory() {
     { label: "Inventory", link: "#" },
   ];
 
-  //filters data
-  const filters = [
+  const [brandsLogos , setBrandLogos]=useState([]);
+  const [PopularTractors , setPopularTractorsData]=useState([]);
+  const [filters, setFilters] = useState([
     {
-      "title": "Brand",
-      "showKey": "showBrands",
-      "options": [
-        { "label": "Mahindra (10)", "value": "mahindra" },
-        { "label": "John Deere (5)", "value": "john_deere_1" },
-        { "label": "John Deere (5)", "value": "john_deere_2" },
-        { "label": "John Deere (5)", "value": "john_deere_3" },
-        { "label": "John Deere (5)", "value": "john_deere_4" }
+      title: "Brand",
+      showKey: "showBrands",
+      options: [] // To be populated with API response
+    },
+    {
+      title: "HP",
+      showKey: "showHps",
+      options: [
+        { label: "Under 20 HP", value: "18" },
+        { label: "21 HP - 30 HP", value: "21_30" },
+        { label: "31 HP - 40 HP", value: "31_40" },
+        { label: "41 HP - 45 HP", value: "41_45" },
+        { label: "46 HP - 50 HP", value: "46_50" },
+        { label: "Above 50 HP", value: "51" }
       ]
     },
     {
-      "title": "HP",
-      "showKey": "showHps",
-      "options": [
-        { "label": "21 HP - 30 HP", "value": "21_30_hp" },
-        { "label": "31 HP - 40 HP", "value": "31_40_hp" },
-        { "label": "41 HP - 50 HP", "value": "41_50_hp" },
-        { "label": "51 HP - 60 HP", "value": "51_60_hp" }
-      ]
-    },
-    {
-      "title": "Price",
-      "showKey": "showPrices",
-      "options": [
-        { "label": "5 Lakh - 6 Lakh", "value": "5_6_lakh" },
-        { "label": "6 Lakh - 7 Lakh", "value": "6_7_lakh" },
-        { "label": "7 Lakh - 9 Lakh", "value": "7_9_lakh" },
-        { "label": "Above 11 Lakh", "value": "above_11_lakh" }
+      title: "Price",
+      showKey: "showPrices",
+      options: [
+        { label: "5 Lakh - 6 Lakh", value: "5_6_lakh" },
+        { label: "6 Lakh - 7 Lakh", value: "6_7_lakh" },
+        { label: "7 Lakh - 9 Lakh", value: "7_9_lakh" },
+        { label: "Above 11 Lakh", value: "above_11_lakh" }
       ]
     }
-  ]
-
-  ////for filters collpase
-  const onToggle = (key) => {
-    setShowStates((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  ////apply, reset btn click functionality
-  const handleResetClick = () => {
-    setResetBgColor(true);
-    setApplyBgColor(false);
-    clearSelectedValues();
-  };
-
-  const handleApplyClick = () => {
-    setApplyBgColor(true);
-    setResetBgColor(false);
-  };
-
-  const clearSelectedValues = () => {
-    const radios = document.querySelectorAll('input[type="radio"]');
-    radios.forEach((radio) => (radio.checked = false));
-  };
+  ]);
 
 
-  const PopularTractors = [
-
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2124",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    },
-    {
-      "certified": true,
-      "price": "₹984006",
-      "title": "Mahindra Oja 2127",
-      "features": [
-        { "icon": "/images/time.svg", "text": "50 hrs" },
-        { "icon": "/images/wheel.svg", "text": "2WD" },
-        { "icon": "/images/hp.svg", "text": "49 HP" },
-        { "icon": "/images/mapIcon.svg", "text": "Mumbai" }
-      ]
-    }
-  ]
-
+  
+  
   const CardsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(PopularTractors.length / CardsPerPage);
@@ -239,6 +88,9 @@ export default function Inventory() {
   const indexOfFirstCard = indexOfLastCard - CardsPerPage;
   const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);
 
+
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
@@ -283,9 +135,29 @@ export default function Inventory() {
     );
   };
 
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  ////for filters collpase
+  const onToggle = (key) => {
+    setShowStates((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
+  ////apply, reset btn click functionality
+  const handleResetClick = () => {
+    setResetBgColor(true);
+    setApplyBgColor(false);
+    clearSelectedValues();
+  };
+
+  const handleApplyClick = () => {
+    setApplyBgColor(true);
+    setResetBgColor(false);
+  };
+
+  const clearSelectedValues = () => {
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach((radio) => (radio.checked = false));
+  };
+
+  
   useEffect(() => {
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
@@ -345,7 +217,75 @@ export default function Inventory() {
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
+  const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
+  const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError } = useQuery(GET_LIVE_INVENTORY, {
+    variables: { lang: language },
+  });
+  
+  useEffect(() => {
+    if (brandsData && brandsData.brandsmodels) {
+      // Map the API response to the options for the "Brand" filter
+      const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
+        const modelsString = node.brandmodelFields.models;  
+        const modelCount = modelsString.split(',').length;  
+        return {
+          label: `${node.brandmodelFields.brand} (${modelCount})`, // Use model count for the label
+          value: node.brandmodelFields.brand.toLowerCase().replace(/\s+/g, '_') // Slugify the brand name
+        };
+      });
+  
+      // Extract all brand logos into a separate array
+      const logos = brandsData.brandsmodels.edges.map(({ node }) => node.brandmodelFields.brandLogo); 
+      // Set brand logos in state
+      setBrandLogos(logos);
+  
+      // Update the filters state with the brand options
+      setFilters(prevFilters =>
+        prevFilters.map(filter => 
+          filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
+        )
+      );
+    }
+  }, [brandsData]); // Trigger this effect when brandsData is available
+  
+  useEffect(() => {
+    if (liveInventoryData && liveInventoryData.allLiveInventory) {
+      const PopularTractorsList = liveInventoryData.allLiveInventory.edges.map(({ node }) => {
+        // Parse imageLinks into an array
+        const imageLinksArray = JSON.parse(node.liveInventoryData.imageLinks);
 
+        // console.log("imageLinksArray"+JSON.stringify(imageLinksArray));
+
+        // console.log("imageLinksArray.length"+JSON.stringify(imageLinksArray.length));
+
+        // console.log("imageLinksArray.length"+JSON.stringify(imageLinksArray[0].processed_image));
+  
+        // Get the first image from the array, if available
+        const firstImage = DefaultTractor;
+ 
+        return {
+          certified: node.liveInventoryData.isVerified,
+          title: node.title,
+          price: node.liveInventoryData.maxPrice,
+          imageLink: firstImage, // Set the first image link
+          features: [
+            { icon: "/images/time.svg", text: `${node.liveInventoryData.engineHours}` },
+            { icon: "/images/wheel.svg", text: node.liveInventoryData.driveType },
+            { icon: "/images/hp.svg", text: `${node.liveInventoryData.enginePower}` },
+            { icon: "/images/mapIcon.svg", text: node.liveInventoryData.district }
+          ],
+          slug: node.slug,
+          id: node.id
+        };
+      });
+  
+      setPopularTractorsData(PopularTractorsList);
+    }
+  }, [liveInventoryData])
+
+  if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
+  if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
+  
   return (
     <div>
       <div className={`${showFilter ? 'overlay' : 'hidden'}`}></div>
@@ -625,15 +565,15 @@ export default function Inventory() {
                             <div className="relative">
                               <Image
                                 className="w-full"
-                                src={DefaultTractor}
+                                src={item.imageLink}
                                 alt="cardImage"
                                 layout="responsive"
                                 width={100}
                                 height={70}
                               />
-                              {item.certified && (
+                              {item.isVerified && (
                                 <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
-                                  CERTIFIED
+                                   {item.price}
                                 </div>
                               )}
                               <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
@@ -834,54 +774,13 @@ export default function Inventory() {
 
               <Heading heading={'Tractors by Brands '} viewButton={false} />
 
-              <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">
-
-                <div className="w-full cursor-pointer">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/mahindra.svg" alt="mahindra" className="w-full cursor-pointer" />
+              <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4"> 
+               
+              {brandsLogos.map((brandlogo, index) => (
+                <div className="w-full cursor-pointer border shadow p-4">
+                <Image loader={customImageLoader} width={50} height={50} layout="responsive" src={brandlogo} alt="mahindra" className="w-full cursor-pointer" />
                 </div>
-
-                <div className="w-full cursor-pointer">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/swaraj.svg" alt="swaraj" className="w-full cursor-pointer" />
-                </div>
-
-                <div className="w-full cursor-pointer">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/elcher.svg" alt="Elcher" className="w-full cursor-pointer" />
-                </div>
-
-                <div className="w-full cursor-pointer  sm:block hidden">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/masseyFerguson.svg" alt="masseyFerguson" className="w-full cursor-pointer" />
-                </div>
-
-                <div className="w-full cursor-pointer sm:block hidden">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/tillersTractors.svg" alt="tillersTractors" className="w-full cursor-pointer" />
-                </div>
-
-                <div className="w-full cursor-pointer sm:block hidden">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/escorts.svg" alt="escorts" className="w-full cursor-pointer" />
-                </div>
-
-                <div className="w-full cursor-pointer">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/kartar.svg" alt="kartar" className="w-full cursor-pointer" />
-                </div>
-
-                <div className="w-full cursor-pointer">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/captain.svg" alt="captain" className="w-full cursor-pointer" />
-                </div>
-
-                <div className="w-full cursor-pointer">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/preet.svg" alt="preet" className="w-full cursor-pointer" />
-                </div>
-                <div className="w-full cursor-pointer sm:block hidden">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/forceMotors.svg" alt="forceMotors" className="w-full cursor-pointer" />
-                </div>
-
-                <div className="w-full cursor-pointer sm:block hidden">
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full cursor-pointer" />
-                </div>
-                <div className="w-full cursor-pointer sm:block hidden">
-
-                  <Image width={100} height={100} layout="responsive" src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full cursor-pointer" />
-                </div>
+              ))} 
               </div>
 
               <div className="my-4 sm:hidden block">
@@ -1163,4 +1062,8 @@ export default function Inventory() {
 
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
 }
