@@ -207,14 +207,19 @@ export default function CompareTractor() {
                 <div className="bg-white mb-3 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
                     <Heading heading={'Compare Tractors'} />
 
-                    <div className='flex items-center gap-4 justify-between'>
+                    <div className='flex sm:items-start items-center  gap-4 justify-between'>
                         <div className='text-center cursor-pointer'>
                             <Image src={CompareImg} alt='compareImg' />
                             <p className='mt-1 sm:font-semibold sm:text-base text-sm'>Select Tractor</p>
+
+                            <div className='mt-4 sm:block hidden'>
+                                <Btn text={'compare'} bgColor={true} />
+                            </div>
+                            
                         </div>
 
 
-                        <div>
+                        <div className='my-auto'>
                             <Image src={vs} alt='vs' />
                         </div>
 
@@ -224,18 +229,19 @@ export default function CompareTractor() {
                         </div>
 
 
-                        <div>
+                        <div className='my-auto'>
                             <Image src={vs} alt='vs' />
                         </div>
 
                         <div className='text-center cursor-pointer'>
                             <Image src={CompareImg} alt='compareImg' />
                             <p className='mt-1 sm:font-semibold sm:text-base text-sm'>Select Tractor</p>
-                        </div>
+                        </div> 
 
+                    </div>
 
-
-
+                    <div className='mt-4 sm:hidden block'>
+                        <Btn text={'compare'} bgColor={true} />
                     </div>
 
                 </div>

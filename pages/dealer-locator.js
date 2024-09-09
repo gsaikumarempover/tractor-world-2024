@@ -130,7 +130,7 @@ export default function DealerLocator() {
                             </div>
                           </div> 
                         </div>
-                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                       <Btn text={"Know More"} bgColor={true} /> 
                       </div> 
                      </div> 
 
@@ -176,7 +176,7 @@ export default function DealerLocator() {
                             </div>
                           </div> 
                         </div>
-                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                       <Btn text={"Know More"} bgColor={true} /> 
                       </div> 
                      </div>   
                     
@@ -222,7 +222,7 @@ export default function DealerLocator() {
                             </div>
                           </div> 
                         </div>
-                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                       <Btn text={"Know More"} bgColor={true} /> 
                       </div> 
                      </div> 
                      
@@ -274,7 +274,7 @@ export default function DealerLocator() {
                             </div>
                           </div> 
                         </div>
-                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                       <Btn text={"Know More"} bgColor={true} /> 
                       </div> 
                      </div> 
 
@@ -320,7 +320,7 @@ export default function DealerLocator() {
                             </div>
                           </div> 
                         </div>
-                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                       <Btn text={"Know More"} bgColor={true} /> 
                       </div> 
                      </div>   
                     
@@ -366,7 +366,7 @@ export default function DealerLocator() {
                             </div>
                           </div> 
                         </div>
-                       <Btn text={" Talk To Dealer"} bgColor={true} /> 
+                       <Btn text={"Know More"} bgColor={true} /> 
                       </div> 
                      </div> 
                      
@@ -384,7 +384,7 @@ export default function DealerLocator() {
 
             <div className="bg-white p-4 sm:w-[75%] w-full">
               <iframe
-                className="w-full h-[100%]"
+                className="w-full sm:h-[100%] h-[60vh]"
                 id="map"
                 frameBorder="0"
                 marginHeight="0"

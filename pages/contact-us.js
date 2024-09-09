@@ -67,7 +67,7 @@ export default function ContactUs() {
                 </div>
               </div>
 
-              <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
+              <div className="w-full lg:w-1/2 sm:mt-8 lg:mt-0">
                 <form className="flex flex-col space-y-4">
                   <div className="flex flex-col">
                     <label htmlFor="name" className="mb-2 text-[15px]">

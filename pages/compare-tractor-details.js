@@ -288,25 +288,24 @@ export default function CompareTractorDetails() {
                     heading={"Compare Tractor Details"}
                     bannerImg={BannerImg}
                 />
-                <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
+                <div className="w-full bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
 
-                    <div className="flex sm:flex-row flex-col gap-2 items-center justify-between">
+                    <div className="w-full flex sm:flex-row sm:items-start items-center flex-col gap-2 justify-between">
                         {images.map((tractor, index) => (
                             <>
 
-                                {index > 0 && (<div className="w-7 text-sm h-7 bg-secondaryColor flex leading-3
-                                 text-white items-center justify-center rounded-full font-bold"> 
-                                    <Image src={vs} alt='vs' />
-
-                                </div>
-                                )}
-
-                                <div>
-                                    <div key={index} className="bg-[#FBFBFB] shadow-lg">
+                                {index > 0 && (
+                                    <div className='my-auto'>
+                                        <Image src={vs} alt='vs' />
+                                    </div>
+                                )} 
+                                <div className="w-full">
+                                    <div key={index} className="bg-[#FBFBFB] shadow-lg w-full">
                                         <Image src={tractor.image}
                                             alt="image"
                                             width={301}
                                             height={173}
+                                            layout="responsive"
                                         />
                                         <div className="p-4 bg-[#FBFBFB]">
                                             <h3 className="text-[14px]  text-[#000000]">{tractor.name}</h3>
@@ -317,9 +316,11 @@ export default function CompareTractorDetails() {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="my-4">
+
+                                    {index == 0 && (<div className="my-4">
                                         <Btn text={'COMPARE'} bgColor={true} />
                                     </div>
+                                    )}
                                 </div>
                             </>
                         ))}
@@ -393,14 +394,14 @@ export default function CompareTractorDetails() {
                         <Tab id="ThreeData" activeTab={activeTab} onClick={handleTabClick}>Upcoming</Tab>
                     </div>
 
-                    <div className="overflow-x-auto sm:overflow-visible">
-                        <div className='flex sm:grid sm:grid-cols-3 xl:gap-8 gap-4'>
+                    <div className="">
+                        <div className='grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4'>
                             {Object.keys(compareTractorData).map((key) =>
                                 activeTab === key ? (
                                     <>
                                         {compareTractorData[key].map((item, index) => (
-                                            <div key={index} className=' shadow p-2 overflow-hidden flex-none w-80 sm:w-auto'>
-                                                <Image src={CompareImage} alt='compareImage' />
+                                            <div key={index} className=' shadow p-2 overflow-hidden flex-none'>
+                                                <Image src={CompareImage} alt='compareImage' layout="responsive" />
                                                 <div className='flex justify-between px-3 mb-3'>
                                                     <div>
                                                         <div>{item.brand1}</div>
