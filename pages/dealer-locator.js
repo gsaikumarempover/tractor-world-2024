@@ -238,11 +238,11 @@ export default function DealerLocator() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  {dealerData.map((data, dataIndex) => (
-                    <div className="slider-container pb-4"> 
-                      <Slider {...settings} key={dataIndex}>
-                        {data.dealerCardData.map((card, cardIndex) => (
-                          <div className="card bg-[#EEEEF0] mb-2" key={cardIndex}>
+                  {dealerData.map((data, dealerDataIndex) => (
+                    <div className="slider-container pb-4" key={dealerDataIndex}> 
+                      <Slider {...settings}>
+                        {data.dealerCardData.map((card, dealerCardDataIndex) => (
+                          <div className="card bg-[#EEEEF0] mb-2" key={dealerCardDataIndex}>
                             <span className="w-full px-2 py-1 rounded-md inline-block cursor-pointer font-bold text-black text-sm" id="location-span">
                               {card.location}
                             </span>
@@ -304,12 +304,8 @@ export default function DealerLocator() {
                     <Image src={Rightarrow} alt='right' />
                     {/* &gt; */}
                   </button>
-                </div>
-
-
-                {/* <div className="mt-2">
-                   <Btn text={"View All"} bgColor={false}  onClick={handleAlldealers} />
-                   </div> */}
+                </div> 
+              
               </div>
             </div>
 

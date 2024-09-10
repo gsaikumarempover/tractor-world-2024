@@ -777,7 +777,7 @@ export default function Inventory({locale}) {
               <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4"> 
                
               {brandsLogos.map((brandlogo, index) => (
-                <div className="w-full cursor-pointer border shadow p-4">
+                <div className="w-full cursor-pointer border shadow p-4" key={index}>
                 <Image loader={customImageLoader} width={50} height={50} layout="responsive" src={brandlogo} alt={brandlogo} className="w-full cursor-pointer" />
                 </div>
               ))} 
