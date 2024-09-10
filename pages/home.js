@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router'; 
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import CardImage from '@Images/card1.svg';
 import Heading from "@components/Heading";
@@ -34,7 +34,7 @@ import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "../components/SingleItemsSlide";
 import Link from 'next/link';
 import { useQuery } from "@apollo/client";
-import { HOME_SLIDERS } from "@utils/constants";
+import { HOME_SLIDERS, GET_ALL_TESTIMONIALS } from "@utils/constants";
 
 export default function HomePage({ locale }) {
     const [isMobile, setIsMobile] = useState(false);
@@ -43,10 +43,9 @@ export default function HomePage({ locale }) {
     const [lastScrollY, setLastScrollY] = useState(0);
     const router = useRouter();
 
-
     useEffect(() => {
-          //moble web devide
-          if (typeof window !== 'undefined') {
+        //moble web devide
+        if (typeof window !== 'undefined') {
             setIsMobile(window.innerWidth <= 768);
             const handleResize = () => {
                 setIsMobile(window.innerWidth <= 768);
@@ -55,11 +54,11 @@ export default function HomePage({ locale }) {
             return () => {
                 window.removeEventListener('resize', handleResize);
             };
-        } 
+        }
 
     }, []);
 
-    useEffect(() => { 
+    useEffect(() => {
         const handleScroll = () => {
             if (typeof window !== 'undefined') {
                 if (window.scrollY > lastScrollY) {
@@ -71,7 +70,7 @@ export default function HomePage({ locale }) {
                 }
                 setLastScrollY(window.scrollY);
             }
-        }; 
+        };
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -80,21 +79,29 @@ export default function HomePage({ locale }) {
     }, [lastScrollY]);
 
     const [currentIndex, setCurrentIndex] = useState(0);
-    const isFirstSlide = currentIndex === 0;
     const language = locale?.toUpperCase();
-    const { loading, error, data } = useQuery(HOME_SLIDERS, {
-        variables: { lang: language }
+ 
+    const { data: bannersData, loading: bannersLoading, error: bannersError } = useQuery(HOME_SLIDERS);
+    const { data: testmonialsData, loading: testmonialsLoading, error: testmonialsError } = useQuery(GET_ALL_TESTIMONIALS, {
+        variables: { lang: language },
     });
 
-    if (loading) return <p>Loading Banners...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+    if (bannersLoading || testmonialsLoading) return <p>Loading...</p>;
+    if (bannersError || testmonialsError) return <p>Error: {bannersError?.message || testmonialsError.message}</p>;
 
-    const slides = data.homeSliders.nodes.map(node => {
+    const homeBannerSlides = bannersData.homeSliders.nodes.map(node => {
         const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
         const mobileUrl = node.homesliders.mobilesliderimage.node.mediaItemUrl;
+        console.log("desktopUrl:", desktopUrl);
+        console.log("mobileUrl:", mobileUrl);
         return { desktopUrl, mobileUrl };
     });
 
+    const testimonialSlides = testmonialsData.allTestimonial.nodes.map(node => {
+        const testimonialDesktopUrl = node.testimonials.tesimonialImage.node.mediaItemUrl;
+        console.log(testimonialDesktopUrl + "testimonialDesktopUrl"); 
+        return { testimonialDesktopUrl };
+    });
 
     const handleCompareAll = () => {
         router.push('/compare-tractors');
@@ -326,7 +333,7 @@ export default function HomePage({ locale }) {
             },
 
         ]
-    }; 
+    };
 
     const contentGallerysettings = {
         dots: true,
@@ -337,49 +344,37 @@ export default function HomePage({ locale }) {
         adaptiveHeight: true,
     };
 
-    const contentGalleryimages = [
-        {
-            image: !isMobile ? slide1 : mblSlide1,
-            name: "Sonalika Tractor",
-        },
-        {
-            image: !isMobile ? slide1 : mblSlide1,
-            name: "Sonalika Tractor",
-        },
-    ];
+    const bannerGalleryitems = homeBannerSlides.map((src, index) => (
+        <div key={index} className="relative sm:w-[1921] sm:h-[629] w-[750] h-[387] overflow-hidden">
+            <Image width={isMobile ? 750 : 1921} height={isMobile ? 387 : 629}
+                className="w-full h-full" src={isMobile ? src.mobileUrl : src.desktopUrl} layout="responsive" alt={`Banner${index + 1}`} />
+        </div>
+    ));
 
-    const contentGalleryitems = contentGalleryimages.map((src, index) => (
+    const testimonialsGalleryItems = testimonialSlides.map((image, index) => (
         <div key={index} className="relative">
-            <Image src={src.image} layout="responsive" alt={`Explore item ${index + 1}`} />
-
+            <Image key={index} src={image.testimonialDesktopUrl} alt={`Testimonial Image ${index + 1}`} />
             <p className='z-40 absolute sm:top-14 top-6 sm:text-base text-sm sm:left-14 left-3
-              text-white sm:w-[300px] w-[247px] font-bold testimonials'>
+                    text-white sm:w-[300px] w-[247px] font-bold testimonials'>
                 Mr. Sujit Majumdar from Cooch Behar,
                 West Bengal: Rising from financial
                 hardships to owning multiple
                 tractors
             </p>
-
             <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
-             bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
-
+                   bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
         </div>
-    ));
+    ))
 
-    const bannerGalleryitems = slides.map((src, index) => (
-        <div key={index} className="relative sm:w-[1921] sm:h-[629] w-[750] h-[387] overflow-hidden">
-            <Image width={isMobile ? 750 : 1921} height={isMobile ? 387 : 629}
-             className="w-full h-full" src={isMobile ? src.mobileUrl : src.desktopUrl} layout="responsive" alt={`Banner${index + 1}`} /> 
-        </div>
-    )); 
-    
+
+
     return (
         <>
             {/* Home SLider */}
- 
-            <div className='relative'> 
 
-                <MultipleItemsSlide settings={contentGallerysettings} id={'bannerGallery'} items={bannerGalleryitems} /> 
+            <div className='relative'>
+
+                <MultipleItemsSlide settings={contentGallerysettings} id={'bannerGallery'} items={bannerGalleryitems} />
 
                 <div className=" sm:flex hidden fixed z-[99] top-1/2 right-0 transform -translate-y-1/2  flex-col items-center justify-center rounded-md shadow-sm" role="group">
 
@@ -547,9 +542,7 @@ export default function HomePage({ locale }) {
                     <Btn text={'View all tractor comparisons'} onClick={handleCompareAll} bgColor={true}
                     />
                 </div>
-            </div >
-
-
+            </div>
 
             {/*testimonials */}
             <div id="testimonials">
@@ -558,10 +551,9 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className="mb-4">
-                    <MultipleItemsSlide settings={contentGallerysettings} id={'contentGallery'} items={contentGalleryitems} />
+                    <MultipleItemsSlide settings={contentGallerysettings} id={'testimonialsGallery'} items={testimonialsGalleryItems} />
                 </div>
             </div>
-
 
             {/*Content Gallery */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2" style={{
@@ -649,7 +641,6 @@ export default function HomePage({ locale }) {
                     <Btn text={'View all'} viewAll={true} />
                 </div>
             </div>
-
 
             {/* Latest News & Updates */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2">
