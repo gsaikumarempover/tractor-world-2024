@@ -1,5 +1,10 @@
 import { gql } from '@apollo/client';
 
+
+export const customImageLoader = ({ src }) => {
+  return src; // Return the original image source directly
+};
+  
 export const HOME_SLIDERS = gql`
   query HomePageSlider($lang: LanguageCodeFilterEnum!) {
     homeSliders(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
@@ -35,6 +40,8 @@ export const GET_LIVE_INVENTORY = gql`
             maxPrice
             imageLinks
             brand
+            isVerified
+            district
           }
           slug 
           id 
@@ -85,6 +92,7 @@ export const GET_ALL_BRANDS = gql`
         brandmodelFields {
           brand
            models
+           brandLogo
         }
       }
     }

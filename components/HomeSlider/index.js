@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { HOME_SLIDERS } from "@utils/constants";
+import { HOME_SLIDERS,customImageLoader } from "@utils/constants";
 import { useQuery } from "@apollo/client";
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { AdvanceSearch } from '../AdvanceSearch';
-import Image from 'next/image';
-
+import Image from 'next/image'; 
 
 export default function HomeSliders({ locale }) {
 
@@ -57,7 +56,7 @@ export default function HomeSliders({ locale }) {
         <>
             <div className='max-w-full w-full m-auto relative group'>
                 <div className='w-full h-full bg-center bg-cover duration-500 pb-10'> 
-                    <Image src={isMobile ? `${slides[currentIndex].mobileUrl}` :
+                    <Image loader={customImageLoader} src={isMobile ? `${slides[currentIndex].mobileUrl}` :
                         `${slides[currentIndex].desktopUrl}`} className='sm:pb-24 bg-white w-full' alt='mobile-url'/> 
                 </div>  
             </div> 
