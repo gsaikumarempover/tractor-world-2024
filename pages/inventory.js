@@ -217,6 +217,7 @@ export default function Inventory({locale}) {
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
+  
   const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
   const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError } = useQuery(GET_LIVE_INVENTORY, {
     variables: { lang: language },
@@ -288,7 +289,7 @@ export default function Inventory({locale}) {
   
   return (
     <div>
-      <div className={`${showFilter ? 'overlay' : 'hidden'}`}></div>
+      <div className={`${showFilter ? 'overlay sm:hidden block' : 'hidden'}`}></div>
 
       <Layout>
         <Banner
@@ -318,11 +319,11 @@ export default function Inventory({locale}) {
 
         <div className={`${showFilter ? 'sm:hidden block' : 'hidden'} transition-max-height duration-300 
         ease-in-out w-full  sm:w-auto`} id="navbar-default">
-          <div className="sm:w-auto w-[312px]
-         sm:bg-transparent z-50 sm:relative flex fixed top-0 sm:pb-4 sm:pt-4 Navbar">
+          <div className="sm:w-auto w-[312px] sm:h-auto max-h-max min-h-screen h-screen
+         sm:bg-transparent z-[99] sm:relative flex fixed top-0 sm:pb-4 sm:pt-4 Navbar">
 
 
-            <div className="px-4 py-4 sm:h-auto h-screen bg-white">
+            <div className="px-4 py-4 min-h-screen max-h-fit h-fit bg-white">
 
               <div className="flex">
                 <div className="w-1/2">
