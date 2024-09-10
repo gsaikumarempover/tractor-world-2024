@@ -219,6 +219,7 @@ export default function Inventory({locale}) {
   };
   
   const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
+  
   const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError } = useQuery(GET_LIVE_INVENTORY, {
     variables: { lang: language },
   });

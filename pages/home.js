@@ -42,6 +42,8 @@ export default function HomePage({ locale }) {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const router = useRouter();
+    const language = locale?.toUpperCase();
+
 
     useEffect(() => {
         //moble web devide
@@ -78,13 +80,17 @@ export default function HomePage({ locale }) {
 
     }, [lastScrollY]);
 
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const language = locale?.toUpperCase();
- 
-    const { data: bannersData, loading: bannersLoading, error: bannersError } = useQuery(HOME_SLIDERS);
+
+    const { data: bannersData, loading: bannersLoading, error: bannersError } = useQuery(HOME_SLIDERS, {
+        variables: { lang: language },
+    });
+
     const { data: testmonialsData, loading: testmonialsLoading, error: testmonialsError } = useQuery(GET_ALL_TESTIMONIALS, {
         variables: { lang: language },
     });
+
+    // debugger;
+
 
     if (bannersLoading || testmonialsLoading) return <p>Loading...</p>;
     if (bannersError || testmonialsError) return <p>Error: {bannersError?.message || testmonialsError.message}</p>;
@@ -99,8 +105,9 @@ export default function HomePage({ locale }) {
 
     const testimonialSlides = testmonialsData.allTestimonial.nodes.map(node => {
         const testimonialDesktopUrl = node.testimonials.tesimonialImage.node.mediaItemUrl;
-        console.log(testimonialDesktopUrl + "testimonialDesktopUrl"); 
-        return { testimonialDesktopUrl };
+        const testimonialDescription = node.testimonials.description;
+        const testimonialVideoUrl = node.testimonials.videoUrl;
+        return { testimonialDesktopUrl, testimonialDescription, testimonialVideoUrl };
     });
 
     const handleCompareAll = () => {
@@ -353,17 +360,20 @@ export default function HomePage({ locale }) {
 
     const testimonialsGalleryItems = testimonialSlides.map((image, index) => (
         <div key={index} className="relative">
-            <Image key={index} src={image.testimonialDesktopUrl} alt={`Testimonial Image ${index + 1}`} />
+            <div className='sm:w-[1921] sm:h-[734] w-[750] h-[387] overflow-hidden'>
+                <Image width={1920} height={734} className="w-full h-full"
+                    src={image.testimonialDesktopUrl} layout='responsive' alt={`Testimonial Image ${index + 1}`} />
+            </div>
             <p className='z-40 absolute sm:top-14 top-6 sm:text-base text-sm sm:left-14 left-3
                     text-white sm:w-[300px] w-[247px] font-bold testimonials'>
-                Mr. Sujit Majumdar from Cooch Behar,
-                West Bengal: Rising from financial
-                hardships to owning multiple
-                tractors
+                {image.testimonialDescription}
             </p>
-            <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
+
+            <Link href={image.testimonialVideoUrl}>
+                 <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
                    bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
-        </div>
+            </Link>
+        </div >
     ))
 
 
