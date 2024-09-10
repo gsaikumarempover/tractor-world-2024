@@ -778,7 +778,7 @@ export default function Inventory({locale}) {
                
               {brandsLogos.map((brandlogo, index) => (
                 <div className="w-full cursor-pointer border shadow p-4">
-                <Image loader={customImageLoader} width={50} height={50} layout="responsive" src={brandlogo} alt="mahindra" className="w-full cursor-pointer" />
+                <Image loader={customImageLoader} width={50} height={50} layout="responsive" src={brandlogo} alt={brandlogo} className="w-full cursor-pointer" />
                 </div>
               ))} 
               </div>
