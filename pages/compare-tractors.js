@@ -327,7 +327,7 @@ export default function CompareTractor() {
                 <Modal showModal={showModal} customStyles={customStyles} handleClose={handleClose} content={
                     <div className='flex sm:flex-row flex-col-reverse w-full'>
                         <div className='px-4 py-4 w-full'>
-                            <div class="flex items-center gap-2">
+                            <div className="flex items-center gap-2">
                                 <Image src={leftArrow} alt='leftArrow' width={15} height={15} className='cursor-pointer' onClick={handleClose} />
                                 <p className='font-bold'>Select Brand</p>
                             </div>
