@@ -1,12 +1,12 @@
-import { gql } from '@apollo/client';
-
+import { gql } from '@apollo/client'; 
 
 export const customImageLoader = ({ src }) => {
   return src; // Return the original image source directly
 };
-  
-export const HOME_SLIDERS = gql`
-  query HomePageSlider($lang: LanguageCodeFilterEnum!) {
+
+export const HOMEPAGE_QUERIES = gql`
+  query GetHomeData($lang: LanguageCodeFilterEnum!) {
+
     homeSliders(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
       nodes {
         homesliders { 
@@ -23,8 +23,64 @@ export const HOME_SLIDERS = gql`
         }
       }
     }
+
+ testimonials(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
+    nodes {
+      tesimonails {
+        description
+        videourl
+        mobileimage {
+          node {
+            mediaItemUrl
+          }
+        }
+        webimage {
+          node {
+            mediaItemUrl
+          }
+        }
+      }
+    }
   }
-`;
+
+contentgallerys(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
+    nodes {
+      contentGalleryFields {
+        badge
+        description
+        image {
+          node {
+            mediaItemUrl
+            sourceUrl
+          }
+        }
+      }
+      date
+      title
+      uri
+    }
+  }
+
+  latestnews(where: {orderby: {field: TITLE, order: ASC}, language: $lang}) {
+    edges {
+      node {
+        contentGalleryFields {
+          badge
+          description
+          image {
+            node {
+              mediaItemUrl
+            }
+          }
+        }
+        title
+        uri
+        date
+      }
+    }
+  }
+  }  
+`;  
  
 export const GET_LIVE_INVENTORY = gql`
   query GetLiveInventory($lang: LanguageCodeFilterEnum!) { 
@@ -114,81 +170,29 @@ query GetModelsByBrand($brand: String!) {
     }
   }
 }
-`; 
+`;  
 
-
-///get testimonails  
-
-export const GET_ALL_TESTIMONIALS = gql`
-query AllTestimonails($lang: LanguageCodeFilterEnum!) {
-  testimonials(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
-    nodes {
-      tesimonails {
-        description
-        videourl
-        mobileimage {
-          node {
-            mediaItemUrl
-          }
-        }
-        webimage {
-          node {
-            mediaItemUrl
-          }
-        }
-      }
-    }
-  }
-}
-`; 
-
-///all content gallery
-
-
-export const GET_ALL_CONTENT_GALLERY = gql`
-query AllContentGallery($lang: [LanguageCodeEnum!]) {
-  contentgallerys(where: {orderby: {field: DATE, order: ASC}, languages: $lang}) {
-    nodes {
-      contentGalleryFields {
-        badge
-        description
-        image {
-          node {
-            mediaItemUrl
-            sourceUrl
-          }
-        }
-      }
-      date
-      title
-      uri
-    }
-  }
-}
-`; 
-
-//all latest news
-
-export const GET_ALL_LATEST_NEWS= gql`
-query AllLatestNews($lang: [LanguageCodeEnum!]) {
-  latestnews(where: {orderby: {field: TITLE, order: ASC}, languages: $lang}) {
-    edges {
-      node {
-        contentGalleryFields {
-          badge
-          description
-          image {
-            node {
-              mediaItemUrl
-            }
-          }
-        }
-        title
-        uri
-        date
-      }
-    }
-  }
-}
-`; 
+// //all latest news 
+// export const GET_ALL_LATEST_NEWS= gql`
+// query AllLatestNews($lang: [LanguageCodeEnum!]) {
+//   latestnews(where: {orderby: {field: TITLE, order: ASC}, language: $lang}) {
+//     edges {
+//       node {
+//         contentGalleryFields {
+//           badge
+//           description
+//           image {
+//             node {
+//               mediaItemUrl
+//             }
+//           }
+//         }
+//         title
+//         uri
+//         date
+//       }
+//     }
+//   }
+// }
+// `; 
 

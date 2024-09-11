@@ -384,15 +384,15 @@ body {
 /// SLick*/
 
 
-#inventorySlide>.slider-container>.slick-slider>span:nth-child(1) {  
+#inventorySlide>.slider-container>.slick-slider>span:nth-child(1) {
   position: absolute !important;
   z-index: 50 !important;
   cursor: pointer !important;
   bottom: 0 !important;
-  right: 100px !important; 
+  right: 100px !important;
 }
 
-#inventorySlide>.slider-container>.slick-slider>span:nth-child(3) { 
+#inventorySlide>.slider-container>.slick-slider>span:nth-child(3) {
   position: absolute !important;
   z-index: 50 !important;
   cursor: pointer !important;
@@ -419,8 +419,8 @@ body {
   transform: translate(-50%) !important;
 }
 
-.slick-dots li.slick-active { 
-  width: 40px!important; 
+.slick-dots li.slick-active {
+  width: 40px !important;
 }
 
 .slick-dots li.slick-active button:before {
@@ -436,7 +436,7 @@ body {
 
 #inventoryCarousel .slick-dots {
   width: 100%;
-  position: inherit!important;
+  position: inherit !important;
   overflow-x: auto !important;
   bottom: 5px !important;
   border-top: 1px solid rgba(217, 217, 217, 1) !important;
@@ -555,7 +555,7 @@ input[type="range"] {
   margin-left: inherit !important
 }
 
- 
+
 .ReactModal__Overlay--after-open {
   background-color: rgba(0, 0, 0, 0.6) !important;
   z-index: 9999;
@@ -568,7 +568,7 @@ input[type="range"] {
 .languageImgSec span {
   height: 100% !important;
 }
- 
+
 /* .detailsSlideImg {
   margin-bottom: 2.3rem !important;
  } */
@@ -590,24 +590,25 @@ input[type="range"] {
   font-size: 14px !important;
 }
 
-[type='text']:focus, 
-[type='email']:focus, 
-[type='url']:focus, 
-[type='password']:focus, 
-[type='number']:focus, 
-[type='date']:focus, 
-[type='datetime-local']:focus, 
-[type='month']:focus, 
-[type='search']:focus, 
-[type='tel']:focus, 
-[type='time']:focus, 
-[type='week']:focus, 
-[multiple]:focus, 
-textarea:focus, 
+[type='text']:focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
 select:focus {
-    outline: none;
-    box-shadow: none;
-    border-color: initial; /* or use 'transparent' or 'none' depending on the context */
+  outline: none;
+  box-shadow: none;
+  border-color: initial;
+  /* or use 'transparent' or 'none' depending on the context */
 }
 
 /* styles.css */
@@ -617,12 +618,12 @@ select:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); 
-  z-index: 60;  
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 60;
 }
 
-.languagePopupImg{
-  overflow: hidden!important;
+.languagePopupImg {
+  overflow: hidden !important;
 }
 
 input.error {
@@ -635,7 +636,7 @@ input.error {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -652,18 +653,24 @@ input.error {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .brands-container::-webkit-scrollbar {
-  width: 5px;  
+  width: 5px;
 }
 
 .brands-container::-webkit-scrollbar-thumb {
-  background-color: var(--theme-color);  
+  background-color: var(--theme-color);
 }
 
 .brands-container::-webkit-scrollbar-track {
-  background-color: #f1f1f1; /* Color of the scrollbar track */
- }
+  background-color: #f1f1f1;
+  /* Color of the scrollbar track */
+}

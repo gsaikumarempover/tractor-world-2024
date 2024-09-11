@@ -14,8 +14,8 @@ import leftArrow from '@Images/compareTractorImg/leftArrow.svg';
 import Modal from "@components/Modal";
 import { GET_ALL_BRANDS, GET_ALL_MODELS_BY_BRAND } from "@utils/constants";
 import { useQuery } from '@apollo/client';
-
-
+import Loader from '@components/Loader';
+ 
 export default function CompareTractor() {
     const [showBrandsModal, setShowBrandsModal] = useState(false);
     const [showBrandsModelsModal, setShowBrandsModelsModal] = useState(false);
@@ -286,9 +286,7 @@ export default function CompareTractor() {
     };
 
     if (brandsLoading || modelsBybrandsLoading) return (
-        <div className="loader-overlay overlay">
-            <div className="loader"></div>
-        </div>
+       <Loader />
     );
 
     if (brandsError || modelsBybrandsError) return <p>Error: {brandsError?.message} || Error: {modelsBybrandsError?.message}</p>;
