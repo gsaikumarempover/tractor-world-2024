@@ -12,13 +12,25 @@ import vs from '@Images/compareTractorImg/vs.svg';
 import Search from '@Images/compareTractorImg/search.svg';
 import leftArrow from '@Images/compareTractorImg/leftArrow.svg';
 import Modal from "@components/Modal";
+import { GET_ALL_BRANDS, GET_ALL_MODELS_BY_BRAND } from "@utils/constants";
+import { useQuery } from '@apollo/client';
+
 
 export default function CompareTractor() {
-    const [showModal, setShowModal] = useState(false);
-    const handleClose = () => setShowModal(false);
-    const modalShow = () => setShowModal(true);
+    const [showBrandsModal, setShowBrandsModal] = useState(false);
+    const [showBrandsModelsModal, setShowBrandsModelsModal] = useState(false);
 
+    const handleClose = () => {
+        setShowBrandsModal(false);
+        setShowBrandsModelsModal(false);
+    };
+
+    const brandsModalShow = () => setShowBrandsModal(true);
     const [isMobile, setIsMobile] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [brands, setBrands] = useState([]);
+    const [models, setModels] = useState([]);
+    const [selectedBrand, setSelectedBrand] = useState('');
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -32,6 +44,52 @@ export default function CompareTractor() {
             };
         }
     }, []);
+
+    ////get brands api intigration
+    const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
+    useEffect(() => {
+        if (brandsData) {
+            const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
+                return {
+                    brandName: node.brandmodelFields.brand
+                };
+            });
+            // console.log(JSON.stringify(brandOptions) + "brandOptions");
+            setBrands(brandOptions);
+        }
+    }, [brandsData]);
+    ////end brands api intigration 
+
+    const handleBrandRadioChange = (event) => {
+        setShowBrandsModal(false);
+        setShowBrandsModelsModal(true);
+        setSelectedBrand(event.target.value);
+    };
+
+    ////get models by brands api intigration
+    const { data: modelsBybrandsData, loading: modelsBybrandsLoading, error: modelsBybrandsError } = useQuery(GET_ALL_MODELS_BY_BRAND, {
+        variables: { brand: selectedBrand },
+    });
+
+    useEffect(() => {
+        // debugger;
+        if (modelsBybrandsData) {
+            const modelsOptions = modelsBybrandsData.brandsmodels.edges.map(({ node }) => {
+                const modelSplitName = node.brandmodelFields.models.split(',');
+                return {
+                    modelName: modelSplitName
+                };
+            });
+
+            // const data = JSON.parse(modelsOptions);
+            const modelNames = modelsOptions[0].modelName.map(name => ({ modelName: name.trim() }));
+            setModels(modelNames); 
+            // console.log(JSON.stringify(models) + "models");
+
+
+        }
+    }, [modelsBybrandsData]);
+    ////end get models by brands api intigration
 
     const breadcrumbData = [
         { label: 'Home', link: '/' },
@@ -227,6 +285,13 @@ export default function CompareTractor() {
         setActiveTab(tabId);
     };
 
+    if (brandsLoading || modelsBybrandsLoading) return (
+        <div className="loader-overlay overlay">
+            <div className="loader"></div>
+        </div>
+    );
+
+    if (brandsError || modelsBybrandsError) return <p>Error: {brandsError?.message} || Error: {modelsBybrandsError?.message}</p>;
 
     return (
         <div>
@@ -242,7 +307,7 @@ export default function CompareTractor() {
 
                     <div className='flex sm:items-start items-center gap-4 justify-between'>
 
-                        <div className='text-center cursor-pointer' onClick={modalShow}>
+                        <div className='text-center cursor-pointer' onClick={brandsModalShow}>
                             <Image src={CompareImg} alt='compareImg' width={250} height={250} />
                         </div>
 
@@ -321,10 +386,9 @@ export default function CompareTractor() {
                         </div>
                     </div>
 
-
                 </div>
 
-                <Modal showModal={showModal} customStyles={customStyles} handleClose={handleClose} content={
+                <Modal showModal={showBrandsModal} customStyles={customStyles} handleClose={handleClose} content={
                     <div className='flex sm:flex-row flex-col-reverse w-full'>
                         <div className='px-4 py-4 w-full'>
                             <div className="flex items-center gap-2">
@@ -333,30 +397,59 @@ export default function CompareTractor() {
                             </div>
 
                             <div className="relative w-full mt-4">
-                                <input type="text" placeholder="Search Tractor Brand by Name" className="w-full rounded border-[1px] border-[#D0D0D0] py-2 pr-14" />
+                                <input type="text" placeholder="Search Tractor Brand by Name" className="w-full rounded border-[1px] border-[#D0D0D0] py-2 pr-14"
+                                    value={searchQuery} // Bind the input value to searchQuery state
+                                    onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
+                                />
                                 <div className="absolute top-[58%] transform -translate-y-1/2 right-2">
                                     <Image src={Search} alt="search" width={40} height={40} />
                                 </div>
                             </div>
 
-                            <div className='mt-3'>
-                                <input type='radio' />
-                                <label className="ml-2 text-medium">575 DI XP Plus</label>
+                            <div className="p-2 mt-4 flex flex-col w-full gap-2 h-80 brands-container overflow-y-auto">
+                                {brands.map((option, index) => (
+                                    <div key={option.brandName}>
+                                        <input type="radio" name="brands" value={option.brandName}
+                                            onChange={handleBrandRadioChange}
+                                        />
+                                        <label className="ml-2">{option.brandName}</label>
+                                    </div>
+                                ))}
                             </div>
-                            <div className='mt-3'>
-                                <input type='radio' />
-                                <label className="ml-2 text-medium">575 DI XP Plus</label>
-                            </div>
-
-                            <div className='mt-3'>
-                                <input type='radio' />
-                                <label className="ml-2 text-medium">575 DI XP Plus</label>
-                            </div>
-
 
                         </div>
+                    </div>
+                } />
 
+                <Modal showModal={showBrandsModelsModal} customStyles={customStyles} handleClose={handleClose} content={
+                    <div className='flex sm:flex-row flex-col-reverse w-full'>
+                        <div className='px-4 py-4 w-full'>
+                            <div className="flex items-center gap-2">
+                                <Image src={leftArrow} alt='leftArrow' width={15} height={15} className='cursor-pointer' onClick={handleClose} />
+                                <p className='font-bold'>Select Models</p>
+                            </div>
 
+                            <div className="relative w-full mt-4">
+                                <input type="text" placeholder="Search Tractor Brand by Name" className="w-full rounded border-[1px] border-[#D0D0D0] py-2 pr-14"
+                                    value={searchQuery} // Bind the input value to searchQuery state
+                                    onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
+                                />
+                                <div className="absolute top-[58%] transform -translate-y-1/2 right-2">
+                                    <Image src={Search} alt="search" width={40} height={40} />
+                                </div>
+                            </div>
+
+                            <div className="p-2 mt-4 flex flex-col w-full gap-2 h-80 brands-container overflow-y-auto">
+                                {models.map((option, index) => (
+                                    <div key={option.modelName}>
+                                        <input type="radio" name="models" value={option.modelName}
+                                        />
+                                        <label className="ml-2">{option.modelName}</label>
+                                    </div>
+                                ))}
+                            </div>
+
+                        </div>
                     </div>
                 } />
 

@@ -100,8 +100,7 @@ export const GET_ALL_BRANDS = gql`
 }
 `; 
 //const brands = response.data.brandsmodels.edges.map(edge => edge.node.brandmodelFields.brand);
-
-
+ 
 export const GET_ALL_MODELS_BY_BRAND = gql`
 query GetModelsByBrand($brand: String!) {
   brandsmodels(where: {name: $brand}) {

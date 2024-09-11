@@ -79,10 +79,7 @@ export default function Inventory({locale}) {
         { label: "Above 11 Lakh", value: "above_11_lakh" }
       ]
     }
-  ]);
-
-
-  
+  ]); 
   
   const CardsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
