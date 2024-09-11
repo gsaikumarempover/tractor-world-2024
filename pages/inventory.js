@@ -148,7 +148,8 @@ export default function Inventory({locale}) {
   const handleResetClick = () => {
     setResetBgColor(true);
     setApplyBgColor(false);
-    clearSelectedValues();
+    clearSelectedValues(); 
+    setliveInventoryFilters(['', '', '']);
   };
 
   const handleApplyClick = () => {
@@ -165,7 +166,10 @@ export default function Inventory({locale}) {
       }
     }); 
 
-    setliveInventoryFilters(selectedValues);
+   // Check if filters have actually changed before updating the state
+   if (JSON.stringify(selectedValues) !== JSON.stringify(liveInventoryFilters)) {
+    setliveInventoryFilters(selectedValues); // Only set state if filters are different
+  }
 
   };
 
@@ -319,31 +323,35 @@ export default function Inventory({locale}) {
     }
   }, [liveInventoryData])
 
-
-  useEffect(() =>{
-
-    debugger;
+  useEffect(() => {
+    if (!liveInventoryFilters.length || !PopularTractors.length) {
+      return; // Early exit if filters or data is not available
+    }
+  
     const filteredTractors = PopularTractors.filter(tractor => {
-
-      
-    debugger;
       const [brandFilter, hpFilter, priceFilter] = liveInventoryFilters;
-
-      const tractorHP = parseInt(tractor.features.find(f => f.text.includes("HP")).text);  // Extract HP from features
-      const tractorPrice = parseInt(tractor.price);  // Convert price to number
-      const priceRange = priceFilter.split("_").map(price => Number(price.replace("lakh", '')) * 100000);
-
-      return (
-        tractor.title.toLowerCase().includes(brandFilter.toLowerCase()) &&  // Filter by brand
-        tractorHP >= parseInt(hpFilter.split("_")[0]) && tractorHP <= parseInt(hpFilter.split("_")[1]) &&  // Filter by HP range
-        tractorPrice >= priceRange[0] && tractorPrice <= priceRange[1]  // Filter by price range
-      );
+  
+      const tractorHP = parseInt(tractor.features.find(f => f.text.includes("HP")).text); // Extract HP
+      const tractorPrice = parseInt(tractor.price); // Convert price to number
+  
+      // If priceFilter is defined, split it into min and max range; otherwise set defaults
+      const priceRange = priceFilter
+        ? priceFilter.split("_").map(price => Number(price.replace("lakh", '')) * 100000)
+        : [0, Number.MAX_VALUE]; // Default range if priceFilter is undefined
+  
+      // Build the filtering conditions, only applying filters that are defined
+      const isBrandMatch = brandFilter ? tractor.title.toLowerCase().includes(brandFilter.toLowerCase()) : true;
+      const isHPMatch = hpFilter
+        ? tractorHP >= parseInt(hpFilter.split("_")[0]) && tractorHP <= parseInt(hpFilter.split("_")[1])
+        : true;
+      const isPriceMatch = tractorPrice >= priceRange[0] && tractorPrice <= priceRange[1];
+  
+      return isBrandMatch && isHPMatch && isPriceMatch;
     });
-
-    setPopularTractorsData(filteredTractors);  // Set the filtered data
-
-  },[liveInventoryFilters])
-
+  
+    setPopularTractorsData(filteredTractors); // Only update if the filtered data has changed
+  }, [liveInventoryFilters, PopularTractors]); // Ensure dependencies are correctly set
+   
   if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
    
@@ -843,13 +851,20 @@ export default function Inventory({locale}) {
 
               <Heading heading={'Tractors by Brands '} viewButton={false} />
 
-              <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4"> 
-               
-              {brandsLogos.map((brandlogo, index) => (
-                <div className="w-full cursor-pointer border shadow p-4" key={index}>
-                <Image loader={customImageLoader} width={50} height={50} layout="responsive" src={brandlogo} alt={brandlogo} className="w-full cursor-pointer" />
-                </div>
-              ))} 
+              <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">  
+                {brandsLogos.slice(0, 12).map((brandlogo, index) => (
+                  <div className="w-full cursor-pointer border shadow p-4" key={index}>
+                    <Image 
+                      loader={customImageLoader} 
+                      width={50} 
+                      height={50} 
+                      layout="responsive" 
+                      src={brandlogo} 
+                      alt={`brand-logo-${index}`} 
+                      className="w-full cursor-pointer" 
+                    />
+                  </div>
+                ))}
               </div>
 
               <div className="my-4 sm:hidden block">
