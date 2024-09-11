@@ -101,18 +101,21 @@ export default function HomePage({ locale }) {
         return { desktopUrl, mobileUrl };
     });
 
-    const testimonialSlides = testmonialsData.allTestimonial.nodes.map(node => {
-        const testimonialDesktopUrl = node.testimonials.tesimonialImage.node.mediaItemUrl;
-        const testimonialDescription = node.testimonials.description;
-        const testimonialVideoUrl = node.testimonials.videoUrl;
-        return { testimonialDesktopUrl, testimonialDescription, testimonialVideoUrl };
+    const testimonialSlides = testmonialsData.testimonials.nodes.map(node => {
+        // Correct the field access to `tesimonails`
+        const testimonialMobileUrl = node.tesimonails.mobileimage.node.mediaItemUrl;
+        const testimonialDesktopUrl = node.tesimonails.webimage.node.mediaItemUrl; 
+        const testimonialDescription = node.tesimonails.description; // Fixed field name
+        const testimonialVideoUrl = node.tesimonails.videourl; // Fixed field name
+        
+        return { 
+          testimonialDesktopUrl, 
+          testimonialMobileUrl, 
+          testimonialDescription, 
+          testimonialVideoUrl 
+        };
     });
-
-    // const contentGalleryDataContent = contentGalleryData.contentgallerys.nodes.map(node => {
-    //     const galleryImg = node.contentGalleryFields.image.node.mediaItemUrl;
-    //     return { galleryImg }; 
-    //  })
-
+ 
     const handleCompareAll = () => {
         router.push('/compare-tractors');
     };
@@ -365,7 +368,8 @@ export default function HomePage({ locale }) {
         <div key={index} className="relative">
             <div className='sm:w-[1921] sm:h-[734] w-[750] h-[387] overflow-hidden'>
                 <Image width={1920} height={734} className="w-full h-full"
-                    src={image.testimonialDesktopUrl} layout='responsive' alt={`Testimonial Image ${index + 1}`} />
+                   src={isMobile ? image.testimonialMobileUrl : image.testimonialDesktopUrl}
+                    layout='responsive' alt={`Testimonial Image ${index + 1}`} />
             </div>
             <p className='z-40 absolute sm:top-14 top-6 sm:text-base text-sm sm:left-14 left-3
                     text-white sm:w-[300px] w-[247px] font-bold testimonials'>
