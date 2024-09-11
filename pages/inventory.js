@@ -45,6 +45,10 @@ export default function Inventory({locale}) {
     { label: "Inventory", link: "#" },
   ];
 
+  
+  //get serach value
+  const [liveInventoryFilters, setliveInventoryFilters] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState(''); 
   const [brandsLogos , setBrandLogos]=useState([]);
   const [PopularTractors , setPopularTractorsData]=useState([]);
   const [filters, setFilters] = useState([
@@ -148,8 +152,21 @@ export default function Inventory({locale}) {
   };
 
   const handleApplyClick = () => {
+
     setApplyBgColor(true);
     setResetBgColor(false);
+
+    const radios = document.querySelectorAll('input[type="radio"]');
+    const selectedValues = [];
+  
+    radios.forEach((radio) => {
+      if (radio.checked) {
+        selectedValues.push(radio.value);  // Add the checked radio value to the array
+      }
+    }); 
+
+    setliveInventoryFilters(selectedValues);
+
   };
 
   const clearSelectedValues = () => {
@@ -249,20 +266,37 @@ export default function Inventory({locale}) {
       );
     }
   }, [brandsData]); // Trigger this effect when brandsData is available
+ 
+  // Filter brands whenever the search query changes
+  useEffect(() => {
+    debugger;
+    if (brandsData && brandsData.brandsmodels) {
+      debugger;
+      const filtered = brandsData.brandsmodels.edges.filter(({ node }) =>
+        node.brandmodelFields.brand.toLowerCase().includes(searchQuery.toLowerCase())
+      ).map(({ node }) => {
+        const modelsString = node.brandmodelFields.models;
+        const modelCount = modelsString.split(',').length;
+        return {
+          label: `${node.brandmodelFields.brand} (${modelCount})`,
+          value: node.brandmodelFields.brand.toLowerCase().replace(/\s+/g, '_')
+        };
+      });
+
+      setFilters(prevFilters =>
+        prevFilters.map(filter => 
+          filter.title === "Brand" ? { ...filter, options: filtered } : filter
+        )
+      );
+    }
+  }, [searchQuery, brandsData]);
   
   useEffect(() => {
     if (liveInventoryData && liveInventoryData.allLiveInventory) {
       const PopularTractorsList = liveInventoryData.allLiveInventory.edges.map(({ node }) => {
         // Parse imageLinks into an array
         const imageLinksArray = JSON.parse(node.liveInventoryData.imageLinks);
-
-        // console.log("imageLinksArray"+JSON.stringify(imageLinksArray));
-
-        // console.log("imageLinksArray.length"+JSON.stringify(imageLinksArray.length));
-
-        // console.log("imageLinksArray.length"+JSON.stringify(imageLinksArray[0].processed_image));
-  
-        // Get the first image from the array, if available
+ 
         const firstImage = DefaultTractor;
  
         return {
@@ -285,9 +319,34 @@ export default function Inventory({locale}) {
     }
   }, [liveInventoryData])
 
+
+  useEffect(() =>{
+
+    debugger;
+    const filteredTractors = PopularTractors.filter(tractor => {
+
+      
+    debugger;
+      const [brandFilter, hpFilter, priceFilter] = liveInventoryFilters;
+
+      const tractorHP = parseInt(tractor.features.find(f => f.text.includes("HP")).text);  // Extract HP from features
+      const tractorPrice = parseInt(tractor.price);  // Convert price to number
+      const priceRange = priceFilter.split("_").map(price => Number(price.replace("lakh", '')) * 100000);
+
+      return (
+        tractor.title.toLowerCase().includes(brandFilter.toLowerCase()) &&  // Filter by brand
+        tractorHP >= parseInt(hpFilter.split("_")[0]) && tractorHP <= parseInt(hpFilter.split("_")[1]) &&  // Filter by HP range
+        tractorPrice >= priceRange[0] && tractorPrice <= priceRange[1]  // Filter by price range
+      );
+    });
+
+    setPopularTractorsData(filteredTractors);  // Set the filtered data
+
+  },[liveInventoryFilters])
+
   if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
-  
+   
   return (
     <div>
       <div className={`${showFilter ? 'overlay sm:hidden block' : 'hidden'}`}></div>
@@ -337,9 +396,14 @@ export default function Inventory({locale}) {
               </div>
 
               <div className="mt-2 w-full">
-                <div className="w-full flex">
-                  <input type="search" placeholder="Type Here"
-                    className="border-secondaryColor border-r-0 w-full" />
+                <div className="w-full flex"> 
+                    <input 
+                      type="search"
+                      placeholder="Type Here"
+                      className="border-secondaryColor border-r-0 w-full"
+                      value={searchQuery} // Bind the input value to searchQuery state
+                      onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
+                    /> 
                   <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
                 </div>
               </div>
@@ -444,8 +508,11 @@ export default function Inventory({locale}) {
               <div className="mt-2 w-full">
                 <div className="w-full flex">
                   <input type="search" placeholder="Type Here"
-                    className="border-secondaryColor border-r-0 w-full" />
-                  <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
+                    className="border-secondaryColor border-r-0 w-full" 
+                    value={searchQuery} // Bind the input value to searchQuery state
+                    onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
+                    />
+                  <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]"  />
                 </div>
               </div>
 
