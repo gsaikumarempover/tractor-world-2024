@@ -104,18 +104,18 @@ export default function HomePage({ locale }) {
     const testimonialSlides = testmonialsData.testimonials.nodes.map(node => {
         // Correct the field access to `tesimonails`
         const testimonialMobileUrl = node.tesimonails.mobileimage.node.mediaItemUrl;
-        const testimonialDesktopUrl = node.tesimonails.webimage.node.mediaItemUrl; 
+        const testimonialDesktopUrl = node.tesimonails.webimage.node.mediaItemUrl;
         const testimonialDescription = node.tesimonails.description; // Fixed field name
         const testimonialVideoUrl = node.tesimonails.videourl; // Fixed field name
-        
-        return { 
-          testimonialDesktopUrl, 
-          testimonialMobileUrl, 
-          testimonialDescription, 
-          testimonialVideoUrl 
+
+        return {
+            testimonialDesktopUrl,
+            testimonialMobileUrl,
+            testimonialDescription,
+            testimonialVideoUrl
         };
     });
- 
+
     const handleCompareAll = () => {
         router.push('/compare-tractors');
     };
@@ -366,21 +366,29 @@ export default function HomePage({ locale }) {
 
     const testimonialsGalleryItems = testimonialSlides.map((image, index) => (
         <div key={index} className="relative">
-            <div className='sm:w-[1921] sm:h-[734] w-[750] h-[387] overflow-hidden'>
-                <Image width={1920} height={734} className="w-full h-full"
-                   src={isMobile ? image.testimonialMobileUrl : image.testimonialDesktopUrl}
-                    layout='responsive' alt={`Testimonial Image ${index + 1}`} />
+            <div className=''>
+                <Image
+                    width={isMobile ? 799 : 1920}
+                    height={isMobile ? 1020 : 744}
+                    className="w-full h-full"
+                    src={isMobile ? image.testimonialMobileUrl : image.testimonialDesktopUrl}
+                    layout='responsive'
+                    alt={`Testimonial Image ${index + 1}`}
+                />
             </div>
+
             <p className='z-40 absolute sm:top-14 top-6 sm:text-base text-sm sm:left-14 left-3
                     text-white sm:w-[300px] w-[247px] font-bold testimonials'>
                 {image.testimonialDescription}
             </p>
 
-            <Link href={image.testimonialVideoUrl}>
+           {image.testimonialVideoUrl && (
+             <Link href={image.testimonialVideoUrl}>
                 <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
                    bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
             </Link>
-        </div >
+            )}
+        </div>
     ))
 
     const cardData = [
@@ -607,13 +615,13 @@ export default function HomePage({ locale }) {
                 <div className="">
                     <div className="grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4 mt-4">
 
-                        {cardData.map((card,index) => (
+                        {cardData.map((card, index) => (
                             <div key={index} className="bg-white overflow-hidden shadow-lg flex-none m-4">
                                 <div className="relative">
                                     <Image
                                         className="w-full"
                                         src={card.image}
-                                        alt={`Image for ${card.index+1}`}
+                                        alt={`Image for ${card.index + 1}`}
                                         layout="responsive"
                                         width={100}
                                         height={70}
