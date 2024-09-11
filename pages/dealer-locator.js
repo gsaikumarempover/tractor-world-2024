@@ -32,9 +32,9 @@ export default function DealerLocator() {
   };
 
 
-  const handleAlldealers = () => {
-    router.push('/dealers');
-  };
+  // const handleAlldealers = () => {
+  //   router.push('/dealers');
+  // };
 
 
   const dealerData = [
@@ -226,12 +226,12 @@ export default function DealerLocator() {
                   <label className="form-label">Tehsil or Taluka</label>
                   <select className="block w-full px-2 py-[7px] border border-gray-300 
                     rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                    <option selected>Select Tehsil or Taluka</option>
+                    <option value="" selected>Select Tehsil or Taluka</option>
                     <option value="Berasia">Berasia</option>
                     <option value="Huzur">Huzur</option>
                   </select>
                 </div>
-                <Btn text={"Find Dealer"} bgColor={true} onClick={handleAlldealers} />
+                <Btn text={"Find Dealer"} bgColor={true}  />
 
                 <div>
                   <p className="font-bold py-3 text-black text-lg">Tractor Dealer List</p>

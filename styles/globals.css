@@ -625,4 +625,6 @@ select:focus {
   overflow: hidden!important;
 }
 
- 
+input.error {
+  border: 2px solid red;
+}

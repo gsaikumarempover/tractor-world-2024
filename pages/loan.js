@@ -25,18 +25,18 @@ export default function ApplyNewTractorLoan() {
       <p>A Tractor Loan EMI (Equated Monthly Instalment) is the monthly payment you make until your tractor loan is fully repaid. This amount comprises both the principal loan amount and the interest accrued.</p>
       <div className="grid sm:grid-cols-4 grid-cols-1 mt-2 gap-2">
         <div className="border cursor-pointer">
-          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
+          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" />
         </div>
         <div className="border cursor-pointer">
-          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
+          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" />
         </div>
         <div className="border cursor-pointer">
-          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
+          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" />
         </div>
         <div className="border cursor-pointer">
-          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" /> 
+          <Image src={videoThumbnail} alt="videoThumbnail" layout="responsive" />
         </div>
-        
+
       </div>
     </div>;
   }
@@ -124,6 +124,33 @@ export default function ApplyNewTractorLoan() {
     }
   ]
 
+  const handleApplyNow = (event) => {
+    event.preventDefault(); 
+  
+    const formElement = document.getElementById("applyForm"); 
+     if (formElement instanceof HTMLFormElement) {
+      const inputs = formElement.querySelectorAll("input"); 
+      let formIsValid = true;
+      inputs.forEach((input) => {
+        if (!input.value.trim()) {
+          formIsValid = false;
+          input.classList.add("error"); 
+        } else {
+          input.classList.remove("error");
+        }
+      });
+  
+      if (formIsValid) {
+        formElement.reset();
+        alert("Successfully applied for loan!"); 
+      } else {
+        alert("Please fill all required fields.");
+      }
+    } else {
+      console.error("Form element not found or invalid type.");
+    }
+  }; 
+
   return (
     <div>
       <Layout currentPage={'loan'}>
@@ -139,7 +166,7 @@ export default function ApplyNewTractorLoan() {
           content={
             <>
               <div>
-                <form>
+                <form  id="applyForm" onSubmit={handleApplyNow}>
                   <div className="flex sm:flex-row flex-col gap-4 mt-4 items-end">
                     <div className="sm:w-1/4 w-full">
                       <label htmlFor="location" className="block mb-2">
@@ -152,7 +179,9 @@ export default function ApplyNewTractorLoan() {
                                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                                      dark:placeholder-gray-400 dark:text-white"
                       >
-                        <option>Select Your Location</option>
+                        <option value="">Select Your Location</option>
+                        <option value="madhyaPradesh">Madhya Pradesh</option>
+                        <option value="maharashtra">Maharashtra</option>
                       </select>
                     </div>
 
@@ -187,12 +216,12 @@ export default function ApplyNewTractorLoan() {
                     </div>
 
                     <div className="sm:w-1/4 w-full">
-                      <div
+                      <button type="submit"
                         className="bg-secondaryColor px-2 py-3 text-white 
-                        text-center rounded-md font-semibold cursor-pointer"
+                        text-center rounded-md w-full font-semibold cursor-pointer"
                       >
                         Apply Now
-                      </div>
+                      </button>
                     </div>
                   </div>
                 </form>

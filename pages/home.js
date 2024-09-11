@@ -20,8 +20,6 @@ import Call from '@Images/home/call.svg';
 import Share from '@Images/home/share.svg';
 import Thumb from '@Images/home/thumb.svg';
 import Tractor from '@Images/home/tractor.svg';
-import slide1 from '@Images/testimonials/slide1.svg'
-import mblSlide1 from '@Images/testimonials/mblSlide.svg'
 import homeIcon from '@Images/footer/homeIcon.svg'
 import callIcon from '@Images/footer/callIcon.svg'
 import enquiryIcon from '@Images/footer/enquiryIcon.svg'
@@ -34,7 +32,7 @@ import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "../components/SingleItemsSlide";
 import Link from 'next/link';
 import { useQuery } from "@apollo/client";
-import { HOME_SLIDERS, GET_ALL_TESTIMONIALS } from "@utils/constants";
+import { HOME_SLIDERS, GET_ALL_TESTIMONIALS, GET_ALL_CONTENT_GALLERY } from "@utils/constants";
 
 export default function HomePage({ locale }) {
     const [isMobile, setIsMobile] = useState(false);
@@ -89,17 +87,17 @@ export default function HomePage({ locale }) {
         variables: { lang: language },
     });
 
-    // debugger;
+    const { data: contentGalleryData, loading: contentGalleryLoading, error: contentGalleryError } = useQuery(GET_ALL_CONTENT_GALLERY, {
+        variables: { lang: language },
+    });
 
 
-    if (bannersLoading || testmonialsLoading) return <p>Loading...</p>;
-    if (bannersError || testmonialsError) return <p>Error: {bannersError?.message || testmonialsError.message}</p>;
+    if (bannersLoading || testmonialsLoading || contentGalleryLoading) return <p>Loading...</p>;
+    if (bannersError || testmonialsError || contentGalleryError) return <p>Error: {bannersError?.message || testmonialsError.message || contentGalleryError.message}</p>;
 
     const homeBannerSlides = bannersData.homeSliders.nodes.map(node => {
         const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
         const mobileUrl = node.homesliders.mobilesliderimage.node.mediaItemUrl;
-        console.log("desktopUrl:", desktopUrl);
-        console.log("mobileUrl:", mobileUrl);
         return { desktopUrl, mobileUrl };
     });
 
@@ -109,6 +107,11 @@ export default function HomePage({ locale }) {
         const testimonialVideoUrl = node.testimonials.videoUrl;
         return { testimonialDesktopUrl, testimonialDescription, testimonialVideoUrl };
     });
+
+    // const contentGalleryDataContent = contentGalleryData.contentgallerys.nodes.map(node => {
+    //     const galleryImg = node.contentGalleryFields.image.node.mediaItemUrl;
+    //     return { galleryImg }; 
+    //  })
 
     const handleCompareAll = () => {
         router.push('/compare-tractors');
@@ -370,12 +373,35 @@ export default function HomePage({ locale }) {
             </p>
 
             <Link href={image.testimonialVideoUrl}>
-                 <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
+                <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
                    bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
             </Link>
         </div >
     ))
 
+    const cardData = [
+        {
+            id: 1,
+            image: CardImage, // Replace with actual image path
+            title: "Tips For Renting The Right Forklift For Next Project",
+            date: "March 16, 2024",
+            category: "Construction Insight"
+        },
+        {
+            id: 2,
+            image: CardImage, // Replace with actual image path
+            title: "How to Choose the Best Equipment for Construction",
+            date: "March 17, 2024",
+            category: "Construction Insight"
+        },
+        {
+            id: 3,
+            image: CardImage, // Replace with actual image path
+            title: "Safety Tips When Operating Heavy Machinery",
+            date: "March 18, 2024",
+            category: "Construction Insight"
+        }
+    ];
 
 
     return (
@@ -576,74 +602,32 @@ export default function HomePage({ locale }) {
 
                 <div className="">
                     <div className="grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4 mt-4">
-                        <div className="bg-white overflow-hidden shadow-lg flex-none">
-                            <div className="relative">
-                                <Image
-                                    className="w-full"
-                                    src={CardImage}
-                                    alt="cardImage"
-                                    layout="responsive"
-                                    width={100}
-                                    height={70}
-                                />
-                                <div className="bg-white px-4 py-2 text-black text-sm absolute top-4 right-4 uppercase font-bold">
-                                    Construction Insight
-                                </div>
-                            </div>
-                            <div className="xl:px-6 lg:px-4 sm:px-2 px-4 py-4">
-                                <div className="mb-2 font-bold lg:w-[250px] md:w-[250px] sm:w-[215px] w-[250px]">
-                                    Tips For Renting The Right Forklift For Next Project
-                                </div>
-                                <p>March 16, 2024</p>
-                            </div>
-                            <ReadMore />
-                        </div>
 
-                        <div className="bg-white overflow-hidden shadow-lg flex-none">
-                            <div className="relative">
-                                <Image
-                                    className="w-full"
-                                    src={CardImage}
-                                    alt="cardImage"
-                                    layout="responsive"
-                                    width={100}
-                                    height={70}
-                                />
-                                <div className="bg-white px-4 py-2 text-black text-sm absolute top-4 right-4 uppercase font-bold">
-                                    Construction Insight
+                        {cardData.map((card,index) => (
+                            <div key={index} className="bg-white overflow-hidden shadow-lg flex-none m-4">
+                                <div className="relative">
+                                    <Image
+                                        className="w-full"
+                                        src={card.image}
+                                        alt={`Image for ${card.index+1}`}
+                                        layout="responsive"
+                                        width={100}
+                                        height={70}
+                                    />
+                                    <div className="bg-white px-4 py-2 text-black text-sm absolute top-4 right-4 uppercase font-bold">
+                                        {card.category}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="xl:px-6 lg:px-4 sm:px-2 px-4 py-4">
-                                <div className="mb-2 font-bold lg:w-[250px] md:w-[250px] sm:w-[215px] w-[250px]">
-                                    Tips For Renting The Right Forklift For Next Project
+                                <div className="xl:px-6 lg:px-4 sm:px-2 px-4 py-4">
+                                    <div className="mb-2 font-bold lg:w-[250px] md:w-[250px] sm:w-[215px] w-[250px]">
+                                        {card.title}
+                                    </div>
+                                    <p>{card.date}</p>
                                 </div>
-                                <p>March 16, 2024</p>
+                                <ReadMore />
                             </div>
-                            <ReadMore />
-                        </div>
+                        ))}
 
-                        <div className="bg-white overflow-hidden shadow-lg flex-none">
-                            <div className="relative">
-                                <Image
-                                    className="w-full"
-                                    src={CardImage}
-                                    alt="cardImage"
-                                    layout="responsive"
-                                    width={100}
-                                    height={70}
-                                />
-                                <div className="bg-white px-4 py-2 text-black text-sm absolute top-4 right-4 uppercase font-bold">
-                                    Construction Insight
-                                </div>
-                            </div>
-                            <div className="xl:px-6 lg:px-4 sm:px-2 px-4 py-4">
-                                <div className="mb-2 font-bold lg:w-[250px] md:w-[250px] sm:w-[215px] w-[250px]">
-                                    Tips For Renting The Right Forklift For Next Project
-                                </div>
-                                <p>March 16, 2024</p>
-                            </div>
-                            <ReadMore />
-                        </div>
                     </div>
                 </div>
 
