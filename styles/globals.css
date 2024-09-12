@@ -352,7 +352,7 @@ body {
 
 @media screen and (min-width: 768px) {
   #inventorySlide .slick-slide {
-    margin-right: 15px;
+    margin-right: 1.5rem;
     padding-bottom: 4rem;
   }
 }

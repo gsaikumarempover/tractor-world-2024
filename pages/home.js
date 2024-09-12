@@ -88,13 +88,13 @@ export default function HomePage({ locale }) {
         <Loader />
     );
 
-    if (error) return <p>Error: {error.message}</p>; 
-    
+    if (error) return <p>Error: {error.message}</p>;
+
     const bannersData = data?.homeSliders?.nodes || [];
     const testimonialsData = data?.testimonials?.nodes || [];
     const contentGalleryData = data?.contentgallerys?.nodes || [];
-    const latestNewsData = data?.latestnews?.edges?.map(edge => edge.node) || []; 
- 
+    const latestNewsData = data?.latestnews?.edges?.map(edge => edge.node) || [];
+
     const homeBannerSlides = bannersData.map(node => {
         const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
         const mobileUrl = node.homesliders.mobilesliderimage.node.mediaItemUrl;
@@ -485,7 +485,7 @@ export default function HomePage({ locale }) {
             {/* Explore Tractor World  */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 mb-3 pt-4 bg-white " >
                 <Heading heading={'Explore Tractor World'} viewButton={false} />
-                <div className='grid sm:grid-cols-6 gap-4 grid-cols-3 pb-4'>
+                <div className='grid sm:grid-cols-6 md:gap-6 gap-4 grid-cols-3 pb-4'>
                     {exploreimages.map((item, index) => (
                         <a href={item.url} key={index}>
                             <Image src={item.image} className='cursor-pointer' alt={`Explore item ${index + 1}`} />
@@ -521,7 +521,7 @@ export default function HomePage({ locale }) {
                     </div>
                 </div>
                 <div className='sm:mt-10 mt-2'>
-                    <div className="grid md:grid-cols-4 grid-cols-2 md:gap-6 gap-2 w-full relative
+                    <div className="grid md:grid-cols-4 grid-cols-2 md:gap-6 gap-4 w-full relative
                      z-10 sm:pb-0 pb-16">
                         {WhyChooseItems.map((item, index) => (
                             <div key={index}>
@@ -558,7 +558,7 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className="">
-                    <div className='grid sm:grid-cols-3 xl:gap-8 gap-4'>
+                    <div className='grid sm:grid-cols-3 md:gap-6 gap-4'>
                         {Object.keys(compareTractorData).map((key) =>
                             activeTab === key ? (
                                 <>
@@ -618,10 +618,10 @@ export default function HomePage({ locale }) {
                 <Heading heading={'Content Gallery'} viewButton={true} onClick={handleAllExclusiveOffers} />
 
                 <div className="">
-                    <div className="grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4 mt-4">
+                    <div className="grid sm:grid-cols-3 grid-cols-1 md:gap-6 gap-4 mt-4">
 
                         {contentGalley.map((card, index) => (
-                            <div key={index} className="bg-white overflow-hidden shadow-lg flex-none m-4">
+                            <div key={index} className="bg-white overflow-hidden shadow-lg flex-none">
                                 <div className="relative">
                                     <Image
                                         className="w-full"
@@ -659,7 +659,7 @@ export default function HomePage({ locale }) {
                 <Heading heading={'Latest News & Updates'} viewButton={true} onClick={handleAllContentHub} />
 
                 <div className="">
-                    <div className="grid sm:grid-cols-3 grid-cols-1 xl:gap-8 gap-4 mt-4">
+                    <div className="grid sm:grid-cols-3 grid-cols-1 md:gap-6 gap-4 mt-4">
                         {latestNewsGalley.map((newsData, index) => (
                             <div key={index} className="bg-white overflow-hidden shadow-lg flex-none">
                                 <div className="relative">

@@ -35,6 +35,7 @@ export default function CompareTractor() {
         setShowBrandsModelsModal(false);
         setModelsSearchQuery('');
         setBrandsSearchQuery('');
+        setSelectedBrand('');
     };
 
     useEffect(() => {
