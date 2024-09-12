@@ -133,12 +133,15 @@ export default function HomePage({ locale }) {
         const contentGalleyUrl = node.contentGalleryFields.image.node.mediaItemUrl;
         const contentGalleyDate = node.date;
         const contentGalleyBadge = node.contentGalleryFields.badge;
+        const contentGalleyDescription = node.contentGalleryFields.description;
+
         const contentGalleyTitle = node.title;
         const contentGalleyURL = node.uri;
         return {
             contentGalleyUrl,
             contentGalleyDate,
             contentGalleyBadge,
+            contentGalleyDescription,
             contentGalleyTitle,
             contentGalleyURL
         };
@@ -668,14 +671,15 @@ export default function HomePage({ locale }) {
                                         {newsData.contentGalleyBadge}
                                     </div>
                                 </div>
-                                <div className="xl:px-6 lg:px-4 sm:px-2 px-4 py-4">
-                                    <div className="mb-4 font-bold">{newsData.date}</div>
+                                <div className="xl:px-6 lg:px-4 sm:px-2 px-4 py-4 sm:h-52">
+                                    <div className="mb-4 font-bold">{newsData.contentGalleyDate}</div>
                                     <div className="font-bold xl:text-xl md:text-lg sm:text-[17px] text-xl mb-2">
                                         {newsData.contentGalleyTitle}
                                     </div>
-                                    <p className="text-grayColor xl:text-base lg:text-sm sm:text-sm text-base">
-                                        {newsData.contentGalleyDate}
-                                    </p>
+                                    <p
+                                        className="truncate-3-lines text-grayColor xl:text-base lg:text-sm sm:text-sm text-base"
+                                        dangerouslySetInnerHTML={{ __html: newsData.contentGalleyDescription }}
+                                    ></p>
                                 </div>
                                 <ReadMore />
                             </div>
