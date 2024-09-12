@@ -612,18 +612,9 @@ export default function Inventory({locale}) {
                         <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
                       </div>
                     </div>
-                  </div>
+                  </div> 
 
-                  {/* <div>  
-                  <select className="block w-full px-2 py-[7px]   rounded border-[1px] border-[#D0D0D0]  text-[14px] text-secondaryColor">
-                    <option selected value="">Tractor Sort By</option>
-                    <option value="hightolow">Price - High to Low</option>
-                    <option value="lowtohigh">Price - Low to High</option>
-                   </select>
-                  </div> */}
-
-                </div>
-
+                </div> 
               </div>
 
               <div className="sm:hidden block">
@@ -655,15 +646,15 @@ export default function Inventory({locale}) {
                               </div>
                             </div>
                             <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                 {item.title}
                               </div>
                               <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
                                 {item.features.map((feature, fIdx) => (
                                   <div
                                     key={fIdx}
-                                    className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                                  >
+                                    className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                    >
                                     <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                     <span>{feature.text}</span>
                                   </div>
@@ -716,7 +707,7 @@ export default function Inventory({locale}) {
 
                                 <div className="p-2">
 
-                                  <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                  <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                     {item.title}
                                   </div>
 
@@ -728,8 +719,8 @@ export default function Inventory({locale}) {
                                     {item.features.slice(0, -1).map((feature, fIdx) => (
                                       <div
                                         key={fIdx}
-                                        className={`flex gap-1 items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                                      >
+                                        className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 2 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                      
                                         <div className="w-2 h-2 sm:w-3 sm:h-3">
                                           <Image
                                             src={feature.icon}
@@ -749,7 +740,7 @@ export default function Inventory({locale}) {
                                       <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
                                         <div
                                           key={fIdx}
-                                          className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                          className={`flex gap-1 h-[14px] items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
                                           <div className="w-3 h-3 sm:w-3 sm:h-3">
                                             <Image
                                               src={feature.icon}
@@ -818,15 +809,15 @@ export default function Inventory({locale}) {
                           </div>
                         </div>
                         <div className="xl:px-4 sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                          <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                          <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                             {item.title}
                           </div>
                           <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
                             {item.features.map((feature, fIdx) => (
                               <div
                                 key={fIdx}
-                                className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                              >
+                                className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                >
                                 <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                 <span>{feature.text}</span>
                               </div>
@@ -896,15 +887,15 @@ export default function Inventory({locale}) {
                           </div>
                         </div>
                         <div className="xl:px-4  sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                          <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                          <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                             {item.title}
                           </div>
                           <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
                             {item.features.map((feature, fIdx) => (
                               <div
                                 key={fIdx}
-                                className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                              >
+                                className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                >
                                 <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                 <span>{feature.text}</span>
                               </div>
@@ -954,14 +945,14 @@ export default function Inventory({locale}) {
                               </div>
                             </div>
                             <div className="xl:px-4 lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                 {item.title}
                               </div>
                               <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
                                 {item.features.map((feature, fIdx) => (
                                   <div
                                     key={fIdx}
-                                    className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                    className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                                   >
                                     <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                     <span>{feature.text}</span>
@@ -1013,7 +1004,7 @@ export default function Inventory({locale}) {
 
                                 <div className="p-2">
 
-                                  <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                  <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                     {item.title}
                                   </div>
 
@@ -1025,8 +1016,8 @@ export default function Inventory({locale}) {
                                     {item.features.slice(0, -1).map((feature, fIdx) => (
                                       <div
                                         key={fIdx}
-                                        className={`flex gap-1 items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                                      >
+                                        className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 2 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                      
                                         <div className="w-2 h-2 sm:w-3 sm:h-3">
                                           <Image
                                             src={feature.icon}
@@ -1046,7 +1037,7 @@ export default function Inventory({locale}) {
                                       <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
                                         <div
                                           key={fIdx}
-                                          className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                          className={`flex gap-1 h-[14px] items-center  ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
                                           <div className="w-3 h-3 sm:w-3 sm:h-3">
                                             <Image
                                               src={feature.icon}
