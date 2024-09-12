@@ -636,7 +636,7 @@ export default function HomePage({ locale }) {
                                     </div>
                                 </div>
                                 <div className="xl:px-6 lg:px-4 sm:px-2 px-4 py-4">
-                                    <div className="mb-2 font-bold lg:w-[250px] md:w-[250px] sm:w-[215px] w-[250px]">
+                                    <div className="mb-2 font-bold">
                                         {card.contentGalleyTitle}
                                     </div>
                                     <p>{card.contentGalleyDate}</p>
@@ -670,7 +670,7 @@ export default function HomePage({ locale }) {
                                 </div>
                                 <div className="xl:px-6 lg:px-4 sm:px-2 px-4 py-4">
                                     <div className="mb-4 font-bold">{newsData.date}</div>
-                                    <div className="font-bold xl:text-xl md:text-lg sm:text-[17px] text-xl mb-2 lg:w-[250px] md:w-[250px] sm:w-[215px] w-[250px]">
+                                    <div className="font-bold xl:text-xl md:text-lg sm:text-[17px] text-xl mb-2">
                                         {newsData.contentGalleyTitle}
                                     </div>
                                     <p className="text-grayColor xl:text-base lg:text-sm sm:text-sm text-base">
