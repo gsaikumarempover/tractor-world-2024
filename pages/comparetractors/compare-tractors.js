@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Image from "next/image";
-import Heading from "../components/Heading";
+import Heading from "../../components/Heading";
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import Btn from '@components/Btn';
