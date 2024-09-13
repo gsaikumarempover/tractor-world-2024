@@ -10,7 +10,7 @@ import Compare from '@Images/navbar/compare.svg';
 import Location from '@Images/navbar/location.svg';
 import Loan from '@Images/navbar/loan.svg';
 import ContentGallery from '@Images/navbar/contentGallery.svg';
-import Blog from '@Images/navbar/blog.svg';
+import bars from '@Images/bars.svg';
 import Contact from '@Images/navbar/call.svg';
 import Facebook from '@Images/navbar/facebook.png';
 import Xpath from '@Images/navbar/Xpath.png';
@@ -22,7 +22,6 @@ import NavbarSearch from '@Images/navbar/search.svg'
 import MblLogo from '@Images/navbar/mblLogo.svg'
 import EndTractor from '@Images/navbar/endTractor.png'
 import sellatractor from '@Images/navbar/sellatractor.svg'
-import Language from '@Images/topbar/language.svg'
 import { useTranslation } from 'next-i18next';
 
 
@@ -64,9 +63,10 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
        p-2 w-10 h-10 justify-center text-sm text-secondaryColorrounded-lg sm:hidden dark:text-gray-400
         dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default"
             aria-expanded="false" onClick={openNavbar}>
-            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <Image src={bars} alt="bars" />
+            {/* <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
-            </svg>
+            </svg> */}
           </button>
 
           <a href="./" className="flex items-center sm:space-x-3 rtl:space-x-reverse"> 
@@ -79,15 +79,13 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
           </a>
 
           <span className="sm:hidden ml-auto mr-2 mt-1" onClick={onClick}>
-            <Image src={Search} alt="Search" />
+            <Image src={Search} alt="Search" width={25} height={25} />
           </span>
 
           <Link href="/sell-tractor">
-            <div className="sm:hidden items-center flex bg-secondaryColor px-4 py-1
-         text-white text-sm mr-2 border-gradient">
-
-              Sell
-
+            <div className="sm:hidden items-center flex bg-secondaryColor px-4 py-[2px]
+         text-white text-sm mr-2 border-gradient"> 
+              Sell 
             </div>
           </Link>
 
@@ -113,7 +111,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <div className="relative w-full">
                     <input type="text" placeholder="search..." className="w-full rounded border-[1px] border-[#D0D0D0] py-3 pr-10" />
                     <div className="absolute top-[55%] transform -translate-y-1/2 right-2">
-                      <Image src={Search} alt="search" />
+                      <Image src={Search} alt="search"  width={25} height={25} />
                     </div>
                   </div>
 
@@ -240,10 +238,10 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                 <hr className="border-[#EFEAEA]"></hr>
                 <p className="my-3 text-[0.84rem">Social Media Links</p>
                 <div className="my-4 flex gap-2">
-                  <Image src={Facebook} alt="facebook" />
-                  <Image src={Xpath} alt="xpath" />
-                  <Image src={Indeed} alt="indeed" />
-                  <Image src={Instagram} alt="instagram" />
+                  <Image src={Facebook} alt="facebook" width={45} height={45} />
+                  <Image src={Xpath} alt="xpath" width={45} height={45}/>
+                  <Image src={Indeed} alt="indeed" width={45} height={45}/>
+                  <Image src={Instagram} alt="instagram" width={45} height={45} />
                 </div>
               </div>
 

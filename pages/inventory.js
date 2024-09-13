@@ -230,6 +230,7 @@ export default function Inventory({locale}) {
       border: 'none',
     },
   };
+  
 
   const [activeTab, setActiveTab] = useState("gridData");
   const handleTabClick = (tabId) => {

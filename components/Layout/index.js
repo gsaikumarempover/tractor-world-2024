@@ -79,17 +79,16 @@ const Layout = ({ children, currentPage }) => {
             content={
               <>
               <div className='sm:block hidden'>
-                <Image src={Logo} alt="Tractor World Logo" /> 
+                <Image src={Logo} alt="Tractor World Logo" width={60} height={60} /> 
                 </div>
 
                 <div className='sm:hidden block mt-2 ml-3'>
-                <Image src={MblLogo} alt="Tractor World Logo" /> 
+                <Image src={MblLogo} alt="Tractor World Logo" width={50} height={50} /> 
                 </div>
                 
-                <div className='px-4 py-10'> 
-                  <div className='mx-auto flex flex-col gap-2 items-center justify-center'>
+                <div className='px-4 sm:py-10 pt-4 pb-8'> 
+                  <div className='mx-auto flex flex-col gap-2 sm:items-center sm:justify-center text-lg'>
                     <p className='font-semibold'>What are you looking for ?</p>
-
                     <input type='text' placeholder='Start typing' className='border-b-[1px] border-[#000000] border-opacity-[10%] border-t-0 border-l-0 border-r-0'/>
                   </div>
                 </div>

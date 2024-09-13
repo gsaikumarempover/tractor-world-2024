@@ -10,7 +10,7 @@ export default function BannerStrip({heading,content}) {
                     <div className='bg-white rounded-md py-4 sm:px-16 px-3'>
                         <div className='flex justify-center w-full'>
                             <p className='text-center md:text-3xl sm:text-2xl text-[21px] font-semibold 
-                            custom-border-gradient w-fit sm:pb-3 pb-2 sm:px-0 px-16'>
+                            custom-border-gradient w-fit sm:pb-3 pb-2 sm:px-0 px-10'>
                                 {heading}
                             </p>
                         </div> 

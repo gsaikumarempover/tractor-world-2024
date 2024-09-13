@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import CardImage from '@Images/card1.svg';
+import languagePopupImg from '@Images/languagePopup.svg';
 import Heading from "@components/Heading";
 import BuyTractors from '@Images/home/buytractors.svg';
 import SellTractors from '@Images/home/SellTractors.svg';
@@ -34,14 +34,35 @@ import Link from 'next/link';
 import { useQuery } from "@apollo/client";
 import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
+import Modal from "@components/Modal";
+import Crossmark from '@Images/inventory/closeIcon.svg';
+import Logo from '@Images/navbar/logo.svg';
+import MblLogo from '@Images/navbar/mblLogo.svg'
 
 export default function HomePage({ locale }) {
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState("oneData");
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+    const [showCallRequestModal, setShowCallRequestModal] = useState(false);
     const router = useRouter();
     const language = locale?.toUpperCase();
+
+    const isShowCallModal = () => {
+        setShowModal(true);
+    }
+
+    const handleRequestCall = () => {
+        setShowCallRequestModal(true);
+        setShowModal(false);
+    }
+
+    const handleClose = () => {
+        setShowModal(false);
+        setShowCallRequestModal(false);
+    }
+
 
     useEffect(() => {
         //moble web devide
@@ -423,6 +444,30 @@ export default function HomePage({ locale }) {
         </div>
     ))
 
+    const customStyles = {
+        content: {
+            top: 'auto',
+            left: 'auto',
+            right: 'auto',
+            bottom: '0',
+            width: '100%',
+            borderTopLeftRadius: '15px',
+            borderTopRightRadius: '15px',
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+            border: 'none',
+        },
+    };
+
+    const requestCustomStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
 
     return (
         <>
@@ -439,7 +484,9 @@ export default function HomePage({ locale }) {
                     </button>
 
                     <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-primaryColor">
-                        <Image src={Tractor} alt='tractor' className='w-full' />
+                        <Link href="sell-tractor">
+                            <Image src={Tractor} alt='tractor' className='w-full' />
+                        </Link>
                     </button>
 
                     <button type="button" className="p-3 w-[50px] bg-white border-t-[1px] border-l-[1px] border-primaryColor">
@@ -464,21 +511,20 @@ export default function HomePage({ locale }) {
                                 <p>Home</p>
                             </div>
 
-                            <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
+                            <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4' onClick={isShowCallModal}>
                                 <Image src={callIcon} alt="callIcon" width={20} height={20} />
                                 <p>Call</p>
                             </div>
 
                             <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
                                 <Image src={enquiryIcon} alt="enquiryIcon" width={20} height={20} />
-                                <p>Enquiry</p>
+                                <p> <Link href="/enquiry">Enquiry</Link></p>
                             </div>
 
-                            <div className='text-center px-4 py-3 w-1/4'>
+                            <div className='text-center px-4 py-3 w-1/4' onClick={handleShareClick}>
                                 <Image src={shareIcon} alt="shareIcon" width={20} height={20} />
                                 <p>Share</p>
                             </div>
-
 
                         </div>
                     </div>
@@ -488,10 +534,10 @@ export default function HomePage({ locale }) {
             {/* Explore Tractor World  */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 mb-3 pt-4 bg-white " >
                 <Heading heading={'Explore Tractor World'} viewButton={false} />
-                <div className='grid sm:grid-cols-6 md:gap-6 gap-4 grid-cols-3 pb-4'>
+                <div className='grid sm:grid-cols-6 grid-cols-3 pb-4'>
                     {exploreimages.map((item, index) => (
-                        <a href={item.url} key={index}>
-                            <Image src={item.image} className='cursor-pointer' alt={`Explore item ${index + 1}`} />
+                        <a href={item.url} key={index} className='w-full'>
+                            <Image src={item.image} className='cursor-pointer' layout='responsive' alt={`Explore item ${index + 1}`} />
                         </a>
                     ))
                     }
@@ -690,9 +736,68 @@ export default function HomePage({ locale }) {
                 <div className='mt-4'>
                     <Btn text={'View all'} viewAll={true} />
                 </div>
-
             </div>
+
+            <Modal
+                CloseIconShow={false}
+                showModal={showModal}
+                customStyles={customStyles}
+                handleClose={handleClose}
+                content={
+                    <>
+                        <div className="block mb-4 text-center mx-auto" onClick={handleClose} >
+                            <Image
+                                src={Crossmark}
+                                width={35}
+                                height={35}
+                                alt="Close Icon"
+                                className="cursor-pointer"
+                            />
+                        </div>
+
+                        {/* Modal Content */}
+                        <div className="rounded-tl-[20px] rounded-tr-[20px] bg-white py-10 px-4 flex flex-col items-center sm:flex-row sm:items-start">
+                            <div className="flex flex-col gap-4 w-full font-bold">
+                                <div className='bg-secondaryColor w-full text-white p-2 text-center rounded'><Link href="tel:18006669999"> Call Now</Link></div>
+                                <div className='bg-primaryColor w-full text-white p-2 text-center rounded' onClick={handleRequestCall}>Request Call Back</div>
+
+                            </div>
+                        </div>
+                    </>
+                }
+            />
+
+            <Modal showModal={showCallRequestModal} customStyles={requestCustomStyles} handleClose={handleClose} content={
+                <div className='flex items-center sm:flex-row flex-col-reverse w-full'>
+                    <div className='w-full px-4 pb-4'>
+                        <div className='mb-2'>
+                            <label className='mb-2 block'>Name</label>
+                            <input type='text' placeholder='Enter Your Name' className='w-full rounded border-[#d1cccc]' />
+                        </div>
+                        <div className='mb-2'>
+                            <label className='mb-2 block'>Mobile Number</label>
+                            <input type='text' placeholder='Select Mobile Number' className='w-full rounded border-[#d1cccc]' />
+                        </div>
+                        <div className='w-full mt-3'>
+                            <Btn text={'Submit'} bgColor={true} />
+                        </div>
+                    </div>
+                    <div className="sm:relative w-[329px] h-[223px] overflow-hidden">
+                        <Image
+                            src={languagePopupImg}
+                            layout='responsive'
+                            width={610}
+                            height={452}
+                            className='languagePopupImg'
+                            alt='languagePopupImg'
+                        />
+                    </div>
+
+                </div>
+            } />
         </>
+
+
 
     )
 }

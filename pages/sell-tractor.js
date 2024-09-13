@@ -140,8 +140,7 @@ export default function SellTractor() {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="flex-none md:flex-initial w-full md:w-auto card bg-gray-200 py-4"
-                >
+                  className="flex-none md:flex-initial w-full md:w-auto card bg-[#F6F6F6] py-4">
                   <div className="grid items-center justify-center gap-2">
                     <Image
                       src={feature.image}
@@ -154,9 +153,10 @@ export default function SellTractor() {
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="py-3 mt-4 bg-[#F4F5F6] md:bg-transparent">
+          </div> 
+        
+        </div>
+        <div className="p-2 md:bg-transparent">
             <Heading
               heading={"Tractor World is best place to sell your tractor"}
             />
@@ -194,7 +194,6 @@ export default function SellTractor() {
               Tractor Junction your tractor loves you back the way you do.
             </p>
           </div>
-        </div>
       </Layout>
     </div>
   );

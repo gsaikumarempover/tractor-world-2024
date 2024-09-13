@@ -157,8 +157,8 @@ export default function Footer() {
                         <Image src={Youtube} alt="youtube" />
                     </div>
                     <hr className="my-6 border-white border-opacity-10"></hr>
-                    <div className="lg:px-14 md:px-6 sm:px-3 px-2 flex gap-3">
-                        <Link href='./'><a><Image src={MblLogo} alt="MblLogo" /></a></Link>
+                    <div className="lg:px-14 md:px-6 sm:px-3 px-2 flex gap-3 sm:items-start items-center">
+                        <Link href='./'><a><Image src={MblLogo} alt="MblLogo" width={40} height={40} /></a></Link>
                         <div>
                             <p className="text-sm py-1 select-none">© 2024 Tractor World All Rights Reserved.</p>
                             <p className="text-sm py-1 select-none">Advertise With Us  -  Privacy Policy  -  Sitemap</p>
