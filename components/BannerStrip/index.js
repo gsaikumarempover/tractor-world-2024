@@ -1,11 +1,10 @@
 import React from 'react'
 
-export default function BannerStrip({heading,content}) {
+export default function BannerStrip({heading,content,isEnquiry}) {
     return (
         <>
-            <div className='flex justify-center lg:px-14 md:px-6 sm:px-3 px-2 relative
-             sm:mt-[-6rem] 
-            mt-[-1.5rem] mb-4'>
+            <div className={`${isEnquiry ? 'sm:mt-[-6rem] mt-[-6.5rem]':'sm:mt-[-6rem] mt-[-1.5rem]'} flex justify-center lg:px-14 md:px-6 sm:px-3 px-2 relative
+             mb-4`}>
                 <div className='w-full bg-[#B6ABAB] bg-opacity-[20%] rounded-md sm:p-4 p-2'>
                     <div className='bg-white rounded-md py-4 sm:px-16 px-3'>
                         <div className='flex justify-center w-full'>

@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Image from "next/image";
 import BannerStrip from "@components/BannerStrip";
-import bannerImg from '@Images/sellTractor/engineering-excellence-banner.svg';
+import bannerImg from '@Images/home/enquiryBanner.svg';
 import CallIcon from '@Images/CallIcon.svg';
+import enquirywebBanner from '@Images/home/enquirywebBanner.svg';
+import WhyChoose from '@Images/home/whyChoose.svg';
+import Link from "next/link";
+
 export default function Enquiry() {
     const breadcrumbData = [
         { label: "Home", link: "/" },
         { label: "Enquiry", link: "#" },
     ];
+
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+            // alert(isMobile)// Adjust the breakpoint as needed
+        };
+
+        handleResize(); // Initial check
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [isMobile]); // Empty dependency array ensures useEffect runs only once after initial render
+
 
     const handleApplyNow = (event) => {
         event.preventDefault();
@@ -39,26 +57,28 @@ export default function Enquiry() {
     };
 
     return (
-      
-            <Layout currentPage={'enquiry'}>
-                  <div>
+
+        <Layout currentPage={'enquiry'}>
+            <div>
                 <Banner
                     breadcrumbs={breadcrumbData}
                     heading={""}
-                    bannerImg={bannerImg}
-                    BannerUnderlineImg={false}
+                    bannerImg={isMobile?bannerImg:enquirywebBanner}
+                    BannerUnderlineImg={false} 
+                    text={'Tractor or implement prices shown on any external website are not  approved or authorized by Tractor World Tractors. Please submit your details  or contact your nearest authorized Mahindra dealership to get the best  price in your location.'}
                 />
-<div className="bg-white"></div>
+                <div className="bg-white"></div>
                 <BannerStrip
+                    isEnquiry={true}
                     heading={"Share Your Details To Get Tractor Prices"}
                     content={
                         <>
                             <div>
                                 <form id="applyForm" onSubmit={handleApplyNow}>
-                                    <div className="flex sm:flex-row flex-col gap-4 mt-4 items-end">
+                                    <div className="grid sm:grid-cols-2 grid-cols-1 sm:gap-x-20 sm:gap-y-6 gap-4 mt-4 items-end">
 
 
-                                        <div className="sm:w-1/4 w-full">
+                                        <div className="w-full">
                                             <label htmlFor="name" className="block mb-2">
                                                 Name
                                             </label>
@@ -73,7 +93,7 @@ export default function Enquiry() {
                                             />
                                         </div>
 
-                                        <div className="sm:w-1/4 w-full">
+                                        <div className="w-full">
                                             <label htmlFor="number" className="block mb-2">
                                                 Mobile Number
                                             </label>
@@ -88,7 +108,7 @@ export default function Enquiry() {
                                             />
                                         </div>
 
-                                        <div className="sm:w-1/4 w-full">
+                                        <div className="w-full">
                                             <label htmlFor="location" className="block mb-2">
                                                 Select Budget
                                             </label>
@@ -108,7 +128,7 @@ export default function Enquiry() {
                                             </select>
                                         </div>
 
-                                        <div className="sm:w-1/4 w-full">
+                                        <div className="w-full">
                                             <label htmlFor="location" className="block mb-2">
                                                 Select Location
                                             </label>
@@ -124,39 +144,51 @@ export default function Enquiry() {
                                                 <option value="maharashtra">Maharashtra</option>
                                             </select>
                                         </div> 
+                                    </div>
 
-                                        <div className="sm:w-1/4 w-full flex gap-2"> 
+                                    
+                                    <div className="w-full flex gap-2 mt-6">
                                             <input type="checkbox" className="mt-1" />
                                             <label htmlFor="location" className="block mb-2 mt-0">
                                                 By clicking “Get Price”, I agree to be  contacted
                                                 by Tractor world associates regarding my
                                                 interest via phone call, WhatsApp or any other medium.
                                             </label>
-                                        </div> 
-
-                                        <div className="sm:w-1/4 w-full">
-                                            <button type="submit"
-                                                className="bg-secondaryColor px-2 py-3 text-white 
-                        text-center rounded-md w-full font-semibold cursor-pointer"
-                                            >
-                                                Apply Now
-                                            </button>
                                         </div>
+
+
+                                    <div className="w-full flex justify-center mt-6">
+                                        <button type="submit"
+                                            className="bg-secondaryColor px-2 py-3 text-white 
+                        text-center rounded-md sm:w-1/2 w-full font-semibold cursor-pointer"
+                                        >
+                                            Get Price
+                                        </button>
                                     </div>
                                 </form>
                             </div>
                         </>
                     }
                 />
+            </div>
+
+            <div className="bg-white pb-6 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3 sm:h-auto h-24">
+                <div className="relative px-4 sm:flex justify-center">
+                    <div>
+                    <div className="flex gap-4 items-center">
+                        <Image src={CallIcon} alt="phone" width={40} height={40} />
+                        <p className="text-medium">For more information call us<br></br>
+                            on our Toll-Free Number:</p>
+                    </div>
+                    <p className="text-primaryColor">24*7 <Link href="tel:18006669999">1800 666 9999</Link></p>
+
+                    </div>
+                    <div className="sm:relative absolute sm:right-[67px] right-[-4px] top-[-8px] sm:w-[200px] w-[160px]">
+                        <Image src={WhyChoose} alt="whyChoose" layout="responsive" />
+                    </div>
                 </div>
 
-                <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
-                  
-                  <div className="flex">
-                   <Image src={CallIcon} alt="phone" /> <p>For more information call us
-                    on our Toll-Free Number:</p>  
-                  </div> 
-                </div>
-            </Layout>
-     );
+            </div>
+        </Layout>
+    );
 }

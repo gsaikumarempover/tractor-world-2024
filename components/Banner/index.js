@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import BannerUnderline from '@Images/bannerUnderline.svg'
 
-export default function Banner({breadcrumbs, bannerImg, heading,BannerUnderlineImg = true }) {
+export default function Banner({breadcrumbs, bannerImg, heading,BannerUnderlineImg = true,text }) {
     return (
         <>
             <div className='bg-secondaryColor sm:text-[14px] text-[13px] uppercase px-2 sm:py-3 py-2 sm:text-center text-start text-white font-bold'>
@@ -25,6 +25,7 @@ export default function Banner({breadcrumbs, bannerImg, heading,BannerUnderlineI
                         </div>
                     )}
                 </div> */}
+                <p className='absolute sm:top-6 top-2 text-white sm:px-10 px-2 sm:text-lg text-medium'>{text}</p>
             </div>
         </>
     )
