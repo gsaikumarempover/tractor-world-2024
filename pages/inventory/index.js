@@ -18,12 +18,13 @@ import listView from "@Images/inventory/listView.svg";
 import listActiveView from "@Images/inventory/listActiveView.svg";
 import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
-import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY } from "@utils/constants"; 
+import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY,HP_OPTIONS,PRICE_OPTIONS } from "@utils/constants"; 
 import { useQuery } from '@apollo/client'; 
 import { getLocaleProps } from "@utils";
 import { useTranslation } from 'next-i18next'; 
 import { useRouter } from 'next/router';
 import Pagination from "@components/Pagination";
+import { GET_ALL_POPULAR_BRANDS } from "../../utils/constants";
 
 export default function Inventory({locale}) {
   //// apply,reset btns active 
@@ -53,24 +54,12 @@ export default function Inventory({locale}) {
     {
       title: "HP",
       showKey: "showHps",
-      options: [
-        { label: "Under 20 HP", value: "18" },
-        { label: "21 HP - 30 HP", value: "21_30" },
-        { label: "31 HP - 40 HP", value: "31_40" },
-        { label: "41 HP - 45 HP", value: "41_45" },
-        { label: "46 HP - 50 HP", value: "46_50" },
-        { label: "Above 50 HP", value: "51" }
-      ]
+      options:HP_OPTIONS
     },
     {
       title: "Price",
       showKey: "showPrices",
-      options: [
-        { label: "5 Lakh - 6 Lakh", value: "5_6_lakh" },
-        { label: "6 Lakh - 7 Lakh", value: "6_7_lakh" },
-        { label: "7 Lakh - 9 Lakh", value: "7_9_lakh" },
-        { label: "Above 11 Lakh", value: "above_11_lakh" }
-      ]
+      options:PRICE_OPTIONS
     }
   ]); 
 
@@ -198,33 +187,44 @@ export default function Inventory({locale}) {
   
   //all brands 
   const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
- 
   useEffect(() => {
-    if (brandsData && brandsData.brandsmodels) {
-      // Map the API response to the options for the "Brand" filter
-      const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
-        const modelsString = node.brandmodelFields.models;  
-        const modelCount = modelsString.split(',').length;  
-        return {
-          label: `${node.brandmodelFields.brand} (${modelCount})`, // Use model count for the label
-          value: node.slug // Slugify the brand name
-        };
-      });
-  
-      // Extract all brand logos into a separate array
-      const logos = brandsData.brandsmodels.edges.map(({ node }) => node.brandmodelFields.brandLogo); 
-      // Set brand logos in state
-      setBrandLogos(logos);
-  
-      // Update the filters state with the brand options
-      setFilters(prevFilters =>
-        prevFilters.map(filter => 
-          filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
-        )
-      );
-    }
-  }, [brandsData]); // Trigger this effect when brandsData is available
-  
+  if (brandsData && brandsData.brandsmodels && liveInventoryData && liveInventoryData.allLiveInventory) {
+    // Map the API response to the options for the "Brand" filter
+    const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
+      const modelsString = node.brandmodelFields.models;
+      const modelCount = modelsString.split(',').length;
+      
+      // Count the number of live inventory items that match the brand's slug
+      const liveInventoryCount = liveInventoryData.allLiveInventory.edges.filter(({ node: inventoryNode }) => 
+        inventoryNode.liveInventoryData.brandSlug === node.slug // Assuming brandSlug field exists in live inventory data
+      ).length;
+
+      return {
+        label: `${node.brandmodelFields.brand} (${liveInventoryCount})`, // Use live inventory count for the label
+        value: node.slug, // Slugify the brand name
+      };
+    }); 
+    // Update the filters state with the brand options
+    setFilters(prevFilters =>
+      prevFilters.map(filter =>
+        filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
+      )
+    );
+  }
+}, [brandsData, liveInventoryData]);
+
+
+///get popular brands 
+const { data: PopularBrandsData, loading: PopularBrandsLoading, error: PopularBrandsError } = useQuery(GET_ALL_POPULAR_BRANDS);
+useEffect(() => {
+  if (PopularBrandsData && PopularBrandsData.brandsmodels) { 
+    // Extract all brand logos into a separate array
+    const logos = PopularBrandsData.brandsmodels.edges.map(({ node }) => node.brandmodelFields.brandLogo);
+    setBrandLogos(logos); 
+  }
+}, [PopularBrandsData]);
+
+
   // Filter brands whenever the search query changes
   useEffect(() => {
     //  debugger;

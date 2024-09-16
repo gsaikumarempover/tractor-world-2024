@@ -18,24 +18,55 @@ import listView from "@Images/inventory/listView.svg";
 import listActiveView from "@Images/inventory/listActiveView.svg";
 import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
-import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY } from "@utils/constants"; 
+import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY,HP_OPTIONS,PRICE_OPTIONS,GET_LIVE_INVENTORY_BYSEARCH } from "@utils/constants"; 
 import { useQuery } from '@apollo/client'; 
 import { getLocaleProps } from "@utils";
 import { useTranslation } from 'next-i18next'; 
 import { useRouter } from 'next/router';
+import Pagination from "@components/Pagination"; 
+import { GET_ALL_POPULAR_BRANDS } from "../../utils/constants";
+import Link from "next/link";
 
 export default function Inventory({locale}) {
   //// apply,reset btns active 
-  const { t } = useTranslation();
+  const { t } = useTranslation();  
+  // Use Next.js router to redirect to the dynamic page
+  const router = useRouter(); 
+  const [showFilter, setShowFilter] = useState(false); 
   const [resetBgColor, setResetBgColor] = useState(false);
   const [applyBgColor, setApplyBgColor] = useState(true);
   const currentLanguage = locale; 
   const language = locale?.toUpperCase(); 
-  // Use Next.js router to redirect to the dynamic page
-  const router = useRouter();
-  const { slug } = router.query; 
-  const slugFirstPart = slug ? slug.toLowerCase().split('-')[0] : '';
+  const { slug } = router.query;  
+  const slugQuery = slug.replace('-', ' ');
+
   console.log("SLUG------------"+slug);
+
+  //get serach value
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [liveInventoryFilters, setliveInventoryFilters] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [brandsLogos , setBrandLogos]=useState([]);
+  const [PopularTractors , setPopularTractorsData]=useState([]);
+  
+  const [filters, setFilters] = useState([
+    {
+      title: "Brand",
+      showKey: "showBrands",
+      options: [] // To be populated with API response
+    },
+    {
+      title: "HP",
+      showKey: "showHps",
+      options:HP_OPTIONS
+    },
+    {
+      title: "Price",
+      showKey: "showPrices",
+      options:PRICE_OPTIONS
+    }
+  ]); 
 
   ///// for collpase
   const [showStates, setShowStates] = useState({
@@ -51,191 +82,6 @@ export default function Inventory({locale}) {
   ];
 
   
-  //get serach value
-  const [liveInventoryFilters, setliveInventoryFilters] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const [brandsLogos , setBrandLogos]=useState([]);
-  const [PopularTractors , setPopularTractorsData]=useState([]);
-  const [filters, setFilters] = useState([
-    {
-      title: "Brand",
-      showKey: "showBrands",
-      options: [] // To be populated with API response
-    },
-    {
-      title: "HP",
-      showKey: "showHps",
-      options: [
-        { label: "Under 20 HP", value: "18" },
-        { label: "21 HP - 30 HP", value: "21_30" },
-        { label: "31 HP - 40 HP", value: "31_40" },
-        { label: "41 HP - 45 HP", value: "41_45" },
-        { label: "46 HP - 50 HP", value: "46_50" },
-        { label: "Above 50 HP", value: "51" }
-      ]
-    },
-    {
-      title: "Price",
-      showKey: "showPrices",
-      options: [
-        { label: "5 Lakh - 6 Lakh", value: "5_6_lakh" },
-        { label: "6 Lakh - 7 Lakh", value: "6_7_lakh" },
-        { label: "7 Lakh - 9 Lakh", value: "7_9_lakh" },
-        { label: "Above 11 Lakh", value: "above_11_lakh" }
-      ]
-    }
-  ]); 
-  
-  const CardsPerPage = 9;
-  const [currentPage, setCurrentPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [endCursor, setEndCursor] = useState(null); 
-  const totalPages = Math.ceil(PopularTractors.length / CardsPerPage);
-
-  const indexOfLastCard = currentPage * CardsPerPage;
-  const indexOfFirstCard = indexOfLastCard - CardsPerPage;
-  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);
-
-
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
-  const handlePrev = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-
-  const renderPageNumbers = () => {
-    let pages = [];
-    const maxPagesToShow = 10;
-
-    if (totalPages <= maxPagesToShow) {
-      pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    } else {
-      if (currentPage <= 3) {
-        pages = [1, 2, 3, 4, 5,6,7,8,9,10];
-      } else if (currentPage > totalPages - 3) {
-        pages = [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-      } else {
-        pages = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
-      }
-    }
-    return (
-      <>
-        {currentPage > 3 && totalPages > maxPagesToShow && (
-          <>
-            <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(1)}>1</li>
-            <li>...</li>
-          </>
-        )}
-        {pages.map(page => (
-          <li key={page} className={`cursor-pointer border px-4 py-2 ${page === currentPage ?
-            'font-bold bg-secondaryColor text-white' : 'font-bold'}`} onClick={() => paginate(page)}>
-            {page}
-          </li>
-        ))}
-        {currentPage < totalPages - 2 && totalPages > maxPagesToShow && (
-          <>
-            <li>...</li>
-            <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(totalPages)}>{totalPages}</li>
-          </>
-        )}
-      </>
-    );
-  };
-
-  ////for filters collpase
-  const onToggle = (key) => {
-    setShowStates((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  ////apply, reset btn click functionality
-  const handleResetClick = () => {
-    setResetBgColor(true);
-    setApplyBgColor(false);
-    clearSelectedValues(); 
-    setliveInventoryFilters(['', '', '']);
-  };
-
-const handleApplyClick = () => {
-  // Set background color states
-  setApplyBgColor(true);
-  setResetBgColor(false);
-
-  // Capture selected radio button values
-  const radios = document.querySelectorAll('input[type="radio"]');
-  const selectedValues = [];
-
-  let selectedBrandSlug = ''; // Initialize an empty variable for storing the slug
-
-  radios.forEach((radio) => {
-    debugger;
-    if (radio.checked) {
-      selectedValues.push(radio.value);  // Collect the checked radio values
-
-      // Assuming the radio value holds the slug for the brand
-      if (radio.name === 'brand') { // Adjust the 'brand' field according to your form name
-        selectedBrandSlug = radio.value; // Get the selected brand slug
-      }
-    }
-  });
-
-  // Check if filters have actually changed before updating the state
-  if (JSON.stringify(selectedValues) !== JSON.stringify(liveInventoryFilters)) {
-    setliveInventoryFilters(selectedValues); // Update state if filters are different
-  }
-
-  if (selectedBrandSlug) {
-    router.push(`/inventory/${selectedBrandSlug}`); // Redirect to the dynamic slug page
-  }
-};
-
-  const clearSelectedValues = () => {
-    const radios = document.querySelectorAll('input[type="radio"]');
-    radios.forEach((radio) => (radio.checked = false));
-  };
-
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      if (typeof window !== 'undefined') {
-        if (window.scrollY > lastScrollY) {
-          // Scrolling down
-          setIsVisible(false);
-        } else {
-          // Scrolling up
-          setIsVisible(true);
-        }
-        setLastScrollY(window.scrollY);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollY]);
-
-  const [showFilter, setShowFilter] = useState(false);
-
-  const isShowFilter = () => {
-    setShowFilter(true);
-  };
-
-  const isHideFilter = () => {
-    setShowFilter(false);
-  };
-
-  const [showModal, setShowModal] = useState(false);
-
-  const isShowSorting = () => {
-    setShowModal(true);
-  }
-
-  const handleClose = () => {
-    setShowModal(false);
-  }
-
   const customStyles = {
     content: {
       top: 'auto',
@@ -254,84 +100,259 @@ const handleApplyClick = () => {
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
-  
-  const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
-  
-  const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError } = useQuery(GET_LIVE_INVENTORY, {
-    variables: { lang: language },
-  });
-
-  // Filter data based on the slug
-  const filteredDataBasedonSlug = liveInventoryData?.allLiveInventory?.edges.filter(({ node }) => {
-    const nodeSlug = node.slug.toLowerCase();
-    return nodeSlug.startsWith(slugFirstPart); // Compare using startsWith
-  }) || [];
-
-  //console.log("filtedbyslug"+JSON.stringify(filteredDataBasedonSlug));
-  
+ 
+  ////for filters collpase
+  const onToggle = (key) => {
+    setShowStates((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+ 
   useEffect(() => {
-    if (brandsData && brandsData.brandsmodels) {
+    const handleScroll = () => {
+      if (typeof window !== 'undefined') {
+        if (window.scrollY > lastScrollY) {
+          // Scrolling down
+          setIsVisible(false);
+        } else {
+          // Scrolling up
+          setIsVisible(true);
+        }
+        setLastScrollY(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll); 
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
+  const isShowFilter = () => {
+    setShowFilter(true);
+  };
+
+  const isHideFilter = () => {
+    setShowFilter(false);
+  };
+
+  const [showModal, setShowModal] = useState(false);
+
+  const isShowSorting = () => {
+    setShowModal(true);
+  }
+
+  const handleClose = () => {
+    setShowModal(false);
+  }
+  
+  ////apply, reset btn click functionality
+  const handleResetClick = () => {
+    setResetBgColor(true);
+    setApplyBgColor(false);
+    clearSelectedValues(); 
+    setliveInventoryFilters(['', '', '']);
+  };
+
+  const handleApplyClick = () => {
+    // Set background color states
+    setApplyBgColor(true);
+    setResetBgColor(false);
+
+    // Capture selected radio button values
+    const radios = document.querySelectorAll('input[type="radio"]');
+    const selectedValues = [];
+
+    let selectedBrandSlug = ''; // Initialize an empty variable for storing the slug
+
+    radios.forEach((radio) => {
+      debugger;
+      if (radio.checked) {
+        selectedValues.push(radio.value);  // Collect the checked radio values
+
+        // Assuming the radio value holds the slug for the brand
+        if (radio.name === 'brand') { // Adjust the 'brand' field according to your form name
+          selectedBrandSlug = radio.value; // Get the selected brand slug
+        }
+      }
+    });
+
+    // Check if filters have actually changed before updating the state
+    if (JSON.stringify(selectedValues) !== JSON.stringify(liveInventoryFilters)) {
+      setliveInventoryFilters(selectedValues); // Update state if filters are different
+    }
+
+    if (selectedBrandSlug) {
+      router.push(`/inventory/${selectedBrandSlug}`); // Redirect to the dynamic slug page
+    }
+  };
+
+  const clearSelectedValues = () => {
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach((radio) => (radio.checked = false));
+  };
+  
+  //all brands 
+  const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
+  useEffect(() => {
+    if (brandsData && brandsData.brandsmodels && liveInventoryData && liveInventoryData.allLiveInventory) {
       // Map the API response to the options for the "Brand" filter
       const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
-        const modelsString = node.brandmodelFields.models;  
-        const modelCount = modelsString.split(',').length;  
+        const modelsString = node.brandmodelFields.models;
+        const modelCount = modelsString.split(',').length;
+        
+        // Count the number of live inventory items that match the brand's slug
+        const liveInventoryCount = liveInventoryData.allLiveInventory.edges.filter(({ node: inventoryNode }) => 
+          inventoryNode.liveInventoryData.brandSlug === node.slug // Assuming brandSlug field exists in live inventory data
+        ).length;
+  
         return {
-          label: `${node.brandmodelFields.brand} (${modelCount})`, // Use model count for the label
-          value: node.slug // Slugify the brand name
+          label: `${node.brandmodelFields.brand} (${liveInventoryCount})`, // Use live inventory count for the label
+          value: node.slug, // Slugify the brand name
         };
       });
-  
-      // Extract all brand logos into a separate array
-      const logos = brandsData.brandsmodels.edges.map(({ node }) => node.brandmodelFields.brandLogo); 
-      // Set brand logos in state
-      setBrandLogos(logos);
-  
+   
       // Update the filters state with the brand options
       setFilters(prevFilters =>
-        prevFilters.map(filter => 
+        prevFilters.map(filter =>
           filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
         )
       );
     }
-  }, [brandsData]); // Trigger this effect when brandsData is available
- 
+  }, [brandsData, liveInventoryData]);
+  
   // Filter brands whenever the search query changes
   useEffect(() => {
-    debugger;
-    if (brandsData && brandsData.brandsmodels) {
-      debugger;
-      const filtered = brandsData.brandsmodels.edges.filter(({ node }) =>
-        node.brandmodelFields.brand.toLowerCase().includes(searchQuery.toLowerCase())
-      ).map(({ node }) => {
-        const modelsString = node.brandmodelFields.models;
-        const modelCount = modelsString.split(',').length;
+    //  debugger;
+      if (brandsData && brandsData.brandsmodels) {
+        debugger;
+        const filtered = brandsData.brandsmodels.edges.filter(({ node }) =>
+          node.brandmodelFields.brand.toLowerCase().includes(searchQuery.toLowerCase())
+        ).map(({ node }) => {
+          const modelsString = node.brandmodelFields.models;
+          const modelCount = modelsString.split(',').length;
+          return {
+            label: `${node.brandmodelFields.brand} (${modelCount})`,
+            value:node.slug
+          };
+        });
+  
+        setFilters(prevFilters =>
+          prevFilters.map(filter => 
+            filter.title === "Brand" ? { ...filter, options: filtered } : filter
+          )
+        );
+      }
+    }, [searchQuery, brandsData]);
+
+
+    
+
+  ///get popular brands 
+  const { data: PopularBrandsData, loading: PopularBrandsLoading, error: PopularBrandsError } = useQuery(GET_ALL_POPULAR_BRANDS);
+  useEffect(() => {
+    if (PopularBrandsData && PopularBrandsData.brandsmodels) { 
+      // Extract all brand logos into a separate array
+      const logos = PopularBrandsData.brandsmodels.edges.map(({ node }) => {
         return {
-          label: `${node.brandmodelFields.brand} (${modelCount})`,
-          value:node.slug
+          brandlogo: node.brandmodelFields.brandLogo, // Use live inventory count for the label
+          brandSlug: node.slug, // Slugify the brand name
         };
       });
-
-      setFilters(prevFilters =>
-        prevFilters.map(filter => 
-          filter.title === "Brand" ? { ...filter, options: filtered } : filter
-        )
-      );
+      setBrandLogos(logos); 
     }
-  }, [searchQuery, brandsData]);
+  }, [PopularBrandsData]);
+
+    
+
+  //live inventory  fetching and execution
+
+  const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError,fetchMore} = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
+    variables: 
+    { lang: language,
+      search: slugQuery,
+      first: 9,
+      after: null
+    },
+    notifyOnNetworkStatusChange: true
+  });
+ 
+ 
+  console.log("filteredDataBasedonSlugliveInventoryData"+" -----------"+JSON.stringify(liveInventoryData));
+ 
+  //pagination
+
+  const CardsPerPage = 9;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [endCursor, setEndCursor] = useState(null);  
+  const totalPages = Math.ceil(10); 
+
+  const indexOfLastCard = currentPage * CardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - CardsPerPage;
+  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);  
+
+  console.log("currentPage"+currentPage+" -----------"+JSON.stringify(currentCards));
+
+  const paginate = (pageNumber) => {
+    fetchInventory(pageNumber);
+  };
+  const handleNext = () => {
+    debugger;
+    if (hasNextPage) {
+      fetchInventory(currentPage + 1);
+    }
+  }; 
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      fetchInventory(currentPage - 1);
+    }
+  };
+ 
+  // Function to fetch more data based on the page number 
+
+  const fetchInventory = async (pageNumber) => {
+    debugger;
+    try {
+      const result = await fetchMore({
+        variables: {
+          first: CardsPerPage,
+          after: endCursor,  // Fetch from the current end cursor
+        },
+        updateQuery: (prevResult, { fetchMoreResult }) => {
+          debugger;
+          if (!fetchMoreResult) return prevResult;  // No more data to fetch
+          
+          return {
+            ...prevResult,
+            allLiveInventory: {
+              ...fetchMoreResult.allLiveInventory,  // Replace the entire allLiveInventory object
+              edges: [
+                ...fetchMoreResult.allLiveInventory.edges,  // Only keep the fresh data
+              ],
+            },
+          };
+        },
+      });
   
+      setHasNextPage(result.data.allLiveInventory.pageInfo.hasNextPage);
+      setEndCursor(result.data.allLiveInventory.pageInfo.endCursor);
+  
+    } catch (error) {
+      console.error('Error fetching more data:', error);
+    }
+  };
+    
   useEffect(() => {
 
     if (liveInventoryData && liveInventoryData.allLiveInventory) {
-
-      const PopularTractorsList = filteredDataBasedonSlug.map(({ node }) => {
-        // Parse imageLinks into an array
-        const imageLinksArray = JSON.parse(node.liveInventoryData.imageLinks); 
-        const firstImage = DefaultTractor; 
+      debugger;
+      
+     const PopularTractorsList = liveInventoryData.allLiveInventory.edges.map(({ node }) => { 
         return {
           certified: node.liveInventoryData.isVerified,
           title: node.title,
           price: node.liveInventoryData.maxPrice,
-          imageLink: firstImage, // Set the first image link
+          imageLink: DefaultTractor,
           features: [
             { icon: "/images/time.svg", text: `${node.liveInventoryData.engineHours}` },
             { icon: "/images/wheel.svg", text: node.liveInventoryData.driveType },
@@ -343,16 +364,23 @@ const handleApplyClick = () => {
         };
       });
   
-      setPopularTractorsData(PopularTractorsList);
+     // Append new tractors to the existing list
+     setPopularTractorsData(PopularTractorsList); 
+     setEndCursor(liveInventoryData.allLiveInventory.pageInfo.endCursor);
+     setHasNextPage(liveInventoryData.allLiveInventory.pageInfo.hasNextPage);
+
     }
   }, [liveInventoryData])
-
+ 
+  ///fliter the tractors 
   useEffect(() => {
     if (!liveInventoryFilters.length || !PopularTractors.length) {
       return; // Early exit if filters or data is not available
     }
+
   
     const filteredTractors = PopularTractors.filter(tractor => {
+ 
       const [brandFilter, hpFilter, priceFilter] = liveInventoryFilters;
   
       const tractorHP = parseInt(tractor.features.find(f => f.text.includes("HP")).text); // Extract HP
@@ -689,7 +717,7 @@ const handleApplyClick = () => {
                                 {item.features.map((feature, fIdx) => (
                                   <div
                                     key={fIdx}
-                                    className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                    className={`flex gap-1 h-[14px] items-center  ${fIdx > 0 ? 'px-[6px]  border-black border-r-[1px]' : 'pr-[6px]'}`}
                                   >
                                     <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                     <span>{feature.text}</span>
@@ -878,15 +906,17 @@ const handleApplyClick = () => {
               <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">  
                 {brandsLogos.slice(0, 12).map((brandlogo, index) => (
                   <div className="w-full cursor-pointer border shadow p-4" key={index}>
+                   <Link href={brandlogo.brandSlug}>
                     <Image 
                       loader={customImageLoader} 
                       width={50} 
                       height={50} 
                       layout="responsive" 
-                      src={brandlogo} 
+                      src={brandlogo.brandlogo} 
                       alt={`brand-logo-${index}`} 
                       className="w-full cursor-pointer" 
                     />
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -1115,19 +1145,14 @@ const handleApplyClick = () => {
                 )}
               </div>
 
-              <div className="pagination my-4 flex justify-center items-center space-x-2">
-                <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>
-                  <Image src={Leftarrow} alt='left' />
-                  {/* &lt; */}
-                </button>
-                <ul className="flex space-x-2 sm:overflow-y-visible overflow-y-auto">
-                  {renderPageNumbers()}
-                </ul>
-                <button onClick={handleNext} className="border px-4 py-2 cursor-pointer" disabled={currentPage === totalPages}>
-                  <Image src={Rightarrow} alt='right' />
-                  {/* &gt; */}
-                </button>
-              </div>
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={paginate}
+                hasNextPage={hasNextPage}
+                handleNext={handleNext}
+                handlePrev={handlePrev}
+              />
 
               {/* <div className="overflow-x-auto sm:overflow-visible"> 
               <div className="flex sm:grid sm:grid-cols-2 gap-4"> 
@@ -1166,8 +1191,7 @@ const handleApplyClick = () => {
             </div>
           </>
         }
-      />
-
+      /> 
     </div>
   );
 }
