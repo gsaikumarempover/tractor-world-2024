@@ -18,17 +18,18 @@ import listView from "@Images/inventory/listView.svg";
 import listActiveView from "@Images/inventory/listActiveView.svg";
 import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
-import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY } from "@utils/constants"; 
-import { useQuery } from '@apollo/client'; 
+import { GET_ALL_BRANDS, customImageLoader, GET_LIVE_INVENTORY } from "@utils/constants";
+import { useQuery } from '@apollo/client';
 import { getLocaleProps } from "@utils";
 import { useTranslation } from 'next-i18next';
+import Loader from '@components/Loader';
 
-export default function Inventory({locale}) {
+export default function Inventory({ locale }) {
   //// apply,reset btns active 
   const { t } = useTranslation();
   const [resetBgColor, setResetBgColor] = useState(false);
   const [applyBgColor, setApplyBgColor] = useState(true);
-  const currentLanguage = locale; 
+  const currentLanguage = locale;
   const language = locale?.toUpperCase();
 
 
@@ -45,12 +46,12 @@ export default function Inventory({locale}) {
     { label: "Inventory", link: "#" },
   ];
 
-  
+
   //get serach value
-  const [liveInventoryFilters, setliveInventoryFilters] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const [brandsLogos , setBrandLogos]=useState([]);
-  const [PopularTractors , setPopularTractorsData]=useState([]);
+  const [liveInventoryFilters, setliveInventoryFilters] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [brandsLogos, setBrandLogos] = useState([]);
+  const [PopularTractors, setPopularTractorsData] = useState([]);
   const [filters, setFilters] = useState([
     {
       title: "Brand",
@@ -79,8 +80,8 @@ export default function Inventory({locale}) {
         { label: "Above 11 Lakh", value: "above_11_lakh" }
       ]
     }
-  ]); 
-  
+  ]);
+
   const CardsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(PopularTractors.length / CardsPerPage);
@@ -145,7 +146,7 @@ export default function Inventory({locale}) {
   const handleResetClick = () => {
     setResetBgColor(true);
     setApplyBgColor(false);
-    clearSelectedValues(); 
+    clearSelectedValues();
     setliveInventoryFilters(['', '', '']);
   };
 
@@ -156,17 +157,17 @@ export default function Inventory({locale}) {
 
     const radios = document.querySelectorAll('input[type="radio"]');
     const selectedValues = [];
-  
+
     radios.forEach((radio) => {
       if (radio.checked) {
         selectedValues.push(radio.value);  // Add the checked radio value to the array
       }
-    }); 
+    });
 
-   // Check if filters have actually changed before updating the state
-   if (JSON.stringify(selectedValues) !== JSON.stringify(liveInventoryFilters)) {
-    setliveInventoryFilters(selectedValues); // Only set state if filters are different
-  }
+    // Check if filters have actually changed before updating the state
+    if (JSON.stringify(selectedValues) !== JSON.stringify(liveInventoryFilters)) {
+      setliveInventoryFilters(selectedValues); // Only set state if filters are different
+    }
 
   };
 
@@ -175,7 +176,7 @@ export default function Inventory({locale}) {
     radios.forEach((radio) => (radio.checked = false));
   };
 
-  
+
   useEffect(() => {
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
@@ -230,50 +231,50 @@ export default function Inventory({locale}) {
       border: 'none',
     },
   };
-  
+
 
   const [activeTab, setActiveTab] = useState("gridData");
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
-  
+
   const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
-  
+
   const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError } = useQuery(GET_LIVE_INVENTORY, {
     variables: { lang: language },
   });
-  
+
   useEffect(() => {
     if (brandsData && brandsData.brandsmodels) {
       // Map the API response to the options for the "Brand" filter
       const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
-        const modelsString = node.brandmodelFields.models;  
-        const modelCount = modelsString.split(',').length;  
+        const modelsString = node.brandmodelFields.models;
+        const modelCount = modelsString.split(',').length;
         return {
           label: `${node.brandmodelFields.brand} (${modelCount})`, // Use model count for the label
           value: node.brandmodelFields.brand.toLowerCase().replace(/\s+/g, '_') // Slugify the brand name
         };
       });
-  
+
       // Extract all brand logos into a separate array
-      const logos = brandsData.brandsmodels.edges.map(({ node }) => node.brandmodelFields.brandLogo); 
+      const logos = brandsData.brandsmodels.edges.map(({ node }) => node.brandmodelFields.brandLogo);
       // Set brand logos in state
       setBrandLogos(logos);
-  
+
       // Update the filters state with the brand options
       setFilters(prevFilters =>
-        prevFilters.map(filter => 
+        prevFilters.map(filter =>
           filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
         )
       );
     }
   }, [brandsData]); // Trigger this effect when brandsData is available
- 
+
   // Filter brands whenever the search query changes
   useEffect(() => {
-    debugger;
+    // debugger;
     if (brandsData && brandsData.brandsmodels) {
-      debugger;
+      // debugger;
       const filtered = brandsData.brandsmodels.edges.filter(({ node }) =>
         node.brandmodelFields.brand.toLowerCase().includes(searchQuery.toLowerCase())
       ).map(({ node }) => {
@@ -286,21 +287,21 @@ export default function Inventory({locale}) {
       });
 
       setFilters(prevFilters =>
-        prevFilters.map(filter => 
+        prevFilters.map(filter =>
           filter.title === "Brand" ? { ...filter, options: filtered } : filter
         )
       );
     }
   }, [searchQuery, brandsData]);
-  
+
   useEffect(() => {
     if (liveInventoryData && liveInventoryData.allLiveInventory) {
       const PopularTractorsList = liveInventoryData.allLiveInventory.edges.map(({ node }) => {
         // Parse imageLinks into an array
         const imageLinksArray = JSON.parse(node.liveInventoryData.imageLinks);
- 
+
         const firstImage = DefaultTractor;
- 
+
         return {
           certified: node.liveInventoryData.isVerified,
           title: node.title,
@@ -316,7 +317,7 @@ export default function Inventory({locale}) {
           id: node.id
         };
       });
-  
+
       setPopularTractorsData(PopularTractorsList);
     }
   }, [liveInventoryData])
@@ -325,34 +326,36 @@ export default function Inventory({locale}) {
     if (!liveInventoryFilters.length || !PopularTractors.length) {
       return; // Early exit if filters or data is not available
     }
-  
+
     const filteredTractors = PopularTractors.filter(tractor => {
       const [brandFilter, hpFilter, priceFilter] = liveInventoryFilters;
-  
+
       const tractorHP = parseInt(tractor.features.find(f => f.text.includes("HP")).text); // Extract HP
       const tractorPrice = parseInt(tractor.price); // Convert price to number
-  
+
       // If priceFilter is defined, split it into min and max range; otherwise set defaults
       const priceRange = priceFilter
         ? priceFilter.split("_").map(price => Number(price.replace("lakh", '')) * 100000)
         : [0, Number.MAX_VALUE]; // Default range if priceFilter is undefined
-  
+
       // Build the filtering conditions, only applying filters that are defined
       const isBrandMatch = brandFilter ? tractor.title.toLowerCase().includes(brandFilter.toLowerCase()) : true;
       const isHPMatch = hpFilter
         ? tractorHP >= parseInt(hpFilter.split("_")[0]) && tractorHP <= parseInt(hpFilter.split("_")[1])
         : true;
       const isPriceMatch = tractorPrice >= priceRange[0] && tractorPrice <= priceRange[1];
-  
+
       return isBrandMatch && isHPMatch && isPriceMatch;
     });
-  
+
     setPopularTractorsData(filteredTractors); // Only update if the filtered data has changed
   }, [liveInventoryFilters, PopularTractors]); // Ensure dependencies are correctly set
-   
-  if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
+
+  if (brandsLoading || inventoryLoading) return (
+    <Loader />
+  );
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
-   
+
   return (
     <div>
       <div className={`${showFilter ? 'overlay sm:hidden block' : 'hidden'}`}></div>
@@ -402,14 +405,14 @@ export default function Inventory({locale}) {
               </div>
 
               <div className="mt-2 w-full">
-                <div className="w-full flex"> 
-                    <input 
-                      type="search"
-                      placeholder="Type Here"
-                      className="border-secondaryColor border-r-0 w-full"
-                      value={searchQuery} // Bind the input value to searchQuery state
-                      onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
-                    /> 
+                <div className="w-full flex">
+                  <input
+                    type="search"
+                    placeholder="Type Here"
+                    className="border-secondaryColor border-r-0 w-full"
+                    value={searchQuery} // Bind the input value to searchQuery state
+                    onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
+                  />
                   <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
                 </div>
               </div>
@@ -514,11 +517,11 @@ export default function Inventory({locale}) {
               <div className="mt-2 w-full">
                 <div className="w-full flex">
                   <input type="search" placeholder="Type Here"
-                    className="border-secondaryColor border-r-0 w-full" 
+                    className="border-secondaryColor border-r-0 w-full"
                     value={searchQuery} // Bind the input value to searchQuery state
                     onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
-                    />
-                  <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]"  />
+                  />
+                  <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
                 </div>
               </div>
 
@@ -613,9 +616,9 @@ export default function Inventory({locale}) {
                         <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
                       </div>
                     </div>
-                  </div> 
+                  </div>
 
-                </div> 
+                </div>
               </div>
 
               <div className="sm:hidden block">
@@ -639,7 +642,7 @@ export default function Inventory({locale}) {
                               />
                               {item.isVerified && (
                                 <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
-                                   {item.price}
+                                  {item.price}
                                 </div>
                               )}
                               <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
@@ -655,7 +658,7 @@ export default function Inventory({locale}) {
                                   <div
                                     key={fIdx}
                                     className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                                    >
+                                  >
                                     <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                     <span>{feature.text}</span>
                                   </div>
@@ -688,14 +691,14 @@ export default function Inventory({locale}) {
                             <div className="flex">
                               <div className="w-[40%] relative">
                                 <div className="w-full h-[175px]">
-                                <Image
-                                  className="w-full h-[600px]"
-                                  src={DefaultTractor}
-                                  height={600}                                
-                                  alt="cardImage"
-                                  layout="responsive"
+                                  <Image
+                                    className="w-full h-[600px]"
+                                    src={DefaultTractor}
+                                    height={600}
+                                    alt="cardImage"
+                                    layout="responsive"
                                   />
-                                  </div>
+                                </div>
 
                                 {item.certified && (
                                   <div className="bg-secondaryColor px-2
@@ -721,7 +724,7 @@ export default function Inventory({locale}) {
                                       <div
                                         key={fIdx}
                                         className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 2 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
-                                      
+
                                         <div className="w-2 h-2 sm:w-3 sm:h-3">
                                           <Image
                                             src={feature.icon}
@@ -755,8 +758,7 @@ export default function Inventory({locale}) {
                                         </div>
                                       </div>
                                       <div className="cursor-pointer">
-                                        <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
-                                          {/* Wrapping the Image component for responsive styling */}
+                                        {/* <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
                                           <div className="w-3 h-3 sm:w-3 sm:h-3 mr-1">
                                             <Image
                                               src="/images/inventory/ActiveCallIcon.svg"
@@ -767,7 +769,12 @@ export default function Inventory({locale}) {
                                             />
                                           </div>
                                           Interested{" "}
-                                        </span>
+                                        </span> */}
+                                        <div className="m-[1px] p-2 bg-secondaryColor cursor-pointer">
+                                          <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-1 text-sm justify-center">
+                                            <Image src='/images/phnIcon.svg' width={13} height={13} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                          </span>
+                                        </div>
                                       </div>
 
                                     </>
@@ -818,7 +825,7 @@ export default function Inventory({locale}) {
                               <div
                                 key={fIdx}
                                 className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                                >
+                              >
                                 <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                 <span>{feature.text}</span>
                               </div>
@@ -840,17 +847,17 @@ export default function Inventory({locale}) {
 
               <Heading heading={'Tractors by Brands '} viewButton={false} />
 
-              <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">  
+              <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">
                 {brandsLogos.slice(0, 12).map((brandlogo, index) => (
                   <div className="w-full cursor-pointer border shadow p-4" key={index}>
-                    <Image 
-                      loader={customImageLoader} 
-                      width={50} 
-                      height={50} 
-                      layout="responsive" 
-                      src={brandlogo} 
-                      alt={`brand-logo-${index}`} 
-                      className="w-full cursor-pointer" 
+                    <Image
+                      loader={customImageLoader}
+                      width={50}
+                      height={50}
+                      layout="responsive"
+                      src={brandlogo}
+                      alt={`brand-logo-${index}`}
+                      className="w-full cursor-pointer"
                     />
                   </div>
                 ))}
@@ -896,7 +903,7 @@ export default function Inventory({locale}) {
                               <div
                                 key={fIdx}
                                 className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                                >
+                              >
                                 <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                 <span>{feature.text}</span>
                               </div>
@@ -1018,7 +1025,7 @@ export default function Inventory({locale}) {
                                       <div
                                         key={fIdx}
                                         className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 2 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
-                                      
+
                                         <div className="w-2 h-2 sm:w-3 sm:h-3">
                                           <Image
                                             src={feature.icon}
@@ -1051,21 +1058,11 @@ export default function Inventory({locale}) {
                                           <span>{feature.text}</span>
                                         </div>
                                       </div>
-                                      <div className="cursor-pointer">
-                                        <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
-                                          {/* Wrapping the Image component for responsive styling */}
-                                          <div className="w-3 h-3 sm:w-3 sm:h-3 mr-1">
-                                            <Image
-                                              src="/images/inventory/ActiveCallIcon.svg"
-                                              alt="phnIcon"
-                                              layout="responsive"
-                                              width={2}
-                                              height={2}
-                                            />
-                                          </div>
-                                          Interested{" "}
-                                        </span>
-                                      </div>
+                                      <div className="m-[1px] p-2 bg-secondaryColor cursor-pointer">
+                                          <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-1 text-sm justify-center">
+                                            <Image src='/images/phnIcon.svg' width={13} height={13} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                          </span>
+                                        </div>
 
                                     </>
                                   ))}
