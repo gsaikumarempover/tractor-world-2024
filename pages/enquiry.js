@@ -128,22 +128,40 @@ export default function Enquiry() {
                                             </select>
                                         </div>
 
-                                        <div className="w-full">
-                                            <label htmlFor="location" className="block mb-2">
-                                                Select Location
-                                            </label>
-                                            <select
-                                                id="location"
-                                                className="bg-white border border-gray-300
-                                      text-black rounded-md  block w-full 
-                                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
-                                     dark:placeholder-gray-400 dark:text-white"
-                                            >
-                                                <option value="">Select Your Location</option>
-                                                <option value="madhyaPradesh">Madhya Pradesh</option>
-                                                <option value="maharashtra">Maharashtra</option>
-                                            </select>
-                                        </div> 
+                                      
+                    <div className="w-full">
+                      <label className="form-label">State</label>
+                      <select className="block w-full px-2 py-[7px] border 
+                    border-gray-300 rounded-md text-[14px] text-[#B9B9B9] mt-2">
+                        <option selected>Select State</option>
+                        <option value="madhyaPradesh">Madhya Pradesh</option>
+                        <option value="maharashtra">Maharashtra</option>
+                      </select>
+                    </div>
+
+                    <div className="w-full">
+                      <label className="form-label">District</label>
+                      <select className="block w-full px-2 py-[7px] 
+                     border border-gray-300 rounded-md  text-[14px] text-[#B9B9B9] mt-2">
+                        <option selected>Select District</option>
+                        <option value="bhopal">Bhopal</option>
+                        <option value="alirajpur">Alirajpur</option>
+                        <option value="barwani">Barwani</option>
+                      </select>
+                    </div>
+
+                    <div className="w-full">
+                      <label className="form-label">Tehsil or Taluka</label>
+                      <select className="block w-full px-2 py-[7px] border border-gray-300 
+                    rounded-md text-[14px] text-[#B9B9B9] mt-2">
+                        <option value="" selected>Select Tehsil or Taluka</option>
+                        <option value="Berasia">Berasia</option>
+                        <option value="Huzur">Huzur</option>
+                      </select>
+                    </div>
+
+
+
                                     </div>
 
                                     
