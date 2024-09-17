@@ -4,7 +4,7 @@ import Banner from "@components/Banner";
 import Image from "next/image";
 import BannerStrip from "@components/BannerStrip";
 import bannerImg from '@Images/home/enquiryBanner.svg';
-import CallIcon from '@Images/CallIcon.svg';
+import CallIcon from '@Images/callIcon.svg';
 import enquirywebBanner from '@Images/home/enquirywebBanner.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
 import Link from "next/link";
