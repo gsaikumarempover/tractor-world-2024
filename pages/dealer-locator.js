@@ -32,9 +32,9 @@ export default function DealerLocator() {
   };
 
 
-  // const handleAlldealers = () => {
-  //   router.push('/dealers');
-  // };
+  const handleDealerClick = () => {
+    router.push('/store-inventory');
+  };
 
 
   const dealerData = [
@@ -283,7 +283,7 @@ export default function DealerLocator() {
                                   </div>
                                 </div>
                               </div>
-                              <Btn text={"Know More"} bgColor={true} />
+                              <Btn text={"Know More"} onClick={handleDealerClick} bgColor={true} />
                             </div>
                           </div>
                         ))}

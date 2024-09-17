@@ -546,9 +546,9 @@ export default function TractorDetails({ locale }) {
                             </div>
                         ))}
                     </div>
-                    <div className='sm:w-1/4 w-full m-auto mt-2'>
+                    {/* <div className='sm:w-1/4 w-full m-auto mt-2'>
                         <Btn text={'View Latest Offers'} bgColor={true} />
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

@@ -125,31 +125,31 @@ export default function ApplyNewTractorLoan() {
   ]
 
   const handleApplyNow = (event) => {
-    event.preventDefault(); 
-  
-    const formElement = document.getElementById("applyForm"); 
-     if (formElement instanceof HTMLFormElement) {
-      const inputs = formElement.querySelectorAll("input"); 
+    event.preventDefault();
+
+    const formElement = document.getElementById("applyForm");
+    if (formElement instanceof HTMLFormElement) {
+      const inputs = formElement.querySelectorAll("input");
       let formIsValid = true;
       inputs.forEach((input) => {
         if (!input.value.trim()) {
           formIsValid = false;
-          input.classList.add("error"); 
+          input.classList.add("error");
         } else {
           input.classList.remove("error");
         }
       });
-  
+
       if (formIsValid) {
         formElement.reset();
-        alert("Successfully applied for loan!"); 
+        alert("Successfully applied for loan!");
       } else {
         alert("Please fill all required fields.");
       }
     } else {
       console.error("Form element not found or invalid type.");
     }
-  }; 
+  };
 
   return (
     <div>
@@ -166,9 +166,9 @@ export default function ApplyNewTractorLoan() {
           content={
             <>
               <div>
-                <form  id="applyForm" onSubmit={handleApplyNow}>
+                <form id="applyForm" onSubmit={handleApplyNow}>
                   <div className="flex sm:flex-row flex-col gap-4 mt-4 items-end">
-                    <div className="sm:w-1/4 w-full">
+                    {/* <div className="sm:w-1/4 w-full">
                       <label htmlFor="location" className="block mb-2">
                         Location
                       </label>
@@ -182,6 +182,37 @@ export default function ApplyNewTractorLoan() {
                         <option value="">Select Your Location</option>
                         <option value="madhyaPradesh">Madhya Pradesh</option>
                         <option value="maharashtra">Maharashtra</option>
+                      </select>
+                    </div> */}
+
+                    <div className="sm:w-1/4 w-full">
+                      <label className="form-label">State</label>
+                      <select className="block w-full px-2 py-[7px] border 
+                    border-gray-300 rounded-md text-[14px] text-[#B9B9B9] mt-2">
+                        <option selected>Select State</option>
+                        <option value="madhyaPradesh">Madhya Pradesh</option>
+                        <option value="maharashtra">Maharashtra</option>
+                      </select>
+                    </div>
+
+                    <div className="sm:w-1/4 w-full">
+                      <label className="form-label">District</label>
+                      <select className="block w-full px-2 py-[7px] 
+                     border border-gray-300 rounded-md  text-[14px] text-[#B9B9B9] mt-2">
+                        <option selected>Select District</option>
+                        <option value="bhopal">Bhopal</option>
+                        <option value="alirajpur">Alirajpur</option>
+                        <option value="barwani">Barwani</option>
+                      </select>
+                    </div>
+
+                    <div className="sm:w-1/4 w-full">
+                      <label className="form-label">Tehsil or Taluka</label>
+                      <select className="block w-full px-2 py-[7px] border border-gray-300 
+                    rounded-md text-[14px] text-[#B9B9B9] mt-2">
+                        <option value="" selected>Select Tehsil or Taluka</option>
+                        <option value="Berasia">Berasia</option>
+                        <option value="Huzur">Huzur</option>
                       </select>
                     </div>
 
