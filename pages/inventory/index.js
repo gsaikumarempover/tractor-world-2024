@@ -20,11 +20,14 @@ import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
 import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY,HP_OPTIONS,PRICE_OPTIONS } from "@utils/constants"; 
 import { useQuery } from '@apollo/client'; 
-import { getLocaleProps } from "@utils";
+import { getLocaleProps } from "@helpers";
 import { useTranslation } from 'next-i18next'; 
 import { useRouter } from 'next/router';
 import Pagination from "@components/Pagination";
-import { GET_ALL_POPULAR_BRANDS } from "../../utils/constants";
+import { GET_ALL_POPULAR_BRANDS } from "@utils/constants";
+import { useDispatch, useSelector } from 'react-redux';
+import {GET_ALL_STATES} from "@utils/constants";
+import Link from "next/link";
 
 export default function Inventory({locale}) {
   //// apply,reset btns active 
@@ -44,7 +47,18 @@ export default function Inventory({locale}) {
   const [searchQuery, setSearchQuery] = useState(''); 
   const [brandsLogos , setBrandLogos]=useState([]);
   const [PopularTractors , setPopularTractorsData]=useState([]);
-  
+  const state = useSelector((state) => state.user.addressData.state);
+  const city = useSelector((state) => state.user.addressData.city); 
+  const [locationDetails , setLocationDetails]=useState(''); 
+  const [stateList, setStateList] = useState([]);   
+  const { loading, error, data } = useQuery(GET_ALL_STATES);  
+
+  useEffect(() => {
+    if (state && city) {
+      setLocationDetails(`${city}, ${state}`);
+    }
+  }, [state, city]); // Only re-run effect when `state` or `city` changes
+
   const [filters, setFilters] = useState([
     {
       title: "Brand",
@@ -261,6 +275,7 @@ useEffect(() => {
     notifyOnNetworkStatusChange: true
   });
   
+  
   //pagination
 
   const CardsPerPage = 9;
@@ -387,9 +402,23 @@ useEffect(() => {
     setPopularTractorsData(filteredTractors); // Only update if the filtered data has changed
   }, [liveInventoryFilters, PopularTractors]); // Ensure dependencies are correctly set
    
+
+  //get states list 
+  useEffect(() => {
+    // Fetch data from API when component mounts
+    if (data && data.allStateTowns) {
+      const fetchedStates = data.allStateTowns.edges.map(({ node }) => ({
+        state: node.stateTownList.state,
+        id: node.id,
+      }));
+      setStateList(fetchedStates); // Update state with fetched data
+    }
+  }, [data]); // Trigger this effect when `data` changes
+
+
   if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
-   
+    
   return (
     <div>
       <div className={`${showFilter ? 'overlay sm:hidden block' : 'hidden'}`}></div>
@@ -524,7 +553,7 @@ useEffect(() => {
           <div className="flex sm:flex-row flex-col gap-2">
 
             <label className="mb-1 sm:hidden block">Your Location</label>
-            <div className="relative w-full sm:hidden block">
+            {/* <div className="relative w-full sm:hidden block">
               <input type="text" placeholder="search..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] py-3" />
               <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
                 <Image src={mapIcon} alt="search" width={22} height={22} />
@@ -533,8 +562,29 @@ useEffect(() => {
               <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
                 <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
               </div>
-            </div>
+            </div> */}
 
+                  <div className="relative w-full sm:hidden block">
+                    <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                        <Image src={mapIcon} alt="search" width={22} height={22} />
+                      </div>
+                      <select
+                        id="location"
+                        className="bg-white border border-gray-300
+                                      text-black rounded-md  block w-full 
+                                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                                     dark:placeholder-gray-400 dark:text-white  px-8"
+                      >
+                        <option value="" hidden>{locationDetails}</option> 
+                        {stateList.map((item, index) => {
+                          return (
+                            <option key={index} value={item.state}>
+                              {item.state}
+                            </option>
+                          );
+                        })}
+                      </select> 
+                      </div>
 
             <div className="bg-[#F6F6F6] p-4 sm:w-[25%] w-full sm:block hidden">
 
@@ -640,7 +690,7 @@ useEffect(() => {
                 <div className="sm:flex hidden items-center gap-3">
                   <div>
                     {/* <label className="mb-1 block text-sm">Your Location</label> */}
-                    <div className="relative w-full">
+                    {/* <div className="relative w-full">
                       <input type="text" placeholder="search your location..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] sm:py-2 py-3" />
                       <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
                         <Image src={mapIcon} alt="search" width={22} height={22} />
@@ -649,7 +699,28 @@ useEffect(() => {
                       <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
                         <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
                       </div>
-                    </div>
+                    </div> */}
+                   <div className="relative w-full">
+                    <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                        <Image src={mapIcon} alt="search" width={22} height={22} />
+                      </div>
+                      <select
+                        id="location"
+                        className="bg-white border border-gray-300
+                                      text-black rounded-md  block w-full 
+                                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                                     dark:placeholder-gray-400 dark:text-white  px-8"
+                      >
+                        <option value="" hidden>{locationDetails}</option>
+                        {stateList.map((item, index) => {
+                          return (
+                            <option key={index} value={item.state}>
+                              {item.state}
+                            </option>
+                          );
+                        })} 
+                      </select> 
+                      </div>
                   </div>
 
                   {/* <div>  
@@ -663,17 +734,22 @@ useEffect(() => {
                 </div>
 
               </div>
-
+{/* 
+              <p>mobile</p> */}
               <div className="sm:hidden block">
                 {activeTab == 'gridData' && (
                   <div className="">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                       {
-                        currentCards.slice(0, 3).map((item, idx) => (
+                        currentCards.slice(0, 3).map((item, idx) => ( 
+                          
+                          <Link className="tractor-details-info cursor-pointer" href={`tractor-details/${item.slug}`} >
+                           
                           <div
                             key={idx}
-                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none"
+                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                           >
+                          
                             <div className="relative">
                               <Image
                                 className="w-full"
@@ -714,8 +790,9 @@ useEffect(() => {
                                   <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
                                 </span>
                               </div>
-                            </div>
-                          </div>
+                            </div> 
+                          </div> 
+                          </Link>
                         ))
                       }
                     </div>
@@ -727,20 +804,23 @@ useEffect(() => {
                     <div className="grid grid-cols-1 gap-4 my-6">
                       {
                         currentCards.slice(0, 3).map((item, idx) => (
+
+                          
+                          <Link className="tractor-details-info cursor-pointer" href={`tractor-details/${item.slug}`} >
+                          
                           <div
                             key={idx}
-                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none">
-
+                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none  cursor-pointer"> 
                             <div className="flex">
                               <div className="w-[40%] relative">
-                                <div className="w-full h-[175px]">
-                                <Image
-                                  className="w-full h-[600px]"
-                                  src={DefaultTractor}
-                                  height={600}                                
-                                  alt="cardImage"
-                                  layout="responsive"
-                                  />
+                                <div className="w-full h-[175px]"> 
+                                 <Image
+                                    className="w-full h-[600px]"
+                                    src={DefaultTractor}
+                                    height={600}                                
+                                    alt="cardImage"
+                                    layout="responsive"
+                                  /> 
                                   </div>
 
                                 {item.certified && (
@@ -821,7 +901,9 @@ useEffect(() => {
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div> 
+                          </Link>
+
                         ))
                       }
                     </div>
@@ -833,10 +915,15 @@ useEffect(() => {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                   {
                     currentCards.slice(0, 3).map((item, idx) => (
+
+                       
                       <div
                         key={idx}
-                        className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none"
+                        className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                       >
+                          
+                        <Link className="tractor-details-info cursor-pointer" href={`tractor-details/${item.slug}`} > 
+                        <div className="wholeCard cursor-pointer">
                         <div className="relative">
                           <Image
                             className="w-full"
@@ -871,6 +958,8 @@ useEffect(() => {
                             ))}
                           </div>
                         </div>
+                        </div>
+                        </Link>  
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
@@ -878,7 +967,7 @@ useEffect(() => {
                             </span>
                           </div>
                         </div>
-                      </div>
+                      </div> 
                     ))
                   }
                 </div>
@@ -915,6 +1004,8 @@ useEffect(() => {
                         key={idx}
                         className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none w-80 sm:w-auto"
                       >
+                      <Link className="tractor-details-info cursor-pointer" href={`tractor-details/${item.slug}`} > 
+                        <div className="wholeCard cursor-pointer">
                         <div className="relative">
                           <Image
                             className="w-full"
@@ -949,6 +1040,8 @@ useEffect(() => {
                             ))}
                           </div>
                         </div>
+                        </div>
+                        </Link>
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">

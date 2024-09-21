@@ -22,6 +22,8 @@ export const PRICE_OPTIONS = [
   { label: "Above 10 Lakh", value: ">10" },
 ];
 
+
+
 export const HOMEPAGE_QUERIES = gql`
   query GetHomeData($lang: LanguageCodeFilterEnum!) {
 
@@ -42,7 +44,31 @@ export const HOMEPAGE_QUERIES = gql`
       }
     }
 
- testimonials(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
+  allLiveInventory(
+    where: {orderby: {field: DATE, order: DESC}, language: $lang} 
+  ) {
+    edges {
+      node {
+        title
+        liveInventoryData {
+          engineHours
+          brand
+          driveType
+          enginePower
+          maxPrice
+          imageLinks
+          brand
+          isVerified
+          district
+          state
+        }
+        slug
+        id
+      }
+    }
+  }
+
+   testimonials(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
     nodes {
       tesimonails {
         description
@@ -98,7 +124,7 @@ contentgallerys(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
     }
   }
   }  
-`;  
+`;    
  
 export const GET_LIVE_INVENTORY = gql` 
 query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: String) {
@@ -120,6 +146,7 @@ query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: Str
           brand
           isVerified
           district
+          state
         }
         slug
         id
@@ -169,14 +196,43 @@ query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: Str
 } 
 `;  
 
+
+export const GET_SIMILAR_INVENTORY_BYSEARCH = gql` 
+query GetLiveInventory($lang: LanguageCodeFilterEnum!,$search: String) {
+  allLiveInventory(
+    where: {orderby: {field: DATE, order: DESC}, language: $lang, search: $search}
+    ) {
+    edges {
+      node {
+        title
+        liveInventoryData {
+          engineHours
+          brand
+          driveType
+          enginePower
+          maxPrice
+          imageLinks
+          brand
+          isVerified
+          district
+        }
+        slug
+        id
+      } 
+    } 
+  }
+} 
+`;  
+
 export const GET_ALL_STATES = gql`
-  query GetAllStates{
+ query GetAllStates {
   allStateTowns(where: {orderby: {order: ASC, field: TITLE}}) {
     edges {
       node {
         stateTownList {
           state
         }
+        id
       }
     }
   }

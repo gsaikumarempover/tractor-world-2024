@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Heading from "@components/Heading";
@@ -14,12 +14,17 @@ import Axis from "@Images/bank/axis.svg";
 import videoThumbnail from "@Images/loan/videoThumbnail.svg";
 import BannerStrip from "@components/BannerStrip";
 import bannerImg from '@Images/sellTractor/engineering-excellence-banner.svg';
+import { useQuery } from '@apollo/client';  
+import {GET_ALL_STATES} from "@utils/constants";
+ 
 export default function ApplyNewTractorLoan() {
+
   const breadcrumbData = [
     { label: "Home", link: "/" },
     { label: "Loan", link: "#" },
   ];
 
+  
   function TractorLoanEMIContent() {
     return <div>
       <p>A Tractor Loan EMI (Equated Monthly Instalment) is the monthly payment you make until your tractor loan is fully repaid. This amount comprises both the principal loan amount and the interest accrued.</p>
@@ -125,8 +130,7 @@ export default function ApplyNewTractorLoan() {
   ]
 
   const handleApplyNow = (event) => {
-    event.preventDefault(); 
-  
+    event.preventDefault();  
     const formElement = document.getElementById("applyForm"); 
      if (formElement instanceof HTMLFormElement) {
       const inputs = formElement.querySelectorAll("input"); 
@@ -149,7 +153,27 @@ export default function ApplyNewTractorLoan() {
     } else {
       console.error("Form element not found or invalid type.");
     }
-  }; 
+  };  
+
+  
+  const [stateList, setStateList] = useState([]);  
+  const { loading, error, data } = useQuery(GET_ALL_STATES);  
+
+  useEffect(() => {
+    // Fetch data from API when component mounts
+    if (data && data.allStateTowns) {
+      const fetchedStates = data.allStateTowns.edges.map(({ node }) => ({
+        state: node.stateTownList.state,
+        id: node.id,
+      }));
+      setStateList(fetchedStates); // Update state with fetched data
+    }
+  }, [data]); // Trigger this effect when `data` changes
+
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+ 
 
   return (
     <div>
@@ -170,7 +194,7 @@ export default function ApplyNewTractorLoan() {
                   <div className="flex sm:flex-row flex-col gap-4 mt-4 items-end">
                     <div className="sm:w-1/4 w-full">
                       <label htmlFor="location" className="block mb-2">
-                        Location
+                        State
                       </label>
                       <select
                         id="location"
@@ -179,9 +203,58 @@ export default function ApplyNewTractorLoan() {
                                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                                      dark:placeholder-gray-400 dark:text-white"
                       >
-                        <option value="">Select Your Location</option>
-                        <option value="madhyaPradesh">Madhya Pradesh</option>
-                        <option value="maharashtra">Maharashtra</option>
+                        <option value="" hidden>Select State</option>
+                        {stateList.map((item, index) => {
+                          return (
+                            <option key={index} value={item.state}>
+                              {item.state}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    <div className="sm:w-1/4 w-full">
+                      <label htmlFor="location" className="block mb-2">
+                        District
+                      </label>
+                      <select
+                        id="location"
+                        className="bg-white border border-gray-300
+                                      text-black rounded-md  block w-full 
+                                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                                     dark:placeholder-gray-400 dark:text-white"
+                      >
+                        <option value="" hidden>Select District</option>
+                        {stateList.map((item, index) => {
+                          return (
+                            <option key={index} value={item.state}>
+                              {item.state}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    <div className="sm:w-1/4 w-full">
+                      <label htmlFor="location" className="block mb-2">
+                      Tehsil or Taluka
+                      </label>
+                      <select
+                        id="location"
+                        className="bg-white border border-gray-300
+                                      text-black rounded-md  block w-full 
+                                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                                     dark:placeholder-gray-400 dark:text-white"
+                      >
+                        <option value="" hidden>Select Tehsil or Taluka</option>
+                        {stateList.map((item, index) => {
+                          return (
+                            <option key={index} value={item.state}>
+                              {item.state}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
 

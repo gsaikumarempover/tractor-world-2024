@@ -20,13 +20,15 @@ import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
 import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY,HP_OPTIONS,PRICE_OPTIONS,GET_LIVE_INVENTORY_BYSEARCH } from "@utils/constants"; 
 import { useQuery } from '@apollo/client'; 
-import { getLocaleProps } from "@utils";
+import { getLocaleProps } from "@helpers";
 import { useTranslation } from 'next-i18next'; 
 import { useRouter } from 'next/router';
 import Pagination from "@components/Pagination"; 
 import { GET_ALL_POPULAR_BRANDS } from "../../utils/constants";
+import { useDispatch, useSelector } from 'react-redux';
 import Link from "next/link";
-
+import {GET_ALL_STATES} from "@utils/constants";
+ 
 export default function Inventory({locale}) {
   //// apply,reset btns active 
   const { t } = useTranslation();  
@@ -35,11 +37,12 @@ export default function Inventory({locale}) {
   const [showFilter, setShowFilter] = useState(false); 
   const [resetBgColor, setResetBgColor] = useState(false);
   const [applyBgColor, setApplyBgColor] = useState(true);
+
   const currentLanguage = locale; 
   const language = locale?.toUpperCase(); 
   const { slug } = router.query;  
   const slugQuery = slug.replace('-', ' ');
-
+  
   console.log("SLUG------------"+slug);
 
   //get serach value
@@ -48,7 +51,21 @@ export default function Inventory({locale}) {
   const [liveInventoryFilters, setliveInventoryFilters] = useState([]); 
   const [searchQuery, setSearchQuery] = useState(''); 
   const [brandsLogos , setBrandLogos]=useState([]);
-  const [PopularTractors , setPopularTractorsData]=useState([]);
+  const [PopularTractors , setPopularTractorsData]=useState([]); 
+  const [stateList, setStateList] = useState([]);  
+  const state = useSelector((state) => state.user.addressData.state);
+  const city = useSelector((state) => state.user.addressData.city); 
+  const [locationDetails , setLocationDetails]=useState('');  
+  const { loading, error, data } = useQuery(GET_ALL_STATES);  
+
+
+  useEffect(() => {
+    if (state && city) {
+      setLocationDetails(`${city}, ${state}`);
+    }
+  }, [state, city]); // Only re-run effect when `state` or `city` changes
+ 
+  console.log("STATE AND CITY"+locationDetails);
   
   const [filters, setFilters] = useState([
     {
@@ -403,10 +420,42 @@ export default function Inventory({locale}) {
   
     setPopularTractorsData(filteredTractors); // Only update if the filtered data has changed
   }, [liveInventoryFilters, PopularTractors]); // Ensure dependencies are correctly set
-   
+
+  
+  useEffect(() => {
+    // Fetch data from API when component mounts
+    if (data && data.allStateTowns) {
+      const fetchedStates = data.allStateTowns.edges.map(({ node }) => ({
+        state: node.stateTownList.state,
+        id: node.id,
+      }));
+      setStateList(fetchedStates); // Update state with fetched data
+    }
+  }, [data]); // Trigger this effect when `data` changes
+
+ 
+  const handleLocationSearch = (e) =>{
+    alert(e.target.value);
+  if(e.target.value){
+
+      const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError,fetchMore} = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
+        variables: 
+        { lang: language,
+          search: e.target.value,
+          first: 9,
+          after: null
+        },
+        notifyOnNetworkStatusChange: true
+      });
+
+    }
+ 
+  }
+
+
   if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
-   
+    
   return (
     <div>
       <div className={`${showFilter ? 'overlay sm:hidden block' : 'hidden'}`}></div>
@@ -541,16 +590,40 @@ export default function Inventory({locale}) {
           <div className="flex sm:flex-row flex-col gap-2">
 
             <label className="mb-1 sm:hidden block">Your Location</label>
+
             <div className="relative w-full sm:hidden block">
-              <input type="text" placeholder="search..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] py-3" />
+                    <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                        <Image src={mapIcon} alt="search" width={22} height={22} />
+                      </div>
+                      <select
+                        id="location"
+                        className="bg-white border border-gray-300
+                                      text-black rounded-md  block w-full 
+                                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                                     dark:placeholder-gray-400 dark:text-white  px-8"
+                      
+                      
+                      onChange={handleLocationSearch}
+                      >
+                        <option value="" hidden>{locationDetails}</option> 
+                        {stateList.map((item, index) => {
+                          return (
+                            <option key={index} value={item.state}>
+                              {item.state}
+                            </option>
+                          );
+                        })} 
+                      </select> 
+                      </div>
+
+            {/* <div className="relative w-full sm:hidden block">
+              <input type="text" placeholder="search..." 
+               className="w-full rounded border-[1px] px-8 border-[#D0D0D0] py-3" 
+               value={locationDetails}/>
               <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
                 <Image src={mapIcon} alt="search" width={22} height={22} />
-              </div>
-
-              <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
-                <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
-              </div>
-            </div>
+              </div> 
+            </div> */}
 
 
             <div className="bg-[#F6F6F6] p-4 sm:w-[25%] w-full sm:block hidden">
@@ -656,9 +729,34 @@ export default function Inventory({locale}) {
 
                 <div className="sm:flex hidden items-center gap-3">
                   <div>
-                    {/* <label className="mb-1 block text-sm">Your Location</label> */}
+                    {/* <label className="mb-1 block text-sm">Your Location</label> */} 
+
                     <div className="relative w-full">
-                      <input type="text" placeholder="search your location..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] sm:py-2 py-3" />
+                    <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                        <Image src={mapIcon} alt="search" width={22} height={22} />
+                      </div>
+                      <select
+                        id="location"
+                        className="bg-white border border-gray-300
+                                      text-black rounded-md  block w-full 
+                                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                                     dark:placeholder-gray-400 dark:text-white  px-8"
+
+                      onChange={handleLocationSearch}
+                      >
+                        <option value="" hidden>{locationDetails}</option> 
+                        {stateList.map((item, index) => {
+                          return (
+                            <option key={index} value={item.state}>
+                              {item.state}
+                            </option>
+                          );
+                        })} 
+                      </select> 
+                      </div>
+
+                    {/* <div className="relative w-full">
+                      <input type="text" placeholder="search your location..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] sm:py-2 py-3"   value={locationDetails}/>
                       <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
                         <Image src={mapIcon} alt="search" width={22} height={22} />
                       </div>
@@ -666,7 +764,7 @@ export default function Inventory({locale}) {
                       <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
                         <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* <div>  
@@ -747,7 +845,7 @@ export default function Inventory({locale}) {
                           <div
                             key={idx}
                             className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none">
-
+                           <a herf={`inventory-details/${item.slug}`}>
                             <div className="flex">
                               <div className="w-[40%] relative">
                                 <div className="w-full h-[175px]">
@@ -838,6 +936,7 @@ export default function Inventory({locale}) {
                                 </div>
                               </div>
                             </div>
+                            </a>
                           </div>
                         ))
                       }
@@ -850,11 +949,13 @@ export default function Inventory({locale}) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                   {
                     currentCards.slice(0, 3).map((item, idx) => (
+                      <Link href={`tractor-details/${item.slug}`}>
                       <div
                         key={idx}
-                        className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none"
+                        className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                       >
                         <div className="relative">
+                      
                           <Image
                             className="w-full"
                             src={DefaultTractor}
@@ -896,6 +997,7 @@ export default function Inventory({locale}) {
                           </div>
                         </div>
                       </div>
+                      </Link>
                     ))
                   }
                 </div>

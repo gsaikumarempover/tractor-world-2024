@@ -29,7 +29,11 @@ function SamplePrevArrow(props) {
   );
 }
 
-const LiveInventoryContainer = ({ locale }) => {
+const LiveInventoryContainer = ({ locale,data}) => {
+  debugger;
+
+  console.log("data2"+JSON.stringify(data));
+ 
   const { t } = useTranslation();
   const CheckTractorDetails = t('CheckTractorDetails');
 
@@ -48,25 +52,7 @@ const LiveInventoryContainer = ({ locale }) => {
         window.removeEventListener('resize', handleResize);
       };
     }
-  }, []);
-
-  const language = locale?.toUpperCase();
-  const { loading, error, data } = useQuery(GET_LIVE_INVENTORY, {
-    variables: { lang: language },
-  });
-
-  if (loading) return <p>Loading Live Inventory...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const liveInventoryData = data.allLiveInventory.edges.map(({ node }) => ({
-    title: node.title,
-    price: node.liveInventoryData.maxPrice,
-    hours: node.liveInventoryData.engineHours,
-    driveType: node.liveInventoryData.driveType,
-    enginePower: node.liveInventoryData.enginePower,
-    slug: node.slug,
-    id: node.id
-  }));
+  }, []); 
 
   const slickSettings = {
     dots: false,
@@ -115,13 +101,13 @@ const LiveInventoryContainer = ({ locale }) => {
     <>
       <div className='sm:block hidden'>
         <div className="liveInventoryData relative" id="inventorySlide">
-          <SlickCarousel settings={slickSettings} items={liveInventoryData} />
+          <SlickCarousel settings={slickSettings} items={data} />
         </div>
       </div>
 
       <div className='sm:hidden block'>
         <div className='grid grid-cols-1 gap-3'> 
-          {liveInventoryData.slice(0, 5).map((item, index) => (
+          {data.slice(0, 5).map((item, index) => (
             <div key={index} className="gap-4 bg-white border-[#D9D9D9] border-[1px]
            overflow-hidden shadow-lg">
               <div className="relative">
