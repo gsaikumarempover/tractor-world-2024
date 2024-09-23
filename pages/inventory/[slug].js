@@ -20,7 +20,7 @@ import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
 import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY } from "@utils/constants"; 
 import { useQuery } from '@apollo/client'; 
-import { getLocaleProps } from "@utils";
+import { getLocaleProps } from "@helpers";
 import { useTranslation } from 'next-i18next'; 
 import { useRouter } from 'next/router';
 
