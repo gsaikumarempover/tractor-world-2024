@@ -19,10 +19,13 @@ import WhyChoose from '@Images/home/whyChoose.svg';
 
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import bannerImg from '@Images/liveInventory/banner.svg';
-import { useRouter } from 'next/router'; 
+import { getLocaleProps } from "@helpers";
+import DefaultTractor from "@Images/default_tractor.svg";
+import LiveInventoryContainer from '@components/LiveInventory';
 import Tab from '@components/Tab';
 import { GET_LIVE_INVENTORY, GET_LIVE_INVENTORY_BYSEARCH } from '@utils/constants';
-import { useQuery } from '@apollo/client'; 
+import { useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
 import LeftSection from '@components/EMI/LeftSection';
 import RightSection from '@components/EMI/RightSection';
 import userDataSlice from '@store/userDataSlice';
@@ -43,21 +46,30 @@ function SamplePrevArrow(props) {
 
 export default function TractorDetails({ locale }) {
 
-    const [isMobile, setIsMobile] = useState(false); 
-    const router = useRouter();
+    const router = useRouter(); 
+    const [isMobile, setIsMobile] = useState(false);
+    const { slug } = router.query; 
+    const currentLanguage = locale; 
+    const language = locale?.toUpperCase();  
+    const [TractorDetails,setTractorDetails]=useState([]); 
+    const [similarTractorsList ,setsimilarTractorsData]=useState([]); 
+    const slugQuery = slug.replace(/-/g, ' '); 
+    const slugWord = slugQuery.split(' ')[0];        
+    // console.log("slugQuery:", slugQuery);      
+    // console.log("firstWord:", slugWord);  
 
-    const handleCompareAll = () => {
-        router.push('/compare-tractors');
-    };
-
-    const handleLocateDealer = () => {
-        router.push('/dealer-locator');
+    const initialState = {
+        principal: 0,
+        loanAmount:0,
+        roi: 8, // rate of interest
+        tenure: 12,
+        downPayment:55000, 
+        totalAmtInt: 0
     };
     
-    const handleEnquiry = () => {
-        router.push('/contact-us');
-    };  
-    
+      const [state, dispatch] = useReducer(userDataSlice, initialState); 
+
+    // const slugQuery = slug.replace('-', ' ');
 
     const breadcrumbData = [
         { label: 'Home', link: '/' },
@@ -486,14 +498,14 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
                 bannerImg={bannerImg}
                 heading={'Tractor Details'} />
 
-
+            
 
             {/* slide sec */}
             <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2
              bg-white w-full flex sm:flex-row flex-col gap-4'>
 
-                <div className='sm:hidden block'>
-                    <Heading heading={'Tractor Details'} />
+            <div className='sm:hidden block'> 
+                <Heading  heading={'Tractor Details'} />
                 </div>
 
                 {/* slide */}
@@ -513,13 +525,8 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
 
 
                             <span className="bg-primaryColor my-4 inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm cursor-pointer" onClick={handleLocateDealer}>
+                                 font-semibold rounded-sm">
                                 Dealer Location
-                            </span>
-
-                            <span className="bg-secondaryColor ml-2 my-4 inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm cursor-pointer" onClick={handleCompareAll}>
-                                Compare Tractor
                             </span>
 
                             <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
@@ -537,7 +544,7 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
                             <div className="">EMI starts at <span className="text-secondaryColor"> ₹ 3,657/month</span> </div>
 
                             <div className='sm:w-1/2 w-full my-4'>
-                                <Btn text={"Enquiry"} bgColor={true} onClick={handleEnquiry} />
+                                <Btn text={"Enquiry"} bgColor={true} />
                             </div>
                            
                         </div>
@@ -550,28 +557,28 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
 
             {/* Features sec */}
             <div className='bg-[#F3F3F4]'>
-                <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'>
+                <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'> 
 
                     <Heading heading={TractorDetails[0].title} />
                     <div className='py-3 sm:mt-5 mt-1 grid md:grid-cols-6 sm:grid-cols-3 
                     grid-cols-2 sm:gap-4 gap-8'>
                         {features.map((feature, index) => (
                             <div key={index} className='features-shadow text-sm bg-white pb-1 pt-6 px-2 rounded-md text-center relative'>
-                                <div className='absolute top-[-30px] left-1/2 transform -translate-x-1/2'>
-                                    <Image src={feature.src}
-                                        alt={feature.alt}
-                                        width={60}
-                                        height={60}
-                                        className='tractorsFeatures' />
-                                </div>
+                               <div className='absolute top-[-30px] left-1/2 transform -translate-x-1/2'>
+                                <Image src={feature.src}
+                                    alt={feature.alt}
+                                    width={60}
+                                    height={60}
+                                    className='tractorsFeatures' />
+                                    </div>
                                 <p className='font-bold uppercase mt-5'>{feature.title}</p>
                                 <span>{feature.description}</span>
                             </div>
                         ))}
                     </div>
-                    {/* <div className='sm:w-1/4 w-full m-auto mt-2'>
+                    <div className='sm:w-1/4 w-full m-auto mt-2'>
                         <Btn text={'View Latest Offers'} bgColor={true} />
-                    </div> */}
+                    </div>
                 </div>
             </div>
 
