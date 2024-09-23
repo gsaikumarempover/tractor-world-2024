@@ -291,11 +291,11 @@ export default function CompareTractorDetails() {
                 />
                 <div className="w-full bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
 
-                    <div className="w-full grid sm:grid-cols-5 grid-cols-1 sm:gap-0 gap-4 sm:flex-row sm:items-start items-center flex-col sm:gap-10 gap-4 justify-between">
+                    <div className="w-full flex grid-cols-1 sm:flex-row sm:items-start items-center flex-col sm:gap-10 gap-4 justify-between">
                         {images.map((tractor, index) => (
                             <>
                                 {index > 0 && (
-                                    <div className='m-auto sm:w-[30px] sm:h-[30px] h-[40px] w-[40px]'>
+                                    <div className='m-auto sm:w-[100px] sm:h-[100px] h-[40px] w-[40px]'>
                                         <Image src={vs} alt='vs' layout="responsive" />
                                     </div>
                                 )}
