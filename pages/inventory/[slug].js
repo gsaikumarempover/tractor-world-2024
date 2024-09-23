@@ -440,17 +440,17 @@ export default function Inventory({locale}) {
   // };
 
 
-const { data: liveInventoryDataBySearch, loading: inventoryLoadingBySearch, error: inventoryBySearchError} = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
-    variables: 
-    { lang: language,
-      search: e.target.value,
-      first: 9,
-      after: null
-    },
-    notifyOnNetworkStatusChange: true
-  });
+// const { data: liveInventoryDataBySearch, loading: inventoryLoadingBySearch, error: inventoryBySearchError} = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
+//     variables: 
+//     { lang: language,
+//       search: e.target.value,
+//       first: 9,
+//       after: null
+//     },
+//     notifyOnNetworkStatusChange: true
+//   });
 
-}
+// }
 
 
   if (brandsLoading || inventoryLoading) return <p>Loading...</p>;

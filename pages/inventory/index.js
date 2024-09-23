@@ -743,7 +743,7 @@ useEffect(() => {
                       {
                         currentCards.slice(0, 3).map((item, idx) => ( 
                           
-                          <Link className="tractor-details-info cursor-pointer" href={`tractor-details/${item.slug}`} >
+                          <Link className="tractor-details-info cursor-pointer" to={`tractor-details/${item.slug}`} >
                            
                           <div
                             key={idx}
