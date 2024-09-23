@@ -1,6 +1,6 @@
 import React,{useState} from "react";
-import InputSlider from "../../Slider";
-import RangeSlider from "../../Ranger";
+import InputSlider from "@components/Slider";
+import RangeSlider from "@components/Ranger";
 import { setLoanTenure,setLoanAmount } from "@store/userDataSlice";
 import { useSelector } from "react-redux";
  

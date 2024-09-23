@@ -1,6 +1,6 @@
 import { calculateEmi, calculateInterest } from "@utils";
-import EmiChart from "./EmiChart";
-import ChartFooter from "./chartFooter";
+import EmiChart from "@components/EMI/RightSection/EmiChart";
+import ChartFooter from "@components/EMI/RightSection/chartFooter";
 import { useDispatch,useSelector } from "react-redux";
 import { setTotalPrincipleAndInt } from "@store/userDataSlice";
  
