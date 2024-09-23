@@ -108,14 +108,16 @@ export default function dealers() {
             <Layout>
                 <Banner breadcrumbs={breadcrumbData} bannerImg={bannerImg}
                     heading={'Dealers'} />
+                <div className="bg-white mt-4 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2">
+                    <Heading heading={'Dealers'} />
+                    {/* tractor info sec */}
+                    <TractorInfo infoImg={tractorImg}
+                        title={'We bring you to the future'}
+                        heading={'Tractor World'}
+                        infoText={'Tractor world is a fully vertically integrated company, with expertise in design, development and manufacture of the full spectrum of automotive components, aggregates and vehicles.'}
+                    />
 
-                {/* tractor info sec */}
-                <TractorInfo infoImg={tractorImg}
-                    title={'We bring you to the future'}
-                    heading={'Tractor World'}
-                    infoText={'Tractor world is a fully vertically integrated company, with expertise in design, development and manufacture of the full spectrum of automotive components, aggregates and vehicles.'}
-                />
-
+                </div>
                 <div className='bg-[#EFECEC] mt-4 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'>
                     <Heading heading={"Mahindra Tractor - Dealers"} viewButton={true} />
                     <div className=''>
