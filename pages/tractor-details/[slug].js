@@ -28,7 +28,7 @@ import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import LeftSection from '@components/EMI/LeftSection';
 import RightSection from '@components/EMI/RightSection';
-import userDataSlice from '@store/slices/userDataSlice';
+import userDataSlice from '@store/userDataSlice';
  
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;

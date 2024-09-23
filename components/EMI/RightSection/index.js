@@ -1,7 +1,7 @@
 import { calculateEmi, calculateInterest } from "@utils"; 
 import { useDispatch,useSelector } from "react-redux";
 import { setTotalPrincipleAndInt } from "@store/userDataSlice";
-import EmiChart from "./EmiChart";
+import EmiChart from "./emiChart";
 import ChartFooter from "./chartFooter";
  
 const RightSection = ({ state }) => {
