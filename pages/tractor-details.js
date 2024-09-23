@@ -12,7 +12,7 @@ import Finance from '@Images/home/finance.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import bannerImg from '@Images/liveInventory/banner.svg';
-
+import { useRouter } from 'next/router'; 
 import Tab from '@components/Tab';
 
 
@@ -32,8 +32,21 @@ function SamplePrevArrow(props) {
 
 export default function TractorDetails({ locale }) {
 
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState(false); 
+    const router = useRouter();
 
+    const handleCompareAll = () => {
+        router.push('/compare-tractors');
+    };
+
+    const handleLocateDealer = () => {
+        router.push('/dealer-locator');
+    };
+    
+    const handleEnquiry = () => {
+        router.push('/contact-us');
+    };  
+    
 
     const breadcrumbData = [
         { label: 'Home', link: '/' },
@@ -445,14 +458,14 @@ export default function TractorDetails({ locale }) {
                 bannerImg={bannerImg}
                 heading={'Tractor Details'} />
 
-            
+
 
             {/* slide sec */}
             <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2
              bg-white w-full flex sm:flex-row flex-col gap-4'>
 
-            <div className='sm:hidden block'> 
-                <Heading  heading={'Tractor Details'} />
+                <div className='sm:hidden block'>
+                    <Heading heading={'Tractor Details'} />
                 </div>
 
                 {/* slide */}
@@ -472,13 +485,13 @@ export default function TractorDetails({ locale }) {
 
 
                             <span className="bg-primaryColor my-4 inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm">
+                                 font-semibold rounded-sm cursor-pointer" onClick={handleLocateDealer}>
                                 Dealer Location
                             </span>
 
                             <span className="bg-secondaryColor ml-2 my-4 inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm">
-                               Compare Tractor
+                                 font-semibold rounded-sm cursor-pointer" onClick={handleCompareAll}>
+                                Compare Tractor
                             </span>
 
                             <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
@@ -496,7 +509,7 @@ export default function TractorDetails({ locale }) {
                             <div className="">EMI starts at <span className="text-secondaryColor"> ₹ 3,657/month</span> </div>
 
                             <div className='sm:w-1/2 w-full my-4'>
-                                <Btn text={"Enquiry"} bgColor={true} />
+                                <Btn text={"Enquiry"} bgColor={true} onClick={handleEnquiry} />
                             </div>
                             {/* <div className='flex items-center gap-2'>
                                 <div className='mt-[2px]'>
@@ -532,20 +545,20 @@ export default function TractorDetails({ locale }) {
 
             {/* Features sec */}
             <div className='bg-[#F3F3F4]'>
-                <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'> 
+                <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'>
 
                     <Heading heading={'Mahindra Arjun 555 DI Features'} />
                     <div className='py-3 sm:mt-5 mt-1 grid md:grid-cols-6 sm:grid-cols-3 
                     grid-cols-2 sm:gap-4 gap-8'>
                         {features.map((feature, index) => (
                             <div key={index} className='features-shadow text-sm bg-white pb-1 pt-6 px-2 rounded-md text-center relative'>
-                               <div className='absolute top-[-30px] left-1/2 transform -translate-x-1/2'>
-                                <Image src={feature.src}
-                                    alt={feature.alt}
-                                    width={60}
-                                    height={60}
-                                    className='tractorsFeatures' />
-                                    </div>
+                                <div className='absolute top-[-30px] left-1/2 transform -translate-x-1/2'>
+                                    <Image src={feature.src}
+                                        alt={feature.alt}
+                                        width={60}
+                                        height={60}
+                                        className='tractorsFeatures' />
+                                </div>
                                 <p className='font-bold uppercase mt-5'>{feature.title}</p>
                                 <span>{feature.description}</span>
                             </div>

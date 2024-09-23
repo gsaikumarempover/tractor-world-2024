@@ -17,8 +17,11 @@ import { GET_ALL_BRANDS, GET_ALL_MODELS_BY_BRAND } from "@utils/constants";
 import { useQuery } from '@apollo/client';
 import Loader from '@components/Loader';
 import { nanoid } from '@reduxjs/toolkit';
+import { useRouter } from 'next/router';
 
 export default function CompareTractor() {
+    const router = useRouter();
+
     const [showBrandsModal, setShowBrandsModal] = useState(false);
     const [showBrandsModelsModal, setShowBrandsModelsModal] = useState(false);
     const [noResults, setNoResults] = useState(false);
@@ -347,6 +350,9 @@ export default function CompareTractor() {
 
     if (brandsError || modelsBybrandsError) return <p>Error: {brandsError?.message} || Error: {modelsBybrandsError?.message}</p>;
 
+    const handleCompareTractordetails = () => {
+        router.push('/compare-tractor-details');
+    };
     return (
         <div>
             <Layout currentPage={"compare"}>
@@ -426,7 +432,7 @@ export default function CompareTractor() {
 
                                                     </div>
                                                 </div>
-                                                <Btn className="uppercase" text={'COMPARE'} />
+                                                <Btn className="uppercase" text={'COMPARE'} onClick={handleCompareTractordetails} />
                                             </div>
                                         ))}
 
@@ -436,7 +442,7 @@ export default function CompareTractor() {
                         </div>
 
                         <div className='flex justify-center my-6'>
-                            <Btn text={'View all tractor comparisons'} bgColor={true} />
+                            <Btn text={'View all tractor comparisons'} bgColor={true}  onClick={handleCompareTractordetails} />
                         </div>
                     </div>
 

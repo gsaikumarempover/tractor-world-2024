@@ -98,8 +98,8 @@ export default function Footer() {
                          before:top-[1.3rem] text-base"> Useful Links</span>
                         <ul className="mt-5 sm:text-[14px]  text-[12px] list-disc ml-3">
                             <Link href="/aboutus"><li className="mb-3 cursor-pointer"> About Us</li></Link>
-                            <li className="mb-3 cursor-pointer"> Latest News</li>
-                            <Link href="/exclusive-offers"><li className="mb-3 cursor-pointer"> Offers</li></Link>
+                            <Link href="/content-hub"><li className="mb-3 cursor-pointer"> Latest News</li></Link>
+                            {/* <Link href="/exclusive-offers"><li className="mb-3 cursor-pointer"> Offers</li></Link> */}
                             <Link href="/inventory"><li className="mb-3 cursor-pointer"> Live inventory</li></Link>
                             <li className="mb-3 cursor-pointer"> Terms and conditions</li>
                         </ul>

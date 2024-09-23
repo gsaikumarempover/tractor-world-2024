@@ -37,8 +37,7 @@ import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
 import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
-import Logo from '@Images/navbar/logo.svg';
-import MblLogo from '@Images/navbar/mblLogo.svg'
+
 
 export default function HomePage({ locale }) {
     const [isMobile, setIsMobile] = useState(false);
@@ -185,6 +184,11 @@ export default function HomePage({ locale }) {
     const handleAllContentHub = () => {
         router.push('/content-hub');
     };
+
+    const handleContentGallery = () => {
+        router.push('/content-gallery');
+    };
+
 
     const handleShareClick = () => {
         const message = encodeURIComponent("Check out Tractor World! https://tractor-world-2024.vercel.app/");
@@ -630,7 +634,7 @@ export default function HomePage({ locale }) {
                                                 </div>
                                             </div>
 
-                                            <Btn className="uppercase" text={'COMPARE'} />
+                                            <Btn className="uppercase" text={'COMPARE'} onClick={handleCompareAll} />
                                         </div>
                                     ))}
 
@@ -650,7 +654,7 @@ export default function HomePage({ locale }) {
             {/*testimonials */}
             <div id="testimonials">
                 <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
-                    <Heading heading={'Testimonials'} viewButton={true} />
+                    <Heading heading={'Testimonials'} viewButton={true} onClick={handleAllContentHub} />
                 </div>
 
                 <div className="mb-4">
@@ -665,7 +669,7 @@ export default function HomePage({ locale }) {
                 backgroundRepeat: 'no-repeat'
             }}>
 
-                <Heading heading={'Content Gallery'} viewButton={true} onClick={handleAllExclusiveOffers} />
+                <Heading heading={'Content Gallery'} viewButton={true} onClick={handleContentGallery} />
 
                 <div className="">
                     <div className="grid sm:grid-cols-3 grid-cols-1 md:gap-6 gap-4 mt-4">
