@@ -741,9 +741,8 @@ export default function Inventory({ locale }) {
 
                                   {item.features.slice(-1).map((feature, fIdx) => (
                                     <>
-                                      <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
-                                        <div
-                                          key={fIdx}
+                                      <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3" key={fIdx}>
+                                        <div 
                                           className={`flex gap-1 h-[14px] items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
                                           <div className="w-3 h-3 sm:w-3 sm:h-3">
                                             <Image
