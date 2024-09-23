@@ -743,7 +743,7 @@ useEffect(() => {
                       {
                         currentCards.slice(0, 3).map((item, idx) => ( 
                           
-                          <Link  key={idx} className="tractor-details-info cursor-pointer" to={`tractor-details/${item.slug}`} >
+                          <Link  key={idx} className="tractor-details-info cursor-pointer"  href={`/tractor-details/${item.slug}`} passHref >
                            
                           <div
                             key={idx}
@@ -806,7 +806,7 @@ useEffect(() => {
                         currentCards.slice(0, 3).map((item, idx) => (
 
                           
-                          <Link  key={idx} className="tractor-details-info cursor-pointer" to={`tractor-details/${item.slug}`} >
+                          <Link  key={idx} className="tractor-details-info cursor-pointer"  href={`/tractor-details/${item.slug}`} passHref >
                           
                           <div
                             key={idx}
@@ -922,7 +922,7 @@ useEffect(() => {
                         className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                       >
                           
-                        <Link className="tractor-details-info cursor-pointer" to={`tractor-details/${item.slug}`} > 
+                        <Link className="tractor-details-info cursor-pointer"  href={`/tractor-details/${item.slug}`} passHref > 
                         <div className="wholeCard cursor-pointer">
                         <div className="relative">
                           <Image
@@ -1004,7 +1004,7 @@ useEffect(() => {
                         key={idx}
                         className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none w-80 sm:w-auto"
                       >
-                      <Link className="tractor-details-info cursor-pointer" to={`tractor-details/${item.slug}`} > 
+                      <Link className="tractor-details-info cursor-pointer"  href={`/tractor-details/${item.slug}`} passHref> 
                         <div className="wholeCard cursor-pointer">
                         <div className="relative">
                           <Image
