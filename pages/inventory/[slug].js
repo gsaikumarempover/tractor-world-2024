@@ -949,7 +949,7 @@ export default function Inventory({locale}) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                   {
                     currentCards.slice(0, 3).map((item, idx) => (
-                      <Link href={`tractor-details/${item.slug}`}>
+                      <Link  key={idx} to={`tractor-details/${item.slug}`}>
                       <div
                         key={idx}
                         className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
