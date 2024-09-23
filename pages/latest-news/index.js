@@ -5,7 +5,7 @@ import Btn from "@components/Btn";
 import Image from "next/image";
 import bannerImg from '@Images/contentHub/banner.svg';
 import Tab from '@components/Tab';
-import Heading from "../components/Heading";
+import Heading from "@components/Heading";
 
 export default function ContentHUb() {
     const breadcrumbData = [
