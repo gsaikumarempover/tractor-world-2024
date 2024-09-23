@@ -1,8 +1,8 @@
-import { calculateEmi, calculateInterest } from "@utils";
-import EmiChart from "@components/EmiChart";
-import ChartFooter from "@components/chartFooter";
+import { calculateEmi, calculateInterest } from "@utils"; 
 import { useDispatch,useSelector } from "react-redux";
 import { setTotalPrincipleAndInt } from "@store/userDataSlice";
+import EmiChart from "./EmiChart";
+import ChartFooter from "./chartFooter";
  
 const RightSection = ({ state }) => {
 
@@ -27,7 +27,7 @@ const RightSection = ({ state }) => {
   return (
     <div className="rightsection-wrapper">
       <EmiChart principal={principalAmt} interestPayable={interestPayable} /> 
-      <ChartFooter
+      <ChartFooter       
         emi={emi}
         principal={principalAmt}
         interestPayable={interestPayable}
