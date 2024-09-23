@@ -24,7 +24,7 @@ import { getLocaleProps } from "@helpers";
 import { useTranslation } from 'next-i18next'; 
 import { useRouter } from 'next/router';
 import Pagination from "@components/Pagination"; 
-import { GET_ALL_POPULAR_BRANDS } from "../../utils/constants";
+import { GET_ALL_POPULAR_BRANDS } from "@utils/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import Link from "next/link";
 import {GET_ALL_STATES} from "@utils/constants";

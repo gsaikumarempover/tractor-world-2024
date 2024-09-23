@@ -21,14 +21,14 @@ import CompareImage from '@Images/liveInventory/compareImage.svg';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import { getLocaleProps } from "@helpers";
 import DefaultTractor from "@Images/default_tractor.svg";
-import LiveInventoryContainer from '../../components/LiveInventory';
+import LiveInventoryContainer from '@components/LiveInventory';
 import Tab from '@components/Tab';
-import { GET_LIVE_INVENTORY, GET_LIVE_INVENTORY_BYSEARCH } from '../../utils/constants';
+import { GET_LIVE_INVENTORY, GET_LIVE_INVENTORY_BYSEARCH } from '@utils/constants';
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import LeftSection from '../../components/EMI/LeftSection';
-import RightSection from '../../components/EMI/RightSection';
-import userDataSlice from '../../store/slices/userDataSlice';
+import LeftSection from '@components/EMI/LeftSection';
+import RightSection from '@components/EMI/RightSection';
+import userDataSlice from '@store/slices/userDataSlice';
 import { useSelector } from 'react-redux';
 
 function SampleNextArrow(props) {
