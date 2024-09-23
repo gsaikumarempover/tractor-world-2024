@@ -71,37 +71,40 @@ export default function ContentHUb() {
                     <div className="flex sm:gap-4 gap-2 mb-4 justify-center">
                         <div className="sm:w-1/4 w-1/2">
                             <Tab id="videoData" image={true} activeTab={activeTab} onClick={handleTabClick}>
-                                {activeTab === "videoData" ? <div className="text-base"> <Btn text={"Videos"} bgColor={true} /></div> :<div className="text-base"> <Btn text={"Videos"} bgColor={false} /></div>}
+                                {activeTab === "videoData" ? <div className="text-base"> <Btn text={"Videos"} bgColor={true} /></div> : <div className="text-base"> <Btn text={"Videos"} bgColor={false} /></div>}
                             </Tab>
                         </div>
                         <div className="sm:w-1/4 w-1/2">
 
                             <Tab id="blogData" image={true} activeTab={activeTab} onClick={handleTabClick}>
-                                {activeTab === "blogData" ?  <div className="text-base"><Btn text={"Blog"} bgColor={true} /></div> :<div className="text-base">  <Btn text={"Blog"} bgColor={false} /></div>}
+                                {activeTab === "blogData" ? <div className="text-base"><Btn text={"Blog"} bgColor={true} /></div> : <div className="text-base">  <Btn text={"Blog"} bgColor={false} /></div>}
                             </Tab>
                         </div>
                     </div>
 
                     {activeTab == 'videoData' && (
 
-                        <div className="flex flex-col gap-3">
+                        <div className="grid sm:grid-cols-3 grid-cols-1 flex-col gap-4">
 
                             {videos.map((video, index) => (
                                 <div className="border p-1 relative" key={index}>
-                                    <div className="flex gap-3 sm:items-center items-start">
-                                        <Image
-                                            src={video.thumbnail}
-                                            className="cursor-pointer sm:w-24 w-20"
-                                            alt="videoThumbnail"
-                                            width={100}
-                                            height={100}
-                                        />
+                                    <div className="gap-3 sm:items-center items-start">
+                                        <div className="w-[100%] h-[292]">
+                                            <Image
+                                                src={video.thumbnail}
+                                                className="cursor-pointer w-full h-full"
+                                                alt="videoThumbnail"
+                                                width={360}
+                                                height={130}
+                                            />
+                                        </div>
+
                                         <div>
+                                            <div className="sm:text-base text-sm absolute right-3">{video.date}</div>
                                             <div className="font-semibold py-2 sm:text-base text-[14px]">{video.name}</div>
                                             <div className="sm:text-base text-[14px]">{video.description}</div>
                                         </div>
                                     </div>
-                                    <div className="absolute top-2 right-3 sm:text-base text-sm">{video.date}</div>
                                 </div>
                             ))}
 
