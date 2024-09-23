@@ -57,7 +57,7 @@ export default function Inventory({locale}) {
   const city = useSelector((state) => state.user.addressData.city); 
   const [locationDetails , setLocationDetails]=useState('');  
   const { loading, error, data } = useQuery(GET_ALL_STATES);  
-
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     if (state && city) {
@@ -432,25 +432,27 @@ export default function Inventory({locale}) {
       setStateList(fetchedStates); // Update state with fetched data
     }
   }, [data]); // Trigger this effect when `data` changes
-
  
-  const handleLocationSearch = (e) =>{
-    alert(e.target.value);
-  if(e.target.value){
-
-      const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError,fetchMore} = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
-        variables: 
-        { lang: language,
-          search: e.target.value,
-          first: 9,
-          after: null
-        },
-        notifyOnNetworkStatusChange: true
-      });
-
-    }
  
+  const handleLocationSearch = (e) =>{ 
+    const value = e.target.value;
+    setSearchTerm(value); 
   }
+
+  
+
+
+const { data: liveInventoryDataBySearch, loading: inventoryLoadingBySearch, error: inventoryBySearchError} = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
+    variables: 
+    { lang: language,
+      search: e.target.value,
+      first: 9,
+      after: null
+    },
+    notifyOnNetworkStatusChange: true
+  });
+
+}
 
 
   if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
@@ -845,7 +847,7 @@ export default function Inventory({locale}) {
                           <div
                             key={idx}
                             className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none">
-                           <a herf={`inventory-details/${item.slug}`}>
+                           <Link to={`inventory-details/${item.slug}`}>
                             <div className="flex">
                               <div className="w-[40%] relative">
                                 <div className="w-full h-[175px]">
@@ -936,7 +938,7 @@ export default function Inventory({locale}) {
                                 </div>
                               </div>
                             </div>
-                            </a>
+                            </Link>
                           </div>
                         ))
                       }
