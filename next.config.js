@@ -11,6 +11,7 @@ const { i18n } = require('./next-i18next.config');
     config.resolve.alias['@service'] = path.join(__dirname, 'lib');
     config.resolve.alias['@utils'] = path.join(__dirname, 'utils');
     config.resolve.alias['@helpers'] = path.join(__dirname, 'helpers');
+    config.resolve.alias['@store']=path.join(__dirname,'store/slices/');
     return config;
   },
   env: {

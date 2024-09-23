@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import InputSlider from "../../Slider";
 import RangeSlider from "../../Ranger";
-import { setLoanTenure,setLoanAmount } from "../../../store/slices/userDataSlice";
+import { setLoanTenure,setLoanAmount } from "@store/userDataSlice";
 import { useSelector } from "react-redux";
  
 const LeftSection = ({ state, dispatch,maxPrice }) => {  
