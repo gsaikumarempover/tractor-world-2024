@@ -6,6 +6,7 @@ import Heading from "../components/Heading";
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import Btn from '@components/Btn';
+import HP from '@Images/hp.svg'; 
 import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
 import CompareImg from '@Images/compareTractorImg/compareImg.svg';
 import vs from '@Images/compareTractorImg/vs.svg';
@@ -170,24 +171,24 @@ export default function CompareTractor() {
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
@@ -198,24 +199,24 @@ export default function CompareTractor() {
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
@@ -226,24 +227,24 @@ export default function CompareTractor() {
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
@@ -254,24 +255,24 @@ export default function CompareTractor() {
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
@@ -282,24 +283,24 @@ export default function CompareTractor() {
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
@@ -310,24 +311,24 @@ export default function CompareTractor() {
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
             {
                 brand1: 'Mahindra 475 DI',
                 brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
+                brand1hp: '42 HP',
+                brand2hp: '42 HP',
                 brand1price: '₹ 6.45-6.75 Lakh*',
                 brand2price: '₹ 8.30-8.40 Lakh*'
             },
@@ -414,13 +415,13 @@ export default function CompareTractor() {
                                                 <div className='flex justify-between px-3 mb-3'>
                                                     <div>
                                                         <div>{item.brand1}</div>
-                                                        <div className='font-semibold my-1'>{item.brand1hrs}</div>
+                                                        <div className='font-semibold my-1'><Image src={HP} width={15} height={15} /> {item.brand1hp}</div>
                                                         <div className='font-semibold my-1'>{item.brand1price}</div>
 
                                                     </div>
                                                     <div>
                                                         <div>{item.brand2}</div>
-                                                        <div className='font-semibold my-1'>{item.brand2hrs}</div>
+                                                        <div className='font-semibold my-1'><Image src={HP} width={15} height={15} /> {item.brand2hp}</div>
                                                         <div className='font-semibold my-1'>{item.brand2price}</div>
 
                                                     </div>

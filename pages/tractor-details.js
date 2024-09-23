@@ -476,6 +476,11 @@ export default function TractorDetails({ locale }) {
                                 Dealer Location
                             </span>
 
+                            <span className="bg-secondaryColor ml-2 my-4 inline-block px-2 py-1 text-white w-auto
+                                 font-semibold rounded-sm">
+                               Compare Tractor
+                            </span>
+
                             <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
                                  rounded-sm w-full'>
                                 <Image src='/images/Tractordetails/editIcon.svg' width={10} height={10}
