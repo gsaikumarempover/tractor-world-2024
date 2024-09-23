@@ -5,6 +5,8 @@ import Btn from "@components/Btn";
 import Image from "next/image";
 import bannerImg from '@Images/contentHub/banner.svg';
 import Tab from '@components/Tab';
+import Heading from '@components/Heading';
+
 
 export default function ContentHUb() {
     const breadcrumbData = [
@@ -68,14 +70,14 @@ export default function ContentHUb() {
                 />
 
                 <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
-                    <div className="flex sm:gap-4 gap-2 mb-4 justify-center">
-                        <div className="sm:w-1/4 w-1/2">
+                    <Heading heading={'Content Hub'} />
+                    <div className="flex sm:gap-4 gap-2 mb-4 mt-2">
+                        <div className="sm:w-1/6 w-1/2">
                             <Tab id="videoData" image={true} activeTab={activeTab} onClick={handleTabClick}>
                                 {activeTab === "videoData" ? <div className="text-base"> <Btn text={"Videos"} bgColor={true} /></div> : <div className="text-base"> <Btn text={"Videos"} bgColor={false} /></div>}
                             </Tab>
                         </div>
-                        <div className="sm:w-1/4 w-1/2">
-
+                        <div className="sm:w-1/6 w-1/2">
                             <Tab id="blogData" image={true} activeTab={activeTab} onClick={handleTabClick}>
                                 {activeTab === "blogData" ? <div className="text-base"><Btn text={"Blog"} bgColor={true} /></div> : <div className="text-base">  <Btn text={"Blog"} bgColor={false} /></div>}
                             </Tab>

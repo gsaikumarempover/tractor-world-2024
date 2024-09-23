@@ -23,6 +23,13 @@ export default function InventoryCarousel() {
         slidesToShow: 1,
         slidesToScroll: 1
     };
+
+    const handleShareClick = () => {
+        const message = encodeURIComponent("Check out Tractor World! https://tractor-world-2024.vercel.app/");
+        const whatsappURL = `https://api.whatsapp.com/send?text=${message}`;
+        window.open(whatsappURL, '_blank');
+    };
+
     return (
         <>
             <div className="slider-container" id="inventoryCarousel">
@@ -30,24 +37,24 @@ export default function InventoryCarousel() {
                     <div className='relative'>
                         <Image width={519} height={397} src={baseUrl + "/slide01.svg"} className='detailsSlideImg' alt='slide01' />
                         <div className='absolute top-4 right-4'>
-                            <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
+                            <Image src={shareIcon} alt="shareIcon" className='cursor-pointer' width={25} height={25} onClick={handleShareClick} />
                         </div>
                     </div>
                     <div className='relative'>
                         <Image width={519} height={397} src={baseUrl + "/slide02.svg"} className='detailsSlideImg' alt='slide02 ' />
                         <div className='absolute top-4 right-4'>
-                            <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
+                            <Image src={shareIcon} alt="shareIcon" className='cursor-pointer' width={25} height={25} onClick={handleShareClick} />
                         </div>                    </div>
                     <div className='relative'>
                         <Image width={519} height={397} src={baseUrl + "/slide03.svg"} className='detailsSlideImg' alt='slide03' />
                         <div className='absolute top-4 right-4'>
-                            <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
+                            <Image src={shareIcon} alt="shareIcon" className='cursor-pointer' width={25} height={25} onClick={handleShareClick} />
                         </div>
                     </div>
                     <div className='relative'>
                         <Image width={519} height={397} src={baseUrl + "/slide04.svg"} className='detailsSlideImg' alt='slide04' />
                         <div className='absolute top-4 right-4'>
-                            <Image src={shareIcon} alt="shareIcon" width={25} height={25} />
+                            <Image src={shareIcon} alt="shareIcon" className='cursor-pointer' width={25} height={25} onClick={handleShareClick} />
                         </div>
                     </div>
                 </Slider>

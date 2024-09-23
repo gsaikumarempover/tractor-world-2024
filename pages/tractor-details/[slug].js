@@ -11,12 +11,7 @@ import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
 
-// import Battery from '@Images/home/battery.png';
-// import Calender from '@Images/home/calender.png';
-// import EngineHours from '@Images/home/enginepower.png';
-// import originalTyre from '@Images/home/original_tyre.svg';
-// import RewardIcon from '@Images/home/reward.png';
-
+ 
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import { getLocaleProps } from "@helpers";
@@ -244,6 +239,17 @@ export default function TractorDetails({ locale }) {
         ]
     };
 
+    const handleDealerLocation = () => {
+        router.push('/dealer-locator');
+    };
+
+    const handleCompareTractor = () => {
+        router.push('/compare-tractors');
+    };
+
+    const handleEnquiry = () => {
+        router.push('/contact-us');
+    };
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -525,8 +531,13 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
 
 
                             <span className="bg-primaryColor my-4 inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm">
+                                 font-semibold rounded-sm cursor-pointer" onClick={handleDealerLocation}>
                                 Dealer Location
+                            </span>
+
+                            <span className="bg-secondaryColor ml-3 my-4 inline-block px-2 py-1 text-white w-auto
+                                 font-semibold rounded-sm cursor-pointer" onClick={handleCompareTractor}>
+                               Compare Tractor
                             </span>
 
                             <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
@@ -544,7 +555,7 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
                             <div className="">EMI starts at <span className="text-secondaryColor"> ₹ 3,657/month</span> </div>
 
                             <div className='sm:w-1/2 w-full my-4'>
-                                <Btn text={"Enquiry"} bgColor={true} />
+                                <Btn text={"Enquiry"} bgColor={true} onClick={handleEnquiry} />
                             </div>
                            
                         </div>
@@ -576,9 +587,9 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
                             </div>
                         ))}
                     </div>
-                    <div className='sm:w-1/4 w-full m-auto mt-2'>
+                    {/* <div className='sm:w-1/4 w-full m-auto mt-2'>
                         <Btn text={'View Latest Offers'} bgColor={true} />
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

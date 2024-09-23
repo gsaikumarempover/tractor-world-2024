@@ -6,7 +6,7 @@ import Image from 'next/image';
         <>
             <div className="loader-overlay overlay">
                 {/* <div className="loader"></div> */}
-                <Image src="/images/loaders/loader.gif" layout='fill'/>
+                <Image src="/images/loader.gif" width={150} height={150}/>
                 
             </div>
         </>
