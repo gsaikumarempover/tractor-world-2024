@@ -293,7 +293,7 @@ export default function Inventory({locale}) {
   });
  
  
-  console.log("filteredDataBasedonSlugliveInventoryData"+" -----------"+JSON.stringify(liveInventoryData));
+  // console.log("filteredDataBasedonSlugliveInventoryData"+" -----------"+JSON.stringify(liveInventoryData));
  
   //pagination
 
@@ -432,14 +432,12 @@ export default function Inventory({locale}) {
       setStateList(fetchedStates); // Update state with fetched data
     }
   }, [data]); // Trigger this effect when `data` changes
- 
- 
-  const handleLocationSearch = (e) =>{ 
-    const value = e.target.value;
-    setSearchTerm(value); 
-  }
-
   
+
+  // const handleLocationSearch = (e) => {
+  //   const value = e.target.value;
+  //   setSearchTerm(value);
+  // };
 
 
 const { data: liveInventoryDataBySearch, loading: inventoryLoadingBySearch, error: inventoryBySearchError} = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
@@ -605,7 +603,7 @@ const { data: liveInventoryDataBySearch, loading: inventoryLoadingBySearch, erro
                                      dark:placeholder-gray-400 dark:text-white  px-8"
                       
                       
-                      onChange={handleLocationSearch}
+                      // onChange={handleLocationSearch}
                       >
                         <option value="" hidden>{locationDetails}</option> 
                         {stateList.map((item, index) => {
