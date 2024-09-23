@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Banner from "@components/Banner";
 import Layout from "@components/Layout";
-import Heading from "../components/Heading";
+import Heading from "../../components/Heading";
 import Table from "@components/Table";
-import PieChart from "../components/PieChart";
+import PieChart from "../../components/PieChart";
 
 export default function EmiCalculator() {
   const breadcrumbData = [

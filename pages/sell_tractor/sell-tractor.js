@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
-import Heading from "../components/Heading";
+import Heading from "../../components/Heading";
 import Image from "next/image";
 import customerReview from "@Images/sellTractor/customer-review.svg";
 import Market from "@Images/sellTractor/market.svg";
@@ -9,7 +9,7 @@ import Rupee from "@Images/sellTractor/rupee.svg";
 import Certified from "@Images/sellTractor/certified.svg";
 import Notifications from "@Images/sellTractor/notifications.svg";
 import Support from "@Images/sellTractor/support.svg";
-import BannerStrip from "../components/BannerStrip";
+import BannerStrip from "../../components/BannerStrip";
 import bannerImg from "@Images/sellTractor/engineering-excellence-banner.svg";
 import mblBannerImg from "@Images/sellTractor/mblBanner.svg";
 

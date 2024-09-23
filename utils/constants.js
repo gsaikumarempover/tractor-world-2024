@@ -82,29 +82,38 @@ contentgallerys(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
   }  
 `;  
  
-export const GET_LIVE_INVENTORY = gql`
-  query GetLiveInventory($lang: LanguageCodeFilterEnum!) { 
-    allLiveInventory(where: {orderby: {field: DATE, order: DESC}, language: $lang}) {
-      edges {
-        node {
-          title
-          liveInventoryData {
-            engineHours
-            brand
-            driveType
-            enginePower
-            maxPrice
-            imageLinks
-            brand
-            isVerified
-            district
-          }
-          slug 
-          id 
+export const GET_LIVE_INVENTORY = gql` 
+query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: String) {
+  allLiveInventory(
+    where: {orderby: {field: DATE, order: DESC}, language: $lang}
+    first: $first,
+    after: $after
+  ) {
+    edges {
+      node {
+        title
+        liveInventoryData {
+          engineHours
+          brand
+          driveType
+          enginePower
+          maxPrice
+          imageLinks
+          brand
+          isVerified
+          district
         }
+        slug
+        id
       }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
+} 
 `;  
 
 export const GET_ALL_STATES = gql`
@@ -141,15 +150,16 @@ export const GET_ALL_TOWNS = gql`
 //{ "state": "Maharashtra"}
 
 export const GET_ALL_BRANDS = gql`
-  query GetBrands {
+query GetBrands {
   brandsmodels(where: {orderby: {field: TITLE, order: ASC}}, first: 50) {
     edges {
       node {
         brandmodelFields {
           brand
-           models
-           brandLogo
+          models
+          brandLogo
         }
+        slug
       }
     }
   }
