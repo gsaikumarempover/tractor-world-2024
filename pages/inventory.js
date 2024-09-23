@@ -741,7 +741,7 @@ export default function Inventory({ locale }) {
 
                                   {item.features.slice(-1).map((feature, fIdx) => (
                                     <>
-                                      <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3" key={fIdx}>
+                                      <div  key={fIdx} className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
                                         <div 
                                           className={`flex gap-1 h-[14px] items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
                                           <div className="w-3 h-3 sm:w-3 sm:h-3">
@@ -807,7 +807,7 @@ export default function Inventory({ locale }) {
                             height={70}
                           />
                           {item.certified && (
-                            <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
+                            <div key={item.id} className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
                               CERTIFIED
                             </div>
                           )}
