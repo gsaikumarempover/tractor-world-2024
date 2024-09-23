@@ -580,7 +580,7 @@ export default function HomePage({ locale }) {
                         {WhyChooseItems.map((item, index) => (
                             <div key={index}>
                                 <div className="bg-white overflow-hidden flex justify-center 
-                                shadow-custom-medium px-4 sm:pb-9 py-2 flex-col items-center">
+                                shadow-custom-medium sm:px-4 px-2 sm:pb-9 py-2 flex-col items-center">
                                     <div>
                                         <Image src={item.src} alt={item.alt} className="chooseImg" />
                                     </div>
