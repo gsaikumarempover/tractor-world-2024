@@ -111,10 +111,14 @@ export default function HomePage({ locale }) {
 
     if (error) return <p>Error: {error.message}</p>;
 
+
+   
     const bannersData = data?.homeSliders?.nodes || [];
+    const liveInventoryData= data?.allLiveInventory?.edges|| [];
     const testimonialsData = data?.testimonials?.nodes || [];
     const contentGalleryData = data?.contentgallerys?.nodes || [];
     const latestNewsData = data?.latestnews?.edges?.map(edge => edge.node) || [];
+ 
 
     const homeBannerSlides = bannersData.map(node => {
         const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
@@ -122,6 +126,17 @@ export default function HomePage({ locale }) {
         return { desktopUrl, mobileUrl };
     });
 
+    const liveInventoryList = liveInventoryData.map(({ node }) => ({ 
+            title: node.title,
+            price: node.liveInventoryData.maxPrice,
+            hours: node.liveInventoryData.engineHours,
+            driveType: node.liveInventoryData.driveType,
+            enginePower: node.liveInventoryData.enginePower,
+            slug: node.slug,
+            id: node.id 
+      }));
+
+ 
     const testimonialSlides = testimonialsData.map(node => {
         const testimonialMobileUrl = node.tesimonails.mobileimage.node.mediaItemUrl;
         const testimonialDesktopUrl = node.tesimonails.webimage.node.mediaItemUrl;
@@ -553,7 +568,7 @@ export default function HomePage({ locale }) {
             {/* Live Inventory */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
                 <Heading heading={'Live Inventory'} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
-                <LiveInventoryContainer locale={locale} />
+                <LiveInventoryContainer locale={locale} data={liveInventoryList}/>
             </div >
 
             {/* why choose us */}

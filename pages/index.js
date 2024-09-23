@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Layout from "@components/Layout";
-import { getLocaleProps } from "@utils";
+import { getLocaleProps } from "@helpers";
 import HomePage from './home';
 import Image from 'next/image';
 import languagePopupImg from '@Images/languagePopup.svg';
@@ -9,7 +9,7 @@ import Modal from "@components/Modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useGeolocation } from '../utilities';
+import { useGeolocation } from '@utils';
 import { setModalStatus } from '../store/slices/userDataSlice';
 
 export default function Home({ locale }) {

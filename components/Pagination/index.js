@@ -18,7 +18,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, hasNextPage, handle
   }
 
   return (
-    <ul className="pagination">
+    <ul className="pagination flex justify-center mb-4">
       {currentPage > 3 && totalPages > maxPagesToShow && (
         <>
           <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => onPageChange(1)}>1</li>

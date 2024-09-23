@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useReducer } from 'react'
 import Banner from '@components/Banner';
 import Layout from '@components/Layout';
 import InventoryCarousel from '@components/InventoryCarousel';
@@ -10,12 +10,24 @@ import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
+
+// import Battery from '@Images/home/battery.png';
+// import Calender from '@Images/home/calender.png';
+// import EngineHours from '@Images/home/enginepower.png';
+// import originalTyre from '@Images/home/original_tyre.svg';
+// import RewardIcon from '@Images/home/reward.png';
+
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import { useRouter } from 'next/router'; 
 import Tab from '@components/Tab';
-
-
+import { GET_LIVE_INVENTORY, GET_LIVE_INVENTORY_BYSEARCH } from '@utils/constants';
+import { useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
+import LeftSection from '@components/EMI/LeftSection';
+import RightSection from '@components/EMI/RightSection';
+import userDataSlice from '@store/userDataSlice';
+ 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -56,40 +68,40 @@ export default function TractorDetails({ locale }) {
     //   Features data
     const features = [
         {
-            src: '/images/liveInventory/features/cylinder.svg',
-            alt: 'Cylinder',
-            title: 'No. of Cylinder',
-            description: '4'
+            src: '/images/liveInventory/features/battery.png',
+            alt: 'Battery',
+            title: 'Battery',
+            description: 'Available'
         },
         {
-            src: '/images/liveInventory/features/liftingCapacity.svg',
-            alt: 'Lifting Capacity',
-            title: 'Lifting Capacity',
-            description: '1850 Kg'
+            src: '/images/liveInventory/features/calender.png',
+            alt: 'Year',
+            title: 'Year',
+            description: '2022'
         },
         {
-            src: '/images/liveInventory/features/warranty.svg',
-            alt: 'Warranty',
-            title: 'Warranty',
-            description: '2000 hr/2 year'
+            src: '/images/liveInventory/features/hours.png',
+            alt: 'Excellent',
+            title: 'Excellent',
+            description: '729 Hrs'
         },
         {
-            src: '/images/liveInventory/features/gearBox.svg',
-            alt: 'Gear Box',
-            title: 'Gear Box',
-            description: '8 Forward + 2 Reverse'
+            src: '/images/liveInventory/features/enginepower.png',
+            alt: 'Engine Power',
+            title: 'Engine Power',
+            description: '32 HP'
         },
         {
-            src: '/images/liveInventory/features/clutch.svg',
-            alt: 'Clutch',
-            title: 'Clutch',
-            description: 'Single / Double Clutch'
+            src: '/images/liveInventory/features/original_tyre.png',
+            alt: 'Excellent',
+            title: 'Excellent',
+            description: 'Original'
         },
         {
-            src: '/images/liveInventory/features/steering.svg',
-            alt: 'Steering',
-            title: 'Steering',
-            description: 'Power / Mechanical'
+            src: '/images/liveInventory/features/reward.png',
+            alt: 'Finance',
+            title: 'Finance',
+            description: 'Upto* 75%'
         }
     ];
 
@@ -181,33 +193,7 @@ export default function TractorDetails({ locale }) {
         { id: 4, heading: 'STEERING', content: { data: steeringData } },
         { id: 5, heading: 'POWER TAKE OFF', content: { data: steeringData } },
     ];
-
-    // for range 
-    const rangeInputRef = useRef(null);
-    useEffect(() => {
-        const rangeInput = rangeInputRef.current;
-        const updateRange = (rangeInput) => {
-            const value = rangeInput.value;
-            const min = rangeInput.min;
-            const max = rangeInput.max;
-            const percentage = ((value - min) / (max - min)) * 100;
-            rangeInput.style.background = `linear-gradient(to right, #F37021 0%, #F37021 ${percentage}%, #d1d1d1 ${percentage}%, #d1d1d1 100%)`;
-        };
-
-        rangeInput.addEventListener('input', () => updateRange(rangeInput));
-
-        // Initialize the range input background on component mount
-        updateRange(rangeInput);
-
-        return () => {
-            rangeInput.removeEventListener('input', () => updateRange(rangeInput));
-        };
-    }, []);
-
-    // buttons data
-    const buttonValues = [12, 24, 36, 48, 60, 72, 84];
-
-
+  
     const slickSettings = {
         dots: false,
         infinite: true,
@@ -261,22 +247,6 @@ export default function TractorDetails({ locale }) {
         }
     }, []);
 
-    // const language = locale.toUpperCase();
-    // const { loading, error, data } = useQuery(GET_LIVE_INVENTORY, {
-    //     variables: { lang: language },
-    // });
-
-    // if (loading) return <p>Loading Live Inventory...</p>;
-    // if (error) return <p>Error: {error.message}</p>;
-
-
-    // const SimilarTractorsData = data.allLiveInventory.edges.map(({ node }) => ({
-    //     title: node.title,
-    //     price: node.liveInventoryData.maxPrice,
-    //     hours: node.liveInventoryData.engineHours,
-    //     driveType: node.liveInventoryData.driveType,
-    //     enginePower: node.liveInventoryData.enginePower // Assuming hp is similar to driveType; adjust if needed
-    // }));
 
     const compareTractorData = {
 
@@ -450,9 +420,68 @@ export default function TractorDetails({ locale }) {
         ]
     };
 
+        // Fetch the main tractor details based on slug
+    const { data: tractorDataList, loading: inventoryLoading, error: inventoryError } = useQuery(GET_LIVE_INVENTORY, {
+        variables: {
+            lang: language,
+            search: slug, // or slug variable
+            first: 1 // Fetch just the single tractor details
+        },
+        notifyOnNetworkStatusChange: true
+    });
 
-    return (
+    // Fetch the similar tractors
+    const { data: similarTractorsData, loading: similarTractorsLoading, error: similarTractorsError } = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
+        variables: {
+            lang: language,
+            search: slugWord, // or some other criteria for "similar"
+            first: 9 // Adjust based on the number of similar tractors you want to load
+        },
+        notifyOnNetworkStatusChange: true
+    });
+
+    // Handle the combined data when both queries are resolved
+    useEffect(() => {
+        if (tractorDataList && tractorDataList.allLiveInventory && similarTractorsData && similarTractorsData.allLiveInventory) {
+            
+            // Main tractor details
+            const tractorDetails = tractorDataList.allLiveInventory.edges.map(({ node }) => ({  
+                certified: node.liveInventoryData.isVerified,
+                title: node.title,
+                district: node.liveInventoryData.district,
+                state: node.liveInventoryData.state,
+                price: node.liveInventoryData.maxPrice,
+                imageLink: DefaultTractor,
+                slug: node.slug,
+                id: node.id 
+            }));
+            setTractorDetails(tractorDetails);
+
+            // Similar tractors details
+            const similarTractorsList = similarTractorsData.allLiveInventory.edges.map(({ node }) => ({  
+                title: node.title,
+                price: node.liveInventoryData.maxPrice,
+                hours: node.liveInventoryData.engineHours,
+                driveType: node.liveInventoryData.driveType,
+                enginePower: node.liveInventoryData.enginePower,
+                slug: node.slug,
+                id: node.id 
+            }));
+            setsimilarTractorsData(similarTractorsList);
+        }
+    }, [tractorDataList, similarTractorsData]);
+
+// Handle loading and errors
+if (inventoryLoading || similarTractorsLoading) return <p>Loading Tractor Details...</p>;
+if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.message || similarTractorsError?.message}</p>;
+ 
+    return ( 
+
         <Layout>
+            
+        {TractorDetails && TractorDetails.length > 0 ? (
+        <div className='main-details'>
+          
             {/* banner sec */}
             <Banner breadcrumbs={breadcrumbData}
                 bannerImg={bannerImg}
@@ -472,15 +501,15 @@ export default function TractorDetails({ locale }) {
                 <div className='sm:w-1/2 w-full border'>
                     <InventoryCarousel />
                 </div>
-
                 <div className='sm:w-1/2 w-full'>
                     <div className=''>
-                        <div className='pl-2'>
+                        <div className='pl-2'> 
+                            
                             <div className='mb-2'>UID - TJN185041 | Report Problem</div>
-                            <div className='font-bold uppercase sm:text-xl text-lg mb-1'>Mahindra Arjun 555 DI
+                            <div className='font-bold uppercase sm:text-xl text-lg mb-1'> {TractorDetails[0].title}
                                 <span className="bg-secondaryColor px-2 ml-3 py-1 text-white text-sm uppercase
                                  font-semibold border-gradient">
-                                    CERTIFIED
+                                    {TractorDetails[0].certified ? "Certified" : "Not Certified"} 
                                 </span></div>
 
 
@@ -502,52 +531,29 @@ export default function TractorDetails({ locale }) {
 
                             <div className='mb-3 cursor-pointer flex gap-2 w-full'>
                                 <Image src='/images/Tractordetails/primaymapIcon.svg' width={10} height={10} className='w-3' alt='Tractordetails/primaymapIcon' />
-                                Beed, Maharashtra</div>
+                                {TractorDetails[0].district}, {TractorDetails[0].state}</div>
 
-                            <div className='font-bold text-xl mb-1'>₹ 9,84,000 <span className="line-through text-sm opacity-[30%]"> ₹ 10,84,000 </span></div>
+                            <div className='font-bold text-xl mb-1'>₹ {TractorDetails[0].price} <span className="line-through text-sm opacity-[30%]"> ₹ 10,84,000 </span></div>
 
                             <div className="">EMI starts at <span className="text-secondaryColor"> ₹ 3,657/month</span> </div>
 
                             <div className='sm:w-1/2 w-full my-4'>
                                 <Btn text={"Enquiry"} bgColor={true} onClick={handleEnquiry} />
                             </div>
-                            {/* <div className='flex items-center gap-2'>
-                                <div className='mt-[2px]'>
-                                    {Array.from({ length: 5 }).map((_, i) => (
-                                        <span className='mr-1'>
-                                            <Image key={i} src={Star} alt="Star" />
-                                        </span>
-                                    ))}
-                                </div>
-                                <div className='bg-secondaryColor px-3 rounded-sm text-sm text-white'>
-                                    Rate This Tractor</div>
-
-                                <div className='bg-primaryColor px-2 rounded-sm text-sm text-white'>
-                                    Compare</div>
-                            </div> */}
+                           
                         </div>
-                        {/* table sec */}
-                        {/* <div className="relative overflow-x-auto sm:mt-2">
-                            <Table data={tractorData} />
-                        </div> */}
+                        
                     </div>
 
-                    {/* <div className='sm:flex hidden mt-4 gap-2'>
-                        <div className='w-1/2'>
-                            <Btn text={"Enquiry"} bgColor={true} />
-                        </div>
-                        <div className='w-1/2'>
-                            <Btn text={"Share"} bgColor={false} />
-                        </div>
-                    </div> */}
-                </div>
+                   
+                </div> 
             </div>
 
             {/* Features sec */}
             <div className='bg-[#F3F3F4]'>
                 <div className='lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'>
 
-                    <Heading heading={'Mahindra Arjun 555 DI Features'} />
+                    <Heading heading={TractorDetails[0].title} />
                     <div className='py-3 sm:mt-5 mt-1 grid md:grid-cols-6 sm:grid-cols-3 
                     grid-cols-2 sm:gap-4 gap-8'>
                         {features.map((feature, index) => (
@@ -570,95 +576,20 @@ export default function TractorDetails({ locale }) {
                 </div>
             </div>
 
-            {/* specification sec */}
-            {/* <div className='bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'>
-                <Heading heading={'Mahindra Arjun 555 DI Full Specifications'} />
-
-                <div className="mt-4" id="accordion-collapse" data-accordion="collapse">
-                    {accordionData.map((item) => (
-                        <div key={item.id}>
-
-                            <h2 id={`accordion-collapse-heading-${item.id}`} className="mt-3">
-                                <button type="button"
-                                    className="flex items-center justify-between w-full p-3
-                                font-semibold rtl:text-right border bg-[#EEEEF0]
-                                border-gray-200 focus:ring-4 focus:ring-gray-200
-                                dark:focus:ring-gray-800 dark:border-gray-700
-                                dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800
-                                gap-3"
-                                    onClick={() => toggleAccordion(item.id)}
-                                    aria-expanded={openAccordion === item.id}
-                                    aria-controls={`accordion-collapse-body-${item.id}`}
-                                >
-                                    <span>{item.heading}</span>
-                                    <svg
-                                        data-accordion-icon
-                                        className={`w-3 h-3 ${openAccordion === item.id ? 'rotate-180' : ''} shrink-0`}
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 10 6"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M9 5 5 1 1 5"
-                                        />
-                                    </svg>
-                                </button>
-                            </h2>
-
-                            <div
-                                id={`accordion-collapse-body-${item.id}`}
-                                className={`${openAccordion === item.id ? '' : 'hidden'}`}
-                                aria-labelledby={`accordion-collapse-heading-${item.id}`}
-                            >
-                                <div className="border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                                    <Table data={item.content.data} />
-                                </div>
-                            </div>
-
-                        </div>
-                    ))}
-                </div>
-            </div> */}
-
+            
             {/* emi sec */}
+
             <div className='bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2'>
 
-                <Heading heading={'Calculate Mahindra Arjun 555 DI EMI'} />
+                <Heading heading={'Calculate '+TractorDetails[0].title} />
                 <div className='bg-[#F6F6F6] px-3 py-6 mt-3 flex sm:flex-row flex-col gap-4'>
 
-                    <div className='sm:w-1/2 w-full'>
-                        <label htmlFor="downPayment" className="form-label">Down Payment</label>
-                        <input type="range" className="w-full" min="0" max="780000"
-                            step="1000" ref={rangeInputRef} id="downPayment" />
+                                
+                        <div className='sm:w-1/2 w-full'>
+                        
+                        <LeftSection state={state} dispatch={dispatch} maxPrice={TractorDetails[0].price} />
 
-                        <div className="flex justify-between mt-3">
-                            <span>₹0</span>
-                            <span className="slider-value" id="downPaymentValue">₹7,80,000</span>
-                        </div>
-
-                        <div className='my-3'>Loan Period (Months)</div>
-
-                        <div className="grid grid-cols-7 rounded-md shadow-sm" role="group">
-                            {buttonValues.map((value, index) => {
-                                const isFirst = index === 0;
-                                const isLast = index === buttonValues.length - 1;
-                                return (
-                                    <button
-                                        key={value}
-                                        type="button"
-                                        className={`sm:px-6 sm:py-3 py-2 font-medium text-gray-900 bg-[#F0F0F0] ${isFirst ? 'rounded-tl-md rounded-bl-md' : ''
-                                            } ${isLast ? 'rounded-tr-md rounded-br-md' : ''} hover:rounded-md focus:rounded-md focus:bg-secondaryColor hover:bg-secondaryColor hover:text-white focus:z-10 focus:ring-2 focus:ring-secondaryColor focus:text-white dark:bg-secondaryColor dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-secondaryColor dark:focus:ring-secondaryColor dark:focus:text-white`}
-                                    >
-                                        {value}
-                                    </button>
-                                );
-                            })}
-                        </div>
+                        
 
                         <div className='mt-4'>
                             <Btn bgColor={true} text={'View Loan Offers'} />
@@ -666,9 +597,16 @@ export default function TractorDetails({ locale }) {
 
                     </div>
 
-                    <div className='w-1/2'>need to update</div>
+                    <div className='w-1/2'>
+                    
+                                
+                        <RightSection state={state} />
+
+                                
+                    </div>
                 </div>
             </div>
+
 
             {/* why choose us */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 relative bg-white mt-3">
@@ -713,10 +651,10 @@ export default function TractorDetails({ locale }) {
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white ">
                 <Heading heading={'Similar Tractors'} viewButton={true} className='mt-8' />
 
-                {/* <div className="SimilarTractors relative" id="similarTractorsSlide">
-                    <SlickCarousel settings={slickSettings} items={SimilarTractorsData} />
+               <div className="SimilarTractors relative" id="similarTractorsSlide">
+                    <LiveInventoryContainer locale={locale} data={similarTractorsList}/> 
                     <Btn text={'View all'} viewAll={true} />
-                </div> */}
+                </div> 
             </div>
 
 
@@ -811,6 +749,14 @@ export default function TractorDetails({ locale }) {
                     <Btn text={'View All Compare Tractors'} bgColor={true} />
                 </div>
             </div> */}
+        </div>
+        ):null}
         </Layout>
+      
     )
 }
+
+
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+  }
