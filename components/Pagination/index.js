@@ -25,9 +25,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange, hasNextPage, handle
 
   return (
     <ul className="pagination gap-2 flex justify-center mb-4">
-      <li className="cursor-pointer font-bold" onClick={handlePrev}>
-      <Image src='/images/Previous.svg' alt="Previous" width={20} height={20} />
-        
+      <li className="cursor-pointer border px-4 py-2  font-bold" onClick={handlePrev}>
+      <Image src='/images/Previous.svg' alt="Previous" width={13} height={13} /> 
         </li>
 
       {currentPage > 2 && totalPages > maxPagesToShow && (
@@ -54,7 +53,11 @@ const Pagination = ({ currentPage, totalPages, onPageChange, hasNextPage, handle
         </>
       )}
       
-      <li className="cursor-pointer border px-4 py-2 font-bold" onClick={handleNext} disabled={!hasNextPage}>Next</li>
+      <li className="cursor-pointer border px-4 py-2 font-bold" onClick={handleNext} disabled={!hasNextPage}>
+        
+      <Image src='/images/next.svg' alt="Previous" width={13} height={13} /> 
+
+      </li>
     </ul>
   );
 };
