@@ -34,7 +34,7 @@ const SlickCarousel = ({ items, settings }) => {
               )}
             </div>
             <div className="xl:px-6 lg:px-4 sm:px-2 px-4 pt-1 h-28">
-              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                 {item.title}
               </div>
               <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">

@@ -682,7 +682,7 @@ const handleApplyClick = () => {
                               </div>
                             </div>
                             <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                 {item.title}
                               </div>
                               <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
@@ -743,7 +743,7 @@ const handleApplyClick = () => {
 
                                 <div className="p-2">
 
-                                  <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                  <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                     {item.title}
                                   </div>
 
@@ -845,7 +845,7 @@ const handleApplyClick = () => {
                           </div>
                         </div>
                         <div className="xl:px-4 sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                          <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                          <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                             {item.title}
                           </div>
                           <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
@@ -923,7 +923,7 @@ const handleApplyClick = () => {
                           </div>
                         </div>
                         <div className="xl:px-4  sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                          <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                          <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                             {item.title}
                           </div>
                           <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
@@ -981,7 +981,7 @@ const handleApplyClick = () => {
                               </div>
                             </div>
                             <div className="xl:px-4 lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                 {item.title}
                               </div>
                               <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
@@ -1040,7 +1040,7 @@ const handleApplyClick = () => {
 
                                 <div className="p-2">
 
-                                  <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                  <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                     {item.title}
                                   </div>
 

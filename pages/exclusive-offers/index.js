@@ -902,7 +902,7 @@ export default function ExclusiveOffers() {
                                 <Image className="w-full" src={card.imageSrc} alt="cardImage" layout="responsive" width={100} height={70} />
                             </div>
                             <div className="xl:px-6 lg:px-4 sm:px-2 px-4 pt-1">
-                                <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                     {card.title}
                                 </div>
                                 <p className='py-1 text-[14px]'>Starts From : {card.startDate}</p>
