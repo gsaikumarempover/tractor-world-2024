@@ -6,7 +6,6 @@ import Image from "next/image";
 import DefaultTractor from "@Images/default_tractor.svg";
 import Heading from "@components/Heading";
 import Loader from '@components/Loader';
-import Rightarrow from '@Images/offers/rightarrow.svg';
 import bannerImg from "@Images/inventory/inventory-banner.svg";
 import filterIcon from '@Images/inventory/filterIcon.svg'
 import sortIcon from '@Images/inventory/sortIcon.svg'
@@ -29,7 +28,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GET_ALL_STATES } from "@utils/constants";
 import Link from "next/link";
 
+
 export default function Inventory({ locale }) {
+
   //// apply,reset btns active 
   const { t } = useTranslation();
   // Use Next.js router to redirect to the dynamic page
@@ -274,78 +275,19 @@ export default function Inventory({ locale }) {
       after: null
     },
     notifyOnNetworkStatusChange: true
-  });
-
-
+  }); 
+ 
   //pagination
-
   const CardsPerPage = 9;
-
   const [currentPage, setCurrentPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [endCursor, setEndCursor] = useState(null);
-  const totalPages = Math.ceil(10);
-
+  const totalPages = Math.ceil(PopularTractors.length / CardsPerPage);
   const indexOfLastCard = currentPage * CardsPerPage;
   const indexOfFirstCard = indexOfLastCard - CardsPerPage;
-  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);
-
-  console.log("currentPage" + currentPage + " -----------" + JSON.stringify(currentCards));
-
-  const paginate = (pageNumber) => {
-    fetchInventory(pageNumber);
-  };
-  const handleNext = () => {
-    // debugger;
-    if (hasNextPage) {
-      fetchInventory(currentPage + 1);
-    }
-  };
-  const handlePrev = () => {
-    if (currentPage > 1) {
-      fetchInventory(currentPage - 1);
-    }
-  };
-
-  // Function to fetch more data based on the page number 
-
-  const fetchInventory = async (pageNumber) => {
-    // debugger;
-    try {
-      const result = await fetchMore({
-        variables: {
-          first: CardsPerPage,
-          after: endCursor,  // Fetch from the current end cursor
-        },
-        updateQuery: (prevResult, { fetchMoreResult }) => {
-          // debugger;
-          if (!fetchMoreResult) return prevResult;  // No more data to fetch
-
-          return {
-            ...prevResult,
-            allLiveInventory: {
-              ...fetchMoreResult.allLiveInventory,  // Replace the entire allLiveInventory object
-              edges: [
-                ...fetchMoreResult.allLiveInventory.edges,  // Only keep the fresh data
-              ],
-            },
-          };
-        },
-      });
-
-      setHasNextPage(result.data.allLiveInventory.pageInfo.hasNextPage);
-      setEndCursor(result.data.allLiveInventory.pageInfo.endCursor);
-
-    } catch (error) {
-      console.error('Error fetching more data:', error);
-    }
-  };
+  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard); 
 
   useEffect(() => {
-
     if (liveInventoryData && liveInventoryData.allLiveInventory) {
-      // debugger;
-
+      // debugger; 
       const PopularTractorsList = liveInventoryData.allLiveInventory.edges.map(({ node }) => {
         return {
           certified: node.liveInventoryData.isVerified,
@@ -365,8 +307,6 @@ export default function Inventory({ locale }) {
 
       // Append new tractors to the existing list
       setPopularTractorsData(PopularTractorsList);
-      setEndCursor(liveInventoryData.allLiveInventory.pageInfo.endCursor);
-      setHasNextPage(liveInventoryData.allLiveInventory.pageInfo.hasNextPage);
 
     }
   }, [liveInventoryData])
@@ -715,20 +655,10 @@ export default function Inventory({ locale }) {
                       </select>
                     </div>
                   </div>
-
-                  {/* <div>  
-                  <select className="block w-full px-2 py-[7px]   rounded border-[1px] border-[#D0D0D0]  text-[14px] text-secondaryColor">
-                    <option selected value="">Tractor Sort By</option>
-                    <option value="hightolow">Price - High to Low</option>
-                    <option value="lowtohigh">Price - Low to High</option>
-                   </select>
-                  </div> */}
-
                 </div>
 
               </div>
-              {/* 
-              <p>mobile</p> */}
+
               <div className="sm:hidden block">
                 {activeTab == 'gridData' && (
                   <div className="">
@@ -874,12 +804,12 @@ export default function Inventory({ locale }) {
                                           </div>
                                         </div>
                                         <div className="cursor-pointer w-fit">
-                                        <div className="px-1 py-1 bg-secondaryColor cursor-pointer rounded">
-                                          <span className="flex items-center gap-1 font-semibold text-white mr-2 text-medium justify-center">
-                                            <Image src='/images/phnIcon.svg' width={12} height={12} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
-                                          </span>
+                                          <div className="px-1 py-1 bg-secondaryColor cursor-pointer rounded">
+                                            <span className="flex items-center gap-1 font-semibold text-white mr-2 text-medium justify-center">
+                                              <Image src='/images/phnIcon.svg' width={12} height={12} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                            </span>
+                                          </div>
                                         </div>
-                                      </div>
 
                                       </>
                                     ))}
@@ -1197,20 +1127,12 @@ export default function Inventory({ locale }) {
               </div>
 
               <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={paginate}
-                hasNextPage={hasNextPage}
-                handleNext={handleNext}
-                handlePrev={handlePrev}
+                data={PopularTractors}
+                TotalPages={totalPages}
+                CurrentPage={currentPage}
+                setCurrentPage={setCurrentPage} 
               />
-
-              {/* <div className="overflow-x-auto sm:overflow-visible"> 
-              <div className="flex sm:grid sm:grid-cols-2 gap-4"> 
-                <Image src="/images/banner2.svg" width={708} height={366} className="flex-none w-80 sm:w-auto" alt="banner1" />
-                <Image src="/images/banner2.svg" width={708} height={366} className="flex-none w-80 sm:w-auto" alt="banner2" />  
-              </div>
-              </div> */}
+ 
             </div>
           </div>
         </div>
