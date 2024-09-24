@@ -568,7 +568,7 @@ export default function HomePage({ locale }) {
             {/* Live Inventory */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
                 <Heading heading={'Live Inventory'} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
-                <LiveInventoryContainer locale={locale} data={liveInventoryList}/>
+                <LiveInventoryContainer locale={locale} data={liveInventoryList} />
             </div >
 
             {/* why choose us */}

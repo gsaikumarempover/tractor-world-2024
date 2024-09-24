@@ -9,14 +9,42 @@ import PhnIcon from '@Images/dealerLocator/phnIcon.svg';
 import ClockIcon from '@Images/dealerLocator/clock.svg';
 import Location from '@Images/dealer/location.svg';
 import LiveInventoryContainer from '@components/LiveInventory';
+import { useQuery } from "@apollo/client";
+import { HOMEPAGE_QUERIES } from "@utils/constants"; 
+import Loader from '@components/Loader';
+import { getLocaleProps } from "@helpers";
 
 export default function StoreInventory({ locale }) {
     const breadcrumbData = [
         { label: 'Home', link: '/' },
         { label: 'Dealers Locater', link: '/dealer-locator' },
-        { label: 'Store Inventory', link: '#' },
-
+        { label: 'Store Inventory', link: '#' }, 
     ];
+
+    const language = locale?.toUpperCase(); 
+    const { data, loading, error } = useQuery(HOMEPAGE_QUERIES, {
+        variables: { lang: language },
+    });
+
+     // Combined loading and error handling
+     if (loading) return (
+        <Loader />
+    );
+
+    if (error) return <p>Error: {error.message}</p>;
+
+
+    const liveInventoryData= data?.allLiveInventory?.edges|| []; 
+
+    const liveInventoryList = liveInventoryData.map(({ node }) => ({ 
+        title: node.title,
+        price: node.liveInventoryData.maxPrice,
+        hours: node.liveInventoryData.engineHours,
+        driveType: node.liveInventoryData.driveType,
+        enginePower: node.liveInventoryData.enginePower,
+        slug: node.slug,
+        id: node.id 
+  }));
 
 
     return (
@@ -93,16 +121,18 @@ export default function StoreInventory({ locale }) {
                             <p className="font-bold">About Srinivasa Motors</p>
                             <p>Srinivasa Motors in Kutbullapur, Hyderabad is known to satisfactorily cater to the demands of its customer base. The business came into existence in 2003 and has, since then, been a known name in its field. It stands located at Plot No 26, Survey No.62/A, Gandimaisamma X Roads, Kutbullapur-500055.</p>
                         </div>
+                    </div> 
+
+                    {/* Live Inventory */}
+                    <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white ">
+                        <LiveInventoryContainer locale={locale} data={liveInventoryList} />
                     </div>
-
-
-                         {/* Live Inventory */}
-            <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white ">
-                 <LiveInventoryContainer locale={locale} />
-            </div>
 
                 </div>
             </Layout>
         </div>
     );
 }
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+  }

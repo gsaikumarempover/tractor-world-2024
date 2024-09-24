@@ -95,9 +95,9 @@ export default function about() {
           <Image width={259} height={252} src="/images/about/brands/aceTractors.svg" alt="aceTractors" className="w-full" />
           <Image width={259} height={252} src="/images/about/brands/autonxt.svg" alt="autonxt" className="w-full" />
         </div>
-        <div className="my-4 sm:hidden block">
+        {/* <div className="my-4 sm:hidden block">
           <Btn text={'view all'} />
-        </div>
+        </div> */}
       </div>
 
       {/*rental steps sec */}

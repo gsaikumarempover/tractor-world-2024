@@ -131,8 +131,7 @@ export default function DealerLocator() {
           }
         },
       ]
-    },
-
+    }, 
 
   ];
 
@@ -194,7 +193,7 @@ export default function DealerLocator() {
       <Banner
         breadcrumbs={breadcrumbData}
         heading={"DEALER LOCATOR "}
-        bannerImg={bannerImg}
+        bannerImg={bannerImg} s
       />
       <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
         <Heading heading={'Dealer Locater'} />
@@ -233,15 +232,15 @@ export default function DealerLocator() {
                     <option value="Huzur">Huzur</option>
                   </select>
                 </div>
-                <Btn text={"Find Dealer"} bgColor={true}  />
+                <Btn text={"Find Dealer"} bgColor={true} />
 
                 <div>
                   <p className="font-bold py-3 text-black text-lg">Tractor Dealer List</p>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  {dealerData.map((data, dealerDataIndex) => (
-                    <div className="slider-container pb-4" key={dealerDataIndex}> 
+                  {currentCards.map((data, dealerDataIndex) => (
+                    <div className="slider-container pb-4" key={dealerDataIndex}>
                       <Slider {...settings}>
                         {data.dealerCardData.map((card, dealerCardDataIndex) => (
                           <div className="card bg-[#EEEEF0] mb-2" key={dealerCardDataIndex}>
@@ -290,8 +289,8 @@ export default function DealerLocator() {
                           </div>
                         ))}
                       </Slider>
-                    </div> 
-                  ))} 
+                    </div>
+                  ))}
                 </div>
 
                 <div className="pagination my-4 flex justify-center items-center space-x-2">
@@ -306,8 +305,8 @@ export default function DealerLocator() {
                     <Image src={Rightarrow} alt='right' />
                     {/* &gt; */}
                   </button>
-                </div> 
-              
+                </div>
+
               </div>
             </div>
 
