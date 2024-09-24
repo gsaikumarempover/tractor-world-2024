@@ -6,7 +6,8 @@ import Image from 'next/image';
 import Heading from '@components/Heading';
 import Btn from '@components/Btn';
 import Warranty from '@Images/home/warranty.svg';
-import EasyEMI from '@Images/home/easyEMI.svg';
+import editIcon from '@Images/Tractordetails/editIcon.svg';
+ import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
@@ -554,7 +555,7 @@ export default function TractorDetails({ locale }) {
 
                                     <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
                                  rounded-sm w-full'>
-                                        <Image src='/images/Tractordetails/editIcon.svg' width={10} height={10}
+                                        <Image src={editIcon} width={10} height={10}
                                             className='w-3' alt='editIcon' />Change Tractor</div>
 
 
