@@ -6,8 +6,7 @@ import Image from 'next/image';
 import Heading from '@components/Heading';
 import Btn from '@components/Btn';
 import Warranty from '@Images/home/warranty.svg';
-import editIcon from '@Images/Tractordetails/editIcon.svg';
- import EasyEMI from '@Images/home/easyEMI.svg';
+import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
@@ -555,12 +554,12 @@ export default function TractorDetails({ locale }) {
 
                                     <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
                                  rounded-sm w-full'>
-                                        <Image src={editIcon} width={10} height={10}
+                                        <Image src='/images/tractordetails/editIcon.svg' width={10} height={10}
                                             className='w-3' alt='editIcon' />Change Tractor</div>
 
 
                                     <div className='mb-3 cursor-pointer flex gap-2 w-full'>
-                                        <Image src='/images/Tractordetails/primaymapIcon.svg' width={10} height={10} className='w-3' alt='primaymapIcon' />
+                                        <Image src='/images/tractordetails/primaymapIcon.svg' width={10} height={10} className='w-3' alt='primaymapIcon' />
                                         {TractorDetails[0].district}, {TractorDetails[0].state}</div>
 
                                     <div className='font-bold text-xl mb-1'>₹ {TractorDetails[0].price} <span className="line-through text-sm opacity-[30%]"> ₹ 10,84,000 </span></div>
