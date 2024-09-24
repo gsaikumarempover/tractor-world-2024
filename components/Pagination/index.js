@@ -1,30 +1,42 @@
-// components/Pagination.js
 import React from 'react';
+import Image from 'next/image';
 
 const Pagination = ({ currentPage, totalPages, onPageChange, hasNextPage, handleNext, handlePrev }) => {
-  const maxPagesToShow = 9;
+  const maxPagesToShow = 4; // Show only 4 pages
   let pages = [];
 
   if (totalPages <= maxPagesToShow) {
+    // If totalPages is less than or equal to maxPagesToShow, show all pages
     pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   } else {
-    if (currentPage <= 3) {
-      pages = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    } else if (currentPage > totalPages - 3) {
-      pages = [totalPages - 8, totalPages - 7, totalPages - 6, totalPages - 5, totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-    } else {
-      pages = [currentPage - 4, currentPage - 3, currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2, currentPage + 3, currentPage + 4];
+    // If the current page is close to the start (first 3 pages)
+    if (currentPage <= 2) {
+      pages = [1, 2, 3, 4];
+    } 
+    // If the current page is close to the end (last 2 pages)
+    else if (currentPage >= totalPages - 1) {
+      pages = [totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    } 
+    // If the current page is somewhere in the middle
+    else {
+      pages = [currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
     }
   }
 
   return (
-    <ul className="pagination flex justify-center mb-4">
-      {currentPage > 3 && totalPages > maxPagesToShow && (
+    <ul className="pagination gap-2 flex justify-center mb-4">
+      <li className="cursor-pointer font-bold" onClick={handlePrev}>
+      <Image src='/images/Previous.svg' alt="Previous" width={20} height={20} />
+        
+        </li>
+
+      {currentPage > 2 && totalPages > maxPagesToShow && (
         <>
           <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => onPageChange(1)}>1</li>
-          <li>...</li>
+          {currentPage > 3 && <li>...</li>}
         </>
       )}
+      
       {pages.map(page => (
         <li
           key={page}
@@ -34,13 +46,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange, hasNextPage, handle
           {page}
         </li>
       ))}
-      {currentPage < totalPages - 2 && totalPages > maxPagesToShow && (
+
+      {currentPage < totalPages - 1 && totalPages > maxPagesToShow && (
         <>
-          <li>...</li>
+          {currentPage < totalPages - 2 && <li>...</li>}
           <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => onPageChange(totalPages)}>{totalPages}</li>
         </>
       )}
-      <li className="cursor-pointer border px-4 py-2 font-bold" onClick={handlePrev}>Previous</li>
+      
       <li className="cursor-pointer border px-4 py-2 font-bold" onClick={handleNext} disabled={!hasNextPage}>Next</li>
     </ul>
   );

@@ -5,7 +5,7 @@ import Btn from '@components/Btn';
 import Image from "next/image";
 import DefaultTractor from "@Images/default_tractor.svg";
 import Heading from "@components/Heading";
-import Leftarrow from '@Images/offers/leftarrow.svg';
+import Loader from '@components/Loader';
 import Rightarrow from '@Images/offers/rightarrow.svg';
 import bannerImg from "@Images/inventory/inventory-banner.svg";
 import filterIcon from '@Images/inventory/filterIcon.svg'
@@ -18,40 +18,40 @@ import listView from "@Images/inventory/listView.svg";
 import listActiveView from "@Images/inventory/listActiveView.svg";
 import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
-import { GET_ALL_BRANDS,customImageLoader,GET_LIVE_INVENTORY,HP_OPTIONS,PRICE_OPTIONS } from "@utils/constants"; 
-import { useQuery } from '@apollo/client'; 
+import { GET_ALL_BRANDS, customImageLoader, GET_LIVE_INVENTORY, HP_OPTIONS, PRICE_OPTIONS } from "@utils/constants";
+import { useQuery } from '@apollo/client';
 import { getLocaleProps } from "@helpers";
-import { useTranslation } from 'next-i18next'; 
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import Pagination from "@components/Pagination";
 import { GET_ALL_POPULAR_BRANDS } from "@utils/constants";
 import { useDispatch, useSelector } from 'react-redux';
-import {GET_ALL_STATES} from "@utils/constants";
+import { GET_ALL_STATES } from "@utils/constants";
 import Link from "next/link";
 
-export default function Inventory({locale}) {
+export default function Inventory({ locale }) {
   //// apply,reset btns active 
-  const { t } = useTranslation();  
+  const { t } = useTranslation();
   // Use Next.js router to redirect to the dynamic page
-  const router = useRouter(); 
-  const [showFilter, setShowFilter] = useState(false); 
+  const router = useRouter();
+  const [showFilter, setShowFilter] = useState(false);
   const [resetBgColor, setResetBgColor] = useState(false);
   const [applyBgColor, setApplyBgColor] = useState(true);
-  const currentLanguage = locale; 
-  const language = locale?.toUpperCase(); 
-  
+  const currentLanguage = locale;
+  const language = locale?.toUpperCase();
+
   //get serach value
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [liveInventoryFilters, setliveInventoryFilters] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const [brandsLogos , setBrandLogos]=useState([]);
-  const [PopularTractors , setPopularTractorsData]=useState([]);
+  const [liveInventoryFilters, setliveInventoryFilters] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [brandsLogos, setBrandLogos] = useState([]);
+  const [PopularTractors, setPopularTractorsData] = useState([]);
   const state = useSelector((state) => state.user.addressData.state);
-  const city = useSelector((state) => state.user.addressData.city); 
-  const [locationDetails , setLocationDetails]=useState(''); 
-  const [stateList, setStateList] = useState([]);   
-  const { loading, error, data } = useQuery(GET_ALL_STATES);  
+  const city = useSelector((state) => state.user.addressData.city);
+  const [locationDetails, setLocationDetails] = useState('');
+  const [stateList, setStateList] = useState([]);
+  const { loading, error, data } = useQuery(GET_ALL_STATES);
 
   useEffect(() => {
     if (state && city) {
@@ -68,14 +68,14 @@ export default function Inventory({locale}) {
     {
       title: "HP",
       showKey: "showHps",
-      options:HP_OPTIONS
+      options: HP_OPTIONS
     },
     {
       title: "Price",
       showKey: "showPrices",
-      options:PRICE_OPTIONS
+      options: PRICE_OPTIONS
     }
-  ]); 
+  ]);
 
   ///// for collpase
   const [showStates, setShowStates] = useState({
@@ -90,7 +90,7 @@ export default function Inventory({locale}) {
     { label: "Inventory", link: "#" },
   ];
 
-  
+
   const customStyles = {
     content: {
       top: 'auto',
@@ -109,12 +109,12 @@ export default function Inventory({locale}) {
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
- 
+
   ////for filters collpase
   const onToggle = (key) => {
     setShowStates((prev) => ({ ...prev, [key]: !prev[key] }));
   };
- 
+
   useEffect(() => {
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
@@ -129,7 +129,7 @@ export default function Inventory({locale}) {
       }
     };
 
-    window.addEventListener('scroll', handleScroll); 
+    window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -152,12 +152,12 @@ export default function Inventory({locale}) {
   const handleClose = () => {
     setShowModal(false);
   }
-  
+
   ////apply, reset btn click functionality
   const handleResetClick = () => {
     setResetBgColor(true);
     setApplyBgColor(false);
-    clearSelectedValues(); 
+    clearSelectedValues();
     setliveInventoryFilters(['', '', '']);
   };
 
@@ -173,7 +173,7 @@ export default function Inventory({locale}) {
     let selectedBrandSlug = ''; // Initialize an empty variable for storing the slug
 
     radios.forEach((radio) => {
-      debugger;
+      // debugger;
       if (radio.checked) {
         selectedValues.push(radio.value);  // Collect the checked radio values
 
@@ -198,118 +198,119 @@ export default function Inventory({locale}) {
     const radios = document.querySelectorAll('input[type="radio"]');
     radios.forEach((radio) => (radio.checked = false));
   };
-  
+
   //all brands 
   const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
   useEffect(() => {
-  if (brandsData && brandsData.brandsmodels && liveInventoryData && liveInventoryData.allLiveInventory) {
-    // Map the API response to the options for the "Brand" filter
-    const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
-      const modelsString = node.brandmodelFields.models;
-      const modelCount = modelsString.split(',').length;
-      
-      // Count the number of live inventory items that match the brand's slug
-      const liveInventoryCount = liveInventoryData.allLiveInventory.edges.filter(({ node: inventoryNode }) => 
-        inventoryNode.liveInventoryData.brandSlug === node.slug // Assuming brandSlug field exists in live inventory data
-      ).length;
+    if (brandsData && brandsData.brandsmodels && liveInventoryData && liveInventoryData.allLiveInventory) {
+      // Map the API response to the options for the "Brand" filter
+      const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
+        const modelsString = node.brandmodelFields.models;
+        const modelCount = modelsString.split(',').length;
 
-      return {
-        label: `${node.brandmodelFields.brand} (${liveInventoryCount})`, // Use live inventory count for the label
-        value: node.slug, // Slugify the brand name
-      };
-    }); 
-    // Update the filters state with the brand options
-    setFilters(prevFilters =>
-      prevFilters.map(filter =>
-        filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
-      )
-    );
-  }
-}, [brandsData, liveInventoryData]);
+        // Count the number of live inventory items that match the brand's slug
+        const liveInventoryCount = liveInventoryData.allLiveInventory.edges.filter(({ node: inventoryNode }) =>
+          inventoryNode.liveInventoryData.brandSlug === node.slug // Assuming brandSlug field exists in live inventory data
+        ).length;
+
+        return {
+          label: `${node.brandmodelFields.brand} (${liveInventoryCount})`, // Use live inventory count for the label
+          value: node.slug, // Slugify the brand name
+        };
+      });
+      // Update the filters state with the brand options
+      setFilters(prevFilters =>
+        prevFilters.map(filter =>
+          filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
+        )
+      );
+    }
+  }, [brandsData, liveInventoryData]);
 
 
-///get popular brands 
-const { data: PopularBrandsData, loading: PopularBrandsLoading, error: PopularBrandsError } = useQuery(GET_ALL_POPULAR_BRANDS);
-useEffect(() => {
-  if (PopularBrandsData && PopularBrandsData.brandsmodels) { 
-    // Extract all brand logos into a separate array
-    const logos = PopularBrandsData.brandsmodels.edges.map(({ node }) => node.brandmodelFields.brandLogo);
-    setBrandLogos(logos); 
-  }
-}, [PopularBrandsData]);
+  ///get popular brands 
+  const { data: PopularBrandsData, loading: PopularBrandsLoading, error: PopularBrandsError } = useQuery(GET_ALL_POPULAR_BRANDS);
+  useEffect(() => {
+    if (PopularBrandsData && PopularBrandsData.brandsmodels) {
+      // Extract all brand logos into a separate array
+      const logos = PopularBrandsData.brandsmodels.edges.map(({ node }) => node.brandmodelFields.brandLogo);
+      setBrandLogos(logos);
+    }
+  }, [PopularBrandsData]);
 
 
   // Filter brands whenever the search query changes
   useEffect(() => {
     //  debugger;
-      if (brandsData && brandsData.brandsmodels) {
-        debugger;
-        const filtered = brandsData.brandsmodels.edges.filter(({ node }) =>
-          node.brandmodelFields.brand.toLowerCase().includes(searchQuery.toLowerCase())
-        ).map(({ node }) => {
-          const modelsString = node.brandmodelFields.models;
-          const modelCount = modelsString.split(',').length;
-          return {
-            label: `${node.brandmodelFields.brand} (${modelCount})`,
-            value:node.slug
-          };
-        });
-  
-        setFilters(prevFilters =>
-          prevFilters.map(filter => 
-            filter.title === "Brand" ? { ...filter, options: filtered } : filter
-          )
-        );
-      }
-    }, [searchQuery, brandsData]);
-    
+    if (brandsData && brandsData.brandsmodels) {
+      // debugger;
+      const filtered = brandsData.brandsmodels.edges.filter(({ node }) =>
+        node.brandmodelFields.brand.toLowerCase().includes(searchQuery.toLowerCase())
+      ).map(({ node }) => {
+        const modelsString = node.brandmodelFields.models;
+        const modelCount = modelsString.split(',').length;
+        return {
+          label: `${node.brandmodelFields.brand} (${modelCount})`,
+          value: node.slug
+        };
+      });
+
+      setFilters(prevFilters =>
+        prevFilters.map(filter =>
+          filter.title === "Brand" ? { ...filter, options: filtered } : filter
+        )
+      );
+    }
+  }, [searchQuery, brandsData]);
+
 
   //live inventory  fetching and execution
 
-  const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError,fetchMore} = useQuery(GET_LIVE_INVENTORY, {
-    variables: 
-    { lang: language,
+  const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError, fetchMore } = useQuery(GET_LIVE_INVENTORY, {
+    variables:
+    {
+      lang: language,
       first: 9,
       after: null
     },
     notifyOnNetworkStatusChange: true
   });
-  
-  
+
+
   //pagination
 
   const CardsPerPage = 9;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
-  const [endCursor, setEndCursor] = useState(null);  
-  const totalPages = Math.ceil(10); 
+  const [endCursor, setEndCursor] = useState(null);
+  const totalPages = Math.ceil(10);
 
   const indexOfLastCard = currentPage * CardsPerPage;
   const indexOfFirstCard = indexOfLastCard - CardsPerPage;
-  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);  
+  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);
 
-  console.log("currentPage"+currentPage+" -----------"+JSON.stringify(currentCards));
+  console.log("currentPage" + currentPage + " -----------" + JSON.stringify(currentCards));
 
   const paginate = (pageNumber) => {
     fetchInventory(pageNumber);
   };
   const handleNext = () => {
-    debugger;
+    // debugger;
     if (hasNextPage) {
       fetchInventory(currentPage + 1);
     }
-  }; 
+  };
   const handlePrev = () => {
     if (currentPage > 1) {
       fetchInventory(currentPage - 1);
     }
   };
- 
+
   // Function to fetch more data based on the page number 
 
   const fetchInventory = async (pageNumber) => {
-    debugger;
+    // debugger;
     try {
       const result = await fetchMore({
         variables: {
@@ -317,9 +318,9 @@ useEffect(() => {
           after: endCursor,  // Fetch from the current end cursor
         },
         updateQuery: (prevResult, { fetchMoreResult }) => {
-          debugger;
+          // debugger;
           if (!fetchMoreResult) return prevResult;  // No more data to fetch
-          
+
           return {
             ...prevResult,
             allLiveInventory: {
@@ -331,21 +332,21 @@ useEffect(() => {
           };
         },
       });
-  
+
       setHasNextPage(result.data.allLiveInventory.pageInfo.hasNextPage);
       setEndCursor(result.data.allLiveInventory.pageInfo.endCursor);
-  
+
     } catch (error) {
       console.error('Error fetching more data:', error);
     }
   };
-    
+
   useEffect(() => {
 
     if (liveInventoryData && liveInventoryData.allLiveInventory) {
-      debugger;
-      
-     const PopularTractorsList = liveInventoryData.allLiveInventory.edges.map(({ node }) => { 
+      // debugger;
+
+      const PopularTractorsList = liveInventoryData.allLiveInventory.edges.map(({ node }) => {
         return {
           certified: node.liveInventoryData.isVerified,
           title: node.title,
@@ -361,47 +362,47 @@ useEffect(() => {
           id: node.id
         };
       });
-  
-     // Append new tractors to the existing list
-     setPopularTractorsData(PopularTractorsList); 
-     setEndCursor(liveInventoryData.allLiveInventory.pageInfo.endCursor);
-     setHasNextPage(liveInventoryData.allLiveInventory.pageInfo.hasNextPage);
+
+      // Append new tractors to the existing list
+      setPopularTractorsData(PopularTractorsList);
+      setEndCursor(liveInventoryData.allLiveInventory.pageInfo.endCursor);
+      setHasNextPage(liveInventoryData.allLiveInventory.pageInfo.hasNextPage);
 
     }
   }, [liveInventoryData])
- 
+
   ///fliter the tractors 
   useEffect(() => {
     if (!liveInventoryFilters.length || !PopularTractors.length) {
       return; // Early exit if filters or data is not available
     }
 
-  
+
     const filteredTractors = PopularTractors.filter(tractor => {
- 
+
       const [brandFilter, hpFilter, priceFilter] = liveInventoryFilters;
-  
+
       const tractorHP = parseInt(tractor.features.find(f => f.text.includes("HP")).text); // Extract HP
       const tractorPrice = parseInt(tractor.price); // Convert price to number
-  
+
       // If priceFilter is defined, split it into min and max range; otherwise set defaults
       const priceRange = priceFilter
         ? priceFilter.split("_").map(price => Number(price.replace("lakh", '')) * 100000)
         : [0, Number.MAX_VALUE]; // Default range if priceFilter is undefined
-  
+
       // Build the filtering conditions, only applying filters that are defined
       const isBrandMatch = brandFilter ? tractor.title.toLowerCase().includes(brandFilter.toLowerCase()) : true;
       const isHPMatch = hpFilter
         ? tractorHP >= parseInt(hpFilter.split("_")[0]) && tractorHP <= parseInt(hpFilter.split("_")[1])
         : true;
       const isPriceMatch = tractorPrice >= priceRange[0] && tractorPrice <= priceRange[1];
-  
+
       return isBrandMatch && isHPMatch && isPriceMatch;
     });
-  
+
     setPopularTractorsData(filteredTractors); // Only update if the filtered data has changed
   }, [liveInventoryFilters, PopularTractors]); // Ensure dependencies are correctly set
-   
+
 
   //get states list 
   useEffect(() => {
@@ -416,9 +417,11 @@ useEffect(() => {
   }, [data]); // Trigger this effect when `data` changes
 
 
-  if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
+  if (brandsLoading || inventoryLoading) return (
+    <Loader />
+  );
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
-    
+
   return (
     <div>
       <div className={`${showFilter ? 'overlay sm:hidden block' : 'hidden'}`}></div>
@@ -468,14 +471,14 @@ useEffect(() => {
               </div>
 
               <div className="mt-2 w-full">
-                <div className="w-full flex"> 
-                    <input 
-                      type="search"
-                      placeholder="Type Here"
-                      className="border-secondaryColor border-r-0 w-full"
-                      value={searchQuery} // Bind the input value to searchQuery state
-                      onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
-                    /> 
+                <div className="w-full flex">
+                  <input
+                    type="search"
+                    placeholder="Type Here"
+                    className="border-secondaryColor border-r-0 w-full"
+                    value={searchQuery} // Bind the input value to searchQuery state
+                    onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
+                  />
                   <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
                 </div>
               </div>
@@ -564,27 +567,27 @@ useEffect(() => {
               </div>
             </div> */}
 
-                  <div className="relative w-full sm:hidden block">
-                    <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
-                        <Image src={mapIcon} alt="search" width={22} height={22} />
-                      </div>
-                      <select
-                        id="location"
-                        className="bg-white border border-gray-300
+            <div className="relative w-full sm:hidden block">
+              <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                <Image src={mapIcon} alt="search" width={22} height={22} />
+              </div>
+              <select
+                id="location"
+                className="bg-white border border-gray-300
                                       text-black rounded-md  block w-full 
                                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                                      dark:placeholder-gray-400 dark:text-white  px-8"
-                      >
-                        <option value="" hidden>{locationDetails}</option> 
-                        {stateList.map((item, index) => {
-                          return (
-                            <option key={index} value={item.state}>
-                              {item.state}
-                            </option>
-                          );
-                        })}
-                      </select> 
-                      </div>
+              >
+                <option value="" hidden>{locationDetails}</option>
+                {stateList.map((item, index) => {
+                  return (
+                    <option key={index} value={item.state}>
+                      {item.state}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
 
             <div className="bg-[#F6F6F6] p-4 sm:w-[25%] w-full sm:block hidden">
 
@@ -601,11 +604,11 @@ useEffect(() => {
               <div className="mt-2 w-full">
                 <div className="w-full flex">
                   <input type="search" placeholder="Type Here"
-                    className="border-secondaryColor border-r-0 w-full" 
+                    className="border-secondaryColor border-r-0 w-full"
                     value={searchQuery} // Bind the input value to searchQuery state
                     onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
-                    />
-                  <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]"  />
+                  />
+                  <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
                 </div>
               </div>
 
@@ -689,19 +692,9 @@ useEffect(() => {
 
                 <div className="sm:flex hidden items-center gap-3">
                   <div>
-                    {/* <label className="mb-1 block text-sm">Your Location</label> */}
-                    {/* <div className="relative w-full">
-                      <input type="text" placeholder="search your location..." className="w-full rounded border-[1px] px-8 border-[#D0D0D0] sm:py-2 py-3" />
-                      <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
-                        <Image src={mapIcon} alt="search" width={22} height={22} />
-                      </div>
 
-                      <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
-                        <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
-                      </div>
-                    </div> */}
-                   <div className="relative w-full">
-                    <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
+                    <div className="relative w-full">
+                      <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
                         <Image src={mapIcon} alt="search" width={22} height={22} />
                       </div>
                       <select
@@ -718,9 +711,9 @@ useEffect(() => {
                               {item.state}
                             </option>
                           );
-                        })} 
-                      </select> 
-                      </div>
+                        })}
+                      </select>
+                    </div>
                   </div>
 
                   {/* <div>  
@@ -734,64 +727,64 @@ useEffect(() => {
                 </div>
 
               </div>
-{/* 
+              {/* 
               <p>mobile</p> */}
               <div className="sm:hidden block">
                 {activeTab == 'gridData' && (
                   <div className="">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                       {
-                        currentCards.slice(0, 3).map((item, idx) => ( 
-                          
-                          <Link  key={idx} className="tractor-details-info cursor-pointer"  href={`/tractor-details/${item.slug}`} passHref >
-                           
-                          <div
-                            key={idx}
-                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
-                          >
-                          
-                            <div className="relative">
-                              <Image
-                                className="w-full"
-                                src={item.imageLink}
-                                alt="cardImage"
-                                layout="responsive"
-                                width={100}
-                                height={70}
-                              />
-                              {item.isVerified && (
-                                <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
-                                   {item.price}
-                                </div>
-                              )}
-                              <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
-                                {item.price}
-                              </div>
-                            </div>
-                            <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
-                                {item.title}
-                              </div>
-                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
-                                {item.features.map((feature, fIdx) => (
-                                  <div
-                                    key={fIdx}
-                                    className={`flex gap-1 h-[14px] items-center  ${fIdx > 0 ? 'px-[6px]  border-black border-r-[1px]' : 'pr-[6px]'}`}
-                                  >
-                                    <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
-                                    <span>{feature.text}</span>
+                        currentCards.slice(0, 3).map((item, idx) => (
+
+                          <Link key={idx} className="tractor-details-info cursor-pointer" href={`/tractor-details/${item.slug}`} passHref >
+
+                            <div
+                              key={idx}
+                              className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
+                            >
+
+                              <div className="relative">
+                                <Image
+                                  className="w-full"
+                                  src={item.imageLink}
+                                  alt="cardImage"
+                                  layout="responsive"
+                                  width={100}
+                                  height={70}
+                                />
+                                {item.isVerified && (
+                                  <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
+                                    {item.price}
                                   </div>
-                                ))}
+                                )}
+                                <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
+                                  {item.price}
+                                </div>
+                              </div>
+                              <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                                <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                  {item.title}
+                                </div>
+                                <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
+                                  {item.features.map((feature, fIdx) => (
+                                    <div
+                                      key={fIdx}
+                                      className={`flex gap-1 h-[14px] items-center  ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''}  ${fIdx > 0 ? 'px-[6px] ' : 'pr-[6px]'}`}
+                                    >
+                                      <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
+                                      <span>{feature.text}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                              <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
+                                <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
+                                  <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
+                                    <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                  </span>
+                                </div>
                               </div>
                             </div>
-                            <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
-                              <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
-                                <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
-                                  <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
-                                </span>
-                              </div>
-                            </div> 
-                          </div> 
                           </Link>
                         ))
                       }
@@ -805,70 +798,50 @@ useEffect(() => {
                       {
                         currentCards.slice(0, 3).map((item, idx) => (
 
-                          
-                          <Link  key={idx} className="tractor-details-info cursor-pointer"  href={`/tractor-details/${item.slug}`} passHref >
-                          
-                          <div
-                            key={idx}
-                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none  cursor-pointer"> 
-                            <div className="flex">
-                              <div className="w-[40%] relative">
-                                <div className="w-full h-[175px]"> 
-                                 <Image
-                                    className="w-full h-[600px]"
-                                    src={DefaultTractor}
-                                    height={600}                                
-                                    alt="cardImage"
-                                    layout="responsive"
-                                  /> 
+
+                          <Link key={idx} className="tractor-details-info cursor-pointer" href={`/tractor-details/${item.slug}`} passHref >
+
+                            <div
+                              key={idx}
+                              className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none  cursor-pointer">
+                              <div className="flex">
+                                <div className="w-[40%] relative">
+                                  <div className="w-full h-[175px]">
+                                    <Image
+                                      className="w-full h-[600px]"
+                                      src={DefaultTractor}
+                                      height={600}
+                                      alt="cardImage"
+                                      layout="responsive"
+                                    />
                                   </div>
 
-                                {item.certified && (
-                                  <div className="bg-secondaryColor px-2
+                                  {item.certified && (
+                                    <div className="bg-secondaryColor px-2
                                    text-white text-sm absolute top-2 left-2 uppercase font-medium border-gradient">
-                                    CERTIFIED
-                                  </div>
-                                )}
-                              </div>
-                              <div className="w-[60%]">
+                                      CERTIFIED
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="w-[60%]">
 
-                                <div className="p-2">
+                                  <div className="p-2">
 
-                                  <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
-                                    {item.title}
-                                  </div>
+                                    <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                      {item.title}
+                                    </div>
 
-                                  <div className="bg-black font-semibold text-white w-max px-2 py-1 mt-2">
-                                    {item.price}
-                                  </div>
+                                    <div className="bg-black font-semibold text-white w-max px-2 py-1 mt-2">
+                                      {item.price}
+                                    </div>
 
-                                  <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
-                                    {item.features.slice(0, -1).map((feature, fIdx) => (
-                                      <div
-                                        key={fIdx}
-                                        className={`flex gap-1 items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                                      >
-                                        <div className="w-2 h-2 sm:w-3 sm:h-3">
-                                          <Image
-                                            src={feature.icon}
-                                            alt={feature.icon}
-                                            layout="responsive"
-                                            width={2}
-                                            height={2}
-                                          />
-                                        </div>
-                                        <span>{feature.text}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-
-                                  {item.features.slice(-1).map((feature, fIdx) => (
-                                    <>
-                                      <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                    <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                      {item.features.slice(0, -1).map((feature, fIdx) => (
                                         <div
                                           key={fIdx}
-                                          className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
-                                          <div className="w-3 h-3 sm:w-3 sm:h-3">
+                                          className={`flex gap-1 items-center ${fIdx < item.features.length - 2 ? 'border-r-[1px] border-black' : ''}  ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                        >
+                                          <div className="w-2 h-2 sm:w-3 sm:h-3">
                                             <Image
                                               src={feature.icon}
                                               alt={feature.icon}
@@ -879,29 +852,41 @@ useEffect(() => {
                                           </div>
                                           <span>{feature.text}</span>
                                         </div>
-                                      </div>
-                                      <div className="cursor-pointer">
-                                        <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
-                                          {/* Wrapping the Image component for responsive styling */}
-                                          <div className="w-3 h-3 sm:w-3 sm:h-3 mr-1">
-                                            <Image
-                                              src="/images/inventory/ActiveCallIcon.svg"
-                                              alt="phnIcon"
-                                              layout="responsive"
-                                              width={2}
-                                              height={2}
-                                            />
+                                      ))}
+                                    </div>
+
+                                    {item.features.slice(-1).map((feature, fIdx) => (
+                                      <>
+                                        <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
+                                          <div
+                                            key={fIdx}
+                                            className={`flex gap-1 items-center ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}>
+                                            <div className="w-3 h-3 sm:w-3 sm:h-3">
+                                              <Image
+                                                src={feature.icon}
+                                                alt={feature.icon}
+                                                layout="responsive"
+                                                width={2}
+                                                height={2}
+                                              />
+                                            </div>
+                                            <span>{feature.text}</span>
                                           </div>
-                                          Interested{" "}
-                                        </span>
+                                        </div>
+                                        <div className="cursor-pointer w-fit">
+                                        <div className="px-1 py-1 bg-secondaryColor cursor-pointer rounded">
+                                          <span className="flex items-center gap-1 font-semibold text-white mr-2 text-medium justify-center">
+                                            <Image src='/images/phnIcon.svg' width={12} height={12} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                          </span>
+                                        </div>
                                       </div>
 
-                                    </>
-                                  ))}
+                                      </>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div> 
                           </Link>
 
                         ))
@@ -916,50 +901,50 @@ useEffect(() => {
                   {
                     currentCards.slice(0, 3).map((item, idx) => (
 
-                       
+
                       <div
                         key={idx}
                         className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                       >
-                          
-                        <Link className="tractor-details-info cursor-pointer"  href={`/tractor-details/${item.slug}`} passHref > 
-                        <div className="wholeCard cursor-pointer">
-                        <div className="relative">
-                          <Image
-                            className="w-full"
-                            src={DefaultTractor}
-                            alt="cardImage"
-                            layout="responsive"
-                            width={100}
-                            height={70}
-                          />
-                          {item.certified && (
-                            <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
-                              CERTIFIED
-                            </div>
-                          )}
-                          <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
-                            {item.price}
-                          </div>
-                        </div>
-                        <div className="xl:px-4 sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                          <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
-                            {item.title}
-                          </div>
-                          <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
-                            {item.features.map((feature, fIdx) => (
-                              <div
-                                key={fIdx}
-                                className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                              >
-                                <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
-                                <span>{feature.text}</span>
+
+                        <Link className="tractor-details-info cursor-pointer" href={`/tractor-details/${item.slug}`} passHref >
+                          <div className="wholeCard cursor-pointer">
+                            <div className="relative">
+                              <Image
+                                className="w-full"
+                                src={DefaultTractor}
+                                alt="cardImage"
+                                layout="responsive"
+                                width={100}
+                                height={70}
+                              />
+                              {item.certified && (
+                                <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
+                                  CERTIFIED
+                                </div>
+                              )}
+                              <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
+                                {item.price}
                               </div>
-                            ))}
+                            </div>
+                            <div className="xl:px-4 sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                {item.title}
+                              </div>
+                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
+                                {item.features.map((feature, fIdx) => (
+                                  <div
+                                    key={fIdx}
+                                    className={`flex gap-1 h-[14px] items-center ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''}  ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                  >
+                                    <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
+                                    <span>{feature.text}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        </div>
-                        </Link>  
+                        </Link>
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
@@ -967,7 +952,7 @@ useEffect(() => {
                             </span>
                           </div>
                         </div>
-                      </div> 
+                      </div>
                     ))
                   }
                 </div>
@@ -975,25 +960,25 @@ useEffect(() => {
 
               <Heading heading={'Tractors by Brands '} viewButton={false} />
 
-              <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">  
+              <div className="grid sm:grid-cols-6 grid-cols-3 sm:gap-6 gap-4">
                 {brandsLogos.slice(0, 12).map((brandlogo, index) => (
                   <div className="w-full cursor-pointer border shadow p-4" key={index}>
-                    <Image 
-                      loader={customImageLoader} 
-                      width={50} 
-                      height={50} 
-                      layout="responsive" 
-                      src={brandlogo} 
-                      alt={`brand-logo-${index}`} 
-                      className="w-full cursor-pointer" 
+                    <Image
+                      loader={customImageLoader}
+                      width={50}
+                      height={50}
+                      layout="responsive"
+                      src={brandlogo}
+                      alt={`brand-logo-${index}`}
+                      className="w-full cursor-pointer"
                     />
                   </div>
                 ))}
               </div>
 
-              <div className="my-4 sm:hidden block">
+              {/* <div className="my-4 sm:hidden block">
                 <Btn text={'view all'} />
-              </div>
+              </div> */}
 
               <div className="sm:block hidden">
                 <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 my-6">
@@ -1004,43 +989,43 @@ useEffect(() => {
                         key={idx}
                         className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none w-80 sm:w-auto"
                       >
-                      <Link className="tractor-details-info cursor-pointer"  href={`/tractor-details/${item.slug}`} passHref> 
-                        <div className="wholeCard cursor-pointer">
-                        <div className="relative">
-                          <Image
-                            className="w-full"
-                            src={DefaultTractor}
-                            alt="cardImage"
-                            layout="responsive"
-                            width={100}
-                            height={70}
-                          />
-                          {item.certified && (
-                            <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
-                              CERTIFIED
-                            </div>
-                          )}
-                          <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
-                            {item.price}
-                          </div>
-                        </div>
-                        <div className="xl:px-4  sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                          <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
-                            {item.title}
-                          </div>
-                          <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
-                            {item.features.map((feature, fIdx) => (
-                              <div
-                                key={fIdx}
-                                className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                              >
-                                <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
-                                <span>{feature.text}</span>
+                        <Link className="tractor-details-info cursor-pointer" href={`/tractor-details/${item.slug}`} passHref>
+                          <div className="wholeCard cursor-pointer">
+                            <div className="relative">
+                              <Image
+                                className="w-full"
+                                src={DefaultTractor}
+                                alt="cardImage"
+                                layout="responsive"
+                                width={100}
+                                height={70}
+                              />
+                              {item.certified && (
+                                <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
+                                  CERTIFIED
+                                </div>
+                              )}
+                              <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
+                                {item.price}
                               </div>
-                            ))}
+                            </div>
+                            <div className="xl:px-4  sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                {item.title}
+                              </div>
+                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
+                                {item.features.map((feature, fIdx) => (
+                                  <div
+                                    key={fIdx}
+                                    className={`flex gap-1 h-[14px] items-center  ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''}  ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                  >
+                                    <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
+                                    <span>{feature.text}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        </div>
                         </Link>
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
@@ -1085,14 +1070,14 @@ useEffect(() => {
                               </div>
                             </div>
                             <div className="xl:px-4 lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                              <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                 {item.title}
                               </div>
                               <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
                                 {item.features.map((feature, fIdx) => (
                                   <div
                                     key={fIdx}
-                                    className={`flex gap-1 h-[14px] items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                    className={`flex gap-1 h-[14px] items-center  ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                                   >
                                     <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
                                     <span>{feature.text}</span>
@@ -1144,7 +1129,7 @@ useEffect(() => {
 
                                 <div className="p-2">
 
-                                  <div className="font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                  <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                                     {item.title}
                                   </div>
 
@@ -1156,7 +1141,7 @@ useEffect(() => {
                                     {item.features.slice(0, -1).map((feature, fIdx) => (
                                       <div
                                         key={fIdx}
-                                        className={`flex gap-1 items-center border-r-[1px] border-black ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                        className={`flex gap-1 items-center  ${fIdx < item.features.length - 2 ? 'border-r-[1px] border-black' : ''} ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
                                       >
                                         <div className="w-2 h-2 sm:w-3 sm:h-3">
                                           <Image
@@ -1190,20 +1175,12 @@ useEffect(() => {
                                           <span>{feature.text}</span>
                                         </div>
                                       </div>
-                                      <div className="cursor-pointer">
-                                        <span className="flex items-center gap-1 font-semibold text-secondaryColor text-sm">
-                                          {/* Wrapping the Image component for responsive styling */}
-                                          <div className="w-3 h-3 sm:w-3 sm:h-3 mr-1">
-                                            <Image
-                                              src="/images/inventory/ActiveCallIcon.svg"
-                                              alt="phnIcon"
-                                              layout="responsive"
-                                              width={2}
-                                              height={2}
-                                            />
-                                          </div>
-                                          Interested{" "}
-                                        </span>
+                                      <div className="cursor-pointer w-fit">
+                                        <div className="px-1 py-1 bg-secondaryColor cursor-pointer rounded">
+                                          <span className="flex items-center gap-1 font-semibold text-white mr-2 text-medium justify-center">
+                                            <Image src='/images/phnIcon.svg' width={12} height={12} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                          </span>
+                                        </div>
                                       </div>
 
                                     </>
@@ -1219,7 +1196,7 @@ useEffect(() => {
                 )}
               </div>
 
-            <Pagination
+              <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={paginate}
@@ -1265,7 +1242,7 @@ useEffect(() => {
             </div>
           </>
         }
-      /> 
+      />
     </div>
   );
 }
