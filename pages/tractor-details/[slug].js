@@ -51,7 +51,11 @@ export default function TractorDetails({ locale }) {
     const slugQuery = slug.replace(/-/g, ' '); 
     const slugWord = slugQuery.split(' ')[0];        
     // console.log("slugQuery:", slugQuery);      
-    // console.log("firstWord:", slugWord);  
+    // console.log("firstWord:", slugWord);
+    
+    const handleCompareAll = () => {
+        router.push('/compare-tractors');
+    };
 
     const initialState = {
         principal: 0,
@@ -250,6 +254,12 @@ export default function TractorDetails({ locale }) {
     const handleEnquiry = () => {
         router.push('/contact-us');
     };
+
+    
+    const handleCompareDetailsAll = () => {
+        router.push('/compare-tractors');
+    };
+    
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -714,7 +724,7 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
                                                 </div>
                                             </div>
 
-                                            <Btn className="uppercase" text={'COMPARE'} />
+                                            <Btn className="uppercase" text={'COMPARE'} onClick={handleCompareAll} />
                                         </div>
                                     ))}
 
@@ -727,7 +737,7 @@ if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.me
             </div>
 
             <div className='justify-center flex my-4'>
-                <Btn text={'View all tractor comparisons'} bgColor={true}
+                <Btn text={'View all tractor comparisons'} onClick={handleCompareDetailsAll} bgColor={true}
                 />
             </div>
 

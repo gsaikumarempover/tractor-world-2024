@@ -351,7 +351,7 @@ export default function CompareTractor() {
     if (brandsError || modelsBybrandsError) return <p>Error: {brandsError?.message} || Error: {modelsBybrandsError?.message}</p>;
 
     const handleCompareTractordetails = () => {
-        router.push('/compare-tractor-details');
+        router.push('/compare-tractors/compare-tractor-details');
     };
     return (
         <div>

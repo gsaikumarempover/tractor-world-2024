@@ -15,6 +15,7 @@ import bannerImg from "@Images/dealerLocator/dealerBanner.svg";
 import { useRouter } from 'next/router';
 import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
+import Heading from "../../components/Heading";
 
 export default function DealerLocator() {
 
@@ -196,6 +197,7 @@ export default function DealerLocator() {
         bannerImg={bannerImg}
       />
       <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
+        <Heading heading={'Dealer Locater'} />
         <div className="bg-[#EFEDED] p-4">
           <div className="flex sm:flex-row flex-col gap-2">
             <div className="bg-white p-4 sm:w-[25%] w-full">

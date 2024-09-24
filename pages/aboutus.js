@@ -31,7 +31,7 @@ export default function about() {
 
       {/*Tractors Dealers by Brands sec*/}
       <div className="bg-white mt-4 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2">
-        <Heading heading={'Tractors by Brands '} viewButton={true} />
+        <Heading heading={'Tractors by Brands '} viewButton={false} />
         {/* <form className="sm:block hidden">
           <div className='flex sm:flex-row flex-col gap-4 mt-4 items-end'>
             <div className='sm:w-1/4 w-full'>
