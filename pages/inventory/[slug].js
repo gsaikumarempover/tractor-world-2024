@@ -376,7 +376,9 @@ const handleApplyClick = () => {
     setPopularTractorsData(filteredTractors); // Only update if the filtered data has changed
   }, [liveInventoryFilters, PopularTractors]); // Ensure dependencies are correctly set
    
-  if (brandsLoading || inventoryLoading) return <p>Loading...</p>;
+  if (brandsLoading || inventoryLoading) return (
+    <Loader />
+  );
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
    
   return (
