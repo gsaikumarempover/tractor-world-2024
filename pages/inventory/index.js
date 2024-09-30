@@ -40,6 +40,7 @@ export default function Inventory({ locale }) {
   const [applyBgColor, setApplyBgColor] = useState(true);
   const currentLanguage = locale;
   const language = locale?.toUpperCase();
+  const [noResults, setNoResults] = useState(false);
 
   //get serach value
   const [isVisible, setIsVisible] = useState(true);
@@ -226,6 +227,10 @@ export default function Inventory({ locale }) {
         )
       );
     }
+
+    // setNoResults(prevFilters.options.length === 0);
+
+
   }, [brandsData, liveInventoryData]);
 
 
@@ -254,14 +259,29 @@ export default function Inventory({ locale }) {
           label: `${node.brandmodelFields.brand} (${modelCount})`,
           value: node.slug
         };
-      });
-
+      }); 
+      // setFilters(prevFilters =>
+      //   prevFilters.map(filter =>
+      //     filter.title === "Brand" ? { ...filter, options: filtered } : filter
+      //   )
+      // ); 
       setFilters(prevFilters =>
-        prevFilters.map(filter =>
-          filter.title === "Brand" ? { ...filter, options: filtered } : filter
-        )
-      );
+        prevFilters.map(filter => {
+          console.log('Filter Title:', filter.title); // Add this line for debugging
+          if (filter.title === "Brand") {
+            if (filtered.length === 0) {
+              setNoResults(true);
+            } else {
+              setNoResults(false);
+            }
+            return { ...filter, options: filtered };
+          }
+          return filter;
+        })
+      ); 
+
     }
+
   }, [searchQuery, brandsData]);
 
 
@@ -275,15 +295,15 @@ export default function Inventory({ locale }) {
       after: null
     },
     notifyOnNetworkStatusChange: true
-  }); 
- 
+  });
+
   //pagination
   const CardsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(PopularTractors.length / CardsPerPage);
   const indexOfLastCard = currentPage * CardsPerPage;
   const indexOfFirstCard = indexOfLastCard - CardsPerPage;
-  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard); 
+  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);
 
   useEffect(() => {
     if (liveInventoryData && liveInventoryData.allLiveInventory) {
@@ -314,7 +334,7 @@ export default function Inventory({ locale }) {
   ///fliter the tractors 
   useEffect(() => {
     if (!liveInventoryFilters.length || !PopularTractors.length) {
-      return; // Early exit if filters or data is not available
+      return; 
     }
 
 
@@ -431,6 +451,7 @@ export default function Inventory({ locale }) {
                       onClick={() => onToggle(filter.showKey)}
                     >
                       <div>{filter.title}</div>
+
                       <div>
                         {showStates[filter.showKey] ? (
                           <svg
@@ -468,17 +489,25 @@ export default function Inventory({ locale }) {
                           </svg>
                         )}
                       </div>
+
                     </div>
                     {showStates[filter.showKey] && (
-                      <div className="p-2 flex flex-col w-full gap-2">
-                        {filter.options.map((option, index) => (
-                          <div key={index}>
-                            <input type="radio" name={filter.title.toLowerCase()} value={option.value} />
-                            <label className="ml-2">{option.label}</label>
+                      <>
+                        {noResults ? (
+                          <p className='my-2 text-center text-primaryColor'>No search data available</p>
+                        ) : (
+                          <div className="p-2 flex flex-col w-full gap-2">
+                            {filter.options.map((option, index) => (
+                              <div key={index}>
+                                <input type="radio" name={filter.title.toLowerCase()} value={option.value} />
+                                <label className="ml-2">{option.label}</label>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
+                        )}
+                      </>
                     )}
+
                   </div>
                 ))}
               </div>
@@ -599,6 +628,10 @@ export default function Inventory({ locale }) {
                       </div>
                     </div>
                     {showStates[filter.showKey] && (
+                      <>
+                        {noResults ? (
+                          <p className='my-2 text-center text-primaryColor'>No search data available</p>
+                      ) : (
                       <div className="p-2 flex flex-col w-full gap-2">
                         {filter.options.map((option, index) => (
                           <div key={index}>
@@ -607,6 +640,8 @@ export default function Inventory({ locale }) {
                           </div>
                         ))}
                       </div>
+                    )}
+                    </>
                     )}
                   </div>
                 ))}
@@ -1130,9 +1165,9 @@ export default function Inventory({ locale }) {
                 data={PopularTractors}
                 TotalPages={totalPages}
                 CurrentPage={currentPage}
-                setCurrentPage={setCurrentPage} 
+                setCurrentPage={setCurrentPage}
               />
- 
+
             </div>
           </div>
         </div>
