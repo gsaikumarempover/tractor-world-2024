@@ -16,6 +16,8 @@ export default function ContentGallery() {
         { label: 'Home', link: '/' },
         { label: 'Content gallery', link: '#' },
     ];
+    const [expandedItems, setExpandedItems] = useState({});
+
 
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
@@ -73,29 +75,24 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+            id:"1",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
         {
             thumbnail: "/images/conentGallery/tractor1.svg",
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+            id:"2",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
         {
             thumbnail: "/images/conentGallery/tractor1.svg",
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
-        },
-
-        {
-            thumbnail: "/images/conentGallery/tractor1.svg",
-            tractorname: "Sonalika Tractor",
-            heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
-            date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+            id:"3",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
         {
@@ -103,7 +100,8 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+            id:"4",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
         {
@@ -111,7 +109,8 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+            id:"5",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
         {
@@ -119,7 +118,8 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+            id:"6",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
         {
@@ -127,7 +127,8 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+            id:"7",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
         {
@@ -135,7 +136,8 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+            id:"8",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
         {
@@ -143,8 +145,18 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
-        }, 
+            id:"9",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+        },
+
+        {
+            thumbnail: "/images/conentGallery/tractor1.svg",
+            tractorname: "Sonalika Tractor",
+            heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
+            date: "February 19, 2024",
+            id:"10",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+        },
 
     ];
 
@@ -226,6 +238,14 @@ export default function ContentGallery() {
         );
     };
 
+
+     const toggleDescription = (index) => {
+      setExpandedItems((prevState) => ({
+        ...prevState,
+        [index]: !prevState[index], 
+      }));
+    };
+
     return (
         <div>
             <Layout currentPage={"contentGallery"}>
@@ -267,10 +287,20 @@ export default function ContentGallery() {
                                             <span>{item.date}</span></div>
                                     </div>
                                 </div>
-                                <p className="sm:mt-0 mt-2 sm:text-base text-sm">{item.description}<span className="text-[#407BD2] sm:uppercase text-sm cursor-pointer">Read more »</span></p>
+                                <p  className="sm:mt-0 mt-2 sm:text-base text-sm">
+                                     {expandedItems[item.id] ? item.description : `${item.description.slice(0, 250)}...`}
+ 
+                                    <span
+                                        className="text-[#407BD2] sm:uppercase text-sm cursor-pointer"
+                                        onClick={() => toggleDescription(item.id)}
+                                    >
+                                        {expandedItems[item.id] ? ' Read less »' : ' Read more »'}
+                                    </span>
+                                </p>
+                                {/* <p className="sm:mt-0 mt-2 sm:text-base text-sm">{item.description}<span className="text-[#407BD2] sm:uppercase text-sm cursor-pointer">Read more »</span></p> */}
                             </div>
                         ))}
-                        
+
                         <div className="pagination my-4 flex justify-center items-center space-x-2">
                             <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>
                                 <Image src={Leftarrow} alt='left' />
@@ -287,7 +317,7 @@ export default function ContentGallery() {
 
                         {/* <p className="sm:mt-0 mt-2 sm:text-base text-sm">Farmtrac tractors simplify farming tasks through their efficient engines and consistent performance. They provide farmers with a dependable choice to increase their agricultural income. Utilising the popular Farmtrac tractor reduces.</p> */}
                     </div>
- 
+
 
                     {/* ///new updates */}
 
