@@ -23,6 +23,8 @@ import { useQuery } from '@apollo/client';
 import { getLocaleProps } from "@helpers";
 import { useTranslation } from 'next-i18next'; 
 import { useRouter } from 'next/router';
+import Loader from '@components/Loader';
+
 
 export default function Inventory({locale}) {
   //// apply,reset btns active 
