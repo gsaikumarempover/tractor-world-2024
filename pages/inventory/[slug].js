@@ -314,7 +314,7 @@ export default function Inventory({ locale }) {
         const modelsString = node.brandmodelFields.models;
         const modelCount = modelsString.split(',').length;
         return {
-          label: `${node.brandmodelFields.brand} (${modelCount})`,
+          label: `${node.brandmodelFields.brand}`,
           value: node.slug
         };
       });
