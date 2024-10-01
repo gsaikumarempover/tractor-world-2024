@@ -156,6 +156,7 @@ export default function Inventory({ locale }) {
     setApplyBgColor(false);
     clearSelectedValues();
     setliveInventoryFilters(['', '', '']);
+    router.push('/inventory');
   };
 
   const handleApplyClick = () => {
@@ -283,7 +284,7 @@ export default function Inventory({ locale }) {
         const modelsString = node.brandmodelFields.models;
         const modelCount = modelsString.split(',').length;
         return {
-          label: `${node.brandmodelFields.brand} (${modelCount})`, // Use model count for the label
+          label: `${node.brandmodelFields.brand}`, // Use model count for the label
           value: node.slug // Slugify the brand name
         };
       });
