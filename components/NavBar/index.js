@@ -24,10 +24,10 @@ import EndTractor from '@Images/navbar/endTractor.png'
 import sellatractor from '@Images/navbar/sellatractor.svg'
 import { useTranslation } from 'next-i18next';
 
-
+    
 export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
   const { locale: activeLocale, locales, asPath } = useRouter();
-
+ 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const openNavbar = () => {
     setIsNavbarOpen(true);
@@ -36,18 +36,8 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
     setIsNavbarOpen(false);
   };
 
-  const { t, i18n } = useTranslation();
-
-  const handleLocaleChange = (locale) => {
-    i18n.changeLanguage(locale);
-  };
-
-  const localeNames = {
-    en: 'English',
-    hi: 'Hindi',
-    mr: 'Marathi',
-    // Add more locale codes and their corresponding languages as needed
-  };
+  const { t, i18n } = useTranslation('common'); // 'common' refers to common.json
+ 
 
   return (
     <>
@@ -128,7 +118,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <a className={`${currentPage == "about" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={About} alt="about" /></span>
-                      <span className={`md:ml-0 ml-2 ${currentPage == "about" ? 'active' : ''}`}>About Us</span>
+                      <span className={`md:ml-0 ml-2 ${currentPage == "about" ? 'active' : ''}`}>{t('Navbar.Aboutus')}</span>
                     </div>
                   </a>
                 </Link>
@@ -137,7 +127,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <a className={`${currentPage == "compare" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={Compare} alt="compare" /></span>
-                      <span className={`md:ml-0 ml-2 ${currentPage == "compare" ? 'active' : ''}`}>Compare</span>
+                      <span className={`md:ml-0 ml-2 ${currentPage == "compare" ? 'active' : ''}`}>{t('Navbar.Compare')}</span>
                     </div>
                   </a>
                 </Link>
@@ -146,7 +136,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <a className={`${currentPage == "sellTractor" ? 'text-secondaryColor font-bold' : ''} sm:hidden hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={sellatractor} alt="location" /></span>
-                      <span className={`md:ml-0 ml-2 ${currentPage == "sellTractor" ? 'active' : ''}`}>Sell Tractor</span>
+                      <span className={`md:ml-0 ml-2 ${currentPage == "sellTractor" ? 'active' : ''}`}>{t('Navbar.SellTractor')}</span>
                     </div>
                   </a>
                 </Link>
@@ -155,7 +145,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <a className={`${currentPage == "dealerLocator" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={Location} alt="location" /></span>
-                      <span className={`md:ml-0 ml-2 ${currentPage == "dealerLocator" ? 'active' : ''}`}>Locate Dealer</span>
+                      <span className={`md:ml-0 ml-2 ${currentPage == "dealerLocator" ? 'active' : ''}`}>{t('Navbar.LocateDealer')}</span>
                     </div>
                   </a>
                 </Link>
@@ -164,7 +154,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <a className={`${currentPage == "loan" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={Loan} alt="loan" /></span>
-                      <span className={`md:ml-0 ml-2 ${currentPage == "loan" ? 'active' : ''}`}>Loan</span>
+                      <span className={`md:ml-0 ml-2 ${currentPage == "loan" ? 'active' : ''}`}>{t('Navbar.Loan')}</span>
                     </div>
                   </a>
                 </Link>
@@ -173,7 +163,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <a className={`${currentPage == "contentGallery" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={ContentGallery} alt="ContentGallery" /></span>
-                      <span className={`md:ml-0 ml-2 ${currentPage == "contentGallery" ? 'active' : ''}`}>Content Gallery</span>
+                      <span className={`md:ml-0 ml-2 ${currentPage == "contentGallery" ? 'active' : ''}`}>{t('Navbar.ContentGallery')}</span>
                     </div>
                   </a>
                 </Link>
@@ -184,7 +174,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <a className={`${currentPage == "contact" ? 'text-secondaryColor font-bold' : ''} hover:md:text-secondaryColor block py-3 md:px-3 md:p-0`}>
                     <div className="flex items-center">
                       <span className="sm:hidden block w-[11%]"><Image src={Contact} alt="Contact-image" /></span>
-                      <span className={`md:ml-0 ml-2 ${currentPage == "contact" ? 'active' : ''}`}>Contact us</span>
+                      <span className={`md:ml-0 ml-2 ${currentPage == "contact" ? 'active' : ''}`}>{t('Navbar.Contactus')}</span>
                     </div>
                   </a>
                 </Link>
@@ -206,7 +196,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   sm:text-xs text-sm">
 
 
-                      <a>Sell</a>
+                      <a>{t('Navbar.Sell')}</a>
 
                     </div>
                   </li>
