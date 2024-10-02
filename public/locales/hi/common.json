@@ -11,6 +11,42 @@
     },
     "Inventory": {
       "PopularTractors": "लोकप्रिय ट्रैक्टर"
+    },
+    "Home":{
+      "Explore_Tractor_World":"ट्रैक्टर वर्ल्ड का अन्वेषण करें",
+      "Live_Inventory":"सजीव सूची",
+      "Why_Choose_Us":"हमें क्यों चुनें",
+      "Over_Deals":"15,000+ से अधिक डील्स",
+      "Best_Choice":"ट्रैक्टर वर्ल्ड सबसे अच्छा विकल्प है",
+      "Kiusmod_Tempor":"किउस्मोड टेम्पोर इंसिडिडंट यूटी लेबर सेड डोलोर मैग्ना एलिक्वे एनिम एड मिनिम वेनियम क्विस नोस्ट्रुड एक्सर्सिटेशन उलाम्को लेबरिस निसी यूटी एलिक्विप एक्स ईए रेप्रेहेन डेरिटिन वॉलुप्टेट।",
+      "Buy_The_Right":"सही ट्रैक्टर खरीदने के लिए तुलना करें",
+      "COMPARE":"तुलना करें",
+      "View_All_Tractor_Comparison":"सभी ट्रैक्टर का तुलना देखें",
+      "Testimonials":"प्रशंसा पत्र",
+      "Watch_Video":"वीडियो देखें",
+      "Content_Gallery":"सामग्री गैलरी",
+      "View_All":"सभी देखें",
+      "Latest_News_And_Update":"ताजा खबरे और अपडेट"
+    },
+    "Footer":{ 
+      "Find_a_Dealer":"व्यापारी को खोजें",
+      "Make_an_Enquiry":"जांच करो",
+      "Call_Us_Now":" अभी हमें कॉल करें",
+      "@_2024_Tractor":"© 2024 ट्रैक्टर वर्ल्ड सर्वाधिकार सुरक्षित।",
+      "Advertise_With_Us":"हमारे साथ विज्ञापन करें - गोपनीयता नीति - साइटमैप",
+      "Useful_Links":"उपयोगी कड़ियां",
+      "About_Us":"हमारे बारे में",
+      "Latest_News":"ताजा खबर",
+      "Live_Inventory":"सजीव सूची",
+      "Terms_and_Conditions":"नियम और शर्तें",
+      "Get_In_Touch":"संपर्क में रहो",
+      "Tool_Free_Number":"टोल फ्री नंबर",
+      "Number":"1800 666 9999",
+      "Office_Hours":"कार्यालय समय",
+      "Office_Time":"सोम-शनिवार सुबह 8 बजे से शाम 6 बजे तक",
+      "Send_Us_Email":"हमें ईमेल भेजें",
+      "Email":"tractorworld@domain.net"
     }
+
   }
   

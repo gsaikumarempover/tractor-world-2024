@@ -49,7 +49,7 @@ export default function HomePage({ locale }) {
     const [showCallRequestModal, setShowCallRequestModal] = useState(false);
     const router = useRouter();
     const language = locale?.toUpperCase();
-    const { t, i18n } = useTranslation('common'); 
+    const { t, i18n } = useTranslation('common');
 
 
     const isShowCallModal = () => {
@@ -115,13 +115,13 @@ export default function HomePage({ locale }) {
     if (error) return <p>Error: {error.message}</p>;
 
 
-   
+
     const bannersData = data?.homeSliders?.nodes || [];
-    const liveInventoryData= data?.allLiveInventory?.edges|| [];
+    const liveInventoryData = data?.allLiveInventory?.edges || [];
     const testimonialsData = data?.testimonials?.nodes || [];
     const contentGalleryData = data?.contentgallerys?.nodes || [];
     const latestNewsData = data?.latestnews?.edges?.map(edge => edge.node) || [];
- 
+
 
     const homeBannerSlides = bannersData.map(node => {
         const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
@@ -129,17 +129,17 @@ export default function HomePage({ locale }) {
         return { desktopUrl, mobileUrl };
     });
 
-    const liveInventoryList = liveInventoryData.map(({ node }) => ({ 
-            title: node.title,
-            price: node.liveInventoryData.maxPrice,
-            hours: node.liveInventoryData.engineHours,
-            driveType: node.liveInventoryData.driveType,
-            enginePower: node.liveInventoryData.enginePower,
-            slug: node.slug,
-            id: node.id 
-      }));
+    const liveInventoryList = liveInventoryData.map(({ node }) => ({
+        title: node.title,
+        price: node.liveInventoryData.maxPrice,
+        hours: node.liveInventoryData.engineHours,
+        driveType: node.liveInventoryData.driveType,
+        enginePower: node.liveInventoryData.enginePower,
+        slug: node.slug,
+        id: node.id
+    }));
 
- 
+
     const testimonialSlides = testimonialsData.map(node => {
         const testimonialMobileUrl = node.tesimonails.mobileimage.node.mediaItemUrl;
         const testimonialDesktopUrl = node.tesimonails.webimage.node.mediaItemUrl;
@@ -461,7 +461,7 @@ export default function HomePage({ locale }) {
             {image.testimonialVideoUrl && (
                 <Link href={image.testimonialVideoUrl}>
                     <div className='z-40 cursor-pointer absolute sm:bottom-8 bottom-4 sm:left-14 left-3
-                   bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>Watch Video</div>
+                   bg-primaryColor sm:px-3 sm:py-2 py-1 px-2 font-semibold text-white sm:text-base text-[14px]'>{t('Home.Watch_Video')}</div>
                 </Link>
             )}
         </div>
@@ -556,7 +556,7 @@ export default function HomePage({ locale }) {
 
             {/* Explore Tractor World  */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 mb-3 pt-4 bg-white " >
-                <Heading heading={t('Home.explore')} viewButton={false} />
+                <Heading heading={t('Home.Explore_Tractor_World')} viewButton={false} />
                 <div className='grid sm:grid-cols-6 grid-cols-3 pb-4'>
                     {exploreimages.map((item, index) => (
                         <a href={item.url} key={index} className='w-full'>
@@ -570,22 +570,20 @@ export default function HomePage({ locale }) {
 
             {/* Live Inventory */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
-                <Heading heading={'Live Inventory'} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
+                <Heading heading={t('Home.Live_Inventory')} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
                 <LiveInventoryContainer locale={locale} data={liveInventoryList} />
             </div >
 
             {/* why choose us */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 relative bg-white mt-3" >
-                <Heading heading={'Why Choose Us'} viewButton={false} />
+                <Heading heading={t('Home.Why_Choose_Us')} viewButton={false} />
                 <div className="flex md:flex-row flex-col justify-between md:gap-16 gap-4 mt-4">
                     <div className="md:w-[40%]">
                         <div className='font-bold text-lg'>
-                            Over 15,000+ Deals<br />
-                            Tractor World Is The Best Choice</div>
+                            {t('Home.Over_Deals')}<br />
+                            {t('Home.Best_Choice')}</div>
                         <p className='mt-2 text-[.9rem]'>
-                            Kiusmod tempor incididunt ut labore sed dolore magna aliquay enim
-                            ad minim veniam quis nostrud exercitation ullamco laboris nisi ut
-                            aliquip ex ea reprehen deritin voluptate.</p>
+                            {t('Home.Kiusmod_Tempor')}</p>
                     </div>
                     <div className='absolute sm:top-[-85px] right-0 bottom-[-80px]'>
                         <Image src={WhyChoose} alt='WhyChoose' width={400} height={400}
@@ -616,7 +614,7 @@ export default function HomePage({ locale }) {
             {/* Compare To Buy The Right Tractor sec */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 bg-white mt-3" >
                 <div className="font-bold xl:text-xl lg:text-lg md:text-base text-xl">
-                    <p className="mb-[-5px]">Compare To Buy The Right Tractor</p>
+                    <p className="mb-[-5px]">{t('Home.Buy_The_Right')}</p>
                 </div>
 
                 <div className='flex sm:gap-4 gap-2 my-3 font-medium relative z-20'>
@@ -652,7 +650,7 @@ export default function HomePage({ locale }) {
                                                 </div>
                                             </div>
 
-                                            <Btn className="uppercase" text={'COMPARE'} onClick={handleCompareAll} />
+                                            <Btn className="uppercase" text={t('Home.COMPARE')} onClick={handleCompareAll} />
                                         </div>
                                     ))}
 
@@ -664,7 +662,7 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className='justify-center flex mt-2'>
-                    <Btn text={'View all tractor comparisons'} onClick={handleCompareAll} bgColor={true}
+                    <Btn text={t('Home.View_All_Tractor_Comparison')} onClick={handleCompareAll} bgColor={true}
                     />
                 </div>
             </div>
@@ -672,7 +670,7 @@ export default function HomePage({ locale }) {
             {/*testimonials */}
             <div id="testimonials">
                 <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
-                    <Heading heading={'Testimonials'} viewButton={true} onClick={handleAllContentHub} />
+                    <Heading heading={t('Home.Testimonials')} viewButton={true} onClick={handleAllContentHub} />
                 </div>
 
                 <div className="mb-4">
@@ -687,7 +685,7 @@ export default function HomePage({ locale }) {
                 backgroundRepeat: 'no-repeat'
             }}>
 
-                <Heading heading={'Content Gallery'} viewButton={true} onClick={handleContentGallery} />
+                <Heading heading={t('Home.Content_Gallery')} viewButton={true} onClick={handleContentGallery} />
 
                 <div className="">
                     <div className="grid sm:grid-cols-3 grid-cols-1 md:gap-6 gap-4 mt-4">
@@ -722,13 +720,13 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className='mt-4'>
-                    <Btn text={'View all'} viewAll={true} />
+                    <Btn text={t('Home.View_All')} viewAll={true} />
                 </div>
             </div>
 
             {/* Latest News & Updates */}
             <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2">
-                <Heading heading={'Latest News & Updates'} viewButton={true} onClick={handleAllContentHub} />
+                <Heading heading={t('Home.Latest_News_And_Update')} viewButton={true} onClick={handleAllContentHub} />
 
                 <div className="">
                     <div className="grid sm:grid-cols-3 grid-cols-1 md:gap-6 gap-4 mt-4">
@@ -757,7 +755,7 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className='mt-4'>
-                    <Btn text={'View all'} viewAll={true} />
+                    <Btn text={t('Home.View_All')} viewAll={true} />
                 </div>
             </div>
 

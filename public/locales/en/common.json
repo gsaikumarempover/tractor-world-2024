@@ -11,6 +11,42 @@
     },
     "Inventory": {
       "PopularTractors": "Popular Tractors"
+    },
+    "Home":{
+      "Explore_Tractor_World":"Explore Tractor World",
+      "Live_Inventory":"Live Inventory",
+      "Why_Choose_Us":"Why Choose Us",
+      "Over_Deals":"Over 15,000+ Deals",
+      "Best_Choice":"Tractor World Is The Best Choice",
+      "Kiusmod_Tempor":"Kiusmod tempor incididunt ut labore sed dolore magna aliquay enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea reprehen deritin voluptate.",
+      "Buy_The_Right":"Compare To Buy The Right Tractor",
+      "COMPARE":"COMPARE",
+      "View_All_Tractor_Comparison":"View all tractor comparisons",
+      "Testimonials":"Testimonials",
+      "Watch_Video":"Watch Video",
+      "Content_Gallery":"Content Gallery",
+      "View_All":"View all",
+      "Latest_News_And_Update":"Latest News & Updates"
+    },
+    "Footer":{ 
+      "Find_a_Dealer":"Find a Dealer",
+      "Make_an_Enquiry":"Make an Enquiry",
+      "Call_Us_Now":" Call Us Now",
+      "@_2024_Tractor":"© 2024 Tractor World All Rights Reserved.",
+      "Advertise_With_Us":"Advertise With Us  -  Privacy Policy  -  Sitemap",
+      "Useful_Links":"Useful Links",
+      "About_Us":"About Us",
+      "Latest_News":"Latest News",
+      "Live_Inventory":"Live inventory",
+      "Terms_and_Conditions":"Terms and conditions",
+      "Get_In_Touch":" Get in touch",
+      "Tool_Free_Number":"Toll Free Number",
+      "Number":"1800 666 9999",
+      "Office_Hours":"The Office Hours",
+      "Office_Time":"Mon - Sat 8am to 6pm",
+      "Send_Us_Email":"Send Us Email",
+      "Email":"tractorworld@domain.net"
     }
+
   }
   

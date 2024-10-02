@@ -16,10 +16,12 @@ import Call from '@Images/footer/call.png';
 import Logo from '@Images/navbar/logo.svg';
 import GoTop from '@Images/footer/top.svg';
 import MblLogo from '@Images/footer/mblLogo.svg';
+import { useTranslation } from 'next-i18next';
 
 
 export default function Footer() {
     const { locale: activeLocale, locales, asPath } = useRouter();
+    const { t, i18n } = useTranslation()
     const [showButton, setShowButton] = useState(false);
 
     // Function to scroll to the top of the page
@@ -51,20 +53,20 @@ export default function Footer() {
                     <Link href='./dealers' legacyBehavior>
                         <a className="flex items-center">
                             <Image src={Location} className="mt-4" alt="location" />
-                            <span className="ml-2">Find a Dealer</span>
+                            <span className="ml-2">{t('Footer.Find_a_Dealer')}</span>
                         </a>
                     </Link>
                     <div className="border-r"></div>
                     <Link href='./contact-us' legacyBehavior>
                         <a className="flex items-center">
                             <Image src={Enquiry} className="mt-4" alt="enquiry" />
-                            <span className="ml-2">Make an Enquiry</span>
+                            <span className="ml-2">{t('Footer.Make_an_Enquiry')}</span>
                         </a>
                     </Link>
                     <div className="border-r"></div>
                     <div className="flex items-center">
                         <Image src={Call} className="mt-4" alt="call-image" />
-                        <span className="ml-2"><Link href="tel:18006669999"> Call Us Now</Link></span>
+                        <span className="ml-2"><Link href="tel:18006669999">{t('Footer.Call_Us_Now')}</Link></span>
                     </div>
                 </div>
             </div>
@@ -79,8 +81,8 @@ export default function Footer() {
 
                     <div className="sm:block hidden">
                         <Link href='./' ><a><Image src={Logo} alt="logo" /></a></Link>
-                        <p className="text-sm py-1">© 2024 Tractor World All Rights Reserved.</p>
-                        <p className="text-sm py-1">Advertise With Us  -  Privacy Policy  -  Sitemap</p>
+                        <p className="text-sm py-1">{t('Footer.@_2024_Tractor')}</p>
+                        <p className="text-sm py-1">{t('Footer.Advertise_With_Us')}</p>
 
                         <div className="mt-3 flex gap-3">
                             <Image src={Facebook} className="cursor-pointer" alt="facebook" />
@@ -95,13 +97,13 @@ export default function Footer() {
                         <span className="uppercase font-semibold md:text-lg
                          footerList-border md:after:top-[1.7rem] sm:after:top-[1.4rem] 
                          after:top-[1.3rem] md:before:top-[1.7rem] sm:before:top-[1.4rem] 
-                         before:top-[1.3rem] text-base"> Useful Links</span>
+                         before:top-[1.3rem] text-base"> {t('Footer.Useful_Links')}</span>
                         <ul className="mt-5 sm:text-[14px]  text-[12px] list-disc ml-3">
-                            <Link href="/aboutus"><li className="mb-3 cursor-pointer"> About Us</li></Link>
-                            <Link href="/content-hub"><li className="mb-3 cursor-pointer"> Latest News</li></Link>
+                            <Link href="/aboutus"><li className="mb-3 cursor-pointer"> {t('Footer.About_Us')}</li></Link>
+                            <Link href="/content-hub"><li className="mb-3 cursor-pointer"> {t('Footer.Latest_News')}</li></Link>
                             {/* <Link href="/exclusive-offers"><li className="mb-3 cursor-pointer"> Offers</li></Link> */}
-                            <Link href="/inventory"><li className="mb-3 cursor-pointer"> Live inventory</li></Link>
-                            <li className="mb-3 cursor-pointer"> Terms and conditions</li>
+                            <Link href="/inventory"><li className="mb-3 cursor-pointer"> {t('Footer.Live_Inventory')}</li></Link>
+                            <li className="mb-3 cursor-pointer"> {t('Footer.Terms_and_Conditions')}</li>
                         </ul>
 
                     </div>
@@ -110,7 +112,7 @@ export default function Footer() {
                         <span className="uppercase font-semibold md:text-lg 
                         footerList-border md:after:top-[1.7rem] sm:after:top-[1.4rem] 
                         after:top-[1.3rem] md:before:top-[1.7rem] sm:before:top-[1.4rem]
-                        before:top-[1.3rem] text-base"> Get in touch</span>
+                        before:top-[1.3rem] text-base">{t('Footer.Get_In_Touch')}</span>
                         <div className="mt-5 sm:text-[14px] text-[12px]">
                             <div className="mb-2 flex items-center gap-3
                              border-opacity-[15%] pb-2">
@@ -118,8 +120,8 @@ export default function Footer() {
                                     <Image src={Support} alt="support" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="mb-1  text-white opacity-60">Toll Free Number</span>
-                                    <Link href="tel:18006669999">1800 666 9999</Link>
+                                    <span className="mb-1  text-white opacity-60">{t('Footer.Tool_Free_Number')}</span>
+                                    <Link href="tel:18006669999">{t('Footer.Number')}</Link>
                                 </div>
                             </div>
 
@@ -129,8 +131,8 @@ export default function Footer() {
                                     <Image src={Time} alt="Time" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="mb-1 text-white opacity-60">The Office Hours</span>
-                                    <span>Mon - Sat 8am to 6pm</span>
+                                    <span className="mb-1 text-white opacity-60">{t('Footer.Office_Hours')}</span>
+                                    <span>{t('Footer.Office_Time')}</span>
                                 </div>
                             </div>
 
@@ -139,8 +141,8 @@ export default function Footer() {
                                     <Image src={Mail} alt="mail" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="mb-1 text-white opacity-60">Send Us Email</span>
-                                    <Link href="mailto:tractorworld@domain.net">tractorworld@domain.net</Link>
+                                    <span className="mb-1 text-white opacity-60">{t('Footer.Send_Us_Email')}</span>
+                                    <Link href="mailto:tractorworld@domain.net">{t('Footer.Email')}</Link>
                                 </div>
                             </div>
 
@@ -160,8 +162,8 @@ export default function Footer() {
                     <div className="lg:px-14 md:px-6 sm:px-3 px-2 flex gap-3 sm:items-start items-center">
                         <Link href='./'><a><Image src={MblLogo} alt="MblLogo" width={40} height={40} /></a></Link>
                         <div>
-                            <p className="text-sm py-1 select-none">© 2024 Tractor World All Rights Reserved.</p>
-                            <p className="text-sm py-1 select-none">Advertise With Us  -  Privacy Policy  -  Sitemap</p>
+                            <p className="text-sm py-1 select-none">{t('Footer.@_2024_Tractor')}</p>
+                            <p className="text-sm py-1 select-none">{t('Footer.Advertise_With_Us')}</p>
                         </div>
                     </div>
                 </div>

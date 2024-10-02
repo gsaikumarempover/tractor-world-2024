@@ -11,5 +11,57 @@
 "Horsepower":"Horsepower",
 "PriceRange":"Price Range",
 "AdvanceSearch":"+ Advanced Search",
-"FindTractorBtn":"Find Tractor" 
+"FindTractorBtn":"Find Tractor" ,
+
+
+"Navbar": {
+    "Aboutus": "आमच्याबद्दल",
+    "Compare": "तुलना करा",
+    "SellTractor": "ट्रॅक्टर विक्री",
+    "LocateDealer": "डीलर शोधा",
+    "Loan": "कर्ज",
+    "ContentGallery": "सामग्री गैलरी",
+    "Contactus": "संपर्क करा",
+    "Sell": "विक्री करा"
+  },
+  "Inventory": {
+    "PopularTractors": "लोकप्रिय ट्रॅक्टर"
+  },
+
+"Home":{
+    "Explore_Tractor_World":"ट्रॅक्टर वर्ल्डचा अभ्यास करा",
+    "Live_Inventory":"थेट यादी",
+    "Why_Choose_Us":"आम्हाला का निवडा",
+    "Over_Deals":"15,000 हून अधिक सौदे",
+    "Best_Choice":"ट्रॅक्टर वर्ल्ड सर्वोत्तम निवड आहे",
+    "Kiusmod_Tempor":"कियुसमोड टेम्पोर इन्किडिडंट उत लेबोरे सेड डोलोरे मॅग्ना अलीक्वाय एनिम अड मिनिम वीनियम क्वीस नोस्ट्रुड व्यायाम उल्लामको लेबरिस निसी उत अलीक्विप एक्स ईए रेप्रेहें डेरिटिन व्होलुप्टे.",
+    "Buy_The_Right":"योग्य ट्रॅक्टर खरेदी करण्यासाठी तुलना करा",
+    "COMPARE":"तुलना करा",
+    "View_All_Tractor_Comparison":"सर्व ट्रॅक्टर तुलना पहा",
+    "Testimonials":"प्रशस्तिपत्र",
+    "Watch_Video":"व्हिडिओ पहा",
+    "Content_Gallery":"सामग्री गॅलरी",
+    "View_All":"सर्व पहा",
+    "Latest_News_And_Update":"ताज्या बातम्या आणि अपडेट्स"
+  },
+  "Footer":{ 
+    "Find_a_Dealer":"विक्रेता शोधा",
+    "Make_an_Enquiry":"चौकशी करा",
+    "Call_Us_Now":" आता आम्हाला कॉल करा",
+    "@_2024_Tractor":"© 2024 ट्रॅक्टर वर्ल्ड सर्व हक्क राखीव.",
+    "Advertise_With_Us":"आमच्यासोबत जाहिरात करा - गोपनीयता धोरण - साइटमॅप",
+    "Useful_Links":"उपयुक्त दुवे",
+    "About_Us":"आमच्याबद्दल",
+    "Latest_News":"ताज्या बातम्या",
+    "Live_Inventory":"थेट यादी",
+    "Terms_and_Conditions":"अटी आणि शर्ती",
+    "Get_In_Touch":"संपर्कात रहा",
+    "Tool_Free_Number":"टोल फ्री क्रमांक",
+    "Number":"1800 666 9999",
+    "Office_Hours":"कार्यालयीन तास",
+    "Office_Time":"सोम - शनि सकाळी 8 ते संध्याकाळी 6",
+    "Send_Us_Email":"आम्हाला ईमेल पाठवा",
+    "Email":"tractorworld@domain.net"
+  }
+
 } 
