@@ -17,9 +17,8 @@ import { getLocaleProps } from "@helpers";
 export default function StoreInventory({ locale }) {
     const breadcrumbData = [
         { label: 'Home', link: '/' },
-        { label: 'Dealers Locater', link: '/dealer-locator' },
-        { label: 'Store Inventory', link: '#' }, 
-    ];
+        { label: 'Dealers Details ', link: '#' },
+     ];
 
     const language = locale?.toUpperCase(); 
     const { data, loading, error } = useQuery(HOMEPAGE_QUERIES, {

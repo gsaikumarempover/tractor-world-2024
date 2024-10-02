@@ -10,7 +10,7 @@ import EasyEMI from '@Images/home/easyEMI.svg';
 import Documenting from '@Images/home/documenting.svg';
 import Finance from '@Images/home/finance.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
-import Loader from '@components/Loader'; 
+import Loader from '@components/Loader';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import { getLocaleProps } from "@helpers";
@@ -535,21 +535,16 @@ export default function TractorDetails({ locale }) {
                                 <div className='pl-2'>
 
                                     <div className='mb-2'>UID - TJN185041 | Report Problem</div>
-                                    <div className='font-bold uppercase sm:text-xl text-lg mb-1'> {TractorDetails[0].title}
+                                    {TractorDetails[0].certified && (<div className='font-bold uppercase sm:text-xl text-lg mb-1'> {TractorDetails[0].title}
                                         <span className="bg-secondaryColor px-2 ml-3 py-1 text-white text-sm uppercase
                                  font-semibold border-gradient">
                                             {TractorDetails[0].certified ? "Certified" : "Not Certified"}
                                         </span></div>
-
+                                    )} 
 
                                     <span className="bg-primaryColor my-4 inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm cursor-pointer" onClick={handleDealerLocation}>
+                                 font-semibold rounded-sm cursor-pointer">
                                         Dealer Location
-                                    </span>
-
-                                    <span className="bg-secondaryColor ml-3 my-4 inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm cursor-pointer" onClick={handleCompareTractor}>
-                                        Compare Tractor
                                     </span>
 
                                     <div className='mb-3 cursor-pointer flex gap-2 text-secondaryColor
@@ -566,9 +561,16 @@ export default function TractorDetails({ locale }) {
 
                                     <div className="">EMI starts at <span className="text-secondaryColor"> ₹ 3,657/month</span> </div>
 
+                                    <span className="bg-secondaryColor mt-2  inline-block px-2 py-1 text-white w-auto
+                                 font-semibold rounded-sm cursor-pointer" onClick={handleCompareTractor}>
+                                        Compare Tractor
+                                    </span>
                                     <div className='sm:w-1/2 w-full my-4'>
                                         <Btn text={"Enquiry"} bgColor={true} onClick={handleEnquiry} />
                                     </div>
+
+
+
 
                                 </div>
 
@@ -626,7 +628,7 @@ export default function TractorDetails({ locale }) {
 
                             </div>
 
-                            <div className='w-1/2'>
+                            <div className='sm:w-1/2 w-full'>
 
 
                                 <RightSection state={state} />

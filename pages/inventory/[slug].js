@@ -171,7 +171,7 @@ export default function Inventory({ locale }) {
     let selectedBrandSlug = ''; // Initialize an empty variable for storing the slug
 
     radios.forEach((radio) => {
-      debugger;
+      // debugger;
       if (radio.checked) {
         selectedValues.push(radio.value);  // Collect the checked radio values
 
@@ -305,9 +305,9 @@ export default function Inventory({ locale }) {
 
   // Filter brands whenever the search query changes
   useEffect(() => {
-    debugger;
+    // debugger;
     if (brandsData && brandsData.brandsmodels) {
-      debugger;
+      // debugger;
       const filtered = brandsData.brandsmodels.edges.filter(({ node }) =>
         node.brandmodelFields.brand.toLowerCase().includes(searchQuery.toLowerCase())
       ).map(({ node }) => {

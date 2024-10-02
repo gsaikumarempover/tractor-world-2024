@@ -239,6 +239,36 @@ export default function ApplyNewTractorLoan() {
                       </select>
                     </div> */}
 
+<div className="sm:w-1/4 w-full">
+                      <label htmlFor="name" className="block mb-2">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        className="bg-white border 
+                      border-gray-300 text-black rounded-md block w-full 
+                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                       dark:placeholder-gray-400 dark:text-white"
+                        placeholder="Enter your Name"
+                      />
+                    </div>
+
+                    <div className="sm:w-1/4 w-full">
+                      <label htmlFor="number" className="block mb-2">
+                        Mobile Number
+                      </label>
+                      <input
+                        type="number"
+                        id="name"
+                        className="bg-white border 
+                      border-gray-300 text-black rounded-md block w-full 
+                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                       dark:placeholder-gray-400 dark:text-white"
+                        placeholder="Enter Your Mobile Number"
+                      />
+                    </div>
+
                     <div className="sm:w-1/4 w-full">
                       <label className="form-label">State</label>
                       <select className="block w-full px-2 py-[7px] border 
@@ -270,35 +300,7 @@ export default function ApplyNewTractorLoan() {
                       </select>
                     </div>
 
-                    <div className="sm:w-1/4 w-full">
-                      <label htmlFor="name" className="block mb-2">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        className="bg-white border 
-                      border-gray-300 text-black rounded-md block w-full 
-                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
-                       dark:placeholder-gray-400 dark:text-white"
-                        placeholder="Enter your Name"
-                      />
-                    </div>
-
-                    <div className="sm:w-1/4 w-full">
-                      <label htmlFor="number" className="block mb-2">
-                        Mobile Number
-                      </label>
-                      <input
-                        type="number"
-                        id="name"
-                        className="bg-white border 
-                      border-gray-300 text-black rounded-md block w-full 
-                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
-                       dark:placeholder-gray-400 dark:text-white"
-                        placeholder="Enter Your Mobile Number"
-                      />
-                    </div>
+              
 
                     <div className="sm:w-1/4 w-full">
                       <button type="submit"

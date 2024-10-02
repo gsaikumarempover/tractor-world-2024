@@ -37,6 +37,7 @@ import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
 import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
+import { useTranslation } from 'next-i18next';
 
 
 export default function HomePage({ locale }) {
@@ -48,6 +49,8 @@ export default function HomePage({ locale }) {
     const [showCallRequestModal, setShowCallRequestModal] = useState(false);
     const router = useRouter();
     const language = locale?.toUpperCase();
+    const { t, i18n } = useTranslation('common'); 
+
 
     const isShowCallModal = () => {
         setShowModal(true);
@@ -553,7 +556,7 @@ export default function HomePage({ locale }) {
 
             {/* Explore Tractor World  */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 mb-3 pt-4 bg-white " >
-                <Heading heading={'Explore Tractor World'} viewButton={false} />
+                <Heading heading={t('Home.explore')} viewButton={false} />
                 <div className='grid sm:grid-cols-6 grid-cols-3 pb-4'>
                     {exploreimages.map((item, index) => (
                         <a href={item.url} key={index} className='w-full'>

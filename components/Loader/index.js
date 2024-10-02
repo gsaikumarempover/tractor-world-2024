@@ -6,7 +6,7 @@ const Loader = () => {
         <>
             <div className="loader-overlay overlay">
                 {/* <div className="loader"></div> */}
-                <Image src="/images/loader.gif" width={100} height={100} />
+                <Image src="/images/loader.gif" width={130} height={130} />
 
             </div>
         </>

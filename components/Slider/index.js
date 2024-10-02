@@ -20,7 +20,7 @@ export default function InputSlider({
   };
 
   const handleValueInputChange = (event, type) => {
-    debugger;
+    // debugger;
     const newValue = event.target.value === "" ? "" : Number(event.target.value);
   
     if (newValue >= min && newValue <= max) {

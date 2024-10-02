@@ -75,7 +75,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
           <Link href="/sell-tractor">
             <div className="sm:hidden items-center flex bg-secondaryColor px-4 py-[2px]
          text-white text-sm mr-2 border-gradient"> 
-              Sell 
+              {t('Navbar.Sell')} 
             </div>
           </Link>
 
