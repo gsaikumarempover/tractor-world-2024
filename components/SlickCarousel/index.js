@@ -10,12 +10,20 @@ import { useTranslation } from 'next-i18next';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 
 const SlickCarousel = ({ items, settings }) => {
+  const router = useRouter();
 
- 
+
+  const handleEnquiry = () => {
+    router.push('/contact-us');
+};
+
+
   const { t } = useTranslation();
-  const CheckTractorDetails = t('CheckTractorDetails');
+  const CheckTractorDetails = "Interested";
   return (
     <div className="slider-container mt-4 bg-white">
       <Slider {...settings} className=''>
@@ -55,7 +63,7 @@ const SlickCarousel = ({ items, settings }) => {
             <Link href={'/tractor-details/?id='+item.id+"&s="+item.slug}>
             <div className='border-t-[1px] border-[#D9D9D9] relative bottom-0'>
               <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
-                <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">{CheckTractorDetails}</span>
+                <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center" onClick={handleEnquiry}>{CheckTractorDetails}</span>
               </div>
             </div>
             </Link>
