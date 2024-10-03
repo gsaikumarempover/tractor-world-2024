@@ -2,6 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddressData } from "../store/slices/userDataSlice"; 
 
+export const HomeHPRanges = [
+  { min: 0, max: 20, key: 'oneData' },
+  { min: 21, max: 30, key: 'twoData' },
+  { min: 31, max: 40, key: 'ThreeData' },
+  { min: 41, max: 45, key: 'FourData' },
+  { min: 46, max: 50, key: 'FifthData' },
+  { min: 51, max: Infinity, key: 'SixthData' },
+];
+
 export const useGeolocation = () => {
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
@@ -63,5 +72,69 @@ export const useGeolocation = () => {
   export const calculateInterest = ({ emi, tenure, loanAmount, downPayment }) => {
     const principal = loanAmount - downPayment; // Adjusted loan amount after downpayment
     return emi * tenure - principal; // Total interest payable
+  };
+
+    
+  // Function to dynamically generate labels for tabs
+  export const getTabLabel = (min, max) => {
+    if (max === Infinity) {
+      return `Above ${min} HP`;
+    }
+    return `${min} - ${max} HP`;
+  };
+
+    // Function to get a random tractor from a list
+  const getRandomTractor = (tractors) => {
+    const randomIndex = Math.floor(Math.random() * tractors.length);
+    return tractors[randomIndex];
+  };
+
+  // Function to filter tractors based on enginePower
+  export const filterByHorsepower = (tractors, min, max) => {
+    return tractors.filter((tractor) => { 
+      const hp = parseInt(tractor.node.liveInventoryData.enginePower.split(' ')[0], 10); // Make sure to convert enginePower to a number
+      return hp >= min && hp <= max;
+    });
+  };
+
+  export const getHomePageTractorsListBasedOnInventory = (liveInventoryData) => {
+  
+    // Object to store the compare data dynamically
+    const compareTractorData = {};
+  
+    HomeHPRanges.forEach((range) => { 
+      // Filter tractors for the current range
+      const filteredTractors = filterByHorsepower(liveInventoryData, range.min, range.max);
+
+  
+      if (filteredTractors.length >= 2) {
+        // Randomly select two tractors to compare
+        const tractor1 = getRandomTractor(filteredTractors);
+        let tractor2 = getRandomTractor(filteredTractors);
+
+        
+      console.log("filterd tractors data tractor1"+JSON.stringify(tractor1));
+      console.log("filterd tractors data tractor2"+JSON.stringify(tractor2));
+      
+      return;
+  
+        // Ensure tractor1 and tractor2 are not the same
+        while (tractor1.id === tractor2.id) {
+          tractor2 = getRandomTractor(filteredTractors);
+        }
+  
+        // Assign the selected tractors to the compareTractorData object
+        compareTractorData[range.key] = {
+          brand1: tractor1.title,
+          brand2: tractor2.title,
+          brand1hp: tractor1.enginePower,
+          brand2hp: tractor2.enginePower,
+          brand1price: tractor1.price,
+          brand2price: tractor2.price,
+        };
+      }
+    });
+  
+    return compareTractorData;
   };
   

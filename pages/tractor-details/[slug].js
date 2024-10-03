@@ -75,7 +75,7 @@ export default function TractorDetails({ locale }) {
     ];
 
     //   Features data
-    const features = [
+    const [features, setFeatures] = useState([ 
         {
             src: '/images/liveInventory/features/battery.png',
             alt: 'Battery',
@@ -90,20 +90,20 @@ export default function TractorDetails({ locale }) {
         },
         {
             src: '/images/liveInventory/features/hours.png',
-            alt: 'Excellent',
-            title: 'Excellent',
+            alt: 'Engine Hours',
+            title: 'Engine Hours',
             description: '729 Hrs'
         },
         {
             src: '/images/liveInventory/features/enginepower.png',
-            alt: 'Engine Power',
-            title: 'Engine Power',
+            alt: 'Engine HP',
+            title: 'Engine HP',
             description: '32 HP'
         },
         {
             src: '/images/liveInventory/features/original_tyre.png',
-            alt: 'Excellent',
-            title: 'Excellent',
+            alt: 'Tyre Condition',
+            title: 'Tyre Condition',
             description: 'Original'
         },
         {
@@ -112,7 +112,7 @@ export default function TractorDetails({ locale }) {
             title: 'Finance',
             description: 'Upto* 75%'
         }
-    ];
+    ]);
 
     // tractor data
     const [tractorData, setTractorData] = useState([
@@ -479,12 +479,45 @@ export default function TractorDetails({ locale }) {
                 price: node.liveInventoryData.maxPrice,
                 imageLink: DefaultTractor,
                 slug: node.slug,
-                id: node.id
+                id: node.id,
+                enginePower: node.liveInventoryData.enginePower,
+                battery: node.liveInventoryData.isBatteryBranded,  
+                tyreState: node.liveInventoryData.tyreState, 
+                buyingYear: node.liveInventoryData.buyingYear,  
+                finance: node.liveInventoryData.finance ,
+                engineHours: node.liveInventoryData.engineHours
             }));
             setTractorDetails(tractorDetails);
 
+             // Setting dynamic features based on tractor details
+             const updatedFeatures = features.map((feature) => {
+                switch (feature.title) {
+                    case 'Battery':
+                        return { ...feature, description: tractorDetails[0]?.battery ? 'Available' : 'Not Available' };
+                    case 'Year':
+                        return { ...feature, description: tractorDetails[0]?.buyingYear || 'N/A' };
+                    case 'Engine Hours':
+                        return { ...feature, description: tractorDetails[0]?.engineHours || 'N/A' }; 
+                    case 'Engine HP':
+                        return { ...feature, description: tractorDetails[0]?.enginePower || 'N/A' };// Adjust title accordingly if needed
+                    case 'Tyre Condition':
+                        return { ...feature, description: tractorDetails[0]?.tyreState || 'N/A' };
+                    case 'Finance':
+                        return { ...feature, description: tractorDetails[0]?.finance || 'N/A' };
+                    default:
+                        return feature; // Return the original feature if no match
+                }
+            });
+
+            setFeatures(updatedFeatures);
+
             // Similar tractors details
-            const similarTractorsList = similarTractorsData.allLiveInventory.edges.map(({ node }) => ({
+            // Get enginePower from the first tractorDetails item
+        const enginePower = tractorDetails.length > 0 ? tractorDetails[0].enginePower : null;
+
+        // Similar tractors details filtered by enginePower
+        const similarTractorsList = similarTractorsData.allLiveInventory.edges
+            .map(({ node }) => ({
                 title: node.title,
                 price: node.liveInventoryData.maxPrice,
                 hours: node.liveInventoryData.engineHours,
@@ -492,8 +525,10 @@ export default function TractorDetails({ locale }) {
                 enginePower: node.liveInventoryData.enginePower,
                 slug: node.slug,
                 id: node.id
-            }));
-            setsimilarTractorsData(similarTractorsList);
+            }))
+            .filter(similarTractor => similarTractor.enginePower === enginePower); // Filter by enginePower
+
+        setsimilarTractorsData(similarTractorsList);
         }
     }, [tractorDataList, similarTractorsData]);
 
@@ -538,7 +573,7 @@ export default function TractorDetails({ locale }) {
                                     {TractorDetails[0].certified && (<div className='font-bold uppercase sm:text-xl text-lg mb-1'> {TractorDetails[0].title}
                                         <span className="bg-secondaryColor px-2 ml-3 py-1 text-white text-sm uppercase
                                  font-semibold border-gradient">
-                                            {TractorDetails[0].certified ? "Certified" : "Not Certified"}
+                                            {TractorDetails[0].certified ? "Certified" : ""}
                                         </span></div>
                                     )} 
 
@@ -623,7 +658,7 @@ export default function TractorDetails({ locale }) {
 
 
                                 <div className='mt-4'>
-                                    <Btn bgColor={true} text={'View Loan Offers'} />
+                                    <Btn bgColor={true} text={'Calculate Loan'} />
                                 </div>
 
                             </div>

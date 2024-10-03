@@ -14,6 +14,7 @@ export const HP_OPTIONS = [
   { label: "Above 75 HP", value: "75" },
 ];
 
+
 export const PRICE_OPTIONS = [
   { label: "0 Lakh - 3 Lakh", value: "0_3" },
   { label: "3 Lakh - 5 Lakh", value: "3_5" },
@@ -21,8 +22,7 @@ export const PRICE_OPTIONS = [
   { label: "7 Lakh - 10 Lakh", value: "7_10" },
   { label: "Above 10 Lakh", value: ">10" },
 ];
-
-
+ 
 
 export const HOMEPAGE_QUERIES = gql`
   query GetHomeData($lang: LanguageCodeFilterEnum!) {
@@ -147,6 +147,11 @@ query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: Str
           isVerified
           district
           state
+          isBatteryBranded
+          tyreState
+          buyingYear
+          battery
+          finance
         }
         slug
         id
@@ -182,6 +187,11 @@ query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: Str
           brand
           isVerified
           district
+          isBatteryBranded
+          tyreState
+          buyingYear
+          battery
+          finance
         }
         slug
         id

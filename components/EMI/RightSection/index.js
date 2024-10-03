@@ -26,7 +26,7 @@ const RightSection = ({ state }) => {
  
   return (
     <div className="rightsection-wrapper">
-      <EmiChart principal={principalAmt} interestPayable={interestPayable} /> 
+      <EmiChart principal={principalAmt} interestPayable={interestPayable} emi={emi}/> 
       <ChartFooter       
         emi={emi}
         principal={principalAmt}

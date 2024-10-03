@@ -37,12 +37,13 @@ import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
 import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
-import { useTranslation } from 'next-i18next';
-
+import { useTranslation } from 'next-i18next'; 
+import {HomeHPRanges,getTabLabel,getHomePageTractorsListBasedOnInventory} from '@utils';
 
 export default function HomePage({ locale }) {
+
     const [isMobile, setIsMobile] = useState(false);
-    const [activeTab, setActiveTab] = useState("oneData");
+    const [activeTab, setActiveTab] = useState('oneData');
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [showModal, setShowModal] = useState(false);
@@ -248,181 +249,186 @@ export default function HomePage({ locale }) {
         },
     ];
 
-    const handleTabClick = (tabId) => {
-        setActiveTab(tabId);
+    const handleTabClick = (tabid) => {
+        debugger;
+        setActiveTab(tabid); // Dynamically set the active tab based on clicked tab's id
     };
 
-    const compareTractorData = {
+    const compareTractorData = getHomePageTractorsListBasedOnInventory(liveInventoryData);
 
-        oneData: [
+    console.log("compareTractorData"+JSON.stringify(compareTractorData));
 
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
+    // const compareTractorData = {
 
-        twoData: [
+    //     oneData: [
 
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //     ],
 
-        ThreeData: [
+    //     twoData: [
 
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //     ],
 
-        FourData: [
+    //     ThreeData: [
 
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //     ],
 
-        FifthData: [
+    //     FourData: [
 
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //     ],
 
-        SixthData: [
+    //     FifthData: [
 
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hp: '42 HP',
-                brand2hp: '42 HP',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //     ],
 
-        ]
-    };
+    //     SixthData: [
+
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+    //         {
+    //             brand1: 'Mahindra 475 DI',
+    //             brand2: 'Kubota MU401 2WD',
+    //             brand1hp: '42 HP',
+    //             brand2hp: '42 HP',
+    //             brand1price: '₹ 6.45-6.75 Lakh*',
+    //             brand2price: '₹ 8.30-8.40 Lakh*'
+    //         },
+
+    //     ]
+    // };
 
     const contentGallerysettings = {
         dots: true,
@@ -618,13 +624,17 @@ export default function HomePage({ locale }) {
                 </div>
 
                 <div className='flex sm:gap-4 gap-2 my-3 font-medium relative z-20'>
-                    <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}>
-                        Under 20 HP</Tab>
-                    <Tab id="twoData" activeTab={activeTab} onClick={handleTabClick}>21 - 30 HP</Tab>
-                    <Tab id="ThreeData" activeTab={activeTab} onClick={handleTabClick}>31 - 40 HP</Tab>
-                    <Tab id="FourData" activeTab={activeTab} onClick={handleTabClick}>41 - 45 HP</Tab>
-                    <Tab id="FifthData" activeTab={activeTab} onClick={handleTabClick}>46 - 50 HP</Tab>
-                    <Tab id="SixthData" activeTab={activeTab} onClick={handleTabClick}>Above 50 HP</Tab>
+                    {/* <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}> Under 20 HP</Tab>  */}
+                    {HomeHPRanges.map((range) => (
+                        <Tab
+                        key={range.key}
+                        id={range.key}
+                        activeTab={activeTab}
+                        onClick={handleTabClick}
+                        >
+                        {getTabLabel(range.min, range.max)}
+                        </Tab>
+                    ))}
                 </div>
 
                 <div className="">

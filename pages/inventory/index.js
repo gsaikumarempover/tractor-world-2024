@@ -31,8 +31,10 @@ import Link from "next/link";
 
 export default function Inventory({ locale }) {
 
+  const { locale: activeLocale, locales, asPath } = useRouter();
+
   //// apply,reset btns active 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation('common'); // 'common' refers to common.json
   // Use Next.js router to redirect to the dynamic page
   const router = useRouter();
   const [showFilter, setShowFilter] = useState(false);
@@ -650,9 +652,8 @@ export default function Inventory({ locale }) {
             <div className="sm:w-[75%] w-full">
               <div className="flex justify-between items-center">
                 <div className="w-auto">
-                  <Heading heading={'Popular Tractors'} />
-                </div>
-
+                  <Heading heading={t('Inventory.PopularTractors')} />
+                </div> 
                 <div className="sm:hidden flex">
 
                   <Tab id="listData" image={true} activeTab={activeTab} onClick={handleTabClick}>

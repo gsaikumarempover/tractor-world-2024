@@ -4,38 +4,52 @@ import { useEffect } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function EmiChart({ principal, interestPayable }) {
-  const data = {
-    labels: ["Principal Amount", "Interest Payable"],
+function EmiChart({ principal, interestPayable,emi }) {
+  // You can dynamically calculate the percentage based on principal or interestPayable if needed
+  const speedValue = Math.min((emi * 12 / principal) * 100, 100);  // The current value to display, example: 30%
+   const data = {
+    labels: [], // No labels necessary
     datasets: [
       {
-        data: [principal, interestPayable],
-        backgroundColor: ["rgba(255, 165, 0, 1)", "rgba(124, 181, 236, 1)"],
-        borderColor: ["rgba(255, 165, 0, 1)", "rgba(124, 181, 236, 1)"]
-      }
+        data: [speedValue, 100 - speedValue],  // The first value is the filled portion, the second is the empty
+        backgroundColor: ['#F37021', '#EAE9E9'], // Orange and gray to match the image
+        borderWidth: 0, // Remove border for a cleaner look
+      },
     ],
+  };
 
-    updateMode: "show"
+  const options = {
+    rotation: -90, // Start angle (top)
+    circumference: 180, // Half-circle
+    cutout: '80%', // Makes the chart more of a gauge instead of a full doughnut
+    plugins: {
+      tooltip: { enabled: false }, // Disable tooltips
+      legend: { display: false }, // Disable legend
+    },
   };
 
   return (
     <div className="relative mx-auto w-[270px] text-center">
       {/* Doughnut Chart */}
-      <Doughnut
-        options={{
-          cutout: 90
+      <Doughnut data={data} options={options} /> 
+      <div
+        style={{
+          position: 'absolute',
+          top: '60%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          textAlign: 'center',
         }}
-        data={data}
-      />
-      
-      {/* Centered Text */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-black text-sm">
-        Total Amount <br />
-        (Principal + Interest) <br />
-        <span className="font-semibold text-lg">
-          &#8377;{principal + interestPayable}
-        </span>
+      >
+        Monthly EMI <br />
+        ₹ {emi.toLocaleString('en-IN')}
       </div>
+
+      {/* Display the min and max values */}
+      <div style={{ position: 'absolute', top: '75%', left: '5%', fontSize: '14px' }}>₹0</div>
+      <div style={{ position: 'absolute', top: '75%', right: '5%', fontSize: '14px' }}>{principal.toLocaleString('en-IN')}</div>
     </div>
   );
 }
