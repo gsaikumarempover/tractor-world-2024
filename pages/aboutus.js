@@ -8,8 +8,13 @@ import RentalSteps from '@Images/about/rentalSteps.svg';
 import Btn from '@components/Btn';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import tractorImg from '@Images/about/tractor.svg';
-import { useTranslation } from "next-i18next";
-
+import { useTranslation } from "next-i18next"; 
+import { getLocaleStaticProps } from "../lib/localeUtils"; 
+  
+export async function getStaticProps({ locale }) {
+    return getLocaleStaticProps(locale, ['common']); // Specify any namespaces
+  }
+  
 export default function about() {
   const { t, i18n } = useTranslation('common');
   const breadcrumbData = [

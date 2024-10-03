@@ -14,10 +14,15 @@ import Axis from "@Images/bank/axis.svg";
 import videoThumbnail from "@Images/loan/videoThumbnail.svg";
 import BannerStrip from "@components/BannerStrip";
 import bannerImg from '@Images/sellTractor/engineering-excellence-banner.svg';
-import { useQuery } from '@apollo/client';
-import { GET_ALL_STATES } from "@utils/constants";
-import { useTranslation } from 'next-i18next';
+import { useQuery } from '@apollo/client';  
+import {GET_ALL_STATES} from "@utils/constants";
+import { getLocaleProps } from "@helpers"; 
 
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+} 
+
+ 
 export default function ApplyNewTractorLoan() {
   const { t, i18n } = useTranslation('common');
   const breadcrumbData = [

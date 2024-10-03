@@ -37,8 +37,13 @@ import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
 import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
-import { useTranslation } from 'next-i18next'; 
-import {HomeHPRanges,getTabLabel,getHomePageTractorsListBasedOnInventory} from '@utils';
+import { useTranslation } from 'next-i18next';
+import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
+import { getLocaleProps } from "@helpers";
+
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+}
 
 export default function HomePage({ locale }) {
 
@@ -256,7 +261,7 @@ export default function HomePage({ locale }) {
 
     const compareTractorData = getHomePageTractorsListBasedOnInventory(liveInventoryData);
 
-    console.log("compareTractorData"+JSON.stringify(compareTractorData));
+    console.log("compareTractorData" + JSON.stringify(compareTractorData));
 
     // const compareTractorData = {
 
@@ -627,12 +632,12 @@ export default function HomePage({ locale }) {
                     {/* <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}> Under 20 HP</Tab>  */}
                     {HomeHPRanges.map((range) => (
                         <Tab
-                        key={range.key}
-                        id={range.key}
-                        activeTab={activeTab}
-                        onClick={handleTabClick}
+                            key={range.key}
+                            id={range.key}
+                            activeTab={activeTab}
+                            onClick={handleTabClick}
                         >
-                        {getTabLabel(range.min, range.max)}
+                            {getTabLabel(range.min, range.max)}
                         </Tab>
                     ))}
                 </div>
