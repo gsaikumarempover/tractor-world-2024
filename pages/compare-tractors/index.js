@@ -18,7 +18,7 @@ import { useQuery } from '@apollo/client';
 import Loader from '@components/Loader';
 import { nanoid } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
- 
+import { useTranslation } from "next-i18next";  
 import { getLocaleProps } from "@helpers";
 
 export async function getServerSideProps(context) {

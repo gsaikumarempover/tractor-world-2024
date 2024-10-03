@@ -27,12 +27,7 @@ import { GET_ALL_POPULAR_BRANDS } from "@utils/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { GET_ALL_STATES } from "@utils/constants";
 import Link from "next/link";
-// import { getLocaleStaticProps } from "../../lib/localeUtils";
-
-// export async function getStaticProps({ locale }) {
-//   return getLocaleStaticProps(locale, ['common']); 
-// } 
-
+ 
 export default function Inventory({ locale }) {
 
   const { locale: activeLocale, locales, asPath } = useRouter();
