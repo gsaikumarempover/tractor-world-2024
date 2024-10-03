@@ -16,12 +16,12 @@ import Call from '@Images/footer/call.png';
 import Logo from '@Images/navbar/logo.svg';
 import GoTop from '@Images/footer/top.svg';
 import MblLogo from '@Images/footer/mblLogo.svg';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from "next-i18next";
 
 
 export default function Footer() {
     const { locale: activeLocale, locales, asPath } = useRouter();
-    const { t, i18n } = useTranslation()
+    const { t, i18n } = useTranslation('common');
     const [showButton, setShowButton] = useState(false);
 
     // Function to scroll to the top of the page

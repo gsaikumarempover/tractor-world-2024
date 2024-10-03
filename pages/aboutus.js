@@ -8,8 +8,10 @@ import RentalSteps from '@Images/about/rentalSteps.svg';
 import Btn from '@components/Btn';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import tractorImg from '@Images/about/tractor.svg';
+import { useTranslation } from "next-i18next";
 
 export default function about() {
+  const { t, i18n } = useTranslation('common');
   const breadcrumbData = [
     { label: 'Home', link: '/' },
     { label: 'About Us', link: '#' },
@@ -21,17 +23,17 @@ export default function about() {
 
       {/* tractor info sec */}
       <div className="bg-white mt-4 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2">
-      <Heading heading={'About Us'}  /> 
+        <Heading heading={t('Footer.About_Us')} />
         <TractorInfo infoImg={tractorImg}
-          title={'We bring you to the future'}
-          heading={'Tractor World'}
-          infoText={'Tractor world is a fully vertically integrated company, with expertise in design, development and manufacture of the full spectrum of automotive components, aggregates and vehicles.'}
+          title={t('About.Bring_You_To_Future')}
+          heading={t('About.Tractor_World')}
+          infoText={t('About.Fully_Integrated_Compony')}
         />
       </div>
 
       {/*Tractors Dealers by Brands sec*/}
       <div className="bg-white mt-4 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2">
-        <Heading heading={'Tractors by Brands '} viewButton={false} />
+        <Heading heading={t('About.Tractors_By_Brands')} viewButton={false} />
         {/* <form className="sm:block hidden">
           <div className='flex sm:flex-row flex-col gap-4 mt-4 items-end'>
             <div className='sm:w-1/4 w-full'>
@@ -102,8 +104,8 @@ export default function about() {
 
       {/*rental steps sec */}
       <div className="bg-white my-4 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4">
-        <p className="text-[#888888] text-sm mb-3">We Promise To Find You The Right Equipment</p>
-        <Heading heading={'Get Your Rentals In Easy Steps'} />
+        <p className="text-[#888888] text-sm mb-3">{t('About.Right_Equipment')}</p>
+        <Heading heading={t('About.Get_Your_Rentals')} />
 
         <div className="image-wrapper sm:overflow-hidden overflow-x-auto">
           <div className="sm:min-w-full min-w-[586px]">
