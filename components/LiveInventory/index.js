@@ -123,8 +123,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
         </div>
       </div>
 
-      <div className="sm:hidden flex justify-end">
-
+      <div className="sm:hidden flex justify-end"> 
         <Tab id="listData" image={true} activeTab={activeTab} onClick={handleTabClick}>
           {activeTab === "listData" ? <Image src={listActiveView} alt="listActiveView" width={50} height={50} /> : <Image src={listView} alt="listView" width={50} height={50} />}
         </Tab>
