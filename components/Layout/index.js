@@ -18,7 +18,7 @@ const Layout = ({ children, currentPage }) => {
   const [languageModalShow, setLanguageModalShow] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const router = useRouter();
-  const { i18n } = useTranslation('common');
+  const { i18n } = useTranslation();
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);

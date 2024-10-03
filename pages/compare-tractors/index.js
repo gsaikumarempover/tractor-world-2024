@@ -18,12 +18,12 @@ import { useQuery } from '@apollo/client';
 import Loader from '@components/Loader';
 import { nanoid } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
-import { useTranslation } from "next-i18next";  
+import { useTranslation } from "next-i18next";
 import { getLocaleProps } from "@helpers";
 
 export async function getServerSideProps(context) {
-  return await getLocaleProps(context);
-} 
+    return await getLocaleProps(context);
+}
 
 export default function CompareTractor() {
     const router = useRouter();
@@ -460,11 +460,11 @@ export default function CompareTractor() {
                         <div className='px-4 py-4 w-full'>
                             <div className="flex items-center gap-2 opacity-50">
                                 <Image src={leftArrow} alt='leftArrow' width={15} height={15} className='cursor-pointer' onClick={handleClose} />
-                                <p className='font-bold text-2xl'>Select Brand</p>
+                                <p className='font-bold text-2xl'>{t('Compare.Select_Brand')}</p>
                             </div>
 
                             <div className="relative w-full mt-4">
-                                <input type="text" placeholder="Search Tractor Brand by Name" className="w-full rounded border-[1px] border-[#D0D0D0] py-2 pr-14"
+                                <input type="text" placeholder={t('Compare.Search_PlaceHolder')} className="w-full rounded border-[1px] border-[#D0D0D0] py-2 pr-14"
                                     value={brandsSearchQuery}
                                     onChange={(e) => setBrandsSearchQuery(e.target.value)}
                                 />
@@ -475,7 +475,7 @@ export default function CompareTractor() {
 
 
                             {noResults ? (
-                                <p className='mt-2 text-center text-primaryColor'>No search data available</p>
+                                <p className='mt-2 text-center text-primaryColor'>{t('Compare.No_Data')}</p>
                             ) : (
                                 <div className="p-2 mt-4 flex flex-col w-full gap-2 h-80 brands-container overflow-y-auto">
                                     {brands.map((option, index) => (

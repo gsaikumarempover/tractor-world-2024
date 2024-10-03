@@ -19,7 +19,7 @@ import HP from '@Images/hp.svg';
 import Wheel from '@Images/wheel.svg';
 import Link from 'next/link';
 import Tab from "@components/Tab";
- 
+
 
 
 function SampleNextArrow(props) {
@@ -123,7 +123,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
         </div>
       </div>
 
-      <div className="sm:hidden flex justify-end"> 
+      <div className="sm:hidden flex justify-end">
         <Tab id="listData" image={true} activeTab={activeTab} onClick={handleTabClick}>
           {activeTab === "listData" ? <Image src={listActiveView} alt="listActiveView" width={50} height={50} /> : <Image src={listView} alt="listView" width={50} height={50} />}
         </Tab>
@@ -346,7 +346,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
       </div>
 
       <div className='mt-2'>
-        <Btn text={'View all'} viewAll={true} onClick={handleAllLiveInventory} />
+        <Btn text={t('Home.View_All')} viewAll={true} onClick={handleAllLiveInventory} />
       </div>
     </>
   );

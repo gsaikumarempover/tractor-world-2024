@@ -22,7 +22,10 @@
     "Loan": "कर्ज",
     "ContentGallery": "सामग्री गैलरी",
     "Contactus": "संपर्क करा",
-    "Sell": "विक्री करा"
+    "Sell": "विक्री करा",
+    "What_You_Looking_For":"तुम्ही काय शोधत आहात?",
+    "Start_Typing":"टायपिंग सुरू करा",
+      "Social_Media":"सोशल मीडिया लिंक"
   },
   "Inventory": {
     "PopularTractors": "लोकप्रिय ट्रॅक्टर"
@@ -47,7 +50,9 @@
     "Warranty":"वारंटी",
     "Easy_EMI":"सुलभ ईएमआय आणि किंमत निर्धारण",
     "Documenting":"दस्तऐवजीकरण",
-    "Mahendra_Financing":"महेंद्र फाइनेंसिंग"
+    "Mahendra_Financing":"महेंद्र फाइनेंसिंग",
+    "Call_Now":"Call Now",
+    "Request_Call":"कॉल बॅकची विनंती करा"
   },
   "Footer":{ 
     "Find_a_Dealer":"विक्रेता शोधा",
@@ -78,7 +83,10 @@
     "Get_Your_Rentals":"सोप्या चरणांमध्ये तुमचे भाडे मिळवा"
   },
   "Compare":{
-    "Compare_Tractore":"ट्रॅक्टरची तुलना करा"
+    "Compare_Tractore":"ट्रॅक्टरची तुलना करा",
+      "Select_Brand":"ब्रँड निवडा",
+      "No_Data":"कोणतीही शोध माहिती उपलब्ध नाही",
+      "Search_PlaceHolder":"नावाने ट्रॅक्टर ब्रँड शोधा"
   },
   "Dealer":{
     "DEALER_LOCATOR":"डीलर लोकेटर",

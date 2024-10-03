@@ -24,10 +24,10 @@ import EndTractor from '@Images/navbar/endTractor.png'
 import sellatractor from '@Images/navbar/sellatractor.svg'
 import { useTranslation } from 'next-i18next';
 
-    
+
 export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
   const { locale: activeLocale, locales, asPath } = useRouter();
- 
+
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const openNavbar = () => {
     setIsNavbarOpen(true);
@@ -37,7 +37,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
   };
 
   const { t, i18n } = useTranslation('common'); // 'common' refers to common.json
- 
+
 
   return (
     <>
@@ -53,19 +53,19 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
        p-2 w-10 h-10 justify-center text-sm text-secondaryColorrounded-lg sm:hidden dark:text-gray-400
         dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default"
             aria-expanded="false" onClick={openNavbar}>
-              <Image src={bars} alt="bars" />
+            <Image src={bars} alt="bars" />
             {/* <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
             </svg> */}
           </button>
 
-          <a href="./" className="flex items-center sm:space-x-3 rtl:space-x-reverse"> 
+          <a href="./" className="flex items-center sm:space-x-3 rtl:space-x-reverse">
             <div className="sm:block hidden">
               <Image src={Logo} alt="Tractor World Logo" />
-            </div> 
+            </div>
             <div className="sm:hidden block">
               <Image src={MblLogo} alt="mblLogo"></Image>
-            </div> 
+            </div>
           </a>
 
           <span className="sm:hidden ml-auto mr-2 mt-1" onClick={onClick}>
@@ -74,8 +74,8 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
 
           <Link href="/sell-tractor">
             <div className="sm:hidden items-center flex bg-secondaryColor px-4 py-[2px]
-         text-white text-sm mr-2 border-gradient"> 
-              {t('Navbar.Sell')} 
+         text-white text-sm mr-2 border-gradient">
+              {t('Navbar.Sell')}
             </div>
           </Link>
 
@@ -101,7 +101,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   <div className="relative w-full">
                     <input type="text" placeholder="search..." className="w-full rounded border-[1px] border-[#D0D0D0] py-3 pr-10" />
                     <div className="absolute top-[55%] transform -translate-y-1/2 right-2">
-                      <Image src={Search} alt="search"  width={25} height={25} />
+                      <Image src={Search} alt="search" width={25} height={25} />
                     </div>
                   </div>
 
@@ -209,7 +209,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                   {/* <div className="">Toll Free Number</div> */}
 
                   <div className="flex items-center mb-1">
-                    <span className="text-[15px] text-secondaryColor">Toll Free Number</span>
+                    <span className="text-[15px] text-secondaryColor">{t('Footer.Tool_Free_Number')}</span>
                   </div>
 
                   <div className="flex items-center mb-1">
@@ -218,7 +218,7 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
                     </span>
                     <span className="text-[.84rem] ml-2 block">
                       <Link href="tel:18006669999">
-                        1800 666 9999</Link></span>
+                        {t('Footer.Number')}</Link></span>
                   </div>
 
                 </div>
@@ -226,11 +226,11 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
 
               <div className="sm:hidden block mt-3 px-4 ">
                 <hr className="border-[#EFEAEA]"></hr>
-                <p className="my-3 text-[0.84rem">Social Media Links</p>
+                <p className="my-3 text-[0.84rem">{t('Navbar.Social_Media')}</p>
                 <div className="my-4 flex gap-2">
                   <Image src={Facebook} alt="facebook" width={45} height={45} />
-                  <Image src={Xpath} alt="xpath" width={45} height={45}/>
-                  <Image src={Indeed} alt="indeed" width={45} height={45}/>
+                  <Image src={Xpath} alt="xpath" width={45} height={45} />
+                  <Image src={Indeed} alt="indeed" width={45} height={45} />
                   <Image src={Instagram} alt="instagram" width={45} height={45} />
                 </div>
               </div>

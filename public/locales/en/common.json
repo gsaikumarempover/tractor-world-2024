@@ -7,7 +7,10 @@
       "Loan": "Loan",
       "ContentGallery": "Content Gallery",
       "Contactus": "Contact us",
-      "Sell": "Sell"
+      "Sell": "Sell",
+      "What_You_Looking_For":"What are you looking for ?",
+      "Start_Typing":"Start typing",
+      "Social_Media":"Social Media Links"
     },
     "Inventory": {
       "PopularTractors": "Popular Tractors"
@@ -31,7 +34,10 @@
       "Warranty":"Warranty",
       "Easy_EMI":"Easy EMi & Pricing",
       "Documenting":"Documenting",
-      "Mahendra_Financing":"Mahendra Financing"
+      "Mahendra_Financing":"Mahendra Financing",
+      "Call_Now":"Call Now",
+      "Request_Call":"Request Call Back"
+
     },
     "Footer":{ 
       "Find_a_Dealer":"Find a Dealer",
@@ -61,7 +67,10 @@
       "Get_Your_Rentals":"Get Your Rentals In Easy Steps"
     },
     "Compare":{
-      "Compare_Tractore":"Compare Tractors"
+      "Compare_Tractore":"Compare Tractors",
+      "Select_Brand":"Select Brand",
+      "No_Data":"No search data available",
+      "Search_PlaceHolder":"Search Tractor Brand by Name"
     },
     "Dealer":{
       "DEALER_LOCATOR":"DEALER LOCATOR",

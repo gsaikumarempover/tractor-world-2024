@@ -42,7 +42,7 @@ import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } fr
 import { getLocaleProps } from "@helpers";
 
 export async function getServerSideProps(context) {
-  return await getLocaleProps(context);
+    return await getLocaleProps(context);
 }
 
 export default function HomePage({ locale }) {
@@ -794,8 +794,8 @@ export default function HomePage({ locale }) {
                         {/* Modal Content */}
                         <div className="rounded-tl-[20px] rounded-tr-[20px] bg-white py-10 px-4 flex flex-col items-center sm:flex-row sm:items-start">
                             <div className="flex flex-col gap-4 w-full font-bold">
-                                <div className='bg-secondaryColor w-full text-white p-2 text-center rounded'><Link href="tel:18006669999"> Call Now</Link></div>
-                                <div className='bg-primaryColor w-full text-white p-2 text-center rounded' onClick={handleRequestCall}>Request Call Back</div>
+                                <div className='bg-secondaryColor w-full text-white p-2 text-center rounded'><Link href="tel:18006669999"> {t('Home.Call_Now')}</Link></div>
+                                <div className='bg-primaryColor w-full text-white p-2 text-center rounded' onClick={handleRequestCall}>{t('Home.Request_Call')}</div>
 
                             </div>
                         </div>
