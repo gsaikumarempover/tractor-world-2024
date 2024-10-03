@@ -13,8 +13,8 @@ import { useTranslation } from "next-i18next";
 export default function about() {
   const { t, i18n } = useTranslation('common');
   const breadcrumbData = [
-    { label: 'Home', link: '/' },
-    { label: 'About Us', link: '#' },
+    { label: t('Home.Home'), link: '/' },
+    { label: t('Navbar.Aboutus'), link: '#' },
   ];
   return (
 

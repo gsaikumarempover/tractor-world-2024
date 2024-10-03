@@ -13,6 +13,7 @@
       "PopularTractors": "Popular Tractors"
     },
     "Home":{
+      "Home":"Home",
       "Explore_Tractor_World":"Explore Tractor World",
       "Live_Inventory":"Live Inventory",
       "Why_Choose_Us":"Why Choose Us",
@@ -26,7 +27,11 @@
       "Watch_Video":"Watch Video",
       "Content_Gallery":"Content Gallery",
       "View_All":"View all",
-      "Latest_News_And_Update":"Latest News & Updates"
+      "Latest_News_And_Update":"Latest News & Updates",
+      "Warranty":"Warranty",
+      "Easy_EMI":"Easy EMi & Pricing",
+      "Documenting":"Documenting",
+      "Mahendra_Financing":"Mahendra Financing"
     },
     "Footer":{ 
       "Find_a_Dealer":"Find a Dealer",
@@ -46,15 +51,58 @@
       "Office_Time":"Mon - Sat 8am to 6pm",
       "Send_Us_Email":"Send Us Email",
       "Email":"tractorworld@domain.net"
-    },
-
-    "About":{
+    }, 
+    "About":{ 
       "Bring_You_To_Future":"We bring you to the future",
       "Tractor_World":"Tractor World",
       "Fully_Integrated_Compony":"Tractor world is a fully vertically integrated company, with expertise in design, development and manufacture of the full spectrum of automotive components, aggregates and vehicles.",
       "Tractors_By_Brands":"Tractors by Brands",
       "Right_Equipment":"We Promise To Find You The Right Equipment",
       "Get_Your_Rentals":"Get Your Rentals In Easy Steps"
+    },
+    "Compare":{
+      "Compare_Tractore":"Compare Tractors"
+    },
+    "Dealer":{
+      "DEALER_LOCATOR":"DEALER LOCATOR",
+      "Search_Nearest_Dealer":"Search Nearest Dealer",
+      "State":"State",
+      "Select_State":"Select State",
+      "District":"District",
+      "Select_District":"Select District",
+      "Tehsil_or_Taluka":"Tehsil or Taluka",
+      "Select_Taluka":"Select Tehsil or Taluka",
+      "Find_Dealer":"Find Dealer",
+      "Tractore_Dealer_List":"Tractor Dealer List",
+      "Know_More":"Know More"
+    },
+    "Loan":{
+      "Apply_Loan":"Apply for Loan",
+      "Loan":"Loan",
+      "Name":"Name",
+      "Enter_Name":"Enter your Name",
+      "Mobile_No":"Mobile Number",
+      "Enter_Mobile_NO":"Enter Your Mobile Number",
+      "Apply_Now":"Apply Now",
+      "Loan_Steps":"New Tractor Loan in 4 Steps",
+      "Get_New_Tractor_Loan":"Get New tractor loan quickly by these 4 steps.",
+      "Fill_The_Form":"Fill the Form",
+      "These_Details":"These details make the",
+      "Process_Quick":"process quick.",
+      "Compare_Offers":"Compare Offers",
+      "Best_Loan":"Choose the best loan offer",
+      "For_You":"for you.",
+      "Instant_Approval":"Instant Approval",
+      "Immediate_Approval_From":"Get immediate approval from",
+      "The_Bank":"the bank.",
+      "Money_In_Acc":"Money in your Account",
+      "You_Gett_Instant":"You can get instant money in an",
+      "Account":"account.",
+      "New_Way_Farming":"Tractor Loan Translates to a New Way Of Farming!",
+      "Tractors_Are_Essential_Text":"Tractors are essential tools for farmers, aiding in various tasks, from planting seeds to transporting harvested crops. For many small-scale farmers in India, purchasing a tractor can be financially challenging. Tractor loans or finances become a crucial solution in such situations. Tractor loans fall under the agricultural loan category and are provided by leading banks, government financial bodies, and non-banking financial companies (NBFCs). These loans facilitate the easy acquisition of new and mini.  Individuals or groups can apply, and repayment, managed through equated monthly instalments (EMIs), can be collective or individual within the group. Before buying a tractor for your farm, knowing the interest rates on tractor loans from various banks is vital. This helps you make an informed decision and find the best financing option for your agricultural investment. Compare rates to find the most suitable choice. Also, the Tractor Loan EMI Calculator tool is a perfect way to calculate your tractor loan EMI.",
+      "EMI_cal":"EMI cal",
+      "Int_Rate_Comparison":"Tractor Loan Interest Rate Comparison",
+      "Compare_The_New_Tractor_Loan_Int":"Compare the new tractor loan interest rate below."
     }
 
   }

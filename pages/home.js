@@ -216,10 +216,10 @@ export default function HomePage({ locale }) {
     };
 
     const WhyChooseItems = [
-        { src: Warranty, alt: "choose1", label: "Warranty" },
-        { src: EasyEMI, alt: "EasyEMI", label: "Easy EMi & Pricing" },
-        { src: Documenting, alt: "Documenting", label: "Documenting" },
-        { src: Finance, alt: "Finance", label: "Mahendra Financing" }
+        { src: Warranty, alt: "choose1", label: t('Home.Warranty') },
+        { src: EasyEMI, alt: "EasyEMI", label: t('Home.Easy_EMI') },
+        { src: Documenting, alt: "Documenting", label: t('Home.Documenting') },
+        { src: Finance, alt: "Finance", label: t('Home.Mahendra_Financing') }
     ];
 
     const exploreimages = [
