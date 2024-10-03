@@ -17,7 +17,11 @@ import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
 import Heading from "../../components/Heading";
 import { useTranslation } from 'next-i18next';
+import { getLocaleProps } from "@helpers";
 
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+}
 export default function DealerLocator() {
   const { t, i18n } = useTranslation('common');
   const router = useRouter();

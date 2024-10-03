@@ -120,6 +120,21 @@
     "EMI_cal":"ईएमआय कॅल्क्युलेटर",
     "Int_Rate_Comparison":"ट्रॅक्टर कर्ज व्याज दरांची तुलना",
     "Compare_The_New_Tractor_Loan_Int":"खाली नवीन ट्रॅक्टर कर्ज व्याज दरांची तुलना करा."
+  },
+  "Gallery":{
+    "Content_Gallery":"सामग्री गॅलरी",
+    "New_Updates":"नवीन अद्यतने",
+    "Recent_Posts":"अलीकडील पोस्ट"
+  },
+  "Contact":{
+    "About_Requirement":"आपल्या आवश्यकता आम्हाला सांगा आणि कोणतेही प्रश्न आम्हाला लिहा. आमची समर्थन टीम तुम्हाला 24 तासांच्या आत मदत करेल",
+    "Email_Id":"ईमेल आयडी",
+    "Enter_Email":"आपला ईमेल आयडी प्रविष्ट करा",
+    "Message":"संदेश",
+    "Your_Message":"तुमचा संदेश",
+    "Submit_Request":"अनुरोध सबमिट करा",
+    "Tactor_In":"tractorworld.in",
+    "Contact_No":"+91 95533 53077"
   }
 
 
