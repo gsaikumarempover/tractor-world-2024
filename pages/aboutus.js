@@ -9,11 +9,12 @@ import Btn from '@components/Btn';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import tractorImg from '@Images/about/tractor.svg';
 import { useTranslation } from "next-i18next"; 
-import { getLocaleStaticProps } from "../lib/localeUtils"; 
-  
-export async function getStaticProps({ locale }) {
-    return getLocaleStaticProps(locale, ['common']); // Specify any namespaces
-  }
+
+import { getLocaleProps } from "@helpers";
+
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+} 
   
 export default function about() {
   const { t, i18n } = useTranslation('common');
