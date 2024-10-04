@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Image from "next/image";
@@ -8,11 +8,19 @@ import CallIcon from '@Images/callIcon.svg';
 import enquirywebBanner from '@Images/home/enquirywebBanner.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
 import Link from "next/link";
+import { getLocaleProps } from "@helpers";
+import { useTranslation } from "next-i18next";
+
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+}
+
 
 export default function Enquiry() {
+    const { t, i18n } = useTranslation('common');
     const breadcrumbData = [
-        { label: "Home", link: "/" },
-        { label: "Enquiry", link: "#" },
+        { label: t('Home.Home'), link: "/" },
+        { label: t('Home.Enquiry'), link: "#" },
     ];
 
     const [isMobile, setIsMobile] = useState(false);
@@ -63,14 +71,14 @@ export default function Enquiry() {
                 <Banner
                     breadcrumbs={breadcrumbData}
                     heading={""}
-                    bannerImg={isMobile?bannerImg:enquirywebBanner}
-                    BannerUnderlineImg={false} 
-                    text={'Tractor or implement prices shown on any external website are not  approved or authorized by Tractor World Tractors. Please submit your details  or contact your nearest authorized Mahindra dealership to get the best  price in your location.'}
+                    bannerImg={isMobile ? bannerImg : enquirywebBanner}
+                    BannerUnderlineImg={false}
+                    text={t('Enquiry.Implement_Prices')}
                 />
                 <div className="bg-white"></div>
                 <BannerStrip
                     isEnquiry={true}
-                    heading={"Share Your Details To Get Tractor Prices"}
+                    heading={t('Enquiry.Share_Your_Details')}
                     content={
                         <>
                             <div>
@@ -80,7 +88,7 @@ export default function Enquiry() {
 
                                         <div className="w-full">
                                             <label htmlFor="name" className="block mb-2">
-                                                Name
+                                                {t('Loan.Name')}
                                             </label>
                                             <input
                                                 type="text"
@@ -89,13 +97,13 @@ export default function Enquiry() {
                       border-gray-300 text-black rounded-md block w-full 
                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                        dark:placeholder-gray-400 dark:text-white"
-                                                placeholder="Enter your Name"
+                                                placeholder={t('Loan.Enter_Name')}
                                             />
                                         </div>
 
                                         <div className="w-full">
                                             <label htmlFor="number" className="block mb-2">
-                                                Mobile Number
+                                                {t('Loan.Mobile_No')}
                                             </label>
                                             <input
                                                 type="number"
@@ -104,13 +112,13 @@ export default function Enquiry() {
                       border-gray-300 text-black rounded-md block w-full 
                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                        dark:placeholder-gray-400 dark:text-white"
-                                                placeholder="Enter Your Mobile Number"
+                                                placeholder={t('Loan.Enter_Mobile_NO')}
                                             />
                                         </div>
 
                                         <div className="w-full">
                                             <label htmlFor="location" className="block mb-2">
-                                                Select Budget
+                                                {t('Enquiry.Select_Budget')}
                                             </label>
                                             <select
                                                 id="location"
@@ -119,7 +127,7 @@ export default function Enquiry() {
                                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                                      dark:placeholder-gray-400 dark:text-white"
                                             >
-                                                <option value="">Select Budget</option>
+                                                <option value="">{t('Enquiry.Select_Budget')}</option>
                                                 <option value="0_3">0 Lakh - 3 Lakh</option>
                                                 <option value="3_5">3 Lakh - 5 Lakh</option>
                                                 <option value="5_7">5 Lakh - 7 Lakh</option>
@@ -128,51 +136,49 @@ export default function Enquiry() {
                                             </select>
                                         </div>
 
-                                      
-                    <div className="w-full">
-                      <label className="form-label">State</label>
-                      <select className="block w-full px-2 py-[7px] border 
+
+                                        <div className="w-full">
+                                            <label className="form-label">{t('Dealer.State')}</label>
+                                            <select className="block w-full px-2 py-[7px] border 
                     border-gray-300 rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                        <option selected>Select State</option>
-                        <option value="madhyaPradesh">Madhya Pradesh</option>
-                        <option value="maharashtra">Maharashtra</option>
-                      </select>
-                    </div>
+                                                <option selected>{t('Dealer.Select_State')}</option>
+                                                <option value="madhyaPradesh">Madhya Pradesh</option>
+                                                <option value="maharashtra">Maharashtra</option>
+                                            </select>
+                                        </div>
 
-                    <div className="w-full">
-                      <label className="form-label">District</label>
-                      <select className="block w-full px-2 py-[7px] 
+                                        <div className="w-full">
+                                            <label className="form-label">{t('Dealer.District')}</label>
+                                            <select className="block w-full px-2 py-[7px] 
                      border border-gray-300 rounded-md  text-[14px] text-[#B9B9B9] mt-2">
-                        <option selected>Select District</option>
-                        <option value="bhopal">Bhopal</option>
-                        <option value="alirajpur">Alirajpur</option>
-                        <option value="barwani">Barwani</option>
-                      </select>
-                    </div>
+                                                <option selected>{t('Dealer.Select_District')}</option>
+                                                <option value="bhopal">Bhopal</option>
+                                                <option value="alirajpur">Alirajpur</option>
+                                                <option value="barwani">Barwani</option>
+                                            </select>
+                                        </div>
 
-                    <div className="w-full">
-                      <label className="form-label">Tehsil or Taluka</label>
-                      <select className="block w-full px-2 py-[7px] border border-gray-300 
+                                        <div className="w-full">
+                                            <label className="form-label">{t('Dealer.Tehsil_or_Taluka')}</label>
+                                            <select className="block w-full px-2 py-[7px] border border-gray-300 
                     rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                        <option value="" selected>Select Tehsil or Taluka</option>
-                        <option value="Berasia">Berasia</option>
-                        <option value="Huzur">Huzur</option>
-                      </select>
-                    </div>
+                                                <option value="" selected>{t('Dealer.Select_Taluka')}</option>
+                                                <option value="Berasia">Berasia</option>
+                                                <option value="Huzur">Huzur</option>
+                                            </select>
+                                        </div>
 
 
 
                                     </div>
 
-                                    
+
                                     <div className="w-full flex gap-2 mt-6">
-                                            <input type="checkbox" className="mt-1" />
-                                            <label htmlFor="location" className="block mb-2 mt-0">
-                                                By clicking “Get Price”, I agree to be  contacted
-                                                by Tractor world associates regarding my
-                                                interest via phone call, WhatsApp or any other medium.
-                                            </label>
-                                        </div>
+                                        <input type="checkbox" className="mt-1" />
+                                        <label htmlFor="location" className="block mb-2 mt-0">
+                                            {t('Enquiry.I_Agree')}
+                                        </label>
+                                    </div>
 
 
                                     <div className="w-full flex justify-center mt-6">
@@ -180,7 +186,7 @@ export default function Enquiry() {
                                             className="bg-secondaryColor px-2 py-3 text-white 
                         text-center rounded-md sm:w-1/2 w-full font-semibold cursor-pointer"
                                         >
-                                            Get Price
+                                            {t('Enquiry.Get_Price')}
                                         </button>
                                     </div>
                                 </form>
@@ -193,12 +199,12 @@ export default function Enquiry() {
             <div className="bg-white pb-6 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3 sm:h-auto h-24">
                 <div className="relative px-4 sm:flex justify-center">
                     <div>
-                    <div className="flex gap-4 items-center">
-                        <Image src={CallIcon} alt="phone" width={40} height={40} />
-                        <p className="text-medium">For more information call us<br></br>
-                            on our Toll-Free Number:</p>
-                    </div>
-                    <p className="text-primaryColor">24*7 <Link href="tel:18006669999">1800 666 9999</Link></p>
+                        <div className="flex gap-4 items-center">
+                            <Image src={CallIcon} alt="phone" width={40} height={40} />
+                            <p className="text-medium">{t('Enquiry.More_Info')}<br></br>
+                                {t('Enquiry.On_Call')}</p>
+                        </div>
+                        <p className="text-primaryColor">{t('Enquiry.24*7 ')}<Link href="tel:18006669999">{t('Footer.Number')}</Link></p>
 
                     </div>
                     <div className="sm:relative absolute sm:right-[67px] right-[-4px] top-[-8px] sm:w-[200px] w-[160px]">

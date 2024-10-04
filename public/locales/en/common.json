@@ -39,7 +39,11 @@
       "Documenting":"Documenting",
       "Mahendra_Financing":"Mahendra Financing",
       "Call_Now":"Call Now",
-      "Request_Call":"Request Call Back"
+      "Request_Call":"Request Call Back",
+      "Call":"Call",
+      "Enquiry":"Enquiry",
+      "Share":"Share",
+      "Submit":"Submit"
 
     },
     "Footer":{ 
@@ -130,6 +134,16 @@
       "Submit_Request":"Submit Request",
       "Tactor_In":"tractorworld.in",
       "Contact_No":"+91 95533 53077"
+    },
+    "Enquiry":{
+      "Implement_Prices":"Tractor or implement prices shown on any external website are not  approved or authorized by Tractor World Tractors. Please submit your details  or contact your nearest authorized Mahindra dealership to get the best  price in your location.",
+      "Share_Your_Details":"Share Your Details To Get Tractor Prices",
+      "Select_Budget":"Select Budget",
+      "I_Agree":"By clicking “Get Price”, I agree to be contacted by Tractor world associates regarding my interest via phone call, WhatsApp or any other medium.",
+      "Get_Price":"Get Price",
+      "More_Info":"For more information call us",
+      "On_Call":"on our Toll-Free Number:",
+      "24*7 ":"24*7 "
     }
 
   }

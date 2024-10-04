@@ -554,22 +554,22 @@ export default function HomePage({ locale }) {
                         <div className='flex text-[15px]'>
                             <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
                                 <Image src={homeIcon} alt="homeIcon" width={20} height={20} />
-                                <p>Home</p>
+                                <p>{t('Home.Home')}</p>
                             </div>
 
                             <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4' onClick={isShowCallModal}>
                                 <Image src={callIcon} alt="callIcon" width={20} height={20} />
-                                <p>Call</p>
+                                <p>{t('Home.Call')}</p>
                             </div>
 
                             <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
                                 <Image src={enquiryIcon} alt="enquiryIcon" width={20} height={20} />
-                                <p> <Link href="/enquiry">Enquiry</Link></p>
+                                <p> <Link href="/enquiry">{t('HOme.Enquiry')}</Link></p>
                             </div>
 
                             <div className='text-center px-4 py-3 w-1/4' onClick={handleShareClick}>
                                 <Image src={shareIcon} alt="shareIcon" width={20} height={20} />
-                                <p>Share</p>
+                                <p>{t('Home.Share')}</p>
                             </div>
 
                         </div>
@@ -819,15 +819,15 @@ export default function HomePage({ locale }) {
                 <div className='flex items-center sm:flex-row flex-col-reverse w-full'>
                     <div className='w-full px-4 pb-4'>
                         <div className='mb-2'>
-                            <label className='mb-2 block'>Name</label>
-                            <input type='text' placeholder='Enter Your Name' className='w-full rounded border-[#d1cccc]' />
+                            <label className='mb-2 block'>{t('Loan.Name')}</label>
+                            <input type='text' placeholder={t('Loan.Enter_Name')} className='w-full rounded border-[#d1cccc]' />
                         </div>
                         <div className='mb-2'>
-                            <label className='mb-2 block'>Mobile Number</label>
-                            <input type='text' placeholder='Select Mobile Number' className='w-full rounded border-[#d1cccc]' />
+                            <label className='mb-2 block'>{t('Loan.Mobile_No')}</label>
+                            <input type='text' placeholder={t('Laon.Enter_Mobile_NO')} className='w-full rounded border-[#d1cccc]' />
                         </div>
                         <div className='w-full mt-3'>
-                            <Btn text={'Submit'} bgColor={true} />
+                            <Btn text={t('Home.Submit')} bgColor={true} />
                         </div>
                     </div>
                     <div className="sm:relative w-[329px] h-[223px] overflow-hidden">
