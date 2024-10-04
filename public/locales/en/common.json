@@ -10,7 +10,10 @@
       "Sell": "Sell",
       "What_You_Looking_For":"What are you looking for ?",
       "Start_Typing":"Start typing",
-      "Social_Media":"Social Media Links"
+      "Social_Media":"Social Media Links",
+      "What_are_you_looking_for":"What are you looking for ?",
+      "Start_typing":"Start typing",
+      "title":"Tractor World"
     },
     "Inventory": {
       "PopularTractors": "Popular Tractors"

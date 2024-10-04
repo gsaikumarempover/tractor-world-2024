@@ -10,7 +10,10 @@
       "Sell": "बेचें",
       "What_You_Looking_For":"आप क्या ढूंढ रहे हैं?",
       "Start_Typing":"टाइप करना शुरू करें", 
-      "Social_Media":"सोशल मीडिया लिंक"
+      "Social_Media":"सोशल मीडिया लिंक",
+      "What_are_you_looking_for":"What are you looking for ?",
+      "Start_typing":"Start typing",
+      "title":"ट्रैक्टर वर्ल्ड"
     },
     "Inventory": {
       "PopularTractors": "लोकप्रिय ट्रैक्टर"
