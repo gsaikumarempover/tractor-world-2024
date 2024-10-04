@@ -4,12 +4,24 @@ import Image from 'next/image';
 import languagePopupImg from '@Images/languagePopup.svg';
 import Heading from "@components/Heading";
 import BuyTractors from '@Images/home/buytractors.svg';
+import BuyTractorsHi from '@Images/home/buytractorsHi.svg';
+import BuyTractorsMr from '@Images/home/buytractorsMr.svg';
 import SellTractors from '@Images/home/SellTractors.svg';
+import SellTractorsHi from '@Images/home/SellTractorsHi.svg';
+import SellTractorsMr from '@Images/home/SellTractorsMr.svg';
 import Loan from '@Images/home/Loan.svg';
+import LoanHi from '@Images/home/LoanHi.svg';
+import LoanMr from '@Images/home/LoanMr.svg';
 import HP from '@Images/hp.svg';
 import LocateDealer from '@Images/home/locateDealer.svg';
+import LocateDealerHi from '@Images/home/locateDealerHi.svg';
+import LocateDealerMr from '@Images/home/locateDealerMr.svg';
 import ContentHub from '@Images/home/ContentHub.svg';
+import ContentHubHi from '@Images/home/ContentHubHi.svg';
+import ContentHubMr from '@Images/home/ContentHubMr.svg';
 import Compare from '@Images/home/compare.svg';
+import CompareHi from '@Images/home/compareHi.svg';
+import CompareMr from '@Images/home/compareMr.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
 import { ReadMore } from '@components/ReadMore';
 import LiveInventoryContainer from '@components/LiveInventory';
@@ -229,27 +241,27 @@ export default function HomePage({ locale }) {
 
     const exploreimages = [
         {
-            image: BuyTractors,
+            image: language == 'HI' ? BuyTractorsHi : language == 'MR' ? BuyTractorsMr : BuyTractors,
             url: '/inventory'
         },
         {
-            image: SellTractors,
+            image: language == 'HI' ? SellTractorsHi : language == 'MR' ? SellTractorsMr : SellTractors,
             url: '/sell-tractor'
         },
         {
-            image: Compare,
+            image: language == 'HI' ? CompareHi : language == 'MR' ? CompareMr : Compare,
             url: '/compare-tractors'
         },
         {
-            image: LocateDealer,
+            image: language == 'HI' ? LocateDealerHi : language == 'MR' ? LocateDealerMr : LocateDealer,
             url: '/dealer-locator'
         },
         {
-            image: Loan,
+            image: language == 'HI' ? LoanHi : language == 'MR' ? LoanMr : Loan,
             url: '/loan'
         },
         {
-            image: ContentHub,
+            image: language == 'HI' ? ContentHubHi : language == 'MR' ? ContentHubMr : ContentHub,
             url: '/content-hub'
         },
     ];
