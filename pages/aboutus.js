@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
   return await getLocaleProps(context);
 } 
   
-export default function about() {
+export default function About() {
   const breadcrumbData = [
     { label: t('Home.Home'), link: '/' },
     { label: t('Navbar.Aboutus'), link: '#' },
