@@ -564,7 +564,7 @@ export default function HomePage({ locale }) {
 
                             <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
                                 <Image src={enquiryIcon} alt="enquiryIcon" width={20} height={20} />
-                                <p> <Link href="/enquiry">{t('HOme.Enquiry')}</Link></p>
+                                <p> <Link href="/enquiry">{t('Home.Enquiry')}</Link></p>
                             </div>
 
                             <div className='text-center px-4 py-3 w-1/4' onClick={handleShareClick}>
