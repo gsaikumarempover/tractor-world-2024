@@ -13,10 +13,25 @@
       "Social_Media":"Social Media Links",
       "What_are_you_looking_for":"What are you looking for ?",
       "Start_typing":"Start typing",
-      "title":"Tractor World"
+      "title":"Tractor World",
+      "SearchPlaceHolder":"search..."
+
     },
     "Inventory": {
       "PopularTractors": "Popular Tractors"
+    },
+    "SellTractor":{
+     "Heading":"Sell Your Used Tractor",
+     "Sell_Now":"Sell Now",
+     "Why_Tractor_world":"Why Tractor World ?",
+     "Tractor_World_is_best_place":"Tractor World is best place to sell your tractor",
+     "Why_Tractor_world_info1":"If any of the above questions halt your moving eyeballs, then yes, you have come to the right place. Many questions, one answer – Tractor Junction. We at Tractor Junction know what does a tractor cost to you and how does it affect your daily lives. As famous agriculture researchers quote, Tractors do not come with glamorous features like any other automobile but for sure go out with a glamorous price. In simple words, a tractor that comes with a high resale value is more dependable than the ones which do not offer a good resale price.",
+     "Why_Tractor_world_info2":"Tractor Junction works to make this price even better for you. If you want to sell your old tractor at the best price and ease then we have got you a simplified process that comforts you and does not hamper you in your daily lives. Register with us, submit your inquiry, post the update about your tractor and you are done, our highly trained tractor specialists quote the best price for your tractor and work to get hassle free buyers on-board. Selling an old tractor had never been this easy, with Tractor Junction your tractor loves you back the way you do.",
+     "Read_less":"Read less",
+     "Read_more":"Read more",
+     "Thinking_to_upgrade" :"Thinking to upgrade your old tractor with a new one?",
+     "Waiting_for_bestOffres":" Waiting for the best offers and schemes?",
+     "Have_an_used_tractor":"Have an used tractor to sell out?"
     },
     "Home":{
       "Home":"Home",

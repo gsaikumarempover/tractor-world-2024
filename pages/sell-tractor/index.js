@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
-import Heading from "../../components/Heading";
+import Heading from "@components/Heading";
 import Image from "next/image";
 import customerReview from "@Images/sellTractor/customer-review.svg";
 import Market from "@Images/sellTractor/market.svg";
@@ -9,15 +9,28 @@ import Rupee from "@Images/sellTractor/rupee.svg";
 import Certified from "@Images/sellTractor/certified.svg";
 import Notifications from "@Images/sellTractor/notifications.svg";
 import Support from "@Images/sellTractor/support.svg";
-import BannerStrip from "../../components/BannerStrip";
+import BannerStrip from "@components/BannerStrip";
 import bannerImg from "@Images/sellTractor/engineering-excellence-banner.svg";
 import mblBannerImg from "@Images/sellTractor/mblBanner.svg";
 
+import { getLocaleProps } from "@helpers";
+import { useTranslation } from "next-i18next";
 
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+}
 export default function SellTractor() {
+  const { t, i18n } = useTranslation('common');
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleReadMore = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   const breadcrumbData = [
-    { label: 'Home', link: '/' },
-    { label: 'Sell Tractor', link: '#' },
+    { label: t('Home.Home'), link: '/' },
+    { label: t('Navbar.SellTractor'), link: '#' },
   ];
   const [isMobile, setIsMobile] = useState(false);
 
@@ -63,16 +76,16 @@ export default function SellTractor() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth <= 768); 
-     const handleResize = () => {
-       setIsMobile(window.innerWidth <= 768);
-     }; 
-     window.addEventListener('resize', handleResize); 
+      setIsMobile(window.innerWidth <= 768);
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
+      window.addEventListener('resize', handleResize);
       return () => {
-       window.removeEventListener('resize', handleResize);
-     };
-   }
- }, []);
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
 
 
   return (
@@ -84,45 +97,45 @@ export default function SellTractor() {
           bannerImg={!isMobile ? bannerImg : mblBannerImg}
           BannerUnderlineImg={false} />
 
-        <BannerStrip heading={'Sell Your Used Tractor'}
+        <BannerStrip heading={t('SellTractor.Heading')}
           content={
             <>
               <div>
                 <form>
                   <div className='flex sm:flex-row flex-col gap-4 mt-4 items-end'>
 
-                  <div className='sm:w-1/4 w-full'>
-                      <label htmlFor="name" className="block mb-2">Name</label>
+                    <div className='sm:w-1/4 w-full'>
+                      <label htmlFor="name" className="block mb-2">{t('Loan.Name')}</label>
                       <input type="text" id="name" className="bg-white border 
                       border-gray-300 text-black rounded-md block w-full 
                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
-                       dark:placeholder-gray-400 dark:text-white" placeholder="Enter your Name" />
+                       dark:placeholder-gray-400 dark:text-white" placeholder={t('Loan.Enter_Name')} />
                     </div>
 
                     <div className='sm:w-1/4 w-full'>
-                      <label htmlFor="number" className="block mb-2">Mobile Number</label>
+                      <label htmlFor="number" className="block mb-2">{t('Loan.Mobile_No')}</label>
                       <input type="number" id="name" className="bg-white border 
                       border-gray-300 text-black rounded-md block w-full 
                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                        dark:placeholder-gray-400 dark:text-white"
-                        placeholder="Enter Your Mobile Number" />
+                        placeholder={t('Loan.Enter_Mobile_NO')} />
                     </div>
-                   
-                  <div className="sm:w-1/4 w-full">
-                      <label className="form-label">State</label>
-                      <select className="block w-full px-2 py-[7px] border 
-                    border-gray-300 rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                        <option selected>Select State</option>
+
+                    <div className="sm:w-1/4 w-full">
+                      <label className="block mb-2">{t('Dealer.State')}</label>
+                      <select className="bg-white border border-gray-300 text-black rounded-md block w-full p-2.5 dark:bg-gray-700
+                       dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        <option selected>{t('Dealer.Select_State')}</option>
                         <option value="madhyaPradesh">Madhya Pradesh</option>
                         <option value="maharashtra">Maharashtra</option>
                       </select>
                     </div>
 
                     <div className="sm:w-1/4 w-full">
-                      <label className="form-label">District</label>
-                      <select className="block w-full px-2 py-[7px] 
-                     border border-gray-300 rounded-md  text-[14px] text-[#B9B9B9] mt-2">
-                        <option selected>Select District</option>
+                      <label className="block mb-2">{t('Dealer.District')}</label>
+                      <select className="bg-white border border-gray-300 text-black rounded-md block w-full
+                       p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        <option selected>{t('Dealer.Select_District')}</option>
                         <option value="bhopal">Bhopal</option>
                         <option value="alirajpur">Alirajpur</option>
                         <option value="barwani">Barwani</option>
@@ -130,32 +143,30 @@ export default function SellTractor() {
                     </div>
 
                     <div className="sm:w-1/4 w-full">
-                      <label className="form-label">Tehsil or Taluka</label>
-                      <select className="block w-full px-2 py-[7px] border border-gray-300 
-                    rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                        <option value="" selected>Select Tehsil or Taluka</option>
+                      <label className="block mb-2">{t('Dealer.Tehsil_or_Taluka')}</label>
+                      <select className="bg-white border border-gray-300 text-black rounded-md block w-full p-2.5 dark:bg-gray-700
+                       dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        <option value="" selected>{t('Dealer.Select_Taluka')}</option>
                         <option value="Berasia">Berasia</option>
                         <option value="Huzur">Huzur</option>
                       </select>
                     </div>
-                    
-                    
 
                     <div className='sm:w-1/4 w-full'>
                       <div className='bg-secondaryColor px-2 py-3 text-white 
                         text-center rounded-md font-semibold cursor-pointer'>
-                        Sell Now
+                        {t('SellTractor.Sell_Now')}
                       </div>
                     </div>
                   </div>
                 </form>
 
               </div>
-              </>
+            </>
           } />
 
         <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
-          <Heading heading={"Why Tractor World ?"} />
+          <Heading heading={t('SellTractor.Why_Tractor_world')} />
 
           <div className="">
             <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
@@ -175,47 +186,46 @@ export default function SellTractor() {
                 </div>
               ))}
             </div>
-          </div> 
-        
+          </div>
+
         </div>
         <div className="p-2 md:bg-transparent">
-            <Heading
-              heading={"Tractor World is best place to sell your tractor"}
-            />
-            {/* <div BannerUnderlineImg={true}> */}
-            <div className="sm:text-base text-[13px]">
-              <p className="my-1 font-bold text-black">
-                Thinking to upgrade your old tractor with a new one?
-              </p>
+          <Heading
+            heading={t('SellTractor.Tractor_World_is_best_place')}
+          />
+          {/* <div BannerUnderlineImg={true}> */}
+          <div className="sm:text-base text-[13px]">
+            <p className="my-1 font-bold text-black">
+              {t('SellTractor.Thinking_to_upgrade')}
+            </p>
 
-              <p className="my-1 font-bold text-black">
-                Waiting for the best offers and schemes?
-              </p>
+            <p className="my-1 font-bold text-black">
+             {t('SellTractor.Waiting_for_bestOffres')}
+            </p>
 
-              <p className="my-1 font-bold text-black">
-                Have an used tractor to sell out?
-              </p>
-            </div>
-            <p className="sm:text-medium text-[13px] my-2">
-              If any of the above questions halt your moving eyeballs, then yes,
-              you have come to the right place. Many questions, one answer –
-              Tractor Junction. We at Tractor Junction know what does a tractor
-              cost to you and how does it affect your daily lives. As famous
-              agriculture researchers quote, Tractors do not come with glamorous
-              features like any other automobile but for sure go out with a
-              glamorous price. In simple words, a tractor that comes with a high
-              resale value is more dependable than the ones which do not offer a
-              good resale price. Tractor Junction works to make this price even
-              better for you. If you want to sell your old tractor at the best
-              price and ease then we have got you a simplified process that
-              comforts you and does not hamper you in your daily lives. Register
-              with us, submit your inquiry, post the update about your tractor
-              and you are done, our highly trained tractor specialists quote the
-              best price for your tractor and work to get hassle free buyers
-              on-board. Selling an old tractor had never been this easy, with
-              Tractor Junction your tractor loves you back the way you do.
+            <p className="my-1 font-bold text-black">
+            {t('SellTractor.Have_an_used_tractor')}
             </p>
           </div>
+          <p className="sm:text-medium text-[13px] my-2">
+            {/* dynamic read more */}
+            {/*{isExpanded ? item.description : `${item.description.slice(0, 250)}...`}*/}
+             {/*end dynamic read more */}
+            {t('SellTractor.Why_Tractor_world_info1')}
+            {isExpanded && (
+              <>
+                {t('SellTractor.Why_Tractor_world_info2')}
+              </>
+            )} 
+            <span
+              className="text-[#407BD2] sm:uppercase text-sm cursor-pointer"
+              onClick={toggleReadMore}
+            >
+              {isExpanded ?  t('SellTractor.Read_less') + ' »' : t('SellTractor.Read_more') + ' »'}
+            </span>
+          </p>
+
+        </div>
       </Layout>
     </div>
   );

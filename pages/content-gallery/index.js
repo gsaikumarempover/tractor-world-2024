@@ -302,11 +302,10 @@ export default function ContentGallery() {
                                         className="text-[#407BD2] sm:uppercase text-sm cursor-pointer"
                                         onClick={() => toggleDescription(item.id)}
                                     >
-                                        {expandedItems[item.id] ? ' Read less »' : ' Read more »'}
+                                        {expandedItems[item.id] ? t('SellTractor.Read_less') + ' »' : t('SellTractor.Read_more') + ' »'}
                                     </span>
                                 </p>
-                                {/* <p className="sm:mt-0 mt-2 sm:text-base text-sm">{item.description}<span className="text-[#407BD2] sm:uppercase text-sm cursor-pointer">Read more »</span></p> */}
-                            </div>
+                             </div>
                         ))}
 
                         <div className="pagination my-4 flex justify-center items-center space-x-2">
