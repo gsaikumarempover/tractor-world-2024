@@ -227,7 +227,12 @@ export default function HomePage({ locale }) {
 
 
     const handleShareClick = () => {
-        const message = encodeURIComponent("Check out Tractor World! https://tractor-world-2024.vercel.app/");
+        const MessageText = language === 'HI'
+            ? 'ट्रैक्टर वर्ल्ड देखें!'
+            : language === 'MR'
+                ? 'ट्रॅक्टर वर्ल्ड पहा!'
+                : 'Check out Tractor World!';
+        const message = encodeURIComponent(MessageText + " https://tractor-world-2024.vercel.app/");
         const whatsappURL = `https://api.whatsapp.com/send?text=${message}`;
         window.open(whatsappURL, '_blank');
     };
