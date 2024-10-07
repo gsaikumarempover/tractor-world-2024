@@ -16,7 +16,8 @@ export async function getServerSideProps(context) {
   return await getLocaleProps(context);
 } 
   
-export default function About() {
+export default function About({locale}) {
+  const language = locale?.toUpperCase();
   const { t, i18n } = useTranslation('common');
   const breadcrumbData = [
     { label: t('Home.Home'), link: '/' },
@@ -116,7 +117,7 @@ export default function About() {
         <div className="image-wrapper sm:overflow-hidden overflow-x-auto">
           <div className="sm:min-w-full min-w-[586px]">
             <Image
-              src='/images/about/rentalSteps.svg'
+              src={language === 'HI' ? '/images/about/rentalStepsHi.svg' : language === 'MR' ?'/images/about/rentalStepsMr.svg' : '/images/about/rentalSteps.svg' }
               layout="responsive"
               width={1673}
               height={493}
