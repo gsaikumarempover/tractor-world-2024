@@ -17,12 +17,14 @@ export async function getServerSideProps(context) {
 } 
   
 export default function about() {
-  const { t } = useTranslation();
-  
   const breadcrumbData = [
     { label: t('Home.Home'), link: '/' },
     { label: t('Navbar.Aboutus'), link: '#' },
   ];
+  // const router = useRouter();
+  // const language = locale?.toUpperCase();
+  const { t, i18n } = useTranslation('common');
+
   return (
 
     <Layout currentPage={"about"}>
