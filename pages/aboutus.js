@@ -17,7 +17,8 @@ export async function getServerSideProps(context) {
 } 
   
 export default function about() {
-  const { t, i18n } = useTranslation('common');
+  const { t } = useTranslation();
+  
   const breadcrumbData = [
     { label: t('Home.Home'), link: '/' },
     { label: t('Navbar.Aboutus'), link: '#' },
