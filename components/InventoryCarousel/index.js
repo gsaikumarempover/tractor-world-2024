@@ -5,7 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from 'next/image';
 import shareIcon from '@Images/tractordetails/shareIcon.svg';
 
-export default function InventoryCarousel() {
+export default function InventoryCarousel({locale}) {
+    const language = locale?.toUpperCase();
     const baseUrl = '/images/liveInventory'
     const settings = {
         customPaging: function (i) {
