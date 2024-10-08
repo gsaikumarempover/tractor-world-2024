@@ -59,14 +59,14 @@ export default function Navbar({ currentPage, onClick, onClickForLanguage }) {
             </svg> */}
           </button>
 
-          <a href="/" className="flex items-center sm:space-x-3 rtl:space-x-reverse">
+          <Link href="/" className="flex items-center sm:space-x-3 rtl:space-x-reverse">
             <div className="sm:block hidden">
               <Image src={Logo} alt="Tractor World Logo" />
             </div>
             <div className="sm:hidden block">
               <Image src={MblLogo} alt="mblLogo"></Image>
             </div>
-          </a>
+          </Link>
 
           <span className="sm:hidden ml-auto mr-2 mt-1" onClick={onClick}>
             <Image src={Search} alt="Search" width={25} height={25} />
