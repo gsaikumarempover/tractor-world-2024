@@ -23,6 +23,9 @@ import { useRouter } from 'next/router';
 import LeftSection from '@components/EMI/LeftSection';
 import RightSection from '@components/EMI/RightSection';
 import userDataSlice from '@store/userDataSlice';
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -534,7 +537,8 @@ export default function TractorDetails({ locale }) {
 
     // Handle loading and errors
     if (inventoryLoading || similarTractorsLoading) return (
-        <Loader />
+        <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
+
     );
 
     if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.message || similarTractorsError?.message}</p>;

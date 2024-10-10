@@ -14,6 +14,9 @@ import { useQuery } from "@apollo/client";
 import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
 import { getLocaleProps } from "@helpers";
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
 
 export default function StoreInventory({ locale }) {
     const breadcrumbData = [
@@ -45,7 +48,7 @@ export default function StoreInventory({ locale }) {
 
     // Combined loading and error handling
     if (loading) return (
-        <Loader />
+        <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
     );
 
     if (error) return <p>Error: {error.message}</p>;

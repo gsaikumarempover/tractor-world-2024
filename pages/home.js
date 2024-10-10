@@ -36,7 +36,10 @@ import Tractor from '@Images/home/tractor.svg';
 import homeIcon from '@Images/footer/homeIcon.svg'
 import callIcon from '@Images/footer/callIcon.svg'
 import enquiryIcon from '@Images/footer/enquiryIcon.svg'
-import shareIcon from '@Images/footer/shareIcon.svg'
+import shareIcon from '@Images/footer/shareIcon.svg';
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
 import Btn from '@components/Btn';
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
@@ -51,7 +54,7 @@ import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
-import { getLocaleProps } from "@helpers";
+import { getLocaleProps } from "@helpers"; 
 
 export async function getServerSideProps(context) {
     return await getLocaleProps(context);
@@ -127,13 +130,11 @@ export default function HomePage({ locale }) {
 
     // Combined loading and error handling
     if (loading) return (
-        <Loader />
+         <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
     );
 
-    if (error) return <p>Error: {error.message}</p>;
-
-
-
+    if (error) return <p>Error: {error.message}</p>; 
+    
     const bannersData = data?.homeSliders?.nodes || [];
     const liveInventoryData = data?.allLiveInventory?.edges || [];
     const testimonialsData = data?.testimonials?.nodes || [];

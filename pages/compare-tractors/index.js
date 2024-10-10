@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Image from "next/image";
-import Heading from "../../components/Heading";
+import Heading from "@components/Heading";
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import Btn from '@components/Btn';
@@ -20,13 +20,17 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { getLocaleProps } from "@helpers";
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
 
 export async function getServerSideProps(context) {
     return await getLocaleProps(context);
 }
 
-export default function CompareTractor() {
+export default function CompareTractor({ locale }) {
     const router = useRouter();
+    const language = locale?.toUpperCase(); 
 
     const [showBrandsModal, setShowBrandsModal] = useState(false);
     const [showBrandsModelsModal, setShowBrandsModelsModal] = useState(false);
@@ -352,7 +356,7 @@ export default function CompareTractor() {
     };
 
     if (brandsLoading || modelsBybrandsLoading) return (
-        <Loader />
+        <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
     );
 
     if (brandsError || modelsBybrandsError) return <p>Error: {brandsError?.message} || Error: {modelsBybrandsError?.message}</p>;

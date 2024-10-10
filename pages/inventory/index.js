@@ -27,6 +27,9 @@ import { GET_ALL_POPULAR_BRANDS } from "@utils/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { GET_ALL_STATES } from "@utils/constants";
 import Link from "next/link";
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
  
 export default function Inventory({ locale }) {
 
@@ -379,7 +382,7 @@ export default function Inventory({ locale }) {
 
 
   if (brandsLoading || inventoryLoading) return (
-    <Loader />
+    <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
   );
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
 
