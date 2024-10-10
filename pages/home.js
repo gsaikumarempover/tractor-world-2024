@@ -612,7 +612,8 @@ export default function HomePage({ locale }) {
                             {t('Home.Over_Deals')}<br />
                             {t('Home.Best_Choice')}</div>
                         <p className='mt-2 text-[.9rem]'>
-                            {t('Home.Kiusmod_Tempor')}</p>
+                            {/* {t('Home.Kiusmod_Tempor')} */}
+                            </p>
                     </div>
                     <div className='absolute sm:top-[-85px] right-0 bottom-[-80px]'>
                         <Image src={WhyChoose} alt='WhyChoose' width={400} height={400}

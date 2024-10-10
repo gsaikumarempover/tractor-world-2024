@@ -604,10 +604,10 @@ export default function TractorDetails({ locale }) {
                                         <div className='sm:w-1/2 w-full my-4'>
                                             <Btn text={"Enquiry"} bgColor={true} onClick={handleEnquiry} />
                                         </div>
-                                        <div className='sm:w-1/2 w-full my-4'> 
-                                        <div className="block bg-primaryColor text-white rounded-[4px] opacity-1 cursor-pointer px-4 py-2 text-center border-primaryColor font-semibold border-[1px] " onClick={handleCompareTractor}>
-                                            Compare Tractor
-                                        </div>
+                                        <div className='sm:w-1/2 w-full my-4'>
+                                            <div className="block bg-primaryColor text-white rounded-[4px] opacity-1 cursor-pointer px-4 py-2 text-center border-primaryColor font-semibold border-[1px] " onClick={handleCompareTractor}>
+                                                Compare Tractor
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -679,16 +679,15 @@ export default function TractorDetails({ locale }) {
 
                     {/* why choose us */}
                     <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 relative bg-white mt-3">
-                        <Heading heading={'Why Choose Us'} viewButton={false} />
+                        <Heading heading={t('Home.Why_Choose_Us')} viewButton={false} />
                         <div className="flex md:flex-row flex-col justify-between md:gap-16 gap-4 mt-4">
                             <div className="md:w-[40%]">
                                 <div className='font-bold text-lg'>
-                                    Over 15,000+ Deals<br />
-                                    Tractor World Is The Best Choice</div>
+                                    {t('Home.Over_Deals')}<br />
+                                    {t('Home.Best_Choice')}</div>
                                 <p className='mt-2 text-[.9rem]'>
-                                    Kiusmod tempor incididunt ut labore sed dolore magna aliquay enim
-                                    ad minim veniam quis nostrud exercitation ullamco laboris nisi ut
-                                    aliquip ex ea reprehen deritin voluptate.</p>
+                                    {/* {t('Home.Kiusmod_Tempor')} */}
+                                </p>
                             </div>
                             <div className='absolute sm:top-[-85px] right-0 bottom-[-80px]'>
                                 <Image src={WhyChoose} alt='WhyChoose' width={400} height={400}
