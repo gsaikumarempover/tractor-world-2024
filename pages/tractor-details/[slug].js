@@ -55,6 +55,8 @@ export default function TractorDetails({ locale }) {
     // console.log("slugQuery:", slugQuery);      
     // console.log("firstWord:", slugWord);
 
+    const { t, i18n } = useTranslation('common');
+
     const handleCompareAll = () => {
         router.push('/compare-tractors');
     };
