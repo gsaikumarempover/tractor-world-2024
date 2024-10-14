@@ -23,6 +23,11 @@ import { useRouter } from 'next/router';
 import LeftSection from '@components/EMI/LeftSection';
 import RightSection from '@components/EMI/RightSection';
 import userDataSlice from '@store/userDataSlice';
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
+import { useTranslation } from 'next-i18next';
+
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -52,6 +57,8 @@ export default function TractorDetails({ locale }) {
     // console.log("slugQuery:", slugQuery);      
     // console.log("firstWord:", slugWord);
 
+    const { t, i18n } = useTranslation('common');
+
     const handleCompareAll = () => {
         router.push('/compare-tractors');
     };
@@ -75,7 +82,7 @@ export default function TractorDetails({ locale }) {
     ];
 
     //   Features data
-    const [features, setFeatures] = useState([ 
+    const [features, setFeatures] = useState([
         {
             src: '/images/liveInventory/features/battery.png',
             alt: 'Battery',
@@ -481,23 +488,23 @@ export default function TractorDetails({ locale }) {
                 slug: node.slug,
                 id: node.id,
                 enginePower: node.liveInventoryData.enginePower,
-                battery: node.liveInventoryData.isBatteryBranded,  
-                tyreState: node.liveInventoryData.tyreState, 
-                buyingYear: node.liveInventoryData.buyingYear,  
-                finance: node.liveInventoryData.finance ,
+                battery: node.liveInventoryData.isBatteryBranded,
+                tyreState: node.liveInventoryData.tyreState,
+                buyingYear: node.liveInventoryData.buyingYear,
+                finance: node.liveInventoryData.finance,
                 engineHours: node.liveInventoryData.engineHours
             }));
             setTractorDetails(tractorDetails);
 
-             // Setting dynamic features based on tractor details
-             const updatedFeatures = features.map((feature) => {
+            // Setting dynamic features based on tractor details
+            const updatedFeatures = features.map((feature) => {
                 switch (feature.title) {
                     case 'Battery':
                         return { ...feature, description: tractorDetails[0]?.battery ? 'Available' : 'Not Available' };
                     case 'Year':
                         return { ...feature, description: tractorDetails[0]?.buyingYear || 'N/A' };
                     case 'Engine Hours':
-                        return { ...feature, description: tractorDetails[0]?.engineHours || 'N/A' }; 
+                        return { ...feature, description: tractorDetails[0]?.engineHours || 'N/A' };
                     case 'Engine HP':
                         return { ...feature, description: tractorDetails[0]?.enginePower || 'N/A' };// Adjust title accordingly if needed
                     case 'Tyre Condition':
@@ -513,28 +520,29 @@ export default function TractorDetails({ locale }) {
 
             // Similar tractors details
             // Get enginePower from the first tractorDetails item
-        const enginePower = tractorDetails.length > 0 ? tractorDetails[0].enginePower : null;
+            const enginePower = tractorDetails.length > 0 ? tractorDetails[0].enginePower : null;
 
-        // Similar tractors details filtered by enginePower
-        const similarTractorsList = similarTractorsData.allLiveInventory.edges
-            .map(({ node }) => ({
-                title: node.title,
-                price: node.liveInventoryData.maxPrice,
-                hours: node.liveInventoryData.engineHours,
-                driveType: node.liveInventoryData.driveType,
-                enginePower: node.liveInventoryData.enginePower,
-                slug: node.slug,
-                id: node.id
-            }))
-            .filter(similarTractor => similarTractor.enginePower === enginePower); // Filter by enginePower
+            // Similar tractors details filtered by enginePower
+            const similarTractorsList = similarTractorsData.allLiveInventory.edges
+                .map(({ node }) => ({
+                    title: node.title,
+                    price: node.liveInventoryData.maxPrice,
+                    hours: node.liveInventoryData.engineHours,
+                    driveType: node.liveInventoryData.driveType,
+                    enginePower: node.liveInventoryData.enginePower,
+                    slug: node.slug,
+                    id: node.id
+                }))
+                .filter(similarTractor => similarTractor.enginePower === enginePower); // Filter by enginePower
 
-        setsimilarTractorsData(similarTractorsList);
+            setsimilarTractorsData(similarTractorsList);
         }
     }, [tractorDataList, similarTractorsData]);
 
     // Handle loading and errors
     if (inventoryLoading || similarTractorsLoading) return (
-        <Loader />
+        <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
+
     );
 
     if (inventoryError || similarTractorsError) return <p>Error: {inventoryError?.message || similarTractorsError?.message}</p>;
@@ -575,10 +583,10 @@ export default function TractorDetails({ locale }) {
                                  font-semibold border-gradient">
                                             {TractorDetails[0].certified ? "Certified" : ""}
                                         </span></div>
-                                    )} 
+                                    )}
 
                                     <span className="bg-primaryColor my-4 inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm cursor-pointer">
+                                 font-semibold rounded-sm">
                                         Dealer Location
                                     </span>
 
@@ -596,17 +604,16 @@ export default function TractorDetails({ locale }) {
 
                                     <div className="">EMI starts at <span className="text-secondaryColor"> ₹ 3,657/month</span> </div>
 
-                                    <span className="bg-secondaryColor mt-2  inline-block px-2 py-1 text-white w-auto
-                                 font-semibold rounded-sm cursor-pointer" onClick={handleCompareTractor}>
-                                        Compare Tractor
-                                    </span>
-                                    <div className='sm:w-1/2 w-full my-4'>
-                                        <Btn text={"Enquiry"} bgColor={true} onClick={handleEnquiry} />
+                                    <div className='sm:flex gap-4'>
+                                        <div className='sm:w-1/2 w-full my-4'>
+                                            <Btn text={"Enquiry"} bgColor={true} onClick={handleEnquiry} />
+                                        </div>
+                                        <div className='sm:w-1/2 w-full my-4'>
+                                            <div className="block bg-primaryColor text-white rounded-[4px] opacity-1 cursor-pointer px-4 py-2 text-center border-primaryColor font-semibold border-[1px] " onClick={handleCompareTractor}>
+                                                Compare Tractor
+                                            </div>
+                                        </div>
                                     </div>
-
-
-
-
                                 </div>
 
                             </div>
@@ -676,16 +683,15 @@ export default function TractorDetails({ locale }) {
 
                     {/* why choose us */}
                     <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 relative bg-white mt-3">
-                        <Heading heading={'Why Choose Us'} viewButton={false} />
+                        <Heading heading={t('Home.Why_Choose_Us')} viewButton={false} />
                         <div className="flex md:flex-row flex-col justify-between md:gap-16 gap-4 mt-4">
                             <div className="md:w-[40%]">
                                 <div className='font-bold text-lg'>
-                                    Over 15,000+ Deals<br />
-                                    Tractor World Is The Best Choice</div>
+                                    {t('Home.Over_Deals')}<br />
+                                    {t('Home.Best_Choice')}</div>
                                 <p className='mt-2 text-[.9rem]'>
-                                    Kiusmod tempor incididunt ut labore sed dolore magna aliquay enim
-                                    ad minim veniam quis nostrud exercitation ullamco laboris nisi ut
-                                    aliquip ex ea reprehen deritin voluptate.</p>
+                                    {/* {t('Home.Kiusmod_Tempor')} */}
+                                </p>
                             </div>
                             <div className='absolute sm:top-[-85px] right-0 bottom-[-80px]'>
                                 <Image src={WhyChoose} alt='WhyChoose' width={400} height={400}

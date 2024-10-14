@@ -2,10 +2,11 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Image from 'next/image'; 
+import Image from 'next/image';
 import shareIcon from '@Images/tractordetails/shareIcon.svg';
 
-export default function InventoryCarousel() {
+export default function InventoryCarousel({locale}) {
+    const language = locale?.toUpperCase();
     const baseUrl = '/images/liveInventory'
     const settings = {
         customPaging: function (i) {
@@ -25,7 +26,12 @@ export default function InventoryCarousel() {
     };
 
     const handleShareClick = () => {
-        const message = encodeURIComponent("Check out Tractor World! https://tractor-world-2024.vercel.app/");
+        const MessageText = language === 'HI'
+            ? 'ट्रैक्टर वर्ल्ड देखें!'
+            : language === 'MR'
+                ? 'ट्रॅक्टर वर्ल्ड पहा!'
+                : 'Check out Tractor World!';
+        const message = encodeURIComponent(MessageText + " https://tractor-world-2024.vercel.app/");
         const whatsappURL = `https://api.whatsapp.com/send?text=${message}`;
         window.open(whatsappURL, '_blank');
     };

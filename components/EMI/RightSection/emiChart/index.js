@@ -48,8 +48,8 @@ function EmiChart({ principal, interestPayable,emi }) {
       </div>
 
       {/* Display the min and max values */}
-      <div style={{ position: 'absolute', top: '75%', left: '5%', fontSize: '14px' }}>₹0</div>
-      <div style={{ position: 'absolute', top: '75%', right: '5%', fontSize: '14px' }}>{principal.toLocaleString('en-IN')}</div>
+      <div style={{ position: 'absolute', top: '80%', left: '0%', fontSize: '14px' }}>₹0</div>
+      <div style={{ position: 'absolute', top: '80%', right: '0%', fontSize: '14px' }}>{principal.toLocaleString('en-IN')}</div>
     </div>
   );
 }

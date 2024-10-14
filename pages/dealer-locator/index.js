@@ -16,13 +16,18 @@ import { useRouter } from 'next/router';
 import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
 import Heading from "../../components/Heading";
+import { useTranslation } from 'next-i18next';
+import { getLocaleProps } from "@helpers";
 
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+}
 export default function DealerLocator() {
-
+  const { t, i18n } = useTranslation('common');
   const router = useRouter();
   const breadcrumbData = [
-    { label: 'Home', link: '/' },
-    { label: 'DEALER LOCATOR', link: '#' },
+    { label: t('Home.Home'), link: '/' },
+    { label: t('Dealer.DEALER_LOCATOR'), link: '#' },
   ];
   const settings = {
     dots: true,
@@ -131,7 +136,7 @@ export default function DealerLocator() {
           }
         },
       ]
-    }, 
+    },
 
   ];
 
@@ -196,27 +201,27 @@ export default function DealerLocator() {
         bannerImg={bannerImg} s
       />
       <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
-        <Heading heading={'Dealer Locater'} />
+        <Heading heading={t('Dealer.DEALER_LOCATOR')} />
         <div className="bg-[#EFEDED] p-4">
           <div className="flex sm:flex-row flex-col gap-2">
             <div className="bg-white p-4 sm:w-[25%] w-full">
               <div>
-                <p className="font-bold mb-3 text-[17px]">Search Nearest Dealer</p>
+                <p className="font-bold mb-3 text-[17px]">{t('Dealer.Search_Nearest_Dealer')}</p>
                 <div className="mb-4">
-                  <label className="form-label">State</label>
+                  <label className="form-label">{t('Dealer.State')}</label>
                   <select className="block w-full px-2 py-[7px] border 
                     border-gray-300 rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                    <option selected>Select State</option>
+                    <option selected>{t('Dealer.Select_State')}</option>
                     <option value="madhyaPradesh">Madhya Pradesh</option>
                     <option value="maharashtra">Maharashtra</option>
                   </select>
                 </div>
 
                 <div className="mb-4">
-                  <label className="form-label">District</label>
+                  <label className="form-label">{t('Dealer.District')}</label>
                   <select className="block w-full px-2 py-[7px] 
                      border border-gray-300 rounded-md  text-[14px] text-[#B9B9B9] mt-2">
-                    <option selected>Select District</option>
+                    <option selected>{t('Dealer.Select_District')}</option>
                     <option value="bhopal">Bhopal</option>
                     <option value="alirajpur">Alirajpur</option>
                     <option value="barwani">Barwani</option>
@@ -224,18 +229,18 @@ export default function DealerLocator() {
                 </div>
 
                 <div className="mb-4">
-                  <label className="form-label">Tehsil or Taluka</label>
+                  <label className="form-label">{t('Dealer.Tehsil_or_Taluka')}</label>
                   <select className="block w-full px-2 py-[7px] border border-gray-300 
                     rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                    <option value="" selected>Select Tehsil or Taluka</option>
+                    <option value="" selected>{t('Dealer.Select_Taluka')}</option>
                     <option value="Berasia">Berasia</option>
                     <option value="Huzur">Huzur</option>
                   </select>
                 </div>
-                <Btn text={"Find Dealer"} bgColor={true} />
+                <Btn text={t('Dealer.Find_Dealer')} bgColor={true} />
 
                 <div>
-                  <p className="font-bold py-3 text-black text-lg">Tractor Dealer List</p>
+                  <p className="font-bold py-3 text-black text-lg">{t('Dealer.Tractore_Dealer_List')}</p>
                 </div>
 
                 <div className="flex flex-col gap-3">
@@ -284,7 +289,7 @@ export default function DealerLocator() {
                                   </div>
                                 </div>
                               </div>
-                              <Btn text={"Know More"} onClick={handleDealerClick} bgColor={true} />
+                              <Btn text={t('Dealer.Know_More')} onClick={handleDealerClick} bgColor={true} />
                             </div>
                           </div>
                         ))}

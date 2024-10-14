@@ -10,17 +10,26 @@ import Twitter from "@Images/contactus/twitter.svg";
 import Instagram from "@Images/contactus/instagram.svg";
 import bannerImg from "@Images/contactus/contactus-banner.svg";
 import Link from "next/link";
+import { getLocaleProps } from "@helpers";
+import { useTranslation } from "next-i18next";
+
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+}
+
+
 export default function ContactUs() {
+  const { t, i18n } = useTranslation('common');
   const breadcrumbData = [
-    { label: "Home", link: "/" },
-    { label: "CONTACT US", link: "#" },
+    { label: t('Home.Home'), link: "/" },
+    { label: t('Navbar.Contactus'), link: "#" },
   ];
   return (
     <div>
       <Layout currentPage={"contact"}>
         <Banner
           breadcrumbs={breadcrumbData}
-          heading={"Contact Us"}
+          heading={t('Navbar.Contactus')}
           bannerImg={bannerImg}
         // BannerUnderlineImg={}
         />
@@ -30,26 +39,25 @@ export default function ContactUs() {
             <div className="flex flex-col lg:flex-row lg:space-x-6">
               <div className="w-full lg:w-1/2 flex flex-col space-y-2">
                 <p className="text-[#7D8F99]">
-                  Tell us about your requirement, and write us any queries. Our
-                  support team will assist you within 24 hours.
+                  {t('Contact.About_Requirement')}
                 </p>
 
                 <Link href="tel:9553353077">
-                <div className="flex space-x-2 float-left cursor-pointer">
-                  <div className="w-[3%]">
-                    <Image src={CallImg} alt="CallImg" />
+                  <div className="flex space-x-2 float-left cursor-pointer">
+                    <div className="w-[3%]">
+                      <Image src={CallImg} alt="CallImg" />
+                    </div>
+                    <p className="text-gray-700">{t('Contact.Contact_No')}</p>
                   </div>
-               <p className="text-gray-700">+91 95533 53077</p>
-                </div>
                 </Link>
 
                 <Link href="mailto:tractorworld.in">
-                <div className="flex space-x-2 float-left cursor-pointer">
-                  <div className="w-[3%]">
-                    <Image src={Mail} alt="Mail" />
+                  <div className="flex space-x-2 float-left cursor-pointer">
+                    <div className="w-[3%]">
+                      <Image src={Mail} alt="Mail" />
+                    </div>
+                    <p className="text-gray-700">{t('Contact.Tactor_In')}</p>
                   </div>
-                  <p className="text-gray-700">tractorworld.in</p>
-                </div>
                 </Link>
 
                 <div className="flex items-center">
@@ -71,10 +79,10 @@ export default function ContactUs() {
                 <form className="flex flex-col space-y-4">
                   <div className="flex flex-col">
                     <label htmlFor="name" className="mb-2 text-[15px]">
-                      Name
+                      {t('Loan.Name')}
                     </label>
                     <input
-                      placeholder="Enter Your Name"
+                      placeholder={t('Loan.Enter_Name')}
                       id="name"
                       type="text"
                       className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -83,10 +91,10 @@ export default function ContactUs() {
 
                   <div className="flex flex-col">
                     <label htmlFor="email" className="mb-2 text-[15px]">
-                      Email ID
+                      {t('Contact.Email_Id')}
                     </label>
                     <input
-                      placeholder="Enter Your Email ID"
+                      placeholder={t('Contact.Enter_Email')}
                       id="email"
                       type="email"
                       className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -95,10 +103,10 @@ export default function ContactUs() {
 
                   <div className="flex flex-col">
                     <label htmlFor="phone" className="mb-2 text-[15px]">
-                      Mobile Number
+                      {t('Loan.Mobile_No')}
                     </label>
                     <input
-                      placeholder="Enter Your Mobile Number"
+                      placeholder={t('Loan.Enter_Mobile_NO')}
                       id="phone"
                       type="phone"
                       className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -107,10 +115,10 @@ export default function ContactUs() {
 
                   <div className="flex flex-col">
                     <label htmlFor="message" className="mb-2 text-[15px]">
-                      Message
+                      {t('Contact.Message')}
                     </label>
                     <textarea
-                      placeholder="Your Message"
+                      placeholder={t('Contact.Your_Message')}
                       id="message"
                       className="rounded-md border border-gray-300 px-3 py-2 resize-none h-24 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     ></textarea>
@@ -122,7 +130,7 @@ export default function ContactUs() {
                       focus:ring-4 focus:outline-none 
                       font-semibold px-5 py-2.5 text-center mr-2 mb-2"
                     >
-                      Submit Request
+                      {t('Contact.Submit_Request')}
                     </button>
                   </div>
                 </form>

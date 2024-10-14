@@ -8,19 +8,23 @@ import RentalSteps from '@Images/about/rentalSteps.svg';
 import Btn from '@components/Btn';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import tractorImg from '@Images/about/tractor.svg';
-import { useTranslation } from "next-i18next";
-import { useRouter } from 'next/router';
+import { useTranslation } from "next-i18next"; 
 
-export default function about() {
+import { getLocaleProps } from "@helpers";
 
-  const { locale: activeLocale } = useRouter();
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+} 
+  
+export default function About({locale}) {
+  const language = locale?.toUpperCase();
   const { t, i18n } = useTranslation('common');
   
   console.log("Language Selected: " + activeLocale); 
 
   const breadcrumbData = [
-    { label: 'Home', link: '/' },
-    { label: 'About Us', link: '#' },
+    { label: t('Home.Home'), link: '/' },
+    { label: t('Navbar.Aboutus'), link: '#' },
   ];
 
   return ( 
@@ -116,7 +120,7 @@ export default function about() {
         <div className="image-wrapper sm:overflow-hidden overflow-x-auto">
           <div className="sm:min-w-full min-w-[586px]">
             <Image
-              src='/images/about/rentalSteps.svg'
+              src={language === 'HI' ? '/images/about/rentalStepsHi.svg' : language === 'MR' ?'/images/about/rentalStepsMr.svg' : '/images/about/rentalSteps.svg' }
               layout="responsive"
               width={1673}
               height={493}

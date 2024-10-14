@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from 'react'
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Image from "next/image";
-import Heading from "../../components/Heading";
+import Heading from "@components/Heading";
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import Btn from '@components/Btn';
-import HP from '@Images/hp.svg'; 
+import HP from '@Images/hp.svg';
 import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
 import CompareImg from '@Images/compareTractorImg/compareImg.svg';
 import vs from '@Images/compareTractorImg/vs.svg';
@@ -18,9 +18,19 @@ import { useQuery } from '@apollo/client';
 import Loader from '@components/Loader';
 import { nanoid } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
+import { useTranslation } from "next-i18next";
+import { getLocaleProps } from "@helpers";
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
 
-export default function CompareTractor() {
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+}
+
+export default function CompareTractor({ locale }) {
     const router = useRouter();
+    const language = locale?.toUpperCase(); 
 
     const [showBrandsModal, setShowBrandsModal] = useState(false);
     const [showBrandsModelsModal, setShowBrandsModelsModal] = useState(false);
@@ -33,6 +43,7 @@ export default function CompareTractor() {
     const [brands, setBrands] = useState([]);
     const [models, setModels] = useState([]);
     const [selectedBrand, setSelectedBrand] = useState('');
+    const { t, i18n } = useTranslation('common');
 
     const handleClose = () => {
         setShowBrandsModal(false);
@@ -146,13 +157,13 @@ export default function CompareTractor() {
 
     const handleModelsBack = () => {
         console.log(selectedBrand + "closeradioButon");
-        setShowBrandsModelsModal(false); 
-        setShowBrandsModal(true);  
+        setShowBrandsModelsModal(false);
+        setShowBrandsModal(true);
     };
 
     const breadcrumbData = [
-        { label: 'Home', link: '/' },
-        { label: 'Campare Tractor', link: '#' },
+        { label: t('Home.Home'), link: '/' },
+        { label: t('Compare.Compare_Tractore'), link: '#' },
     ];
 
     const customStyles = {
@@ -345,7 +356,7 @@ export default function CompareTractor() {
     };
 
     if (brandsLoading || modelsBybrandsLoading) return (
-        <Loader />
+        <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
     );
 
     if (brandsError || modelsBybrandsError) return <p>Error: {brandsError?.message} || Error: {modelsBybrandsError?.message}</p>;
@@ -358,12 +369,12 @@ export default function CompareTractor() {
             <Layout currentPage={"compare"}>
                 <Banner
                     breadcrumbs={breadcrumbData}
-                    heading={"Compare Tractors"}
+                    heading={t('Compare.Compare_Tractore')}
                     bannerImg={BannerImg}
                 />
 
                 <div className="bg-white mb-3 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
-                    <Heading heading={'Compare Tractors'} />
+                    <Heading heading={t('Compare.Compare_Tractore')} />
 
                     <div className='flex sm:items-start items-center gap-4 justify-between'>
 
@@ -391,14 +402,14 @@ export default function CompareTractor() {
 
                     <div className='mt-4 w-full flex justify-end'>
                         <div className='sm:w-[15%] w-full'>
-                            <Btn text={'COMPARE'} bgColor={true} disabled={true} />
+                            <Btn text={t('Home.COMPARE')} bgColor={true} disabled={true} />
                         </div>
                     </div>
 
                 </div>
 
                 <div className="bg-white mb-3 lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
-                    <Heading heading={'Compare To Buy The Right Tractor'} />
+                    <Heading heading={t('Home.Buy_The_Right')} />
 
                     <div className='flex sm:gap-4 gap-2 my-3 font-medium'>
                         <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}>
@@ -432,7 +443,7 @@ export default function CompareTractor() {
 
                                                     </div>
                                                 </div>
-                                                <Btn className="uppercase" text={'COMPARE'} onClick={handleCompareTractordetails} />
+                                                <Btn className="uppercase" text={t('Home.COMPARE')} onClick={handleCompareTractordetails} />
                                             </div>
                                         ))}
 
@@ -442,7 +453,7 @@ export default function CompareTractor() {
                         </div>
 
                         <div className='flex justify-center my-6'>
-                            <Btn text={'View all tractor comparisons'} bgColor={true}  onClick={handleCompareTractordetails} />
+                            <Btn text={t('Home.View_All_Tractor_Comparison')} bgColor={true} onClick={handleCompareTractordetails} />
                         </div>
                     </div>
 
@@ -453,11 +464,11 @@ export default function CompareTractor() {
                         <div className='px-4 py-4 w-full'>
                             <div className="flex items-center gap-2 opacity-50">
                                 <Image src={leftArrow} alt='leftArrow' width={15} height={15} className='cursor-pointer' onClick={handleClose} />
-                                <p className='font-bold text-2xl'>Select Brand</p>
+                                <p className='font-bold text-2xl'>{t('Compare.Select_Brand')}</p>
                             </div>
 
                             <div className="relative w-full mt-4">
-                                <input type="text" placeholder="Search Tractor Brand by Name" className="w-full rounded border-[1px] border-[#D0D0D0] py-2 pr-14"
+                                <input type="text" placeholder={t('Compare.Search_PlaceHolder')} className="w-full rounded border-[1px] border-[#D0D0D0] py-2 pr-14"
                                     value={brandsSearchQuery}
                                     onChange={(e) => setBrandsSearchQuery(e.target.value)}
                                 />
@@ -468,7 +479,7 @@ export default function CompareTractor() {
 
 
                             {noResults ? (
-                                <p className='mt-2 text-center text-primaryColor'>No search data available</p>
+                                <p className='mt-2 text-center text-primaryColor'>{t('Compare.No_Data')}</p>
                             ) : (
                                 <div className="p-2 mt-4 flex flex-col w-full gap-2 h-80 brands-container overflow-y-auto">
                                     {brands.map((option, index) => (

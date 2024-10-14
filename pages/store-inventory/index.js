@@ -1,49 +1,70 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Heading from "@components/Heading";
 import Image from "next/image";
 import bannerImg from '@Images/dealerLocator/storeInventoryBanner.svg';
+import bannerMblImg from '@Images/dealerLocator/mblstoreInventoryBanner.svg';
 import MapIcon from '@Images/dealerLocator/mapIcon.svg';
 import PhnIcon from '@Images/dealerLocator/phnIcon.svg';
 import ClockIcon from '@Images/dealerLocator/clock.svg';
 import Location from '@Images/dealer/location.svg';
 import LiveInventoryContainer from '@components/LiveInventory';
 import { useQuery } from "@apollo/client";
-import { HOMEPAGE_QUERIES } from "@utils/constants"; 
+import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
 import { getLocaleProps } from "@helpers";
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
 
 export default function StoreInventory({ locale }) {
     const breadcrumbData = [
         { label: 'Home', link: '/' },
         { label: 'Dealers Details ', link: '#' },
-     ];
+    ];
 
-    const language = locale?.toUpperCase(); 
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        //moble web devide
+        if (typeof window !== 'undefined') {
+            setIsMobile(window.innerWidth <= 768);
+            const handleResize = () => {
+                setIsMobile(window.innerWidth <= 768);
+            };
+            window.addEventListener('resize', handleResize);
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }
+
+    }, []);
+
+    const language = locale?.toUpperCase();
     const { data, loading, error } = useQuery(HOMEPAGE_QUERIES, {
         variables: { lang: language },
     });
 
-     // Combined loading and error handling
-     if (loading) return (
-        <Loader />
+    // Combined loading and error handling
+    if (loading) return (
+        <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
     );
 
     if (error) return <p>Error: {error.message}</p>;
 
 
-    const liveInventoryData= data?.allLiveInventory?.edges|| []; 
+    const liveInventoryData = data?.allLiveInventory?.edges || [];
 
-    const liveInventoryList = liveInventoryData.map(({ node }) => ({ 
+    const liveInventoryList = liveInventoryData.map(({ node }) => ({
         title: node.title,
         price: node.liveInventoryData.maxPrice,
         hours: node.liveInventoryData.engineHours,
         driveType: node.liveInventoryData.driveType,
         enginePower: node.liveInventoryData.enginePower,
         slug: node.slug,
-        id: node.id 
-  }));
+        id: node.id
+    }));
 
 
     return (
@@ -57,18 +78,18 @@ export default function StoreInventory({ locale }) {
                 <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
 
                     <div>
-                        <div className='border-[20px] border-secondaryColor flex gap-4 overflow-x-auto mb-3 storeInventoryBannerImg'>
+                        <div className='sm:border-[20px] border-[10px] border-secondaryColor flex gap-4 overflow-x-auto mb-3 storeInventoryBannerImg'>
 
                             <div className="w-full overflow-hidden flex-none">
-                                <Image src={bannerImg} alt="bannerImg" layout="responsive" className="" />
+                                <Image src={isMobile ? bannerMblImg : bannerImg} alt="bannerImg" layout="responsive" className="" />
                             </div>
 
                             <div className="w-full  overflow-hidden flex-none">
-                                <Image src={bannerImg} alt="bannerImg" layout="responsive" className="" />
+                                <Image src={isMobile ? bannerMblImg : bannerImg} alt="bannerImg" layout="responsive" className="" />
                             </div>
 
                             <div className="w-full  overflow-hidden flex-none">
-                                <Image src={bannerImg} alt="bannerImg" layout="responsive" className="" />
+                                <Image src={isMobile ? bannerMblImg : bannerImg} alt="bannerImg" layout="responsive" className="" />
                             </div>
 
                         </div>
@@ -120,7 +141,7 @@ export default function StoreInventory({ locale }) {
                             <p className="font-bold">About Srinivasa Motors</p>
                             <p>Srinivasa Motors in Kutbullapur, Hyderabad is known to satisfactorily cater to the demands of its customer base. The business came into existence in 2003 and has, since then, been a known name in its field. It stands located at Plot No 26, Survey No.62/A, Gandimaisamma X Roads, Kutbullapur-500055.</p>
                         </div>
-                    </div> 
+                    </div>
 
                     {/* Live Inventory */}
                     <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white ">
@@ -134,4 +155,4 @@ export default function StoreInventory({ locale }) {
 }
 export async function getServerSideProps(context) {
     return await getLocaleProps(context);
-  }
+}

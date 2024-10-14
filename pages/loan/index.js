@@ -16,15 +16,22 @@ import BannerStrip from "@components/BannerStrip";
 import bannerImg from '@Images/sellTractor/engineering-excellence-banner.svg';
 import { useQuery } from '@apollo/client';  
 import {GET_ALL_STATES} from "@utils/constants";
+import { getLocaleProps } from "@helpers"; 
+import { useTranslation } from "next-i18next";  
+
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+} 
+
  
 export default function ApplyNewTractorLoan() {
-
+  const { t, i18n } = useTranslation('common');
   const breadcrumbData = [
-    { label: "Home", link: "/" },
-    { label: "Loan", link: "#" },
+    { label: t('Home.Home'), link: "/" },
+    { label: t('Loan.Loan'), link: "#" },
   ];
 
-  
+
   function TractorLoanEMIContent() {
     return <div>
       <p>A Tractor Loan EMI (Equated Monthly Instalment) is the monthly payment you make until your tractor loan is fully repaid. This amount comprises both the principal loan amount and the interest accrued.</p>
@@ -167,7 +174,7 @@ export default function ApplyNewTractorLoan() {
         />
 
         <BannerStrip
-          heading={"Apply for Loan"}
+          heading={t('Loan.Apply_Loan')}
           content={
             <>
               <div>
@@ -239,9 +246,9 @@ export default function ApplyNewTractorLoan() {
                       </select>
                     </div> */}
 
-<div className="sm:w-1/4 w-full">
+                    <div className="sm:w-1/4 w-full">
                       <label htmlFor="name" className="block mb-2">
-                        Name
+                        {t('Loan.Name')}
                       </label>
                       <input
                         type="text"
@@ -250,13 +257,13 @@ export default function ApplyNewTractorLoan() {
                       border-gray-300 text-black rounded-md block w-full 
                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                        dark:placeholder-gray-400 dark:text-white"
-                        placeholder="Enter your Name"
+                        placeholder={t('Loan.Enter_Name')}
                       />
                     </div>
 
                     <div className="sm:w-1/4 w-full">
                       <label htmlFor="number" className="block mb-2">
-                        Mobile Number
+                        {t('Loan.Mobile_No')}
                       </label>
                       <input
                         type="number"
@@ -265,25 +272,25 @@ export default function ApplyNewTractorLoan() {
                       border-gray-300 text-black rounded-md block w-full 
                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                        dark:placeholder-gray-400 dark:text-white"
-                        placeholder="Enter Your Mobile Number"
+                        placeholder={t('Loan.Enter_Mobile_NO')}
                       />
                     </div>
 
                     <div className="sm:w-1/4 w-full">
-                      <label className="form-label">State</label>
+                      <label className="form-label">{t('Dealer.State')}</label>
                       <select className="block w-full px-2 py-[7px] border 
                     border-gray-300 rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                        <option selected>Select State</option>
+                        <option selected>{t('Dealer.Select_State')}</option>
                         <option value="madhyaPradesh">Madhya Pradesh</option>
                         <option value="maharashtra">Maharashtra</option>
                       </select>
                     </div>
 
                     <div className="sm:w-1/4 w-full">
-                      <label className="form-label">District</label>
+                      <label className="form-label">{t('Dealer.District')}</label>
                       <select className="block w-full px-2 py-[7px] 
                      border border-gray-300 rounded-md  text-[14px] text-[#B9B9B9] mt-2">
-                        <option selected>Select District</option>
+                        <option selected>{t('Dealer.Select_District')}</option>
                         <option value="bhopal">Bhopal</option>
                         <option value="alirajpur">Alirajpur</option>
                         <option value="barwani">Barwani</option>
@@ -291,23 +298,23 @@ export default function ApplyNewTractorLoan() {
                     </div>
 
                     <div className="sm:w-1/4 w-full">
-                      <label className="form-label">Tehsil or Taluka</label>
+                      <label className="form-label">{t('Dealer.Tehsil_or_Taluka')}</label>
                       <select className="block w-full px-2 py-[7px] border border-gray-300 
                     rounded-md text-[14px] text-[#B9B9B9] mt-2">
-                        <option value="" selected>Select Tehsil or Taluka</option>
+                        <option value="" selected>{t('Dealer.Select_Taluka')}</option>
                         <option value="Berasia">Berasia</option>
                         <option value="Huzur">Huzur</option>
                       </select>
                     </div>
 
-              
+
 
                     <div className="sm:w-1/4 w-full">
                       <button type="submit"
                         className="bg-secondaryColor px-2 py-3 text-white 
                         text-center rounded-md w-full font-semibold cursor-pointer"
                       >
-                        Apply Now
+                        {t('Loan.Apply_Now')}
                       </button>
                     </div>
                   </div>
@@ -319,11 +326,11 @@ export default function ApplyNewTractorLoan() {
 
         <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 my-3">
           <Heading
-            heading={"New Tractor Loan in 4 Steps"}
+            heading={t('Loan.Loan_Steps')}
             BannerUnderlineImg={false}
           />
           <span className="text-sm text-[#333333]">
-            Get New tractor loan quickly by these 4 steps.
+            {t('Loan.Get_New_Tractor_Loan')}
           </span>
 
           <div className="grid sm:grid-cols-4 grid-cols-2 gap-4 mt-10">
@@ -337,9 +344,9 @@ export default function ApplyNewTractorLoan() {
                   height={120}
                 />
                 <span className="sm:text-medium text-sm text-center">
-                  Fill the Form <br />
-                  These details make the
-                  <br /> process quick.{" "}
+                  {t('Loan.Fill_The_Form')} <br />
+                  {t('Loan.These_Details')}
+                  <br /> {t('Loan.Process_Quick')}{" "}
                 </span>
               </div>
             </div>
@@ -353,10 +360,10 @@ export default function ApplyNewTractorLoan() {
                   height={120}
                 />
                 <span className="sm:text-medium text-medium text-center">
-                  Compare Offers
+                  {t('Loan.Compare_Offers')}
                   <br />
-                  Choose the best loan offer
-                  <br /> for you.{" "}
+                  {t('Loan.Best_Loan')}
+                  <br /> {t('Loan.For_You')}{" "}
                 </span>
               </div>
             </div>
@@ -370,9 +377,9 @@ export default function ApplyNewTractorLoan() {
                   height={120}
                 />
                 <span className="sm:text-medium text-sm text-center">
-                  Instant Approval
-                  <br /> Get immediate approval from <br />
-                  the bank.{" "}
+                  {t('Loan.Instant_Approval')}
+                  <br /> {t('Loan.Immediate_Approval_From')} <br />
+                  {t('Loan.The_Bank')}{" "}
                 </span>
               </div>
             </div>
@@ -386,9 +393,9 @@ export default function ApplyNewTractorLoan() {
                   height={120}
                 />
                 <span className="sm:text-medium text-sm text-center">
-                  Money in your Account
-                  <br /> You can get instant money in an
-                  <br /> account.{" "}
+                  {t('Loan.Money_In_Acc')}
+                  <br /> {t('Loan.You_Gett_Instant')}
+                  <br /> {t('Loan.Account')}{" "}
                 </span>
               </div>
             </div>
@@ -397,18 +404,15 @@ export default function ApplyNewTractorLoan() {
 
           <div className="py-4">
             <Heading
-              heading={"  Tractor Loan Translates to a New Way Of Farming!"}
+              heading={t('Loan.New_Way_Farming')}
               BannerUnderlineImg={false}
             />
             <p className="text-sm">
-              Tractors are essential tools for farmers, aiding in various tasks, from planting seeds to transporting harvested crops. For many
-              small-scale farmers in India, purchasing a tractor can be financially challenging. Tractor loans or finances become a crucial
-              solution in such situations. Tractor loans fall under the agricultural loan category and are provided by leading banks, government financial bodies, and non-banking financial companies (NBFCs). These loans facilitate the easy acquisition of new and mini.  Individuals or groups can apply, and repayment, managed through equated monthly instalments (EMIs), can be collective or individual within the group. Before buying a tractor for your farm, knowing the interest rates on tractor loans from various banks is vital. This helps you make an informed decision and find the best financing option for your agricultural investment. Compare rates
-              to find the most suitable choice. Also, the Tractor Loan EMI Calculator tool is a perfect way to calculate your tractor loan EMI.            {/* <span className="cursor-pointer text-secondaryColor block">Read More..</span> */}
+              {t('Loan.Tractors_Are_Essential_Text')}
             </p>
           </div>
 
-          <p>EMI cal</p>
+          <p>{t('Loan.EMI_cal')}</p>
 
           <div className="overflow-x-auto sm:overflow-visible">
             <div className="py-4 grid sm:grid-cols-8 grid-cols-4 gap-3">
@@ -426,12 +430,12 @@ export default function ApplyNewTractorLoan() {
 
           <div className="py-4">
             <Heading
-              heading={"Tractor Loan Interest Rate Comparison"}
+              heading={t('Loan.Int_Rate_Comparison')}
               BannerUnderlineImg={false}
             />
 
             <span className="text-sm">
-              Compare the new tractor loan interest rate below.
+              {t('Loan.Compare_The_New_Tractor_Loan_Int')}
             </span>
           </div>
 

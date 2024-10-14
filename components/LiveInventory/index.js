@@ -21,6 +21,7 @@ import Link from 'next/link';
 import Tab from "@components/Tab";
 
 
+
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -110,6 +111,10 @@ const LiveInventoryContainer = ({ locale, data }) => {
     router.push('/inventory');
   };
 
+  const handleEnquiry = () => {
+    router.push('/contact-us');
+  };
+
   return (
     <>
       <div className='sm:block hidden'>
@@ -118,8 +123,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
         </div>
       </div>
 
-      <div className="sm:hidden flex">
-
+      <div className="sm:hidden flex justify-end">
         <Tab id="listData" image={true} activeTab={activeTab} onClick={handleTabClick}>
           {activeTab === "listData" ? <Image src={listActiveView} alt="listActiveView" width={50} height={50} /> : <Image src={listView} alt="listView" width={50} height={50} />}
         </Tab>
@@ -242,7 +246,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
+                      <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0" onClick={handleEnquiry}>
                         <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                           <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
                             <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
@@ -288,7 +292,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
                         </div>
                         <div className="w-[60%]">
 
-                          <div className="p-2">
+                          <div className="py-2 pl-2">
 
                             <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
                               {item.title}
@@ -300,8 +304,8 @@ const LiveInventoryContainer = ({ locale, data }) => {
 
 
 
-                            <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
-                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
+                            <div className="flex items-center my-3">
+                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-[0.7rem] my-3">
                                 {item.hours && (<div className='flex gap-1 h-[14px] items-center border-r-[1px] border-black pr-2'>
                                   <Image src={Time} alt='Time'></Image> {item.hours} hrs
                                 </div>
@@ -317,9 +321,9 @@ const LiveInventoryContainer = ({ locale, data }) => {
                               </div>
                             </div>
                             <>
-                             
 
-                              <div className="cursor-pointer w-fit">
+
+                              <div className="cursor-pointer w-fit" onClick={handleEnquiry}>
                                 <div className="px-1 py-1 bg-secondaryColor cursor-pointer rounded">
                                   <span className="flex items-center gap-1 font-semibold text-white mr-2 text-medium justify-center">
                                     <Image src='/images/phnIcon.svg' width={12} height={12} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
@@ -342,7 +346,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
       </div>
 
       <div className='mt-2'>
-        <Btn text={'View all'} viewAll={true} onClick={handleAllLiveInventory} />
+        <Btn text={t('Home.View_All')} viewAll={true} onClick={handleAllLiveInventory} />
       </div>
     </>
   );

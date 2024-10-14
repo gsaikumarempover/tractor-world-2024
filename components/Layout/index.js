@@ -18,8 +18,7 @@ const Layout = ({ children, currentPage }) => {
   const [languageModalShow, setLanguageModalShow] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const router = useRouter();
-  const { i18n } = useTranslation('common');
-
+  const { t, i18n } = useTranslation('common');
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
@@ -66,7 +65,7 @@ const Layout = ({ children, currentPage }) => {
   return (
     <>
       <Head>
-        <title>Tractor World</title>
+        <title>{t('Navbar.title')}</title>
         <meta name="description" content="This is a description of my page" />
       </Head>
       <div className='header'>
@@ -88,14 +87,13 @@ const Layout = ({ children, currentPage }) => {
 
                 <div className='px-4 sm:py-10 pt-4 pb-8'>
                   <div className='mx-auto flex flex-col gap-2 sm:items-center sm:justify-center text-lg'>
-                    <p className='font-semibold'>What are you looking for ?</p>
-                    <input type='text' placeholder='Start typing' className='border-b-[1px] border-[#000000] border-opacity-[10%] border-t-0 border-l-0 border-r-0' />
+                    <p className='font-semibold'>{t('Navbar.What_are_you_looking_for')}</p>
+                    <input type='text' placeholder={t('Navbar.Start_typing')} className='border-b-[1px] border-[#000000] border-opacity-[10%] border-t-0 border-l-0 border-r-0' />
                   </div>
                 </div>
               </>
             }
           />
-
 
         </main>
       </div>

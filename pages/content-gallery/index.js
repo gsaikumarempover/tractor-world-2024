@@ -10,11 +10,19 @@ import MultipleItemsSlide from "../../components/SingleItemsSlide";
 import bannerImg from "@Images/sellTractor/engineering-excellence-banner.svg";
 import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
+import { getLocaleProps } from "@helpers";
+import { useTranslation } from "next-i18next";
 
+
+
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+}
 export default function ContentGallery() {
+    const { t, i18n } = useTranslation('common');
     const breadcrumbData = [
-        { label: 'Home', link: '/' },
-        { label: 'Content gallery', link: '#' },
+        { label: t('Home.Home'), link: '/' },
+        { label: t('Gallery.Content_Gallery'), link: '#' },
     ];
     const [expandedItems, setExpandedItems] = useState({});
 
@@ -75,7 +83,7 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"1",
+            id: "1",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
         {
@@ -83,7 +91,7 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"2",
+            id: "2",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
         {
@@ -91,16 +99,7 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"3",
-            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
-        },
-
-        {
-            thumbnail: "/images/conentGallery/tractor1.svg",
-            tractorname: "Sonalika Tractor",
-            heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
-            date: "February 19, 2024",
-            id:"4",
+            id: "3",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
@@ -109,7 +108,7 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"5",
+            id: "4",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
@@ -118,7 +117,7 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"6",
+            id: "5",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
@@ -127,7 +126,7 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"7",
+            id: "6",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
@@ -136,7 +135,7 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"8",
+            id: "7",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
@@ -145,7 +144,7 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"9",
+            id: "8",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
@@ -154,7 +153,16 @@ export default function ContentGallery() {
             tractorname: "Sonalika Tractor",
             heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
             date: "February 19, 2024",
-            id:"10",
+            id: "9",
+            description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
+        },
+
+        {
+            thumbnail: "/images/conentGallery/tractor1.svg",
+            tractorname: "Sonalika Tractor",
+            heading: "Popular Sonalika Tractor Series Price List 2024: Specifications & Mileage",
+            date: "February 19, 2024",
+            id: "10",
             description: "The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things The Sonalika Tractor Series is well-known worldwide for its advanced technology in agriculture. These tractors are tough and smart, helping farmers with tasks like plowing fields and moving heavy things…"
         },
 
@@ -239,11 +247,11 @@ export default function ContentGallery() {
     };
 
 
-     const toggleDescription = (index) => {
-      setExpandedItems((prevState) => ({
-        ...prevState,
-        [index]: !prevState[index], 
-      }));
+    const toggleDescription = (index) => {
+        setExpandedItems((prevState) => ({
+            ...prevState,
+            [index]: !prevState[index],
+        }));
     };
 
     return (
@@ -256,7 +264,7 @@ export default function ContentGallery() {
                     BannerUnderlineImg={false} />
 
                 <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
-                    <Heading heading={"Content Gallery"} />
+                    <Heading heading={t('Gallery.Content_Gallery')} />
                     <hr className="mt-2 mx-2"></hr>
                     <div className="mb-4 p-2">
                         <MultipleItemsSlide settings={contentGallerysettings} id={'contentGallery'} items={contentGalleryitems} />
@@ -282,23 +290,22 @@ export default function ContentGallery() {
                                     <div>
                                         <div className="bg-primaryColor inline-block sm:px-2 px-1 py-1 text-white w-auto font-semibold sm:text-base text-sm">{item.tractorname}</div>
                                         <div className="font-semibold py-2 sm:text-base text-[12px]">{item.heading}</div>
-                                        <div className="sm:text-sm text-[10px] text-[#606C7E] uppercase font-bold flex sm:gap-2 gap-1 items-center">Tractor World
+                                        <div className="sm:text-sm text-[10px] text-[#606C7E] uppercase font-bold flex sm:gap-2 gap-1 items-center">{t('About.Tractor_World')}
                                             <div className="sm:w-2 w-1 sm:h-2 h-1 bg-[#CCCCCC] rounded-full"></div>
                                             <span>{item.date}</span></div>
                                     </div>
                                 </div>
-                                <p  className="sm:mt-0 mt-2 sm:text-base text-sm">
-                                     {expandedItems[item.id] ? item.description : `${item.description.slice(0, 250)}...`}
- 
+                                <p className="sm:mt-0 mt-2 sm:text-base text-sm">
+                                    {expandedItems[item.id] ? item.description : `${item.description.slice(0, 250)}...`}
+
                                     <span
                                         className="text-[#407BD2] sm:uppercase text-sm cursor-pointer"
                                         onClick={() => toggleDescription(item.id)}
                                     >
-                                        {expandedItems[item.id] ? ' Read less »' : ' Read more »'}
+                                        {expandedItems[item.id] ? t('SellTractor.Read_less') + ' »' : t('SellTractor.Read_more') + ' »'}
                                     </span>
                                 </p>
-                                {/* <p className="sm:mt-0 mt-2 sm:text-base text-sm">{item.description}<span className="text-[#407BD2] sm:uppercase text-sm cursor-pointer">Read more »</span></p> */}
-                            </div>
+                             </div>
                         ))}
 
                         <div className="pagination my-4 flex justify-center items-center space-x-2">
@@ -322,7 +329,7 @@ export default function ContentGallery() {
                     {/* ///new updates */}
 
                     <div className="mt-4">
-                        <Heading heading={"New Updates"} />
+                        <Heading heading={t('Gallery.New_Updates')} />
                         <div className="overflow-x-auto sm:overflow-visible">
                             <div className="flex sm:grid sm:grid-cols-4 gap-8">
                                 {newUpdateDetails.map((item, index) => (
@@ -337,7 +344,7 @@ export default function ContentGallery() {
                     </div>
 
                     <div className="mt-4">
-                        <Heading heading={"Recent Posts"} />
+                        <Heading heading={t('Gallery.Recent_Posts')} />
 
                         <ul className="ml-4">
                             <li className="list-disc text-sm mb-2">Popular Sonalika Tractor Series Price List 2024 : Specifications & Mileage</li>

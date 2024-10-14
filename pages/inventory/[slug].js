@@ -24,6 +24,9 @@ import { getLocaleProps } from "@helpers";
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import Loader from '@components/Loader';
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
 
 
 export default function Inventory({ locale }) {
@@ -385,7 +388,7 @@ export default function Inventory({ locale }) {
   }, [liveInventoryFilters, PopularTractors]); // Ensure dependencies are correctly set
 
   if (brandsLoading || inventoryLoading) return (
-    <Loader />
+    <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
   );
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
 

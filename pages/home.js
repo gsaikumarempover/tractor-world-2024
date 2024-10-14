@@ -4,12 +4,24 @@ import Image from 'next/image';
 import languagePopupImg from '@Images/languagePopup.svg';
 import Heading from "@components/Heading";
 import BuyTractors from '@Images/home/buytractors.svg';
+import BuyTractorsHi from '@Images/home/buytractorsHi.svg';
+import BuyTractorsMr from '@Images/home/buytractorsMr.svg';
 import SellTractors from '@Images/home/SellTractors.svg';
+import SellTractorsHi from '@Images/home/SellTractorsHi.svg';
+import SellTractorsMr from '@Images/home/SellTractorsMr.svg';
 import Loan from '@Images/home/Loan.svg';
+import LoanHi from '@Images/home/LoanHi.svg';
+import LoanMr from '@Images/home/LoanMr.svg';
 import HP from '@Images/hp.svg';
 import LocateDealer from '@Images/home/locateDealer.svg';
+import LocateDealerHi from '@Images/home/locateDealerHi.svg';
+import LocateDealerMr from '@Images/home/locateDealerMr.svg';
 import ContentHub from '@Images/home/ContentHub.svg';
+import ContentHubHi from '@Images/home/ContentHubHi.svg';
+import ContentHubMr from '@Images/home/ContentHubMr.svg';
 import Compare from '@Images/home/compare.svg';
+import CompareHi from '@Images/home/compareHi.svg';
+import CompareMr from '@Images/home/compareMr.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
 import { ReadMore } from '@components/ReadMore';
 import LiveInventoryContainer from '@components/LiveInventory';
@@ -24,7 +36,10 @@ import Tractor from '@Images/home/tractor.svg';
 import homeIcon from '@Images/footer/homeIcon.svg'
 import callIcon from '@Images/footer/callIcon.svg'
 import enquiryIcon from '@Images/footer/enquiryIcon.svg'
-import shareIcon from '@Images/footer/shareIcon.svg'
+import shareIcon from '@Images/footer/shareIcon.svg';
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
 import Btn from '@components/Btn';
 import Tab from '@components/Tab';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
@@ -37,8 +52,13 @@ import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
 import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
-import { useTranslation } from 'next-i18next'; 
-import {HomeHPRanges,getTabLabel,getHomePageTractorsListBasedOnInventory} from '@utils';
+import { useTranslation } from 'next-i18next';
+import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
+import { getLocaleProps } from "@helpers"; 
+
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+}
 
 export default function HomePage({ locale }) {
 
@@ -110,13 +130,11 @@ export default function HomePage({ locale }) {
 
     // Combined loading and error handling
     if (loading) return (
-        <Loader />
+         <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
     );
 
-    if (error) return <p>Error: {error.message}</p>;
-
-
-
+    if (error) return <p>Error: {error.message}</p>; 
+    
     const bannersData = data?.homeSliders?.nodes || [];
     const liveInventoryData = data?.allLiveInventory?.edges || [];
     const testimonialsData = data?.testimonials?.nodes || [];
@@ -210,41 +228,46 @@ export default function HomePage({ locale }) {
 
 
     const handleShareClick = () => {
-        const message = encodeURIComponent("Check out Tractor World! https://tractor-world-2024.vercel.app/");
+        const MessageText = language === 'HI'
+            ? 'ट्रैक्टर वर्ल्ड देखें!'
+            : language === 'MR'
+                ? 'ट्रॅक्टर वर्ल्ड पहा!'
+                : 'Check out Tractor World!';
+        const message = encodeURIComponent(MessageText + " https://tractor-world-2024.vercel.app/");
         const whatsappURL = `https://api.whatsapp.com/send?text=${message}`;
         window.open(whatsappURL, '_blank');
     };
 
     const WhyChooseItems = [
-        { src: Warranty, alt: "choose1", label: "Warranty" },
-        { src: EasyEMI, alt: "EasyEMI", label: "Easy EMi & Pricing" },
-        { src: Documenting, alt: "Documenting", label: "Documenting" },
-        { src: Finance, alt: "Finance", label: "Mahendra Financing" }
+        { src: Warranty, alt: "choose1", label: t('Home.Warranty') },
+        { src: EasyEMI, alt: "EasyEMI", label: t('Home.Easy_EMI') },
+        { src: Documenting, alt: "Documenting", label: t('Home.Documenting') },
+        { src: Finance, alt: "Finance", label: t('Home.Mahendra_Financing') }
     ];
 
     const exploreimages = [
         {
-            image: BuyTractors,
+            image: language == 'HI' ? BuyTractorsHi : language == 'MR' ? BuyTractorsMr : BuyTractors,
             url: '/inventory'
         },
         {
-            image: SellTractors,
+            image: language == 'HI' ? SellTractorsHi : language == 'MR' ? SellTractorsMr : SellTractors,
             url: '/sell-tractor'
         },
         {
-            image: Compare,
+            image: language == 'HI' ? CompareHi : language == 'MR' ? CompareMr : Compare,
             url: '/compare-tractors'
         },
         {
-            image: LocateDealer,
+            image: language == 'HI' ? LocateDealerHi : language == 'MR' ? LocateDealerMr : LocateDealer,
             url: '/dealer-locator'
         },
         {
-            image: Loan,
+            image: language == 'HI' ? LoanHi : language == 'MR' ? LoanMr : Loan,
             url: '/loan'
         },
         {
-            image: ContentHub,
+            image: language == 'HI' ? ContentHubHi : language == 'MR' ? ContentHubMr : ContentHub,
             url: '/content-hub'
         },
     ];
@@ -256,7 +279,7 @@ export default function HomePage({ locale }) {
 
     const compareTractorData = getHomePageTractorsListBasedOnInventory(liveInventoryData);
 
-    console.log("compareTractorData"+JSON.stringify(compareTractorData));
+    console.log("compareTractorData" + JSON.stringify(compareTractorData));
 
     // const compareTractorData = {
 
@@ -537,22 +560,22 @@ export default function HomePage({ locale }) {
                         <div className='flex text-[15px]'>
                             <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
                                 <Image src={homeIcon} alt="homeIcon" width={20} height={20} />
-                                <p>Home</p>
+                                <p>{t('Home.Home')}</p>
                             </div>
 
                             <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4' onClick={isShowCallModal}>
                                 <Image src={callIcon} alt="callIcon" width={20} height={20} />
-                                <p>Call</p>
+                                <p>{t('Home.Call')}</p>
                             </div>
 
                             <div className='text-center border-r border-[#FFFFFF] border-opacity-25 px-4 py-3 w-1/4'>
                                 <Image src={enquiryIcon} alt="enquiryIcon" width={20} height={20} />
-                                <p> <Link href="/enquiry">Enquiry</Link></p>
+                                <p> <Link href="/enquiry">{t('Home.Enquiry')}</Link></p>
                             </div>
 
                             <div className='text-center px-4 py-3 w-1/4' onClick={handleShareClick}>
                                 <Image src={shareIcon} alt="shareIcon" width={20} height={20} />
-                                <p>Share</p>
+                                <p>{t('Home.Share')}</p>
                             </div>
 
                         </div>
@@ -589,7 +612,8 @@ export default function HomePage({ locale }) {
                             {t('Home.Over_Deals')}<br />
                             {t('Home.Best_Choice')}</div>
                         <p className='mt-2 text-[.9rem]'>
-                            {t('Home.Kiusmod_Tempor')}</p>
+                            {/* {t('Home.Kiusmod_Tempor')} */}
+                            </p>
                     </div>
                     <div className='absolute sm:top-[-85px] right-0 bottom-[-80px]'>
                         <Image src={WhyChoose} alt='WhyChoose' width={400} height={400}
@@ -627,12 +651,12 @@ export default function HomePage({ locale }) {
                     {/* <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}> Under 20 HP</Tab>  */}
                     {HomeHPRanges.map((range) => (
                         <Tab
-                        key={range.key}
-                        id={range.key}
-                        activeTab={activeTab}
-                        onClick={handleTabClick}
+                            key={range.key}
+                            id={range.key}
+                            activeTab={activeTab}
+                            onClick={handleTabClick}
                         >
-                        {getTabLabel(range.min, range.max)}
+                            {getTabLabel(range.min, range.max)}
                         </Tab>
                     ))}
                 </div>
@@ -789,8 +813,8 @@ export default function HomePage({ locale }) {
                         {/* Modal Content */}
                         <div className="rounded-tl-[20px] rounded-tr-[20px] bg-white py-10 px-4 flex flex-col items-center sm:flex-row sm:items-start">
                             <div className="flex flex-col gap-4 w-full font-bold">
-                                <div className='bg-secondaryColor w-full text-white p-2 text-center rounded'><Link href="tel:18006669999"> Call Now</Link></div>
-                                <div className='bg-primaryColor w-full text-white p-2 text-center rounded' onClick={handleRequestCall}>Request Call Back</div>
+                                <div className='bg-secondaryColor w-full text-white p-2 text-center rounded'><Link href="tel:18006669999">{t('Home.Call_Now')}</Link></div>
+                                <div className='bg-primaryColor w-full text-white p-2 text-center rounded' onClick={handleRequestCall}>{t('Home.Request_Call')}</div>
 
                             </div>
                         </div>
@@ -802,15 +826,15 @@ export default function HomePage({ locale }) {
                 <div className='flex items-center sm:flex-row flex-col-reverse w-full'>
                     <div className='w-full px-4 pb-4'>
                         <div className='mb-2'>
-                            <label className='mb-2 block'>Name</label>
-                            <input type='text' placeholder='Enter Your Name' className='w-full rounded border-[#d1cccc]' />
+                            <label className='mb-2 block'>{t('Loan.Name')}</label>
+                            <input type='text' placeholder={t('Loan.Enter_Name')} className='w-full rounded border-[#d1cccc]' />
                         </div>
                         <div className='mb-2'>
-                            <label className='mb-2 block'>Mobile Number</label>
-                            <input type='text' placeholder='Select Mobile Number' className='w-full rounded border-[#d1cccc]' />
+                            <label className='mb-2 block'>{t('Loan.Mobile_No')}</label>
+                            <input type='text' placeholder={t('Laon.Enter_Mobile_NO')} className='w-full rounded border-[#d1cccc]' />
                         </div>
                         <div className='w-full mt-3'>
-                            <Btn text={'Submit'} bgColor={true} />
+                            <Btn text={t('Home.Submit')} bgColor={true} />
                         </div>
                     </div>
                     <div className="sm:relative w-[329px] h-[223px] overflow-hidden">

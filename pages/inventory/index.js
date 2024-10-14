@@ -27,8 +27,10 @@ import { GET_ALL_POPULAR_BRANDS } from "@utils/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { GET_ALL_STATES } from "@utils/constants";
 import Link from "next/link";
-
-
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
+ 
 export default function Inventory({ locale }) {
 
   const { locale: activeLocale, locales, asPath } = useRouter();
@@ -261,7 +263,7 @@ export default function Inventory({ locale }) {
           label: `${node.brandmodelFields.brand}`,
           value: node.slug
         };
-      }); 
+      });
       // setFilters(prevFilters =>
       //   prevFilters.map(filter =>
       //     filter.title === "Brand" ? { ...filter, options: filtered } : filter
@@ -280,7 +282,7 @@ export default function Inventory({ locale }) {
           }
           return filter;
         })
-      ); 
+      );
 
     }
 
@@ -336,7 +338,7 @@ export default function Inventory({ locale }) {
   ///fliter the tractors 
   useEffect(() => {
     if (!liveInventoryFilters.length || !PopularTractors.length) {
-      return; 
+      return;
     }
 
 
@@ -380,7 +382,7 @@ export default function Inventory({ locale }) {
 
 
   if (brandsLoading || inventoryLoading) return (
-    <Loader />
+    <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
   );
   if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
 
@@ -633,17 +635,17 @@ export default function Inventory({ locale }) {
                       <>
                         {noResults ? (
                           <p className='my-2 text-center text-primaryColor'>No search data available</p>
-                      ) : (
-                      <div className="p-2 flex flex-col w-full gap-2">
-                        {filter.options.map((option, index) => (
-                          <div key={index}>
-                            <input type="radio" name={filter.title.toLowerCase()} value={option.value} />
-                            <label className="ml-2">{option.label}</label>
+                        ) : (
+                          <div className="p-2 flex flex-col w-full gap-2">
+                            {filter.options.map((option, index) => (
+                              <div key={index}>
+                                <input type="radio" name={filter.title.toLowerCase()} value={option.value} />
+                                <label className="ml-2">{option.label}</label>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    )}
-                    </>
+                        )}
+                      </>
                     )}
                   </div>
                 ))}
@@ -653,7 +655,7 @@ export default function Inventory({ locale }) {
               <div className="flex justify-between items-center">
                 <div className="w-auto">
                   <Heading heading={t('Inventory.PopularTractors')} />
-                </div> 
+                </div>
                 <div className="sm:hidden flex">
 
                   <Tab id="listData" image={true} activeTab={activeTab} onClick={handleTabClick}>
@@ -1208,3 +1210,4 @@ export default function Inventory({ locale }) {
 export async function getServerSideProps(context) {
   return await getLocaleProps(context);
 }
+
