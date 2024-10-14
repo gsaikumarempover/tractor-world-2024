@@ -26,6 +26,8 @@ import userDataSlice from '@store/userDataSlice';
 import LoaderHi from '@Images/loader.gif';
 import LoaderMr from '@Images/loaderMr.gif';
 import LoaderEn from '@Images/loaderEn.gif';
+import { useTranslation } from 'next-i18next';
+
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
