@@ -9,15 +9,21 @@ import Btn from '@components/Btn';
 import bannerImg from '@Images/liveInventory/banner.svg';
 import tractorImg from '@Images/about/tractor.svg';
 import { useTranslation } from "next-i18next";
+import { useRouter } from 'next/router';
 
 export default function about() {
+
+  const { locale: activeLocale } = useRouter();
   const { t, i18n } = useTranslation('common');
+  
+  console.log("Language Selected: " + activeLocale); 
+
   const breadcrumbData = [
     { label: 'Home', link: '/' },
     { label: 'About Us', link: '#' },
   ];
-  return (
 
+  return ( 
     <Layout currentPage={"about"}>
       <Banner breadcrumbs={breadcrumbData} bannerImg={bannerImg} heading={'About Us'} />
 
