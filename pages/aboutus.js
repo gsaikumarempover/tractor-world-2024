@@ -20,7 +20,7 @@ export default function About({locale}) {
   const language = locale?.toUpperCase();
   const { t, i18n } = useTranslation('common');
   
-  console.log("Language Selected: " + activeLocale); 
+  // console.log("Language Selected: " + activeLocale); 
 
   const breadcrumbData = [
     { label: t('Home.Home'), link: '/' },
