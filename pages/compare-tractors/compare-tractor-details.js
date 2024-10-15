@@ -434,7 +434,7 @@ export default function CompareTractorDetails() {
                         </div>
 
                         <div className='flex justify-center my-6'>
-                            <Btn text={'View all tractor comparisons'} bgColor={true} />
+                            <Btn text={t('Home.View_All_Tractor_Comparison')}  bgColor={true} />
                         </div>
                     </div>
                 </div>

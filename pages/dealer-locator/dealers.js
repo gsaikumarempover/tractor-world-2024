@@ -205,7 +205,7 @@ export default function dealers() {
                     </div>
 
                     <div className="my-4 sm:hidden block">
-                        <Btn text={'view all'} />
+                        <Btn text={t('Home.View_All')} />
                     </div>
                 </div>
             </Layout>

@@ -92,7 +92,8 @@ export const useGeolocation = () => {
   // Function to filter tractors based on enginePower
   export const filterByHorsepower = (tractors, min, max) => {
     return tractors.filter((tractor) => { 
-      const hp = parseInt(tractor.node.liveInventoryData.enginePower.split(' ')[0], 10); // Make sure to convert enginePower to a number
+      const hp = parseInt(tractor.node.liveInventoryData.enginePower, 10); // Make sure to convert enginePower to a number
+      // const hp = parseInt(tractor.node.liveInventoryData.enginePower.split(' ')[0], 10); 
       return hp >= min && hp <= max;
     });
   };

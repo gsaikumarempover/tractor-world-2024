@@ -725,7 +725,7 @@ export default function TractorDetails({ locale }) {
 
                         <div className="SimilarTractors relative" id="similarTractorsSlide">
                             <LiveInventoryContainer locale={locale} data={similarTractorsList} />
-                            <Btn text={'View all'} viewAll={true} />
+                            <Btn text={t('Home.View_All')} viewAll={true} />
                         </div>
                     </div>
 
