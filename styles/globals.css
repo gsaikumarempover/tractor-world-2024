@@ -727,3 +727,7 @@ input.error {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.slick-track {
+  margin-left: inherit!important;
+}

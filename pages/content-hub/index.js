@@ -6,13 +6,22 @@ import Image from "next/image";
 import bannerImg from '@Images/contentHub/banner.svg';
 import Tab from '@components/Tab';
 import Heading from '@components/Heading';
+import { getLocaleProps } from "@helpers";
+import { useTranslation } from "next-i18next";  
+
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+  } 
 
 
 export default function ContentHUb() {
+    const { t, i18n } = useTranslation('common');
+
     const breadcrumbData = [
-        { label: 'Home', link: '/' },
-        { label: 'Content Hub', link: '#' },
+        { label:  t('Home.Home'), link: '/' },
+        { label:  t('Home.Content_Hub'), link: '#' },
     ];
+
 
     const [activeTab, setActiveTab] = useState("videoData");
     const handleTabClick = (tabId) => {
@@ -65,21 +74,21 @@ export default function ContentHUb() {
             <Layout currentPage={"ContentHub"}>
                 <Banner
                     breadcrumbs={breadcrumbData}
-                    heading={"Content Hub"}
+                    heading={t('Home.Content_Hub')}
                     bannerImg={bannerImg}
                 />
 
                 <div className="bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
-                    <Heading heading={'Content Hub'} />
+                    <Heading heading={t('Home.Content_Hub')} />
                     <div className="flex sm:gap-4 gap-2 mb-4 mt-2">
                         <div className="sm:w-1/6 w-1/2">
                             <Tab id="videoData" image={true} activeTab={activeTab} onClick={handleTabClick}>
-                                {activeTab === "videoData" ? <div className="text-base"> <Btn text={"Videos"} bgColor={true} /></div> : <div className="text-base"> <Btn text={"Videos"} bgColor={false} /></div>}
+                                {activeTab === "videoData" ? <div className="text-base"> <Btn text={t('Home.Videos')} bgColor={true} /></div> : <div className="text-base"> <Btn text={t('Home.Videos')} bgColor={false} /></div>}
                             </Tab>
                         </div>
                         <div className="sm:w-1/6 w-1/2">
                             <Tab id="blogData" image={true} activeTab={activeTab} onClick={handleTabClick}>
-                                {activeTab === "blogData" ? <div className="text-base"><Btn text={"Blog"} bgColor={true} /></div> : <div className="text-base">  <Btn text={"Blog"} bgColor={false} /></div>}
+                                {activeTab === "blogData" ? <div className="text-base"><Btn text={t('Home.Blog')} bgColor={true} /></div> : <div className="text-base">  <Btn text={t('Home.Blog')} bgColor={false} /></div>}
                             </Tab>
                         </div>
                     </div>

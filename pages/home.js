@@ -588,9 +588,9 @@ export default function HomePage({ locale }) {
                 <Heading heading={t('Home.Explore_Tractor_World')} viewButton={false} />
                 <div className='grid sm:grid-cols-6 grid-cols-3 pb-4'>
                     {exploreimages.map((item, index) => (
-                        <a href={item.url} key={index} className='w-full'>
+                        <Link href={item.url} key={index} className='w-full'>
                             <Image src={item.image} className='cursor-pointer' layout='responsive' alt={`Explore item ${index + 1}`} />
-                        </a>
+                        </Link>
                     ))
                     }
                 </div>

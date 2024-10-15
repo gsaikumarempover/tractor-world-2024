@@ -782,7 +782,7 @@ export default function TractorDetails({ locale }) {
                     </div>
 
                     <div className='justify-center flex my-4'>
-                        <Btn text={'View all tractor comparisons'} onClick={handleCompareDetailsAll} bgColor={true}
+                        <Btn text={t('Home.View_All_Tractor_Comparison')} onClick={handleCompareDetailsAll} bgColor={true}
                         />
                     </div>
 

@@ -6,7 +6,7 @@ export default function TractorInfo({ infoImg, title, heading, infoText }) {
         <>
             <div className="sm:flex sm:pb-0 pb-6">
                 <div className="sm:w-1/2 w-full">
-                    <Image src={infoImg} alt="Tractor" className="w-full" />
+                    <Image src={infoImg} alt="Tractor" layout='responsive' className="w-full" />
                 </div>
                 <div className="sm:w-1/2 w-full sm:mt-[3.5%] relative">
                     <Image src="/images/about/icon.svg" width={93} height={70} className="sm:block hidden" alt='icon' />
