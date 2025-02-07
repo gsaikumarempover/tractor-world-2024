@@ -30,6 +30,7 @@ export async function getServerSideProps(context) {
 
 export default function DealerLocator({ locale }) {
   const { t, i18n } = useTranslation('common');
+  const [currentPage, setCurrentPage] = useState(1); 
   const language = locale?.toUpperCase();
   const router = useRouter();
   const breadcrumbData = [
@@ -168,7 +169,6 @@ export default function DealerLocator({ locale }) {
 
   //pagination
   const CardsPerPage = 3;
-  const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(dealerData.length / CardsPerPage);
   const indexOfLastCard = currentPage * CardsPerPage;
   const indexOfFirstCard = indexOfLastCard - CardsPerPage;
