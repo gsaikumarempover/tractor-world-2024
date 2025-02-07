@@ -69,7 +69,7 @@ export default function HomePage({ locale }) {
     const [showModal, setShowModal] = useState(false);
     const [showCallRequestModal, setShowCallRequestModal] = useState(false);
     const router = useRouter();
-    const language = locale?.toUpperCase();
+    const language = "EN";
     const { t, i18n } = useTranslation('common');
 
 
