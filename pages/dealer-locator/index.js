@@ -13,17 +13,24 @@ import MailImg from "@Images/dealerLocator/mailImg.svg";
 import Btn from "@components/Btn";
 import bannerImg from "@Images/dealerLocator/dealerBanner.svg";
 import { useRouter } from 'next/router';
-import Leftarrow from '@Images/offers/leftarrow.svg';
-import Rightarrow from '@Images/offers/rightarrow.svg';
+import Pagination from "@components/Pagination";
 import Heading from "../../components/Heading";
 import { useTranslation } from 'next-i18next';
 import { getLocaleProps } from "@helpers";
+import { DEALERLIST_DATA } from "@utils/constants";
+import Loader from '@components/Loader';
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
+import LoaderEn from '@Images/loaderEn.gif';
+import { useQuery } from "@apollo/client";
 
 export async function getServerSideProps(context) {
   return await getLocaleProps(context);
 }
-export default function DealerLocator() {
+
+export default function DealerLocator({ locale }) {
   const { t, i18n } = useTranslation('common');
+  const language = locale?.toUpperCase();
   const router = useRouter();
   const breadcrumbData = [
     { label: t('Home.Home'), link: '/' },
@@ -37,11 +44,29 @@ export default function DealerLocator() {
     slidesToScroll: 1,
   };
 
+  const { data, loading, error } = useQuery(DEALERLIST_DATA, {
+    variables: { lang: language },
+  });
+
+ 
+
+
+  if (error) return <p>Error: {error.message}</p>;
+
+  const dealerListData = data?.dealerslist?.nodes || [];
+
+  const dealersData = dealerListData.map(node => {
+    const address = node.dealerlistFields.address;
+    const dealerName = node.dealerlistFields.dealerName;
+    const googleLocationURL = node.dealerlistFields.dealerName;
+    return { address, dealerName, googleLocationURL };
+  });
+
+  console.log(JSON.stringify(dealersData) + "dealersData");
 
   const handleDealerClick = () => {
     router.push('/store-inventory');
   };
-
 
   const dealerData = [
     {
@@ -141,57 +166,14 @@ export default function DealerLocator() {
   ];
 
 
+  //pagination
   const CardsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(dealerData.length / CardsPerPage);
-
   const indexOfLastCard = currentPage * CardsPerPage;
   const indexOfFirstCard = indexOfLastCard - CardsPerPage;
   const currentCards = dealerData.slice(indexOfFirstCard, indexOfLastCard);
 
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
-  const handlePrev = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-
-  const renderPageNumbers = () => {
-    let pages = [];
-    const maxPagesToShow = 2;
-
-    if (totalPages <= maxPagesToShow) {
-      pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    } else {
-      if (currentPage <= 3) {
-        pages = [1, 2, 3, 4, 5];
-      } else if (currentPage > totalPages - 3) {
-        pages = [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-      } else {
-        pages = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
-      }
-    }
-    return (
-      <>
-        {currentPage > 3 && totalPages > maxPagesToShow && (
-          <>
-            <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(1)}>1</li>
-            <li>...</li>
-          </>
-        )}
-        {pages.map(page => (
-          <li key={page} className={`cursor-pointer border px-4 py-2 ${page === currentPage ?
-            'font-bold bg-secondaryColor text-white' : 'font-bold'}`} onClick={() => paginate(page)}>
-            {page}
-          </li>
-        ))}
-        {currentPage < totalPages - 2 && totalPages > maxPagesToShow && (
-          <>
-            <li>...</li>
-            <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(totalPages)}>{totalPages}</li>
-          </>
-        )}
-      </>
-    );
-  };
 
   return (
     <Layout currentPage={'dealerLocator'}>
@@ -298,19 +280,15 @@ export default function DealerLocator() {
                   ))}
                 </div>
 
-                <div className="pagination my-4 flex justify-center items-center space-x-2">
-                  <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>
-                    <Image src={Leftarrow} alt='left' />
-                    {/* &lt; */}
-                  </button>
-                  <ul className="flex space-x-2 sm:overflow-y-visible overflow-y-auto">
-                    {renderPageNumbers()}
-                  </ul>
-                  <button onClick={handleNext} className="border px-4 py-2 cursor-pointer" disabled={currentPage === totalPages}>
-                    <Image src={Rightarrow} alt='right' />
-                    {/* &gt; */}
-                  </button>
-                </div>
+                <Pagination
+                  data={dealerData}
+                  TotalPages={totalPages}
+                  CurrentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
+
+
+
 
               </div>
             </div>

@@ -12,8 +12,7 @@ import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
 import { getLocaleProps } from "@helpers";
 import { useTranslation } from "next-i18next";
-
-
+import Pagination from "@components/Pagination"; 
 
 export async function getServerSideProps(context) {
     return await getLocaleProps(context);
@@ -194,58 +193,15 @@ export default function ContentGallery() {
 
     ];
 
-    const CardsPerPage = 5;
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(galleryDetails.length / CardsPerPage);
 
-    const indexOfLastCard = currentPage * CardsPerPage;
-    const indexOfFirstCard = indexOfLastCard - CardsPerPage;
-    const currentCards = galleryDetails.slice(indexOfFirstCard, indexOfLastCard);
-
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
-    const handlePrev = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-
-    const renderPageNumbers = () => {
-        let pages = [];
-        const maxPagesToShow = 5;
-
-        if (totalPages <= maxPagesToShow) {
-            pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-        } else {
-            if (currentPage <= 3) {
-                pages = [1, 2, 3, 4, 5];
-            } else if (currentPage > totalPages - 3) {
-                pages = [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-            } else {
-                pages = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
-            }
-        }
-        return (
-            <>
-                {currentPage > 3 && totalPages > maxPagesToShow && (
-                    <>
-                        <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(1)}>1</li>
-                        <li>...</li>
-                    </>
-                )}
-                {pages.map(page => (
-                    <li key={page} className={`cursor-pointer border px-4 py-2 ${page === currentPage ?
-                        'font-bold bg-secondaryColor text-white' : 'font-bold'}`} onClick={() => paginate(page)}>
-                        {page}
-                    </li>
-                ))}
-                {currentPage < totalPages - 2 && totalPages > maxPagesToShow && (
-                    <>
-                        <li>...</li>
-                        <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(totalPages)}>{totalPages}</li>
-                    </>
-                )}
-            </>
-        );
-    };
-
+      //pagination
+      const CardsPerPage = 5;
+      const [currentPage, setCurrentPage] = useState(1);
+      const totalPages = Math.ceil(galleryDetails.length / CardsPerPage);
+      const indexOfLastCard = currentPage * CardsPerPage;
+      const indexOfFirstCard = indexOfLastCard - CardsPerPage;
+      const currentCards = galleryDetails.slice(indexOfFirstCard, indexOfLastCard);  
+   
 
     const toggleDescription = (index) => {
         setExpandedItems((prevState) => ({
@@ -305,22 +261,15 @@ export default function ContentGallery() {
                                         {expandedItems[item.id] ? t('SellTractor.Read_less') + ' »' : t('SellTractor.Read_more') + ' »'}
                                     </span>
                                 </p>
-                             </div>
+                            </div>
                         ))}
 
-                        <div className="pagination my-4 flex justify-center items-center space-x-2">
-                            <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>
-                                <Image src={Leftarrow} alt='left' />
-                                {/* &lt; */}
-                            </button>
-                            <ul className="flex space-x-2 sm:overflow-y-visible overflow-y-auto">
-                                {renderPageNumbers()}
-                            </ul>
-                            <button onClick={handleNext} className="border px-4 py-2 cursor-pointer" disabled={currentPage === totalPages}>
-                                <Image src={Rightarrow} alt='right' />
-                                {/* &gt; */}
-                            </button>
-                        </div>
+                        <Pagination
+                            data={galleryDetails}
+                            TotalPages={totalPages}
+                            CurrentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
 
                         {/* <p className="sm:mt-0 mt-2 sm:text-base text-sm">Farmtrac tractors simplify farming tasks through their efficient engines and consistent performance. They provide farmers with a dependable choice to increase their agricultural income. Utilising the popular Farmtrac tractor reduces.</p> */}
                     </div>

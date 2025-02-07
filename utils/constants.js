@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'; 
+import { gql } from '@apollo/client';
 
 export const customImageLoader = ({ src }) => {
   return src; // Return the original image source directly
@@ -22,7 +22,7 @@ export const PRICE_OPTIONS = [
   { label: "7 Lakh - 10 Lakh", value: "7_10" },
   { label: "Above 10 Lakh", value: ">10" },
 ];
- 
+
 
 export const HOMEPAGE_QUERIES = gql`
   query GetHomeData($lang: LanguageCodeFilterEnum!) {
@@ -124,8 +124,32 @@ contentgallerys(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
     }
   }
   }  
-`;    
+`;
+
+///dealer list  
+export const DEALERLIST_DATA = gql` 
+query DealerList($lang: LanguageCodeFilterEnum!) {
+  dealerslist(where: {orderby: {field: DATE, order: ASC}, language: $lang}) {
+    nodes {
+      dealerlistFields {
+        address
+        dealerName
+        googleLocation {
+          url
+        }
+        phoneNumber
+        storeName
+      }
+      language {
+        slug
+      }
+    }
+  }
  
+ 
+  }  
+`;
+
 export const GET_LIVE_INVENTORY = gql` 
 query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: String) {
   allLiveInventory(
@@ -164,8 +188,7 @@ query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: Str
     }
   }
 } 
-`;  
-
+`;
 
 export const GET_LIVE_INVENTORY_BYSEARCH = gql` 
 query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: String,$search: String) {
@@ -204,8 +227,7 @@ query GetLiveInventory($lang: LanguageCodeFilterEnum!, $first: Int!, $after: Str
     }
   }
 } 
-`;  
-
+`;
 
 export const GET_SIMILAR_INVENTORY_BYSEARCH = gql` 
 query GetLiveInventory($lang: LanguageCodeFilterEnum!,$search: String) {
@@ -232,7 +254,7 @@ query GetLiveInventory($lang: LanguageCodeFilterEnum!,$search: String) {
     } 
   }
 } 
-`;  
+`;
 
 export const GET_ALL_STATES = gql`
  query GetAllStates {
@@ -247,7 +269,7 @@ export const GET_ALL_STATES = gql`
     }
   }
 }
-`;  
+`;
 //const states = response.data.allStateTowns.edges.map(edge => edge.node.stateTownList.state);
 //console.log(states); 
 
@@ -264,7 +286,7 @@ export const GET_ALL_TOWNS = gql`
     }
   }
 }
-`; 
+`;
 //const states = response.data.allStateTowns.edges.map(edge => edge.node.stateTownList.townsList);
 //{ "state": "Maharashtra"}
 
@@ -287,7 +309,7 @@ query GetBrands {
     }
   }
 }
-`;  
+`;
 
 export const GET_ALL_BRANDS = gql`
 query GetBrands {
@@ -304,9 +326,9 @@ query GetBrands {
     }
   }
 }
-`; 
+`;
 //const brands = response.data.brandsmodels.edges.map(edge => edge.node.brandmodelFields.brand);
- 
+
 export const GET_ALL_MODELS_BY_BRAND = gql`
 query GetModelsByBrand($brand: String!) {
   brandsmodels(where: {name: $brand}) {
@@ -320,9 +342,9 @@ query GetModelsByBrand($brand: String!) {
     }
   }
 }
-`;  
+`;
 
-// //all latest news 
+// //all latest news
 // export const GET_ALL_LATEST_NEWS= gql`
 // query AllLatestNews($lang: [LanguageCodeEnum!]) {
 //   latestnews(where: {orderby: {field: TITLE, order: ASC}, language: $lang}) {

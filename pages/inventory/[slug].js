@@ -27,6 +27,7 @@ import Loader from '@components/Loader';
 import LoaderHi from '@Images/loader.gif';
 import LoaderMr from '@Images/loaderMr.gif';
 import LoaderEn from '@Images/loaderEn.gif';
+import Pagination from "@components/Pagination";  
 
 
 export default function Inventory({ locale }) {
@@ -91,12 +92,10 @@ export default function Inventory({ locale }) {
     }
   ]);
 
+  //pagination
   const CardsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [endCursor, setEndCursor] = useState(null);
   const totalPages = Math.ceil(PopularTractors.length / CardsPerPage);
-
   const indexOfLastCard = currentPage * CardsPerPage;
   const indexOfFirstCard = indexOfLastCard - CardsPerPage;
   const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);
@@ -105,48 +104,7 @@ export default function Inventory({ locale }) {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
-  const handlePrev = () => setCurrentPage(prev => Math.max(prev - 1, 1));
 
-  const renderPageNumbers = () => {
-    let pages = [];
-    const maxPagesToShow = 10;
-
-    if (totalPages <= maxPagesToShow) {
-      pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    } else {
-      if (currentPage <= 3) {
-        pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      } else if (currentPage > totalPages - 3) {
-        pages = [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-      } else {
-        pages = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
-      }
-    }
-    return (
-      <>
-        {currentPage > 3 && totalPages > maxPagesToShow && (
-          <>
-            <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(1)}>1</li>
-            <li>...</li>
-          </>
-        )}
-        {pages.map(page => (
-          <li key={page} className={`cursor-pointer border px-4 py-2 ${page === currentPage ?
-            'font-bold bg-secondaryColor text-white' : 'font-bold'}`} onClick={() => paginate(page)}>
-            {page}
-          </li>
-        ))}
-        {currentPage < totalPages - 2 && totalPages > maxPagesToShow && (
-          <>
-            <li>...</li>
-            <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(totalPages)}>{totalPages}</li>
-          </>
-        )}
-      </>
-    );
-  };
 
   ////for filters collpase
   const onToggle = (key) => {
@@ -1128,19 +1086,13 @@ export default function Inventory({ locale }) {
                 )}
               </div>
 
-              <div className="pagination my-4 flex justify-center items-center space-x-2">
-                <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>
-                  <Image src={Leftarrow} alt='left' />
-                  {/* &lt; */}
-                </button>
-                <ul className="flex space-x-2 sm:overflow-y-visible overflow-y-auto">
-                  {renderPageNumbers()}
-                </ul>
-                <button onClick={handleNext} className="border px-4 py-2 cursor-pointer" disabled={currentPage === totalPages}>
-                  <Image src={Rightarrow} alt='right' />
-                  {/* &gt; */}
-                </button>
-              </div>
+              <Pagination
+                data={PopularTractors}
+                TotalPages={totalPages}
+                CurrentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+
 
               {/* <div className="overflow-x-auto sm:overflow-visible"> 
               <div className="flex sm:grid sm:grid-cols-2 gap-4"> 

@@ -832,60 +832,15 @@ export default function ExclusiveOffers() {
             title: "Heavy Duty Dhamaka Returns-Sonalika",
             startDate: "14 Apr, 2024"
         }, 
-    ];
+    ]; 
 
+    //pagination
     const CardsPerPage = 9;
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = Math.ceil(cardData.length / CardsPerPage);
-
     const indexOfLastCard = currentPage * CardsPerPage;
     const indexOfFirstCard = indexOfLastCard - CardsPerPage;
-    const currentCards = cardData.slice(indexOfFirstCard, indexOfLastCard);
-
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
-    const handlePrev = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-
-    const renderPageNumbers = () => {
-        let pages = [];
-        const maxPagesToShow = 5;
-
-        if (totalPages <= maxPagesToShow) {
-            pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-        } else {
-            if (currentPage <= 3) {
-                pages = [1, 2, 3, 4, 5];
-            } else if (currentPage > totalPages - 3) {
-                pages = [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-            } else {
-                pages = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
-            }
-        }
-
-        return (
-            <>
-                {currentPage > 3 && totalPages > maxPagesToShow && (
-                    <>
-                        <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(1)}>1</li>
-                        <li>...</li>
-                    </>
-                )}
-                {pages.map(page => (
-                    <li key={page} className={`cursor-pointer border px-4 py-2 ${page === currentPage ?
-                        'font-bold bg-secondaryColor text-white' : 'font-bold'}`} onClick={() => paginate(page)}>
-                        {page}
-                    </li>
-                ))}
-                {currentPage < totalPages - 2 && totalPages > maxPagesToShow && (
-                    <>
-                        <li>...</li>
-                        <li className="cursor-pointer border px-4 py-2 font-bold" onClick={() => paginate(totalPages)}>{totalPages}</li>
-                    </>
-                )}
-            </>
-        );
-    };
+    const currentCards = cardData.slice(indexOfFirstCard, indexOfLastCard); 
 
     return (
         <Layout currentPage={"offers"}>
@@ -918,19 +873,13 @@ export default function ExclusiveOffers() {
                     ))}
                 </div>
 
-                <div className="pagination mt-4 flex justify-center items-center space-x-2">
-                    <button onClick={handlePrev} className="border px-4 py-2 cursor-pointer" disabled={currentPage === 1}>
-                        <Image src={Leftarrow} alt='left' />
-                        {/* &lt; */}
-                    </button>
-                    <ul className="flex space-x-2 sm:overflow-y-visible overflow-y-auto">
-                        {renderPageNumbers()}
-                    </ul>
-                    <button onClick={handleNext} className="border px-4 py-2 cursor-pointer" disabled={currentPage === totalPages}>
-                        <Image src={Rightarrow} alt='right' />
-                        {/* &gt; */}
-                    </button>
-                </div>
+                <Pagination
+                data={cardData}
+                TotalPages={totalPages}
+                CurrentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+               
             </div>
         </Layout>
     );
