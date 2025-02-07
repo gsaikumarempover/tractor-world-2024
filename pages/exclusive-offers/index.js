@@ -6,6 +6,8 @@ import Tractor1 from '@Images/offers/1.svg';
 import Leftarrow from '@Images/offers/leftarrow.svg';
 import Rightarrow from '@Images/offers/rightarrow.svg';
 import bannerImg from '@Images/sellTractor/engineering-excellence-banner.svg';
+import Pagination from "@components/Pagination";  
+
 
 export default function ExclusiveOffers() {
     const breadcrumbData = [
@@ -873,7 +875,7 @@ export default function ExclusiveOffers() {
                     ))}
                 </div>
 
-                <Pagination
+            <Pagination
                 data={cardData}
                 TotalPages={totalPages}
                 CurrentPage={currentPage}
