@@ -152,11 +152,11 @@ export default function CompareTractor({ locale }) {
         setSelectedBrand(event.target.value);
         setShowBrandsModal(false);
         setShowBrandsModelsModal(true);
-        console.log(selectedBrand + "firstradioBtn");
+        //console.log(selectedBrand + "firstradioBtn");
     };
 
     const handleModelsBack = () => {
-        console.log(selectedBrand + "closeradioButon");
+     //   console.log(selectedBrand + "closeradioButon");
         setShowBrandsModelsModal(false);
         setShowBrandsModal(true);
     };

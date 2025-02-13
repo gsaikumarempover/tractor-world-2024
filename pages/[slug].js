@@ -29,7 +29,7 @@ export async function getStaticProps({ params }) {
       },
     });
 
-    console.log('Fetched data:', data);
+    //console.log('Fetched data:', data);
 
     // Handle the case where `postBy` might be undefined or null
     return {

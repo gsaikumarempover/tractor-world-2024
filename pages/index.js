@@ -24,7 +24,7 @@ export default function Home({ locale }) {
   const handleClose = () => setShowModal(false);
   const [selectedLanguage, setSelectedLanguage] = useState('');
 
-  console.log(modalStatus, "modalStatus from store")
+ // console.log(modalStatus, "modalStatus from store")
 
   const languageMap = [
     { label: "English", value: "english" },

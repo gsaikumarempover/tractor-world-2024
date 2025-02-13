@@ -55,7 +55,7 @@ import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
-
+ 
 export async function getServerSideProps(context) {
     return await getLocaleProps(context);
 }
@@ -71,7 +71,7 @@ export default function HomePage({ locale }) {
     const router = useRouter();
     const language = "EN";
     const { t, i18n } = useTranslation('common');
-
+    
 
     const isShowCallModal = () => {
         setShowModal(true);
@@ -124,9 +124,13 @@ export default function HomePage({ locale }) {
     }, [lastScrollY]);
 
 
-    const { data, loading, error } = useQuery(HOMEPAGE_QUERIES, {
+    const { data, loading, error, networkStatus } = useQuery(HOMEPAGE_QUERIES, {
         variables: { lang: language },
-    });
+        fetchPolicy: 'cache-first' 
+      });
+      
+
+    
 
     // Combined loading and error handling
     if (loading) return (
@@ -279,7 +283,7 @@ export default function HomePage({ locale }) {
 
     const compareTractorData = getHomePageTractorsListBasedOnInventory(liveInventoryData);
 
-    console.log("compareTractorData" + JSON.stringify(compareTractorData));
+   // console.log("compareTractorData" + JSON.stringify(compareTractorData));
 
     // const compareTractorData = {
 

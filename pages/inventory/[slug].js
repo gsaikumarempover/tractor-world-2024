@@ -41,7 +41,7 @@ export default function Inventory({ locale }) {
   const router = useRouter();
   const { slug } = router.query;
   const slugFirstPart = slug ? slug.toLowerCase().split('-')[0] : '';
-  console.log("SLUG------------" + slug);
+ // console.log("SLUG------------" + slug);
 
   ///// for collpase
   const [showStates, setShowStates] = useState({

@@ -271,7 +271,7 @@ export default function Inventory({ locale }) {
       // ); 
       setFilters(prevFilters =>
         prevFilters.map(filter => {
-          console.log('Filter Title:', filter.title); // Add this line for debugging
+      //    console.log('Filter Title:', filter.title); // Add this line for debugging
           if (filter.title === "Brand") {
             if (filtered.length === 0) {
               setNoResults(true);
@@ -703,15 +703,13 @@ export default function Inventory({ locale }) {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                       {
                         currentCards.slice(0, 3).map((item, idx) => (
-
-                          <Link key={idx} className="tractor-details-info cursor-pointer" href={`/tractor-details/${item.slug}`} passHref >
-
+ 
                             <div
                               key={idx}
                               className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                             >
 
-                              <div className="relative">
+                              <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
                                 <Image
                                   className="w-full"
                                   src={item.imageLink}
@@ -752,8 +750,7 @@ export default function Inventory({ locale }) {
                                   </span>
                                 </div>
                               </div>
-                            </div>
-                          </Link>
+                            </div> 
                         ))
                       }
                     </div>
@@ -957,9 +954,9 @@ export default function Inventory({ locale }) {
                         key={idx}
                         className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none w-80 sm:w-auto"
                       >
-                        <Link className="tractor-details-info cursor-pointer" href={`/tractor-details/${item.slug}`} passHref>
+                        
                           <div className="wholeCard cursor-pointer">
-                            <div className="relative">
+                            <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
                               <Image
                                 className="w-full"
                                 src={DefaultTractor}
@@ -993,8 +990,7 @@ export default function Inventory({ locale }) {
                                 ))}
                               </div>
                             </div>
-                          </div>
-                        </Link>
+                          </div> 
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">

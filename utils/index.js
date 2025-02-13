@@ -114,8 +114,8 @@ export const useGeolocation = () => {
         let tractor2 = getRandomTractor(filteredTractors);
 
         
-      console.log("filterd tractors data tractor1"+JSON.stringify(tractor1));
-      console.log("filterd tractors data tractor2"+JSON.stringify(tractor2));
+     // console.log("filterd tractors data tractor1"+JSON.stringify(tractor1));
+     // console.log("filterd tractors data tractor2"+JSON.stringify(tractor2));
       
       return;
   

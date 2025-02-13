@@ -46,7 +46,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
     setActiveTab(tabId);
   };
 
-  console.log("data2" + JSON.stringify(data));
+  //console.log("data2" + JSON.stringify(data));
 
   const { t } = useTranslation();
   const CheckTractorDetails = t('CheckTractorDetails');
@@ -267,13 +267,13 @@ const LiveInventoryContainer = ({ locale, data }) => {
               {
                 data.map((item, idx) => (
 
-                  <div key={idx} className="tractor-details-info cursor-pointer" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
+                  <div key={idx} className="tractor-details-info cursor-pointer">
                     <div
                       key={idx}
                       className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none  cursor-pointer">
                       <div className="flex">
                         <div className="w-[40%] relative">
-                          <div className="w-full h-[175px]">
+                          <div className="w-full h-[175px]" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
                             <Image
                               className="w-full h-[600px]"
                               src={DefaultTractor}

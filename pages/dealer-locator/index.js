@@ -63,7 +63,7 @@ export default function DealerLocator({ locale }) {
     return { address, dealerName, googleLocationURL };
   });
 
-  console.log(JSON.stringify(dealersData) + "dealersData");
+  //console.log(JSON.stringify(dealersData) + "dealersData");
 
   const handleDealerClick = () => {
     router.push('/store-inventory');

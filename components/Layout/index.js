@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '@components/NavBar';
 import Footer from '@components/Footer';
 import Head from 'next/head';
@@ -10,15 +10,32 @@ import Btn from '@components/Btn';
 import languagePopupImg from '@Images/languagePopup.svg';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { useQuery, gql } from '@apollo/client';
+import { GET_LIVE_INVENTORY_BYSEARCH } from "@utils/constants";
 
 
 
-const Layout = ({ children, currentPage }) => {
+const Layout = ({ children, currentPage, locale }) => {
   const [showModal, setShowModal] = useState(false);
   const [languageModalShow, setLanguageModalShow] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const language = locale?.toUpperCase();
+  const [brands, setBrands] = useState([]);
+
+
+  // Fetch autosuggestions using Apollo Client
+  const { loading, error, data } = useQuery(GET_LIVE_INVENTORY_BYSEARCH, {
+    variables: { lang: "EN", searchTerm, first: 10 },
+    skip: searchTerm.length < 2,
+    fetchPolicy: "cache-first"
+    });
+ 
+
+
   const router = useRouter();
   const { t, i18n } = useTranslation('common');
+
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
@@ -29,6 +46,30 @@ const Layout = ({ children, currentPage }) => {
   const handleLanguageModalClose = () => {
     setLanguageModalShow(false)
   }
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Reset the brands list if the search term is empty
+  useEffect(() => {
+    if (!searchTerm) {
+      setBrands([]); // Clear the brands list if the search term is empty
+    } else if (data) { 
+      const liveInventoryData = data?.allLiveInventory?.edges || [];
+      const titles = liveInventoryData.map(item => item.node.title).filter(title => title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+      //console.log(titles);
+ 
+       setBrands([...titles]); 
+    }
+  }, [data, searchTerm]);
+
+
+  const handleSuggestionClick = (brand) => {
+    router.push(`/tractor-details/${brand.slug}`);  // Navigate to the tractor detail page
+  };
+
 
   const customStyles = {
     content: {
@@ -61,7 +102,6 @@ const Layout = ({ children, currentPage }) => {
   };
 
 
-
   return (
     <>
       <Head>
@@ -88,8 +128,25 @@ const Layout = ({ children, currentPage }) => {
                 <div className='px-4 sm:py-10 pt-4 pb-8'>
                   <div className='mx-auto flex flex-col gap-2 sm:items-center sm:justify-center text-lg'>
                     <p className='font-semibold'>{t('Navbar.What_are_you_looking_for')}</p>
-                    <input type='text' placeholder={t('Navbar.Start_typing')} className='border-b-[1px] border-[#000000] border-opacity-[10%] border-t-0 border-l-0 border-r-0' />
+                    <input type='text'
+                      placeholder={t('Navbar.Start_typing')}
+                      onChange={handleSearchChange}
+                      className='border-b-[1px] border-[#000000] border-opacity-[10%] border-t-0 border-l-0 border-r-0' />
                   </div>
+                  {/* Loader */}
+                    {loading ? (
+                      <div className="loading">Loading...</div>
+                    ) : searchTerm && brands.length > 0 ? (
+                      <ul className="brand-list p-3">
+                        {brands.map((brand, index) => (
+                          <li key={index} onClick={() => handleBrandClick(brand)} className="brand-item text-base p-1">
+                            {brand}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : searchTerm && brands.length === 0 ? (
+                      <div className="no-results p-3">No results found</div>
+                    ) : null}
                 </div>
               </>
             }

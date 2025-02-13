@@ -460,6 +460,7 @@ export default function TractorDetails({ locale }) {
             search: slug, // or slug variable
             first: 1 // Fetch just the single tractor details
         },
+        fetchPolicy: "cache-first",
         notifyOnNetworkStatusChange: true
     });
 
@@ -470,6 +471,7 @@ export default function TractorDetails({ locale }) {
             search: slugWord, // or some other criteria for "similar"
             first: 9 // Adjust based on the number of similar tractors you want to load
         },
+        fetchPolicy: "cache-first",
         notifyOnNetworkStatusChange: true
     });
 
