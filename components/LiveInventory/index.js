@@ -188,14 +188,14 @@ const LiveInventoryContainer = ({ locale, data }) => {
               {
                 data.map((item, idx) => (
 
-                  <div key={idx} className="tractor-details-info cursor-pointer" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
+                  <div key={idx} className="tractor-details-info cursor-pointer">
 
                     <div
                       key={idx}
                       className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                     >
 
-                      <div className="relative">
+                      <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
                         <Image
                           className="w-full"
                           src={DefaultTractor}

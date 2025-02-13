@@ -29,8 +29,8 @@ const SlickCarousel = ({ items, settings }) => {
       <Slider {...settings} className=''>
         {items.map((item, index) => (
           <div key={index} className="gap-4 bg-white border-[#D9D9D9] border-[1px]
-           overflow-hidden shadow-lg cursor-pointer" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
-            <div className="relative">
+           overflow-hidden shadow-lg cursor-pointer">
+            <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
               <Image className="w-full" src={DefaultTractor} alt="cardImage" layout="responsive" width={100} height={70} /> 
               <div className="bg-secondaryColor px-2  text-white text-sm absolute top-4 left-4
                uppercase font-medium border-gradient">
@@ -60,14 +60,12 @@ const SlickCarousel = ({ items, settings }) => {
                 )}
               </div> 
             </div>
-            <Link href={'/tractor-details/?id='+item.id+"&s="+item.slug}>
-            <div className='border-t-[1px] border-[#D9D9D9] relative bottom-0'>
+             <div className='border-t-[1px] border-[#D9D9D9] relative bottom-0'>
               <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                 <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center" onClick={handleEnquiry}>{CheckTractorDetails}</span>
               </div>
             </div>
-            </Link>
-          </div>
+           </div>
         ))}
       </Slider>
     </div>
