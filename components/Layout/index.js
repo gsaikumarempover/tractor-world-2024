@@ -126,20 +126,25 @@ const Layout = ({ children, currentPage, locale }) => {
                 </div>
 
                 <div className='px-4 sm:py-10 pt-4 pb-8'>
-                  <div className='mx-auto flex flex-col gap-2 sm:items-center sm:justify-center text-lg'>
+                  <div className='w-full flex justify-center'>
+                  <div className='flex flex-col gap-2 text-lg'>
                     <p className='font-semibold'>{t('Navbar.What_are_you_looking_for')}</p>
+                    <div  className='border-b-2 border-[#e6e6e6]'>
+
                     <input type='text'
                       placeholder={t('Navbar.Start_typing')}
                       onChange={handleSearchChange}
-                      className='border-b-[1px] border-[#000000] border-opacity-[10%] border-t-0 border-l-0 border-r-0' />
-                  </div>
+                      className='border-b-0 border-t-0 border-l-0 border-r-0' />
+                       </div>
+                
                   {/* Loader */}
                     {loading ? (
                       <div className="loading">Loading...</div>
                     ) : searchTerm && brands.length > 0 ? (
-                      <ul className="brand-list p-3">
+                      <ul className="brand-list">
+                        <p className='text-[#F37021] mb-1 font-bold text-[15px]'>Popular Searches</p>
                         {brands.map((brand, index) => (
-                          <li key={index} onClick={() => handleBrandClick(brand)} className="brand-item text-base p-1">
+                          <li key={index} onClick={() => handleBrandClick(brand)} className="brand-item text-[15px] p-1">
                             {brand}
                           </li>
                         ))}
@@ -147,6 +152,8 @@ const Layout = ({ children, currentPage, locale }) => {
                     ) : searchTerm && brands.length === 0 ? (
                       <div className="no-results p-3">No results found</div>
                     ) : null}
+                </div>
+                </div>
                 </div>
               </>
             }

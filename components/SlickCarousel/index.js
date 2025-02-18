@@ -18,7 +18,7 @@ const SlickCarousel = ({ items, settings }) => {
 
 
   const handleEnquiry = () => {
-    router.push('/contact-us');
+    router.push('/interested');
 };
 
 

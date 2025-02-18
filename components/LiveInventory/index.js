@@ -112,7 +112,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
   };
 
   const handleEnquiry = () => {
-    router.push('/contact-us');
+    router.push('/interested');
   };
 
   return (
