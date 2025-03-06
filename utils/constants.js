@@ -4,6 +4,7 @@ export const customImageLoader = ({ src }) => {
   return src; // Return the original image source directly
 };
 
+
 export const HP_OPTIONS = [
   { label: "1 HP - 20 HP", value: "1_20" },
   { label: "21 HP - 30 HP", value: "21_30" },
@@ -22,6 +23,9 @@ export const PRICE_OPTIONS = [
   { label: "7 Lakh - 10 Lakh", value: "7_10" },
   { label: "Above 10 Lakh", value: ">10" },
 ];
+
+export const LiveInventoryAPIURL="https://used-tractor-backend.azurewebsites.net/inventory/web/v2/tractor/";
+
 
 
 export const HOMEPAGE_QUERIES = gql`

@@ -14,7 +14,7 @@ export const HomeHPRanges = [
 export const useGeolocation = () => {
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
-    console.log(error,"maps denied")
+    //console.log(error,"maps denied")
     const getLocation = useCallback(() => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(

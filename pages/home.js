@@ -48,19 +48,37 @@ import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "@components/SingleItemsSlide";
 import Link from 'next/link';
 import { useQuery } from "@apollo/client";
-import { HOMEPAGE_QUERIES } from "@utils/constants";
+import { HOMEPAGE_QUERIES,LiveInventoryAPIURL } from "@utils/constants";
 import Loader from '@components/Loader';
 import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
+import useSWR from 'swr';
+
  
-export async function getServerSideProps(context) {
-    return await getLocaleProps(context);
+export async function getStaticProps(context) {
+
+    console.log("🚀 Fetching locale and inventory data at build time...");
+
+    // Fetch locale data
+    const localeProps = await getLocaleProps(context);
+
+    // Fetch API data
+    const res = await fetch("https://used-tractor-backend.azurewebsites.net/inventory/web/v2/tractor/");
+    const inventoryData = await res.json();
+
+    return {
+        props: {
+            ...localeProps.props, // Merging locale props
+            inventoryData, // API data
+        },
+        revalidate: 10, // Re-generate the page every 10 seconds (ISR)
+    };
 }
 
-export default function HomePage({ locale }) {
+export default function HomePage({ locale,inventoryData  }) { 
 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
@@ -71,6 +89,18 @@ export default function HomePage({ locale }) {
     const router = useRouter();
     const language = "EN";
     const { t, i18n } = useTranslation('common');
+    const fetcher = (url) => fetch(url).then((res) => res.json());
+
+    
+    // Fetch latest data on the client side without blocking render
+    const { data: inventoryData, error: inventoryError } = useSWR(LiveInventoryAPIURL,
+        fetcher,
+        { fallbackData: inventoryData }
+    );
+
+    if (inventoryError) return <div>Error loading data.</div>;
+
+
     
 
     const isShowCallModal = () => {
@@ -140,7 +170,6 @@ export default function HomePage({ locale }) {
     if (error) return <p>Error: {error.message}</p>; 
     
     const bannersData = data?.homeSliders?.nodes || [];
-    const liveInventoryData = data?.allLiveInventory?.edges || [];
     const testimonialsData = data?.testimonials?.nodes || [];
     const contentGalleryData = data?.contentgallerys?.nodes || [];
     const latestNewsData = data?.latestnews?.edges?.map(edge => edge.node) || [];
@@ -150,18 +179,8 @@ export default function HomePage({ locale }) {
         const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
         const mobileUrl = node.homesliders.mobilesliderimage.node.mediaItemUrl;
         return { desktopUrl, mobileUrl };
-    });
-
-    const liveInventoryList = liveInventoryData.map(({ node }) => ({
-        title: node.title,
-        price: node.liveInventoryData.maxPrice,
-        hours: node.liveInventoryData.engineHours,
-        driveType: node.liveInventoryData.driveType,
-        enginePower: node.liveInventoryData.enginePower,
-        slug: node.slug,
-        id: node.id
-    }));
-
+    }); 
+    
 
     const testimonialSlides = testimonialsData.map(node => {
         const testimonialMobileUrl = node.tesimonails.mobileimage.node.mediaItemUrl;
@@ -207,9 +226,8 @@ export default function HomePage({ locale }) {
             contentGalleyTitle,
             contentGalleyURL
         };
-    });
-
-
+    }); 
+ 
     const handleCompareAll = () => {
         router.push('/compare-tractors');
     };
@@ -281,7 +299,7 @@ export default function HomePage({ locale }) {
         setActiveTab(tabid); // Dynamically set the active tab based on clicked tab's id
     };
 
-    const compareTractorData = getHomePageTractorsListBasedOnInventory(liveInventoryData);
+   // const compareTractorData = getHomePageTractorsListBasedOnInventory(liveInventoryData);
 
    // console.log("compareTractorData" + JSON.stringify(compareTractorData));
 
@@ -602,9 +620,15 @@ export default function HomePage({ locale }) {
             </div >
 
             {/* Live Inventory */}
+
+           
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
                 <Heading heading={t('Home.Live_Inventory')} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
-                <LiveInventoryContainer locale={locale} data={liveInventoryList} />
+                {!initialData ? (
+                    <p>Loading latest data...</p>
+                ) : (
+                    <LiveInventoryContainer locale={locale} data={initialData} />  
+                )} 
             </div >
 
             {/* why choose us */}
@@ -665,7 +689,7 @@ export default function HomePage({ locale }) {
                     ))}
                 </div>
 
-                <div className="">
+                {/* <div className="">
                     <div className='grid sm:grid-cols-3 md:gap-6 gap-4'>
                         {Object.keys(compareTractorData).map((key) =>
                             activeTab === key ? (
@@ -697,7 +721,7 @@ export default function HomePage({ locale }) {
                         )}
 
                     </div>
-                </div>
+                </div> */}
 
                 <div className='justify-center flex mt-2'>
                     <Btn text={t('Home.View_All_Tractor_Comparison')} onClick={handleCompareAll} bgColor={true}

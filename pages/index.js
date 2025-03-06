@@ -90,10 +90,7 @@ export default function Home({ locale }) {
   useEffect(() => {
     getLocation();
   }, [])
-
-  console.log(addressFromStore, "address from pages")
-  console.log(selectedLanguage, "selectedLanguage from pages")
-
+ 
   return (
 
     <>
