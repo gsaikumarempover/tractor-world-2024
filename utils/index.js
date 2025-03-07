@@ -92,38 +92,37 @@ export const useGeolocation = () => {
   // Function to filter tractors based on enginePower
   export const filterByHorsepower = (tractors, min, max) => {
     return tractors.filter((tractor) => { 
-      const hp = parseInt(tractor.node.liveInventoryData.enginePower, 10); // Make sure to convert enginePower to a number
+      const hp = parseInt(tractor.enginePower, 10); // Make sure to convert enginePower to a number
+      console.log("hp"+hp)
       // const hp = parseInt(tractor.node.liveInventoryData.enginePower.split(' ')[0], 10); 
       return hp >= min && hp <= max;
     });
   };
 
   export const getHomePageTractorsListBasedOnInventory = (liveInventoryData) => {
-  
+    console.log("compare tractor data"+ liveInventoryData);
+   
     // Object to store the compare data dynamically
     const compareTractorData = {};
   
     HomeHPRanges.forEach((range) => { 
       // Filter tractors for the current range
       const filteredTractors = filterByHorsepower(liveInventoryData, range.min, range.max);
-
   
+
+    
+
+   
       if (filteredTractors.length >= 2) {
         // Randomly select two tractors to compare
         const tractor1 = getRandomTractor(filteredTractors);
-        let tractor2 = getRandomTractor(filteredTractors);
-
-        
-     // console.log("filterd tractors data tractor1"+JSON.stringify(tractor1));
-     // console.log("filterd tractors data tractor2"+JSON.stringify(tractor2));
-      
-      return;
+        let tractor2 = getRandomTractor(filteredTractors); 
   
         // Ensure tractor1 and tractor2 are not the same
         while (tractor1.id === tractor2.id) {
           tractor2 = getRandomTractor(filteredTractors);
         }
-  
+       console.log("filtered Hp range"+filteredTractors)
         // Assign the selected tractors to the compareTractorData object
         compareTractorData[range.key] = {
           brand1: tractor1.title,
@@ -137,5 +136,5 @@ export const useGeolocation = () => {
     });
   
     return compareTractorData;
-  };
+   };
   
