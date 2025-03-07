@@ -47,7 +47,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "@components/SingleItemsSlide";
 import Link from 'next/link';
-import { useQuery } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import { HOMEPAGE_QUERIES,LiveInventoryAPIURL } from "@utils/constants";
 import Loader from '@components/Loader';
 import Modal from "@components/Modal";
@@ -56,7 +56,8 @@ import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
 import useSWR from 'swr';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setInventoryData } from '../store/slices/inventorySlice';
  
 export async function getStaticProps(context) {
 
@@ -66,7 +67,7 @@ export async function getStaticProps(context) {
     const localeProps = await getLocaleProps(context);
 
     // Fetch API data
-    const res = await fetch("https://used-tractor-backend.azurewebsites.net/inventory/web/v2/tractor/");
+    const res = await fetch(LiveInventoryAPIURL);
     const inventoryData = await res.json();
 
     return {
@@ -79,7 +80,8 @@ export async function getStaticProps(context) {
 }
 
 export default function HomePage({ locale,inventoryData  }) { 
-
+    
+  
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
     const [isVisible, setIsVisible] = useState(true);
@@ -93,16 +95,39 @@ export default function HomePage({ locale,inventoryData  }) {
 
     
     // Fetch latest data on the client side without blocking render
-    const { data: inventoryData, error: inventoryError } = useSWR(LiveInventoryAPIURL,
-        fetcher,
-        { fallbackData: inventoryData }
-    );
+    const dispatch = useDispatch();
+    const persistedInventory = useSelector((state) => state.inventory.data); // Get persisted data
 
-    if (inventoryError) return <div>Error loading data.</div>;
+  const {  data: InventoryData, error: inventoryError } = useSWR(LiveInventoryAPIURL, fetcher, {
+    fallbackData: persistedInventory, // Use persisted data if available
+    onSuccess: (fetchedData) => {
+      dispatch(setInventoryData(fetchedData)); // Save to Redux
+    },
+  });
+ 
 
 
-    
+    console.log("My inventory data",(InventoryData))
 
+    if (inventoryError) return <p>Error loading data.</p>;
+  if (!InventoryData && InventoryData.length === 0) return <p>Loading...</p>;
+
+ 
+  console.log(InventoryData.data)
+    const slicedData = InventoryData?.data?.slice(0,100) || []
+    console.log(slicedData)
+    const inventoryList = slicedData.map(item => ({
+        title: `${item.brand} ${item.model}`,
+        price: item.max_price,
+        engineHours: item.engine_hours,
+        driveType: item.drive_type,
+        enginePower: item.engine_power,
+        tractorId: item.tractor_id,
+        // imageUrl: item.image_links."0".processed_image,
+      })) || [];
+
+
+     
     const isShowCallModal = () => {
         setShowModal(true);
     }
@@ -299,182 +324,10 @@ export default function HomePage({ locale,inventoryData  }) {
         setActiveTab(tabid); // Dynamically set the active tab based on clicked tab's id
     };
 
-   // const compareTractorData = getHomePageTractorsListBasedOnInventory(liveInventoryData);
+    //compare tractors  data
 
-   // console.log("compareTractorData" + JSON.stringify(compareTractorData));
-
-    // const compareTractorData = {
-
-    //     oneData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     twoData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     ThreeData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     FourData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     FifthData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     SixthData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-
-    //     ]
-    // };
-
+    const compareTractorData = getHomePageTractorsListBasedOnInventory(inventoryList);
+    const compareTractorData2 =[];
     const contentGallerysettings = {
         dots: true,
         infinite: true,
@@ -624,10 +477,10 @@ export default function HomePage({ locale,inventoryData  }) {
            
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
                 <Heading heading={t('Home.Live_Inventory')} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
-                {!initialData ? (
+                {!InventoryData ? (
                     <p>Loading latest data...</p>
                 ) : (
-                    <LiveInventoryContainer locale={locale} data={initialData} />  
+                    <LiveInventoryContainer locale={locale} data={inventoryList} />  
                 )} 
             </div >
 
@@ -676,6 +529,7 @@ export default function HomePage({ locale,inventoryData  }) {
                 </div>
 
                 <div className='flex sm:gap-4 gap-2 my-3 font-medium relative z-20'>
+
                     {/* <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}> Under 20 HP</Tab>  */}
                     {HomeHPRanges.map((range) => (
                         <Tab
@@ -689,7 +543,8 @@ export default function HomePage({ locale,inventoryData  }) {
                     ))}
                 </div>
 
-                {/* <div className="">
+
+                <div className="">
                     <div className='grid sm:grid-cols-3 md:gap-6 gap-4'>
                         {Object.keys(compareTractorData).map((key) =>
                             activeTab === key ? (
@@ -721,7 +576,7 @@ export default function HomePage({ locale,inventoryData  }) {
                         )}
 
                     </div>
-                </div> */}
+                </div>
 
                 <div className='justify-center flex mt-2'>
                     <Btn text={t('Home.View_All_Tractor_Comparison')} onClick={handleCompareAll} bgColor={true}
