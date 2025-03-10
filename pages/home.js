@@ -103,11 +103,10 @@ export async function getStaticProps(context) {
     }
 }
  
-export default function HomePage({localeProps,inventoryData}) { 
+export default function HomePage({props}) { 
 
-    console.log("📦 Full Props on Client:", localeProps);
-    console.log("📦 inventoryData on Client Side:", inventoryData);
-
+    console.log("📦 Full Props on Client:", props);  
+    
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
     const [isVisible, setIsVisible] = useState(true);
