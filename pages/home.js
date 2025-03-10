@@ -63,10 +63,7 @@ export async function getStaticProps(context) {
       // Fetch locale props
       const localeProps = await getLocaleProps(context);
       console.log("✅ Locale Props:", localeProps.props);
-      
-      // Define your API URL
-      const LiveInventoryAPIURL = process.env.INVENTORY_API_URL; // Make sure this is defined
-      
+       
       // Fetch inventory data
       const res = await fetch(LiveInventoryAPIURL);
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
