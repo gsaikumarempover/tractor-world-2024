@@ -55,30 +55,51 @@ import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
-import useSWR from 'swr';
-
  
 export async function getStaticProps(context) {
-
     console.log("🚀 Fetching locale and inventory data at build time...");
 
-    // Fetch locale data
-    const localeProps = await getLocaleProps(context);
+    try {
+        // Fetch locale data
+        const localeProps = await getLocaleProps(context);
 
-    // Fetch API data
-    const res = await fetch("https://used-tractor-backend.azurewebsites.net/inventory/web/v2/tractor/");
-    const inventoryData = await res.json();
+        // Fetch API data
+        const res = await fetch();
+        const jsonResponse = await res.json();
 
-    return {
-        props: {
-            ...localeProps.props, // Merging locale props
-            inventoryData, // API data
-        },
-        revalidate: 10, // Re-generate the page every 10 seconds (ISR)
-    };
-}
+        // Ensure data exists and filter by status (1,2,3,4)
+        const filteredInventoryData = jsonResponse && jsonResponse.data
+            ? jsonResponse.data.filter(item => [1, 2, 3, 4].includes(item.status))
+            : [];
 
+        console.log("✅ Filtered Inventory Data:", JSON.stringify(filteredInventoryData));
+
+        return {
+            props: {
+                ...localeProps.props, // Merging locale props
+                inventoryData: filteredInventoryData, // Filtered API data
+            },
+            revalidate: 10, // ISR: Re-fetches every 10 seconds
+        };
+    } catch (error) {
+        console.error("❌ Error fetching inventory data:", error);
+
+        return {
+            props: {
+                inventoryData: [], // Return empty array on failure
+            },
+            revalidate: 10,
+        };
+    }
+} 
 export default function HomePage({ locale,inventoryData  }) { 
+
+    console.log("📦 inventoryData on Client Side:", inventoryData);
+
+    if (!inventoryData || inventoryData.length === 0) {
+        return <p>No inventory data available.</p>;
+    }
+
 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
@@ -89,19 +110,8 @@ export default function HomePage({ locale,inventoryData  }) {
     const router = useRouter();
     const language = "EN";
     const { t, i18n } = useTranslation('common');
-    const fetcher = (url) => fetch(url).then((res) => res.json());
-
     
-    // Fetch latest data on the client side without blocking render
-    const { data: inventoryData, error: inventoryError } = useSWR(LiveInventoryAPIURL,
-        fetcher,
-        { fallbackData: inventoryData }
-    );
-
-    if (inventoryError) return <div>Error loading data.</div>;
-
-
-    
+     
 
     const isShowCallModal = () => {
         setShowModal(true);
@@ -543,6 +553,9 @@ export default function HomePage({ locale,inventoryData  }) {
         },
     };
 
+
+    
+
     return (
         <>
             {/* Home SLider */}
@@ -624,10 +637,10 @@ export default function HomePage({ locale,inventoryData  }) {
            
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
                 <Heading heading={t('Home.Live_Inventory')} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
-                {!initialData ? (
+                {!inventoryData ? (
                     <p>Loading latest data...</p>
                 ) : (
-                    <LiveInventoryContainer locale={locale} data={initialData} />  
+                    <LiveInventoryContainer locale={locale} data={inventoryData} />  
                 )} 
             </div >
 
