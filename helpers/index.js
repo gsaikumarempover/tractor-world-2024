@@ -18,14 +18,26 @@ export async function getLocaleProps(context) {
     if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     
     const jsonResponse = await res.json();
-    
-    // Filter valid inventory items
-    const filteredInventoryData = Array.isArray(jsonResponse?.data)
-      ? jsonResponse.data.filter(item => [1, 2, 3, 4].includes(item.status))
-      : [];
-    
-    console.log(`📝 Found ${filteredInventoryData.length} valid inventory items`);
-    
+        
+    // First filter valid items
+    const filteredItems = (jsonResponse?.data || [])
+      .filter(item => [1, 2, 3, 4].includes(item.status));
+
+    // Then take just the first 10 for testing
+    const slicedItems = filteredItems.slice(0, 10);
+
+    // Finally map to only include essential fields
+    const filteredInventoryData = slicedItems.map(item => ({
+      id: item.tractor_id,
+      brand: item.brand,
+      model: item.model,
+      year: item.year,
+      price: item.max_price,
+      location: item.user_location,
+      state: item.state
+    }));
+
+    console.log(`Reduced inventory: ${filteredInventoryData.length} items out of ${filteredItems.length} total`);
     // Explicitly construct the return object
     const returnProps = {
       locale,
