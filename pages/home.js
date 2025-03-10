@@ -54,10 +54,8 @@ import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
+
 import { getLocaleProps } from "@helpers"; 
-import { LiveInventoryAPIURL } from '../utils/constants';
-
-
 export async function getStaticProps(context) {
     console.log("🚀 Fetching data at build time...");
     
@@ -65,7 +63,10 @@ export async function getStaticProps(context) {
       // Fetch locale props
       const localeProps = await getLocaleProps(context);
       console.log("✅ Locale Props:", localeProps.props);
-       
+      
+      // Define your API URL
+      const LiveInventoryAPIURL = process.env.INVENTORY_API_URL; // Make sure this is defined
+      
       // Fetch inventory data
       const res = await fetch(LiveInventoryAPIURL);
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
@@ -99,7 +100,8 @@ export async function getStaticProps(context) {
       };
     }
   }
-export default function HomePage({locale, inventoryData = [] } ) { 
+
+  export default function HomePage({ locale, inventoryData = [] }) {
 
     console.log("📦 Full Props on Client:", { locale, inventoryData });
 
