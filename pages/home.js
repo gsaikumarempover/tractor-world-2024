@@ -62,30 +62,33 @@ export async function getStaticProps(context) {
     try {
         // Fetch locale data
         const localeProps = await getLocaleProps(context);
+        console.log("🌍 Locale Props:", localeProps);
 
         // Fetch API data
         const res = await fetch(LiveInventoryAPIURL);
 
-        // Check if the response is OK
         if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
         }
 
         const jsonResponse = await res.json();
-        console.log("📡 API Response:", JSON.stringify(jsonResponse).substring(0, 1000)); // Log first 1000 characters
+        console.log("📡 API Response:", JSON.stringify(jsonResponse).substring(0, 1000)); // First 1000 chars
 
         // Ensure data exists and filter by status (1,2,3,4)
-        const filteredInventoryData = jsonResponse?.data
-            ? jsonResponse.data.filter(item => [1, 2, 3, 4].includes(item.status))
-            : [];
+        const filteredInventoryData = jsonResponse?.data?.filter(item => [1, 2, 3, 4].includes(item.status)) || [];
 
         console.log("📦 Filtered Inventory Data:", JSON.stringify(filteredInventoryData).substring(0, 1000));
 
-         // Final props object
-         const finalProps = {
+        // **Check the structure of `localeProps.props`**
+        console.log("✅ localeProps.props BEFORE merging:", localeProps.props);
+
+        // **Create a new props object explicitly**
+        const finalProps = {
             locale: localeProps.props?.locale ?? 'en',
             inventoryData: filteredInventoryData,
         };
+
+        console.log("🚀 Final Props Sent to Page:", finalProps);
 
         return {
             props: finalProps,
@@ -96,7 +99,7 @@ export async function getStaticProps(context) {
 
         return {
             props: {
-                locale: 'enr',
+                locale: 'en',
                 inventoryData: [],
             },
             revalidate: 10,
@@ -104,13 +107,12 @@ export async function getStaticProps(context) {
     }
 }
 
+
 export default function HomePage(props) { 
 
-    console.log("📦 inventoryData on Client props:", props);
-
-
+    console.log("📦 Full Props on Client:", props);
     console.log("📦 inventoryData on Client Side:", props.inventoryData);
- 
+
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
     const [isVisible, setIsVisible] = useState(true);
