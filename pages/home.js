@@ -60,10 +60,10 @@ export async function getStaticProps(context) {
     console.log("🚀 Fetching data at build time...");
     
     try {
-      // Fetch locale props
+      // Fetch locale data
       const localeProps = await getLocaleProps(context);
       console.log("✅ Locale Props:", localeProps.props);
-       
+      
       // Fetch inventory data
       const res = await fetch(LiveInventoryAPIURL);
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
@@ -76,28 +76,35 @@ export async function getStaticProps(context) {
         [1, 2, 3, 4].includes(item.status)
       ) || [];
       
-      // Ensure inventoryData is explicitly defined in the returned props
+      // Debug the filtered data
+      console.log("🔍 Filtered Inventory Data:", 
+        JSON.stringify(filteredInventoryData).substring(0, 100), 
+        `(${filteredInventoryData.length} items)`
+      );
+      
+      // Return props directly without the intermediate finalProps variable
       return { 
         props: {
           ...localeProps.props,
-          inventoryData: filteredInventoryData,
+          inventoryData: filteredInventoryData, // Make sure this is an array
         }, 
         revalidate: 10 
       };
     } catch (error) {
       console.error("❌ Error in getStaticProps:", error.message);
-      // Make sure to return proper default props with localeProps
+      
+      // Get locale props again in catch block
       const localeProps = await getLocaleProps(context);
+      
       return { 
         props: { 
           ...localeProps.props, 
-          inventoryData: [] 
+          inventoryData: [] // Empty array fallback
         }, 
         revalidate: 10 
       };
     }
   }
-
   export default function HomePage({ locale, inventoryData = [] }) {
 
     console.log("📦 Full Props on Client:", { locale, inventoryData });
