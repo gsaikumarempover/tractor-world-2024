@@ -64,7 +64,7 @@ export async function getStaticProps(context) {
         const localeProps = await getLocaleProps(context);
 
         // Fetch API data
-        const res = await fetch();
+        const res = await fetch(LiveInventoryAPIURL);
         const jsonResponse = await res.json();
 
         // Ensure data exists and filter by status (1,2,3,4)
