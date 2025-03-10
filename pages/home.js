@@ -62,11 +62,10 @@ export async function getStaticProps(context) {
     try {
         // Fetch locale data
         const localeProps = await getLocaleProps(context);
-        console.log("🌍 Locale Props:", localeProps);
+        console.log("🌍 Locale Props Before Merge:", localeProps);
 
         // Fetch API data
         const res = await fetch(LiveInventoryAPIURL);
-
         if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
         }
@@ -79,13 +78,10 @@ export async function getStaticProps(context) {
 
         console.log("📦 Filtered Inventory Data:", JSON.stringify(filteredInventoryData).substring(0, 1000));
 
-        // **Check the structure of `localeProps.props`**
-        console.log("✅ localeProps.props BEFORE merging:", localeProps.props);
-
-        // **Create a new props object explicitly**
+        // **Manually merge localeProps without overwriting**
         const finalProps = {
-            locale: localeProps.props?.locale ?? 'en',
-            inventoryData: filteredInventoryData,
+            ...localeProps.props, // Keep existing locale-related props
+            inventoryData: filteredInventoryData, // Add inventory data
         };
 
         console.log("🚀 Final Props Sent to Page:", finalProps);
@@ -106,8 +102,7 @@ export async function getStaticProps(context) {
         };
     }
 }
-
-
+ 
 export default function HomePage(props) { 
 
     console.log("📦 Full Props on Client:", props);
