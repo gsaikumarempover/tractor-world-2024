@@ -95,12 +95,7 @@ export async function getStaticProps(context) {
 export default function HomePage({ locale,inventoryData  }) { 
 
     console.log("📦 inventoryData on Client Side:", inventoryData);
-
-    if (!inventoryData || inventoryData.length === 0) {
-        return <p>No inventory data available.</p>;
-    }
-
-
+ 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
     const [isVisible, setIsVisible] = useState(true);
