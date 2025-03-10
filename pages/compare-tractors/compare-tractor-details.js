@@ -10,8 +10,14 @@ import CompareImage from '@Images/liveInventory/compareImage.svg';
 import closeIcon from '@Images/closeIcon.svg';
 import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
 import vs from '@Images/compareTractorImg/vs.svg';
+import { getLocaleProps } from "@helpers";
 
-export default function CompareTractorDetails() {
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+}
+
+export default function CompareTractorDetails({ locale }) {
+    
     const breadcrumbData = [
         { label: 'Home', link: '/' },
         { label: 'Compare Tractor', link: '#' },
@@ -31,17 +37,7 @@ export default function CompareTractorDetails() {
             price: "₹ 11.24 lac - 11.55 lac*",
             checkPrice: "Check Tractor Price",
             image: "/images/compareTractorImg/massey.svg"
-        },
-
-        {
-            name: "Massey Ferguson 90 4WD",
-            emiStartsFrom: "EMI starts from ₹ 24,055*",
-            price: "₹ 11.24 lac - 11.55 lac*",
-            checkPrice: "Check Tractor Price",
-            image: "/images/compareTractorImg/massey.svg"
-        },
-
-
+        }, 
     ];
 
     // Specifications data
@@ -300,8 +296,8 @@ export default function CompareTractorDetails() {
                                     </div>
                                 )}
 
-                                <div className="w-full">
-                                    <div key={index} className="bg-[#FBFBFB] shadow-lg w-full">
+                                <div className="w-96">
+                                    <div key={index} className="bg-[#FBFBFB] shadow-lg w-96">
                                         <div className="relative p-2">
                                             <Image src={tractor.image}
                                                 alt="image"
@@ -328,11 +324,11 @@ export default function CompareTractorDetails() {
 
                     </div>
 
-                    <div className='mt-4 w-full flex justify-end'>
+                    {/* <div className='mt-4 w-full flex justify-end'>
                         <div className='sm:w-[15%] w-full'>
                             <Btn text={'COMPARE'} bgColor={true} />
                         </div>
-                    </div>
+                    </div> */}
 
                     <div
                         className="mt-4"

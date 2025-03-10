@@ -52,9 +52,7 @@ export default function TractorDetails({ locale }) {
     const language = locale?.toUpperCase();
     const [TractorDetails, setTractorDetails] = useState([]);
     const [similarTractorsList, setsimilarTractorsData] = useState([]);
-    const slugQuery = slug.replace(/-/g, ' ');
-    const slugWord = slugQuery.split(' ')[0];
-    // console.log("slugQuery:", slugQuery);      
+     // console.log("slugQuery:", slugQuery);      
     // console.log("firstWord:", slugWord);
 
     const { t, i18n } = useTranslation('common');

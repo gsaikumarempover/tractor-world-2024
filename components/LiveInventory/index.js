@@ -189,14 +189,16 @@ const LiveInventoryContainer = ({ locale, data }) => {
               {
                 data.map((item, idx) => (
 
+
                   <div key={idx} className="tractor-details-info cursor-pointer">
 
+                    <p>gridData--{item.tractorId}</p>
                     <div
                       key={idx}
                       className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                     >
 
-                      <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
+                      <div className="relative" onClick={() => router.push(`/tractor-details/${item.tractorId}`)}>
                         <Image
                           className="w-full"
                           src={DefaultTractor}
@@ -269,12 +271,13 @@ const LiveInventoryContainer = ({ locale, data }) => {
                 data.map((item, idx) => (
 
                   <div key={idx} className="tractor-details-info cursor-pointer">
+                      <p>listData--{item.tractorId}</p>
                     <div
                       key={idx}
                       className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none  cursor-pointer">
                       <div className="flex">
                         <div className="w-[40%] relative">
-                          <div className="w-full h-[175px]" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
+                          <div className="w-full h-[175px]" onClick={() => router.push(`/tractor-details/${item.tractorId}`)}>
                             <Image
                               className="w-full h-[600px]"
                               src={DefaultTractor}

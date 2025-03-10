@@ -93,6 +93,9 @@ export default function HomePage({ locale }) {
         {
             onSuccess: (fetchedData) => {
                 if (shouldFetch && fetchedData) {
+
+                    console.log("fetchedData"+JSON.stringify(fetchedData));
+
                     dispatch(setInventoryData(fetchedData));
                 }
             },
@@ -125,6 +128,17 @@ export default function HomePage({ locale }) {
             tractorId: item.tractor_id,
         }));
     }, [finalInventory]);
+
+    //compare tractors  data
+
+    const slicedDataCompare = useMemo(() => {
+        return Array.isArray(inventoryList) ? inventoryList.slice(0, 100) : [];
+    }, [inventoryList]);
+    
+    const compareTractorData = useMemo(() => {
+        return getHomePageTractorsListBasedOnInventory(slicedDataCompare);
+    }, [slicedDataCompare]); 
+    
     
 
     if (inventoryError) return <p>Error loading data.</p>;
@@ -326,18 +340,7 @@ export default function HomePage({ locale }) {
         setActiveTab(tabid); // Dynamically set the active tab based on clicked tab's id
     };
  
-    //compare tractors  data
-
-    const slicedDataCompare = useMemo(() => {
-        return Array.isArray(inventoryList) ? inventoryList.slice(0, 100) : [];
-    }, [inventoryList]);  // Dependency: Runs only when `inventoryList` changes
     
-    //console.log("slicedDataCompare"+JSON.stringify(slicedDataCompare));
-
-    const compareTractorData = useMemo(() => {
-        return getHomePageTractorsListBasedOnInventory(slicedDataCompare);
-    }, [slicedDataCompare]);  // Runs only when `slicedDataCompare` changes
-   
    // const compareTractorData =[];
     const contentGallerysettings = {
         dots: true,

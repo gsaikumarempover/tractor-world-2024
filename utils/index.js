@@ -132,9 +132,8 @@ export const useGeolocation = () => {
       }
     });
   
-    console.log("Compare Tractor Data:", JSON.stringify(compareTractorData, null, 2));
-  
+   
     return compareTractorData;
   };
   
-  
+   
