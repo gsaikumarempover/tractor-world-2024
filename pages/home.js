@@ -56,64 +56,16 @@ import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
 export async function getStaticProps(context) {
-    console.log(`🚀 getStaticProps called for path: ${context?.params?.slug || "undefined"}`);
-
-    try {
-        console.log(`🔍 getLocaleProps called with locale: ${context.locale}`);
+    
         const localeProps = await getLocaleProps(context);
-
-        console.log(`🌐 Using API URL: ${LiveInventoryAPIURL}`);
-        const res = await fetch(LiveInventoryAPIURL);
-        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-
-        const jsonResponse = await res.json();
- 
-        // Ensure data exists and filter by status (1,2,3,4)
-        let filteredInventoryData = jsonResponse?.data?.filter(item => [1, 2, 3, 4].includes(item.status)) || [];
-
- 
-        const slicedItems = filteredInventoryData.slice(0, 10);
-
-        // Finally map to only include essential fields
-        const inventoryData = slicedItems.map(item => ({
-        id: item.tractor_id,
-        brand: item.brand,
-        model: item.model,
-        year: item.year,
-        price: item.max_price,
-        location: item.user_location,
-        state: item.state
-        }));
-
-        console.log(`Reduced inventory: ${inventoryData.length} items out of ${slicedItems.length || 0} total`);
-
-        // Ensure data is serializable (force JSON conversion)
-        filteredInventoryData = JSON.parse(JSON.stringify(inventoryData));
-
-        const finalProps = {
-            ...localeProps.props,
-            inventoryData: inventoryData, // Ensure this is a valid array
-        };
-
-        console.log("📦 Props object keys:", Object.keys(finalProps));
-        console.log("🧪 inventoryData type:", Array.isArray(finalProps.inventoryData) ? "Array" : typeof finalProps.inventoryData);
-        console.log("🧩 Final props structure:", {
-            locale: finalProps.locale,
-            hasInventoryData: Array.isArray(finalProps.inventoryData),
-            inventoryDataLength: finalProps.inventoryData.length,
-        });
-
-        return { props: finalProps, revalidate: 10 };
-    } catch (error) {
-        console.error("❌ Error in getStaticProps:", error.message);
         return {
             props: {
-                locale: 'en',
-                inventoryData: [],
+                ...localeProps,
+                inventoryData: [{ test: "This is a test item" }]
             },
             revalidate: 10,
         };
-    }
+     
 }
 
 export default function HomePage({ locale, inventoryData }) {
