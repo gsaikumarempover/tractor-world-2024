@@ -55,6 +55,7 @@ import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
+ 
 export async function getStaticProps(context) {
     console.log("🚀 Fetching locale and inventory data at build time...");
 
@@ -64,35 +65,42 @@ export async function getStaticProps(context) {
 
         // Fetch API data
         const res = await fetch(LiveInventoryAPIURL);
+
+        // Check if the response is OK
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
         const jsonResponse = await res.json();
+        console.log("📡 API Response:", JSON.stringify(jsonResponse).substring(0, 1000)); // Log first 1000 characters
 
         // Ensure data exists and filter by status (1,2,3,4)
         const filteredInventoryData = jsonResponse?.data
             ? jsonResponse.data.filter(item => [1, 2, 3, 4].includes(item.status))
             : [];
 
-        const finalProps = {
-            ...localeProps.props, 
-            inventoryData: filteredInventoryData,
-        };
-
-        console.log("📦 Final Props Returned from getStaticProps:", JSON.stringify(finalProps).substring(0, 1000)); // Log first 1000 characters to prevent log overflow
-
-        return {
-            props: finalProps,
-            revalidate: 10,
-        };
-    } catch (error) {
-        console.error("❌ Error fetching inventory data:", error);
+        console.log("📦 Filtered Inventory Data:", JSON.stringify(filteredInventoryData).substring(0, 1000));
 
         return {
             props: {
-                inventoryData: [], // Return empty array on failure
+                ...localeProps.props,
+                inventoryData: filteredInventoryData,
+            },
+            revalidate: 10,
+        };
+    } catch (error) {
+        console.error("❌ Error fetching inventory data:", error.message);
+
+        return {
+            props: {
+                ...localeProps.props,
+                inventoryData: [],
             },
             revalidate: 10,
         };
     }
-} 
+}
+
 export default function HomePage(props) { 
 
     console.log("📦 inventoryData on Client Side:", props.inventoryData);
