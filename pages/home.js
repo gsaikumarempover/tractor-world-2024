@@ -55,58 +55,35 @@ import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
- 
 export async function getStaticProps(context) {
-    console.log("🚀 Fetching locale and inventory data at build time...");
-
     try {
-        // Fetch locale data
+        console.log("🚀 Fetching data at build time...");
+
         const localeProps = await getLocaleProps(context);
-        console.log("🌍 Locale Props Before Merge:", localeProps);
-
-        // Fetch API data
         const res = await fetch(LiveInventoryAPIURL);
-        if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-
         const jsonResponse = await res.json();
-        console.log("📡 API Response:", JSON.stringify(jsonResponse).substring(0, 1000)); // First 1000 chars
-
-        // Ensure data exists and filter by status (1,2,3,4)
+        
         const filteredInventoryData = jsonResponse?.data?.filter(item => [1, 2, 3, 4].includes(item.status)) || [];
-
-        console.log("📦 Filtered Inventory Data:", JSON.stringify(filteredInventoryData).substring(0, 1000));
-
-        // **Manually merge localeProps without overwriting**
+        
         const finalProps = {
-            ...localeProps.props, // Keep existing locale-related props
-            inventoryData: filteredInventoryData, // Add inventory data
+            ...localeProps.props,
+            inventoryData: filteredInventoryData,
         };
 
-        console.log("🚀 Final Props Sent to Page:", finalProps);
+        console.log("✅ Final Props Before Returning:", finalProps);
 
-        return {
-            props: finalProps,
-            revalidate: 10,
-        };
+        return { props: finalProps, revalidate: 10 };
     } catch (error) {
-        console.error("❌ Error fetching inventory data:", error.message);
-
-        return {
-            props: {
-                locale: 'en',
-                inventoryData: [],
-            },
-            revalidate: 10,
-        };
+        console.error("❌ Error in getStaticProps:", error.message);
+        return { props: { inventoryData: [] }, revalidate: 10 };
     }
 }
+
  
-export default function HomePage({props}) { 
+export default function HomePage(props) { 
 
     console.log("📦 Full Props on Client:", props);  
-    
+
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
     const [isVisible, setIsVisible] = useState(true);
