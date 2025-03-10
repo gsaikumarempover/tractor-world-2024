@@ -54,20 +54,30 @@ import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
+
 import { getLocaleProps } from "@helpers"; 
 export async function getStaticProps(context) {
-    try {
-        console.log("🚀 Fetching data at build time...");
+    console.log("🚀 Fetching data at build time...");
 
+    try {
+        // Fetch locale data
         const localeProps = await getLocaleProps(context);
+        console.log("✅ Locale Props:", localeProps.props); // Log locale props
+
+        // Fetch inventory data
         const res = await fetch(LiveInventoryAPIURL);
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+
         const jsonResponse = await res.json();
-        
+        console.log("📡 API Response:", JSON.stringify(jsonResponse).substring(0, 1000)); 
+
+        // Filter valid inventory items
         const filteredInventoryData = jsonResponse?.data?.filter(item => [1, 2, 3, 4].includes(item.status)) || [];
-        
+
+        // Merge locale and inventory data
         const finalProps = {
-            ...localeProps.props,
-            inventoryData: filteredInventoryData,
+            ...localeProps.props,  // Ensure locale props are spread
+            inventoryData: filteredInventoryData, // Always ensure this exists
         };
 
         console.log("✅ Final Props Before Returning:", finalProps);
@@ -75,14 +85,13 @@ export async function getStaticProps(context) {
         return { props: finalProps, revalidate: 10 };
     } catch (error) {
         console.error("❌ Error in getStaticProps:", error.message);
-        return { props: { inventoryData: [] }, revalidate: 10 };
+        return { props: { ...localeProps.props, inventoryData: [] }, revalidate: 10 };
     }
 }
 
- 
-export default function HomePage(props) { 
+export default function HomePage({ locale, inventoryData }) { 
 
-    console.log("📦 Full Props on Client:", props);  
+    console.log("📦 Full Props on Client:", { locale, inventoryData });
 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
