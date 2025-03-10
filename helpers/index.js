@@ -1,42 +1,49 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {LiveInventoryAPIURL } from "@utils/constants";
 
+
 export async function getLocaleProps(context) {
   const locale = context.locale;
+  console.log("🔍 getLocaleProps called with locale:", locale);
   
   try {
-    // 1. Get translations
+    // Fetch translations
     const translations = await serverSideTranslations(locale, ['common']);
     
-    // 2. Fetch inventory data
-     const res = await fetch(LiveInventoryAPIURL);
+    // Fetch inventory data
+     console.log("🌐 Using API URL:", LiveInventoryAPIURL);
+    
+    const res = await fetch(LiveInventoryAPIURL);
     
     if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     
     const jsonResponse = await res.json();
-    console.log("📡 API Response in getLocaleProps:", JSON.stringify(jsonResponse).substring(0, 1000));
     
-    // 3. Filter valid inventory items
+    // Filter valid inventory items
     const filteredInventoryData = Array.isArray(jsonResponse?.data)
       ? jsonResponse.data.filter(item => [1, 2, 3, 4].includes(item.status))
       : [];
     
-    // 4. Return combined props
-    return {
-      props: {
-        locale,
-        inventoryData: filteredInventoryData,
-        ...translations,
-      }
-    };
-  } catch (error) {
-    console.error("❌ Error fetching data in getLocaleProps:", error.message);
+    console.log(`📝 Found ${filteredInventoryData.length} valid inventory items`);
     
-    // Return locale props with empty inventory array on error
+    // Explicitly construct the return object
+    const returnProps = {
+      locale,
+      inventoryData: filteredInventoryData,
+      ...translations,
+    };
+    
+    console.log("📦 Props object keys:", Object.keys(returnProps));
+    console.log("🧪 inventoryData type:", Array.isArray(returnProps.inventoryData) ? "Array" : typeof returnProps.inventoryData);
+    
+    return { props: returnProps };
+  } catch (error) {
+    console.error("❌ Error in getLocaleProps:", error);
+    
     return {
       props: {
         locale,
-        inventoryData: [],
+        inventoryData: [], // Explicit empty array
         ...(await serverSideTranslations(locale, ['common'])),
       }
     };

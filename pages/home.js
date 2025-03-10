@@ -55,13 +55,58 @@ import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
-export async function getServerSideProps(context) {
-    return await getLocaleProps(context);
-} 
-  
-export default function HomePage({ locale, inventoryData  }) {
+export async function getStaticProps(context) {
+    console.log("🚀 getStaticProps called for path:", context.params);
+    
+    try {
+      const result = await getLocaleProps(context);
+      
+      // Verify and log the props structure before return
+      console.log("🧩 Final props structure:", {
+        locale: result.props.locale,
+        hasInventoryData: Boolean(result.props.inventoryData),
+        inventoryDataLength: Array.isArray(result.props.inventoryData) ? result.props.inventoryData.length : "not an array",
+      });
+      
+      // Try cloning the props to ensure serializability
+      const serializedProps = JSON.parse(JSON.stringify(result.props));
+      
+      return { 
+        props: serializedProps,
+        revalidate: 10 
+      };
+    } catch (error) {
+      console.error("💥 Critical error in getStaticProps:", error);
+      
+      // Fallback with minimal props
+      const fallbackProps = { 
+        locale: context.locale || "en", 
+        inventoryData: [] 
+      };
+      
+      // Add translations if possible
+      try {
+        const translations = await serverSideTranslations(context.locale || "en", ['common']);
+        Object.assign(fallbackProps, translations);
+      } catch (e) {
+        console.error("Failed to get translations in error handler:", e);
+      }
+      
+      return { props: fallbackProps, revalidate: 10 };
+    }
+  }
+export default function HomePage(props) {
 
-    console.log("📦 Full Props on Client:", { locale, inventoryData });
+  const safeProps = props || {};
+  const locale = safeProps.locale || "en";
+  const inventoryData = Array.isArray(safeProps.inventoryData) ? safeProps.inventoryData : [];
+  
+  console.log("📱 Client-side render with props:", { 
+    locale, 
+    inventoryDataExists: Boolean(inventoryData),
+    inventoryDataLength: inventoryData.length,
+    allPropKeys: Object.keys(safeProps)
+  });
 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
