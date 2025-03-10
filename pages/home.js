@@ -81,11 +81,14 @@ export async function getStaticProps(context) {
 
         console.log("📦 Filtered Inventory Data:", JSON.stringify(filteredInventoryData).substring(0, 1000));
 
+         // Final props object
+         const finalProps = {
+            locale: localeProps.props?.locale ?? 'en',
+            inventoryData: filteredInventoryData,
+        };
+
         return {
-            props: {
-                ...localeProps.props,
-                inventoryData: filteredInventoryData,
-            },
+            props: finalProps,
             revalidate: 10,
         };
     } catch (error) {
@@ -93,7 +96,7 @@ export async function getStaticProps(context) {
 
         return {
             props: {
-                ...localeProps.props,
+                locale: 'enr',
                 inventoryData: [],
             },
             revalidate: 10,
