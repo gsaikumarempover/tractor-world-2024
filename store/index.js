@@ -1,22 +1,28 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from './slices/userDataSlice';
 import storage from "redux-persist/lib/storage";
-import { persistReducer } from "redux-persist";
-import persistStore from "redux-persist/lib/persistStore";
+import { persistReducer, persistStore } from "redux-persist";
+import userReducer from "./slices/userDataSlice";
+import inventoryReducer from "./slices/inventorySlice";
+import { combineReducers } from "redux";
 
-
-
+// Persist configuration
 const persistConfig = {
-    key: 'root',
-    storage,
-  };
-  
-const persistedReducer = persistReducer(persistConfig, userReducer);
-export const store = configureStore({
-    reducer:{
-        user: persistedReducer,
-        // if require another reducer create file in slice folder and add here to access that reducer as like "userReducer  file"
-    }
-})
+  key: "root",
+  storage,
+  whitelist: ["user", "inventory"], // Persist both user & inventory
+};
 
-export const persistor = persistStore(store) 
+// Combine reducers
+const rootReducer = combineReducers({
+  user: userReducer,
+  inventory: inventoryReducer, // Apply persist here too
+});
+
+// Create persisted reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer, // Persist both reducers
+});
+
+export const persistor = persistStore(store);

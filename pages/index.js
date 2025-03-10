@@ -9,11 +9,11 @@ import Modal from "@components/Modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useGeolocation } from '@utils';
+//import { useGeolocation } from '@utils';
 import { setModalStatus } from '../store/slices/userDataSlice';
 
 export default function Home({ locale }) {
-  const { error, getLocation } = useGeolocation();
+  //const { error, getLocation } = useGeolocation();
   const dispatch = useDispatch()
   const router = useRouter();
   const { i18n } = useTranslation();
@@ -87,9 +87,9 @@ export default function Home({ locale }) {
     dispatch(setModalStatus({ modalStatus: true }))
   };
 
-  useEffect(() => {
-    getLocation();
-  }, [])
+  // useEffect(() => {
+  //   getLocation();
+  // }, [])
  
   return (
 
@@ -97,7 +97,7 @@ export default function Home({ locale }) {
       <Layout currentPage={"home"} onClick={showLanguageModal}>
         <HomePage locale={locale} />
       </Layout>
-      <Modal showModal={showModal} customStyles={customStyles} handleClose={handleClose} content={
+      {/* <Modal showModal={showModal} customStyles={customStyles} handleClose={handleClose} content={
         <div className='flex items-center sm:flex-row flex-col-reverse w-full'>
           <div className='px-4 py-10'>
             <p className='font-bold  text-xl'>Select your preferred<br></br> Language</p>
@@ -140,7 +140,7 @@ export default function Home({ locale }) {
           </div>
 
         </div>
-      } />
+      } /> */}
     </>
 
   );

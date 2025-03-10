@@ -40,8 +40,7 @@ function SamplePrevArrow(props) {
 
 const LiveInventoryContainer = ({ locale, data }) => {
 
-  console.log("live inventory data received"+data);
-  // debugger;
+   // debugger;
 
   const [activeTab, setActiveTab] = useState("gridData");
   const handleTabClick = (tabId) => {

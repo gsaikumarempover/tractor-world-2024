@@ -91,51 +91,50 @@ export const useGeolocation = () => {
 
   // Function to filter tractors based on enginePower
   export const filterByHorsepower = (tractors, min, max) => {
-    return tractors.filter((tractor) => { 
-      const hp = parseInt(tractor.node.liveInventoryData.enginePower, 10); // Make sure to convert enginePower to a number
-      // const hp = parseInt(tractor.node.liveInventoryData.enginePower.split(' ')[0], 10); 
+      return tractors.filter((tractor) => { 
+      //onst hp = parseInt(tractor.enginePower, 10); // Make sure to convert enginePower to a number
+       const hp = parseInt(tractor.enginePower.split(' ')[0], 10); 
       return hp >= min && hp <= max;
     });
   };
-
   export const getHomePageTractorsListBasedOnInventory = (liveInventoryData) => {
-  
     // Object to store the compare data dynamically
     const compareTractorData = {};
   
     HomeHPRanges.forEach((range) => { 
       // Filter tractors for the current range
       const filteredTractors = filterByHorsepower(liveInventoryData, range.min, range.max);
-
   
       if (filteredTractors.length >= 2) {
-        // Randomly select two tractors to compare
-        const tractor1 = getRandomTractor(filteredTractors);
-        let tractor2 = getRandomTractor(filteredTractors);
-
-        
-     // console.log("filterd tractors data tractor1"+JSON.stringify(tractor1));
-     // console.log("filterd tractors data tractor2"+JSON.stringify(tractor2));
-      
-      return;
+        compareTractorData[range.key] = [];  // ✅ Initialize as an array
   
-        // Ensure tractor1 and tractor2 are not the same
-        while (tractor1.id === tractor2.id) {
-          tractor2 = getRandomTractor(filteredTractors);
+        while (filteredTractors.length >= 2) {
+          // ✅ Randomly pick two tractors
+          const tractor1 = getRandomTractor(filteredTractors);
+          let tractor2 = getRandomTractor(filteredTractors);
+  
+          // ✅ Store the pair in an array instead of overwriting
+          compareTractorData[range.key].push({
+            brand1Id: tractor1.tractorId, 
+            brand1: tractor1.title,
+            brand2Id: tractor2.tractorId, 
+            brand2: tractor2.title,
+            brand1hp: tractor1.enginePower,
+            brand2hp: tractor2.enginePower,
+            brand1price: tractor1.price,
+            brand2price: tractor2.price,
+          });
+  
+          // ✅ Remove selected tractors to avoid duplicate comparisons
+          filteredTractors.splice(filteredTractors.indexOf(tractor1), 1);
+          filteredTractors.splice(filteredTractors.indexOf(tractor2), 1);
         }
-  
-        // Assign the selected tractors to the compareTractorData object
-        compareTractorData[range.key] = {
-          brand1: tractor1.title,
-          brand2: tractor2.title,
-          brand1hp: tractor1.enginePower,
-          brand2hp: tractor2.enginePower,
-          brand1price: tractor1.price,
-          brand2price: tractor2.price,
-        };
       }
     });
   
+    console.log("Compare Tractor Data:", JSON.stringify(compareTractorData, null, 2));
+  
     return compareTractorData;
   };
+  
   

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import languagePopupImg from '@Images/languagePopup.svg';
@@ -47,38 +47,23 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MultipleItemsSlide from "@components/SingleItemsSlide";
 import Link from 'next/link';
-import { useQuery } from "@apollo/client";
-import { HOMEPAGE_QUERIES,LiveInventoryAPIURL } from "@utils/constants";
+import { useQuery, gql } from "@apollo/client";
+import { HOMEPAGE_QUERIES, LiveInventoryAPIURL } from "@utils/constants";
 import Loader from '@components/Loader';
 import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
-import { getLocaleProps } from "@helpers"; 
+import { getLocaleProps } from "@helpers";
 import useSWR from 'swr';
+import { useDispatch, useSelector } from 'react-redux';
+import { setInventoryData } from '../store/slices/inventorySlice';
 
- 
-export async function getStaticProps(context) {
-
-    console.log("🚀 Fetching locale and inventory data at build time...");
-
-    // Fetch locale data
-    const localeProps = await getLocaleProps(context);
-
-    // Fetch API data
-    const res = await fetch("https://used-tractor-backend.azurewebsites.net/inventory/web/v2/tractor/");
-    const inventoryData = await res.json();
-
-    return {
-        props: {
-            ...localeProps.props, // Merging locale props
-            inventoryData, // API data
-        },
-        revalidate: 10, // Re-generate the page every 10 seconds (ISR)
-    };
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
 }
+export default function HomePage({ locale }) {
 
-export default function HomePage({ locale,inventoryData  }) { 
 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
@@ -92,16 +77,59 @@ export default function HomePage({ locale,inventoryData  }) {
     const fetcher = (url) => fetch(url).then((res) => res.json());
 
     
-    // Fetch latest data on the client side without blocking render
-    const { data: inventoryData, error: inventoryError } = useSWR(LiveInventoryAPIURL,
-        fetcher,
-        { fallbackData: inventoryData }
+    const dispatch = useDispatch();
+    const persistedInventory = useSelector((state) => state.inventory.data);
+
+    // Memoize the shouldFetch value to prevent unnecessary recalculations
+    const shouldFetch = useMemo(() => 
+        !persistedInventory || !persistedInventory.data || persistedInventory.data.length === 0, 
+        [persistedInventory]
     );
 
-    if (inventoryError) return <div>Error loading data.</div>;
+    // Use SWR for data fetching with proper caching
+    const { data: inventoryData, error: inventoryError } = useSWR(
+        shouldFetch ? LiveInventoryAPIURL : null,
+        fetcher,
+        {
+            onSuccess: (fetchedData) => {
+                if (shouldFetch && fetchedData) {
+                    dispatch(setInventoryData(fetchedData));
+                }
+            },
+            revalidateOnFocus: false, // Prevent refetching when window regains focus
+            revalidateOnMount: shouldFetch, // Only validate on mount if needed
+            dedupingInterval: 10000, // Dedupe requests within 10 seconds
+        }
+    );
 
+    // Properly determine the final inventory data once
+    const finalInventory = useMemo(() => {
+        if (persistedInventory && persistedInventory.data && persistedInventory.data.length > 0) {
+            return persistedInventory;
+        }
+        return inventoryData || { data: [] };
+    }, [persistedInventory, inventoryData]);
 
+    // Process inventory list data once
+    const inventoryList = useMemo(() => {
+        if (!finalInventory || !finalInventory.data || finalInventory.data.length === 0) {
+            return [];
+        }
+        
+        return finalInventory.data.map((item) => ({
+            title: `${item.brand} ${item.model}`,
+            price: item.max_price,
+            engineHours: item.engine_hours,
+            driveType: item.drive_type,
+            enginePower: item.engine_power,
+            tractorId: item.tractor_id,
+        }));
+    }, [finalInventory]);
     
+
+    if (inventoryError) return <p>Error loading data.</p>;
+    // if (inventoryError) return <p>Error loading data.</p>;
+    // if (!InventoryData || !InventoryData?.data || InventoryData?.data?.length === 0) return <p>Loading latest data...</p>;
 
     const isShowCallModal = () => {
         setShowModal(true);
@@ -156,31 +184,27 @@ export default function HomePage({ locale,inventoryData  }) {
 
     const { data, loading, error, networkStatus } = useQuery(HOMEPAGE_QUERIES, {
         variables: { lang: language },
-        fetchPolicy: 'cache-first' 
-      });
-      
-
-    
-
+        fetchPolicy: 'cache-first'
+    });
+ 
     // Combined loading and error handling
     if (loading) return (
-         <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
+        <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
     );
 
-    if (error) return <p>Error: {error.message}</p>; 
-    
+    if (error) return <p>Error: {error.message}</p>;
+
     const bannersData = data?.homeSliders?.nodes || [];
     const testimonialsData = data?.testimonials?.nodes || [];
     const contentGalleryData = data?.contentgallerys?.nodes || [];
     const latestNewsData = data?.latestnews?.edges?.map(edge => edge.node) || [];
-
-
+ 
     const homeBannerSlides = bannersData.map(node => {
         const desktopUrl = node.homesliders.sliderimage.node.mediaItemUrl;
         const mobileUrl = node.homesliders.mobilesliderimage.node.mediaItemUrl;
         return { desktopUrl, mobileUrl };
-    }); 
-    
+    });
+ 
 
     const testimonialSlides = testimonialsData.map(node => {
         const testimonialMobileUrl = node.tesimonails.mobileimage.node.mediaItemUrl;
@@ -226,10 +250,13 @@ export default function HomePage({ locale,inventoryData  }) {
             contentGalleyTitle,
             contentGalleyURL
         };
-    }); 
- 
-    const handleCompareAll = () => {
-        router.push('/compare-tractors');
+    });
+
+    const handleCompareAll = (tractorId1, tractorTitle1, tractorId2, tractorTitle2) => {
+        const encodedTitle1 = encodeURIComponent(tractorTitle1);
+        const encodedTitle2 = encodeURIComponent(tractorTitle2);
+    
+        router.push(`/compare-tractors/compare-tractor-details?id1=${tractorId1}&t1=${encodedTitle1}&id2=${tractorId2}&t2=${encodedTitle2}`);
     };
 
     const handleAllExclusiveOffers = () => {
@@ -295,186 +322,23 @@ export default function HomePage({ locale,inventoryData  }) {
     ];
 
     const handleTabClick = (tabid) => {
-        debugger;
+//debugger;
         setActiveTab(tabid); // Dynamically set the active tab based on clicked tab's id
     };
+ 
+    //compare tractors  data
 
-   // const compareTractorData = getHomePageTractorsListBasedOnInventory(liveInventoryData);
+    const slicedDataCompare = useMemo(() => {
+        return Array.isArray(inventoryList) ? inventoryList.slice(0, 100) : [];
+    }, [inventoryList]);  // Dependency: Runs only when `inventoryList` changes
+    
+    //console.log("slicedDataCompare"+JSON.stringify(slicedDataCompare));
 
-   // console.log("compareTractorData" + JSON.stringify(compareTractorData));
-
-    // const compareTractorData = {
-
-    //     oneData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     twoData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     ThreeData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     FourData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     FifthData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //     ],
-
-    //     SixthData: [
-
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-    //         {
-    //             brand1: 'Mahindra 475 DI',
-    //             brand2: 'Kubota MU401 2WD',
-    //             brand1hp: '42 HP',
-    //             brand2hp: '42 HP',
-    //             brand1price: '₹ 6.45-6.75 Lakh*',
-    //             brand2price: '₹ 8.30-8.40 Lakh*'
-    //         },
-
-    //     ]
-    // };
-
+    const compareTractorData = useMemo(() => {
+        return getHomePageTractorsListBasedOnInventory(slicedDataCompare);
+    }, [slicedDataCompare]);  // Runs only when `slicedDataCompare` changes
+   
+   // const compareTractorData =[];
     const contentGallerysettings = {
         dots: true,
         infinite: true,
@@ -621,15 +485,16 @@ export default function HomePage({ locale,inventoryData  }) {
 
             {/* Live Inventory */}
 
-           
-            < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
-                <Heading heading={t('Home.Live_Inventory')} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
-                {!initialData ? (
-                    <p>Loading latest data...</p>
+
+
+            <div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white">
+                <Heading heading={t("Home.Live_Inventory")} viewButton={true} onClick={handleAllLiveInventory} className="mt-8" />
+                {!finalInventory || finalInventory.length === 0 ? (
+                    <p>Loading Live Inventory data...</p>
                 ) : (
-                    <LiveInventoryContainer locale={locale} data={initialData} />  
-                )} 
-            </div >
+                    <LiveInventoryContainer locale={locale} data={inventoryList} />
+                )}
+            </div>
 
             {/* why choose us */}
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:py-4 py-2 relative bg-white mt-3" >
@@ -641,7 +506,7 @@ export default function HomePage({ locale,inventoryData  }) {
                             {t('Home.Best_Choice')}</div>
                         <p className='mt-2 text-[.9rem]'>
                             {/* {t('Home.Kiusmod_Tempor')} */}
-                            </p>
+                        </p>
                     </div>
                     <div className='absolute sm:top-[-85px] right-0 bottom-[-80px]'>
                         <Image src={WhyChoose} alt='WhyChoose' width={400} height={400}
@@ -676,6 +541,7 @@ export default function HomePage({ locale,inventoryData  }) {
                 </div>
 
                 <div className='flex sm:gap-4 gap-2 my-3 font-medium relative z-20'>
+
                     {/* <Tab id="oneData" activeTab={activeTab} onClick={handleTabClick}> Under 20 HP</Tab>  */}
                     {HomeHPRanges.map((range) => (
                         <Tab
@@ -689,39 +555,44 @@ export default function HomePage({ locale,inventoryData  }) {
                     ))}
                 </div>
 
-                {/* <div className="">
+
+                <div className="">
                     <div className='grid sm:grid-cols-3 md:gap-6 gap-4'>
                         {Object.keys(compareTractorData).map((key) =>
                             activeTab === key ? (
                                 <>
-                                    {compareTractorData[key].map((item, index) => (
-                                        <div key={index} className='overflow-hidden flex-none'>
-                                            <Image src={CompareImage} alt='compareImage' layout='responsive' />
-                                            <div className='flex justify-between px-3 mb-3'>
-                                                <div>
-                                                    <div>{item.brand1}</div>
-                                                    <div className='font-semibold my-1'><Image src={HP} width={15} height={15} /> {item.brand1hp}</div>
-                                                    <div className='font-semibold my-1'>{item.brand1price}</div>
-
+                                    {(Array.isArray(compareTractorData[key]) ? compareTractorData[key] : [compareTractorData[key]]).map(
+                                        (item, index) => (
+                                            <div key={index} className='overflow-hidden flex-none'>
+                                                <Image src={CompareImage} alt='compareImage' layout='responsive' />
+                                                <div className='flex justify-between px-3 mb-3'>
+                                                    <div>
+                                                        <div>{item.brand1}</div>
+                                                        <div className='font-semibold my-1'>
+                                                            <Image src={HP} width={15} height={15} /> {item.brand1hp}
+                                                        </div>
+                                                        <div className='font-semibold my-1'>{item.brand1price}</div>
+                                                    </div>
+                                                    <div>
+                                                        <div>{item.brand2}</div>
+                                                        <div className='font-semibold my-1'>
+                                                            <Image src={HP} width={15} height={15} /> {item.brand2hp}
+                                                        </div>
+                                                        <div className='font-semibold my-1'>{item.brand2price}</div>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <div>{item.brand2}</div>
-                                                    <div className='font-semibold my-1'><Image src={HP} width={15} height={15} /> {item.brand2hp}</div>
-                                                    <div className='font-semibold my-1'>{item.brand2price}</div>
-
-                                                </div>
+                                                <Btn className="uppercase" text={t('Home.COMPARE')}
+                                                onClick={() => handleCompareAll(item.brand1Id,item.brand1,item.brand2Id,item.brand2)} 
+                                                />
                                             </div>
-
-                                            <Btn className="uppercase" text={t('Home.COMPARE')} onClick={handleCompareAll} />
-                                        </div>
-                                    ))}
-
+                                        )
+                                    )}
                                 </>
                             ) : null
                         )}
-
                     </div>
-                </div> */}
+                </div>
+
 
                 <div className='justify-center flex mt-2'>
                     <Btn text={t('Home.View_All_Tractor_Comparison')} onClick={handleCompareAll} bgColor={true}
