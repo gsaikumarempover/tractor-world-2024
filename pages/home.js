@@ -103,6 +103,9 @@ export async function getStaticProps(context) {
 
 export default function HomePage(props) { 
 
+    console.log("📦 inventoryData on Client props:", props);
+
+
     console.log("📦 inventoryData on Client Side:", props.inventoryData);
  
     const [isMobile, setIsMobile] = useState(false);
