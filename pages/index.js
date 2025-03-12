@@ -94,10 +94,8 @@ export default function Home({ locale }) {
   return (
 
     <>
-      <Layout currentPage={"home"} onClick={showLanguageModal}>
-        <HomePage locale={locale} />
-      </Layout>
-      <Modal showModal={showModal} customStyles={customStyles} handleClose={handleClose} content={
+    
+        <HomePage locale={locale} /> 
         <div className='flex items-center sm:flex-row flex-col-reverse w-full'>
           <div className='px-4 py-10'>
             <p className='font-bold  text-xl'>Select your preferred<br></br> Language</p>
@@ -140,11 +138,8 @@ export default function Home({ locale }) {
           </div>
 
         </div>
-      } />
+    
     </>
 
   );
-}
-export async function getServerSideProps(context) {
-  return await getLocaleProps(context);
-}
+} 
