@@ -90,20 +90,7 @@ export default function HomePage({ inventoryDataProp  }) {
     const router = useRouter();
     const language = "EN";
     const { t, i18n } = useTranslation('common');
-    const fetcher = (url) => fetch(url).then((res) => res.json());
-
-    
-    // Fetch latest data on the client side without blocking render
-    const { data: inventoryData, error: inventoryError } = useSWR(LiveInventoryAPIURL,
-        fetcher,
-        { fallbackData: inventoryData }
-    );
-
-    if (inventoryError) return <div>Error loading data.</div>;
-
-
-    
-
+      
     const isShowCallModal = () => {
         setShowModal(true);
     }
