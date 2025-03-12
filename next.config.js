@@ -10,7 +10,7 @@ module.exports = {
       config.resolve.fallback = { fs: false };
     }
 
-    config.resolve.alias['@locales'] = path.join(__dirname, 'public', 'locales');
+    //config.resolve.alias['@locales'] = path.join(__dirname, 'public', 'locales');
     config.resolve.alias['@Images'] = path.join(__dirname, 'public', 'images');
     config.resolve.alias['@components'] = path.join(__dirname, 'components');
     config.resolve.alias['@service'] = path.join(__dirname, 'lib');
