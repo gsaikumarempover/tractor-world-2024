@@ -55,27 +55,12 @@ import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
-export async function getStaticProps(context) {
-    
-        const localeProps = await getLocaleProps(context);
-        return {
-            props: {
-                ...localeProps,
-                inventoryData: [{ test: "This is a test item" }]
-            },
-            revalidate: 10,
-        };
-     
+
+export async function getStaticProps(context) { 
+    return await getLocaleProps(context); 
 }
-
-export default function HomePage({ locale, inventoryData }) {
-
-    console.log("📱 Client-side render with props:", {
-        locale,
-        inventoryDataExists: Array.isArray(inventoryData),
-        inventoryDataLength: inventoryData?.length || 0,
-        allPropKeys: Object.keys({ locale, inventoryData }),
-    });
+ 
+export default function HomePage({ locale }) {
 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
@@ -86,7 +71,6 @@ export default function HomePage({ locale, inventoryData }) {
     const router = useRouter();
     const language = "EN";
     const { t, i18n } = useTranslation('common');
-    
      
 
     const isShowCallModal = () => {
