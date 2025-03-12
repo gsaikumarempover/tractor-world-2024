@@ -90,14 +90,9 @@ export async function getStaticProps(context) {
     };
 }
  
-export default function HomePage({ locale, inventoryData }) {
-
-    console.log("📱 Client-side render with props:", {
-        locale,
-        inventoryDataExists: Array.isArray(inventoryData),
-        inventoryDataLength: inventoryData?.length || 0,
-        allPropKeys: Object.keys({ locale, inventoryData }),
-    });
+export default function HomePage({inventoryData }) {
+ 
+    console.log(JSON.stringify(inventoryData, null, 2));
 
  
     const [isMobile, setIsMobile] = useState(false);
