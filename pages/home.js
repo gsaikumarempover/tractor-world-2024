@@ -70,7 +70,7 @@ export async function getStaticProps(context) {
       console.log('API response status:', res.status);
       if (!res.ok) throw new Error('Failed to fetch data');
       data = await res.json();
-      console.log('Fetched data:', data);
+      console.log('Fetched data:', JSON.stringify(data, null, 2));
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -81,7 +81,7 @@ export async function getStaticProps(context) {
       inventoryData: data,
     };
   
-    console.log('Props being shared with the component:', JSON.stringify(props));
+    console.log('Props being shared with the component:', JSON.stringify(props, null, 2)); 
   
     return {
       props,
