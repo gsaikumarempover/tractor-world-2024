@@ -63,7 +63,7 @@ export async function getStaticProps(context) {
     console.log("🚀 Fetching locale and inventory data at build time...");
 
     // Fetch locale data
-    const localeProps = await getLocaleProps(context);
+    //const localeProps = await getLocaleProps(context);
 
     // Fetch API data
     const res = await fetch("https://used-tractor-backend.azurewebsites.net/inventory/web/v2/tractor/");
@@ -71,14 +71,13 @@ export async function getStaticProps(context) {
 
     return {
         props: {
-            ...localeProps.props, // Merging locale props
-            inventoryData, // API data
+             inventoryData, // API data
         },
         revalidate: 10, // Re-generate the page every 10 seconds (ISR)
     };
 }
 
-export default function HomePage({ locale,inventoryData  }) { 
+export default function HomePage({ inventoryData  }) { 
 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
