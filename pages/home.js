@@ -82,7 +82,7 @@ export async function getStaticProps(context) {
         inventoryData, // Make sure it's an array
     };
 
-    console.log("✅ Final Props Sent to Page:", JSON.stringify(props).slice(0, 500));
+    console.log("✅ Final Props Sent to Page:", JSON.stringify(props.inventoryData).slice(0, 500));
 
     return {
         props: JSON.parse(JSON.stringify(props)), // Force serialization
