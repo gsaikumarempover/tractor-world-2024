@@ -4,10 +4,7 @@ export async function getLocaleProps(context) {
   const locale = context.locale;   
   return {
     props: {
-      locale,
-      ...(await serverSideTranslations(locale, [
-        'common' 
-      ])),
+      locale 
     } 
   };
 }

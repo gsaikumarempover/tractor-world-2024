@@ -56,11 +56,37 @@ import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
 
-export async function getStaticProps(context) { 
-    return await getLocaleProps(context); 
+
+export async function getStaticProps() {
+    
+  const apiUrl = LiveInventoryAPIURL;
+ 
+  console.log('Starting getStaticProps in test');
+ 
+  let Inventorydata = {};
+  try {
+    const res = await fetch(apiUrl);
+    console.log('API response status:', res.status);
+    if (!res.ok) throw new Error('Failed to fetch data');
+    Inventorydata = await res.json();
+    console.log('Fetched data:', Inventorydata);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+ 
+  console.log('Returning data from getStaticProps');
+ 
+  return {
+    props: {
+      Inventorydata,
+    },
+    revalidate: 10,
+  };
 }
  
-export default function HomePage({ locale }) {
+export default function HomePage({ Inventorydata }) {
+
+    console.log("Inventorydata"+JSON.stringify(Inventorydata, null, 2))
 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
