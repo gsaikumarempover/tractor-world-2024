@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Layout from "@components/Layout";
-import { getLocaleProps } from "@helpers";
+//import { getLocaleProps } from "@helpers";
 import HomePage from './home';
 import Image from 'next/image';
 import languagePopupImg from '@Images/languagePopup.svg';

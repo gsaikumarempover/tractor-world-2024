@@ -13,7 +13,7 @@ import LiveInventoryContainer from '@components/LiveInventory';
 import { useQuery } from "@apollo/client";
 import { HOMEPAGE_QUERIES } from "@utils/constants";
 import Loader from '@components/Loader';
-import { getLocaleProps } from "@helpers";
+//import { getLocaleProps } from "@helpers";
 import LoaderHi from '@Images/loader.gif';
 import LoaderMr from '@Images/loaderMr.gif';
 import LoaderEn from '@Images/loaderEn.gif';

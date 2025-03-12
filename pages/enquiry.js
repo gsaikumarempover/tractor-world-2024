@@ -8,12 +8,12 @@ import CallIcon from '@Images/callIcon.svg';
 import enquirywebBanner from '@Images/home/enquirywebBanner.svg';
 import WhyChoose from '@Images/home/whyChoose.svg';
 import Link from "next/link";
-import { getLocaleProps } from "@helpers";
+//import { getLocaleProps } from "@helpers";
 import { useTranslation } from "next-i18next";
 
-export async function getServerSideProps(context) {
-    return await getLocaleProps(context);
-}
+// export async function getServerSideProps(context) {
+//     return await getLocaleProps(context);
+// }
 
 
 export default function Enquiry() {

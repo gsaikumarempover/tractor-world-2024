@@ -54,7 +54,7 @@ import Modal from "@components/Modal";
 import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
-import { getLocaleProps } from "@helpers"; 
+//import { getLocaleProps } from "@helpers"; 
 
 
 export async function getStaticProps() {

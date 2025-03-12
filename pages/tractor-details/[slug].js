@@ -13,7 +13,7 @@ import WhyChoose from '@Images/home/whyChoose.svg';
 import Loader from '@components/Loader';
 import CompareImage from '@Images/liveInventory/compareImage.svg';
 import bannerImg from '@Images/liveInventory/banner.svg';
-import { getLocaleProps } from "@helpers";
+//import { getLocaleProps } from "@helpers";
 import DefaultTractor from "@Images/default_tractor.svg";
 import LiveInventoryContainer from '@components/LiveInventory';
 import Tab from '@components/Tab';

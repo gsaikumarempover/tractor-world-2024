@@ -13,7 +13,7 @@ import BannerStrip from "@components/BannerStrip";
 import bannerImg from "@Images/sellTractor/engineering-excellence-banner.svg";
 import mblBannerImg from "@Images/sellTractor/mblBanner.svg";
 
-import { getLocaleProps } from "@helpers";
+//import { getLocaleProps } from "@helpers";
 import { useTranslation } from "next-i18next";
 
 export async function getServerSideProps(context) {
