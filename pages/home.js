@@ -63,33 +63,29 @@ export async function getStaticProps(context) {
   
     console.log("localeProps:", JSON.stringify(localeProps));
   
-    let data = null; // Initialize data as null
+    let inventoryData = null; // Initialize data as null
   
     try {
-      const res = await fetch(LiveInventoryAPIURL);
-      console.log('API response status:', res.status);
-      if (!res.ok) throw new Error('Failed to fetch data');
-      data = await res.json();
-
-      inventoryData = JSON.parse(JSON.stringify(data));
-    
-      console.log('Fetched and serialized data successfully'); 
+        const res = await fetch(LiveInventoryAPIURL);
+        if (!res.ok) throw new Error(`Failed to fetch data: ${res.status}`);
+        
+        const rawData = await res.json();
+        // Ensure data is serializable
+        inventoryData = JSON.parse(JSON.stringify(rawData));
+        
+        console.log('Fetched and serialized data successfully');
 
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  
-    // Log the final props that will be returned
-    const props = {
-      ...localeProps,
-       inventoryData
-    };
-  
    
     return {
-      props,
-      revalidate: 10,
-    };
+        props: {
+          ...localeProps.props, // Unpack the nested props
+          inventoryData,
+        },
+        revalidate: 10,
+      };
 } 
 export default function HomePage({ locale, inventoryData }) {
 
