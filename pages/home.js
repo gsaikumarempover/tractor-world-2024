@@ -75,7 +75,7 @@ export async function getStaticProps(context) {
         },
         revalidate: 10, // Re-generate the page every 10 seconds (ISR)
     };
-}
+}  
 
 export default function HomePage({ inventoryData  }) { 
 
