@@ -73,11 +73,16 @@ export async function getStaticProps(context) {
         // Ensure data is serializable
         inventoryData = JSON.parse(JSON.stringify(rawData));
         
-        console.log('Fetched and serialized data successfully');
+        console.log("Fetched Data Sample:", rawData?.slice(0, 5)); // Logs first 5 records
+        console.log("Total Records Fetched:", rawData?.length);
+ 
 
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+
+    console.log("Final inventoryData (Sample):", inventoryData?.slice(0, 5));
+
    
     return {
         props: {
