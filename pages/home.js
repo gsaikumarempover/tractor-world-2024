@@ -57,42 +57,13 @@ import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } fr
 import { getLocaleProps } from "@helpers"; 
  
 export async function getStaticProps(context) {
-    const localeProps = await getLocaleProps(context);
-    let inventoryData = [];
-    try {
-        const res = await fetch(LiveInventoryAPIURL);
-        if (!res.ok) throw new Error(`Failed to fetch data: ${res.status}`);
-
-        const rawData = await res.json();
-        console.log("✅ Raw Data Type:", typeof rawData);
-        console.log("✅ Raw Data Structure:", rawData);
-
-        // Ensure inventoryData is always an array
-        inventoryData = Array.isArray(rawData?.data) ? rawData.data : [];
-
-        console.log("✅ Total Records Fetched:", inventoryData.length);
-        console.log("✅ Fetched Data Sample:", inventoryData.slice(0, 5));
-
-    } catch (error) {
-        console.error("❌ Error fetching data:", error);
-    }
-
-    const props = {
-        ...localeProps.props,
-        inventoryData, // Make sure it's an array
-    };
-
-    console.log("✅ Final Props Sent to Page:", JSON.stringify(props.inventoryData).slice(0, 500));
-
-    return {
-        props: JSON.parse(JSON.stringify(props)), // Force serialization
-        revalidate: 10,
-    };
+    return await getLocaleProps(context); 
 }
  
-export default function HomePage({inventoryData }) {
+export default function HomePage({locale,inventoryData }) {
  
-    console.log(JSON.stringify(inventoryData, null, 2));
+    console.log(JSON.stringify(locale));
+    console.log(JSON.stringify(inventoryData));
 
  
     const [isMobile, setIsMobile] = useState(false);
