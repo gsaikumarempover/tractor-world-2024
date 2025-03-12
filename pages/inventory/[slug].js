@@ -36,7 +36,7 @@ export default function Inventory({ locale }) {
   const [resetBgColor, setResetBgColor] = useState(false);
   const [applyBgColor, setApplyBgColor] = useState(true);
   const currentLanguage = locale;
-  const language = locale?.toUpperCase();
+  const language = 'EN';
   // Use Next.js router to redirect to the dynamic page
   const router = useRouter();
   const { slug } = router.query;
