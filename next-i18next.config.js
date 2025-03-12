@@ -7,7 +7,7 @@
 //     ? require('path').resolve('./public/locales')
 //     : '/locales',
 // };
-import HttpBackend from 'i18next-http-backend';
+const HttpBackend = require('i18next-http-backend');
 
 i18n
   .use(HttpBackend) // Replace fs-backend with http-backend
