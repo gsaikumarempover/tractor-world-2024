@@ -2,6 +2,8 @@ import React from 'react';
 import { LiveInventoryAPIURL } from '../utils/constants';
  
 const HomePage = ({ data }) => {
+
+    console.log("data"+JSON.stringify(data));
   return (
     <div>
       <h1>This is for testing purpose</h1>
@@ -11,6 +13,7 @@ const HomePage = ({ data }) => {
 };
  
 export async function getStaticProps() {
+
   const apiUrl = LiveInventoryAPIURL;
  
   console.log('Starting getStaticProps');
