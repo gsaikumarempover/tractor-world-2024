@@ -55,43 +55,39 @@ import Crossmark from '@Images/inventory/closeIcon.svg';
 import { useTranslation } from 'next-i18next';
 import { HomeHPRanges, getTabLabel, getHomePageTractorsListBasedOnInventory } from '@utils';
 import { getLocaleProps } from "@helpers"; 
-
-
+ 
 export async function getStaticProps(context) {
-
     const localeProps = await getLocaleProps(context);
-  
-    console.log("localeProps:", JSON.stringify(localeProps));
-  
-    let inventoryData = null; // Initialize data as null
-  
+    let inventoryData = null;
+
     try {
         const res = await fetch(LiveInventoryAPIURL);
         if (!res.ok) throw new Error(`Failed to fetch data: ${res.status}`);
-        
+
         const rawData = await res.json();
-        // Ensure data is serializable
-        inventoryData = JSON.parse(JSON.stringify(rawData));
         
-        console.log("Fetched Data Sample:", rawData?.slice(0, 5)); // Logs first 5 records
-        console.log("Total Records Fetched:", rawData?.length);
- 
+        console.log("✅ Raw Data Type:", typeof rawData);
+        console.log("✅ Raw Data Structure:", rawData);
+
+        // If rawData contains 'data' key, extract array; otherwise, assign an empty array
+        inventoryData = Array.isArray(rawData.data) ? rawData.data : [];
+
+        console.log("✅ Total Records Fetched:", inventoryData.length);
+        console.log("✅ Fetched Data Sample:", inventoryData.slice(0, 5));
 
     } catch (error) {
-      console.error('Error fetching data:', error);
+        console.error("❌ Error fetching data:", error);
     }
 
-    console.log("Final inventoryData (Sample):", inventoryData?.slice(0, 5));
-
-   
     return {
         props: {
-          ...localeProps.props, // Unpack the nested props
-          inventoryData,
+            ...localeProps.props,
+            inventoryData,
         },
         revalidate: 10,
-      };
-} 
+    };
+}
+ 
 export default function HomePage({ locale, inventoryData }) {
 
     console.log("📱 Client-side render with props:", {
