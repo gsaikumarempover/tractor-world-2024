@@ -12,8 +12,8 @@ const { i18n } = require('./next-i18next.config');
     config.resolve.alias['@utils'] = path.join(__dirname, 'utils');
     config.resolve.alias['@helpers'] = path.join(__dirname, 'helpers');
     config.resolve.alias['@store']=path.join(__dirname,'store','slices');
-    
-    return config;
+    config.resolve.fallback = { fs: false };
+    return config; 
   },
   env: {
     WORDPRESS_API_URL: process.env.WORDPRESS_API_URL,

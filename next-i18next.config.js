@@ -7,12 +7,12 @@
 //     ? require('path').resolve('./public/locales')
 //     : '/locales',
 // };
-module.exports = {
-  i18n: {
-    locales: ["en", "fr"],
-    defaultLocale: "en",
-  },
-  backend: {
-    use: [], // Prevents `fs` from being used
-  },
-};
+import HttpBackend from 'i18next-http-backend';
+
+i18n
+  .use(HttpBackend) // Replace fs-backend with http-backend
+  .init({
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json', // Adjust path as needed
+    },
+  });
