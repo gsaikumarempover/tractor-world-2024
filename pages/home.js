@@ -99,10 +99,7 @@ export default function HomePage({ locale, inventoryData }) {
         allPropKeys: Object.keys({ locale, inventoryData }),
     });
 
-    if (!Array.isArray(inventoryData) || inventoryData.length === 0) {
-        return <p>❌ No Inventory Data Available</p>;
-    }
-
+ 
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
     const [isVisible, setIsVisible] = useState(true);
