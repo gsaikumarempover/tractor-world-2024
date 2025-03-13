@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import languagePopupImg from '@Images/languagePopup.svg';
@@ -61,11 +61,7 @@ export async function getStaticProps(context) {
 }
  
 export default function HomePage({locale,inventoryData }) {
- 
-    console.log(JSON.stringify(locale));
-    console.log(JSON.stringify(inventoryData));
-
- 
+  
     const [isMobile, setIsMobile] = useState(false);
     const [activeTab, setActiveTab] = useState('oneData');
     const [isVisible, setIsVisible] = useState(true);
@@ -200,6 +196,22 @@ export default function HomePage({locale,inventoryData }) {
             contentGalleyURL
         };
     }); 
+
+
+    const inventoryList = useMemo(() => {
+        if (!inventoryData || inventoryData.length === 0) {
+            return [];
+        }
+    
+        return inventoryData.slice(0, 50).map((item) => ({
+            title: `${item.brand} ${item.model}`,
+            price: item.max_price,
+            engineHours: item.engine_hours,
+            driveType: item.drive_type,
+            enginePower: item.engine_power,
+            tractorId: item.tractor_id,
+        }));
+    }, [inventoryData]); // ✅ Correct dependency
  
     const handleCompareAll = () => {
         router.push('/compare-tractors');
@@ -600,10 +612,10 @@ export default function HomePage({locale,inventoryData }) {
            
             < div className="lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-4 sm:pb-8 py-2 bg-white " >
                 <Heading heading={t('Home.Live_Inventory')} viewButton={true} onClick={handleAllLiveInventory} className='mt-8' />
-                {!inventoryData ? (
-                    <p>Loading latest data...</p>
+                {!inventoryList ? (
+                    <p>Loading inventoryList data...</p>
                 ) : (
-                    <LiveInventoryContainer locale={locale} data={inventoryData} />  
+                    <LiveInventoryContainer locale={locale} data={inventoryList} />  
                 )} 
             </div >
 
