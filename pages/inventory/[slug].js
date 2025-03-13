@@ -29,9 +29,13 @@ import LoaderMr from '@Images/loaderMr.gif';
 import LoaderEn from '@Images/loaderEn.gif';
 import Pagination from "@components/Pagination";  
 
+export async function getServerSideProps(context) {
+  return await getLocaleProps(context);
+} 
 
-export default function Inventory({ locale }) {
-  //// apply,reset btns active 
+export default function Inventory({ locale,InventoryData }) {
+
+   //// apply,reset btns active 
   const { t } = useTranslation();
   const [resetBgColor, setResetBgColor] = useState(false);
   const [applyBgColor, setApplyBgColor] = useState(true);
@@ -40,8 +44,7 @@ export default function Inventory({ locale }) {
   // Use Next.js router to redirect to the dynamic page
   const router = useRouter();
   const { slug } = router.query;
-  const slugFirstPart = slug ? slug.toLowerCase().split('-')[0] : '';
- // console.log("SLUG------------" + slug);
+  console.log("Query Parm------------" + slug);
 
   ///// for collpase
   const [showStates, setShowStates] = useState({
@@ -55,6 +58,22 @@ export default function Inventory({ locale }) {
     { label: "Home", link: "/" },
     { label: "Inventory", link: "#" },
   ];
+
+   const inventoryList = useMemo(() => {
+          if (!InventoryData || InventoryData.length === 0) {
+              return [];
+          }
+      
+          return InventoryData.slice(0, 50).map((item) => ({
+              title: `${item.brand} ${item.model}`,
+              price: item.max_price,
+              engineHours: item.engine_hours,
+              driveType: item.drive_type,
+              enginePower: item.engine_power,
+              tractorId: item.tractor_id,
+          }));
+      }, [InventoryData]); // ✅ Correct dependency
+   
 
 
   //get serach value
@@ -217,25 +236,8 @@ export default function Inventory({ locale }) {
   const [activeTab, setActiveTab] = useState("gridData");
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
-  };
-
-  const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
-
-  const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError } = useQuery(GET_LIVE_INVENTORY, {
-    variables:
-    {
-      lang: language,
-      first: 9,
-      after: null
-    },
-  });
-
-  // Filter data based on the slug
-  const filteredDataBasedonSlug = liveInventoryData?.allLiveInventory?.edges.filter(({ node }) => {
-    const nodeSlug = node.slug.toLowerCase();
-    return nodeSlug.startsWith(slugFirstPart); // Compare using startsWith
-  }) || [];
-
+  }; 
+ 
   //console.log("filtedbyslug"+JSON.stringify(filteredDataBasedonSlug));
 
   useEffect(() => {
@@ -290,16 +292,16 @@ export default function Inventory({ locale }) {
 
   useEffect(() => {
 
-    if (liveInventoryData && liveInventoryData.allLiveInventory) {
+    if (inventoryList) {
 
-      const PopularTractorsList = filteredDataBasedonSlug.map(({ node }) => {
+      const PopularTractorsList = inventoryList.map(({ item }) => {
         // Parse imageLinks into an array
-        const imageLinksArray = JSON.parse(node.liveInventoryData.imageLinks);
+        const imageLinksArray = JSON.parse(item.imageLinks);
         const firstImage = DefaultTractor;
         return {
-          certified: node.liveInventoryData.isVerified,
-          title: node.title,
-          price: node.liveInventoryData.maxPrice,
+          certified: item.isVerified,
+          title: item.title,
+          price: item.maxPrice,
           imageLink: firstImage, // Set the first image link
           features: [
             { icon: "/images/time.svg", text: `${node.liveInventoryData.engineHours}` },

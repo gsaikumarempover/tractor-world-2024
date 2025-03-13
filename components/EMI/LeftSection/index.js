@@ -4,8 +4,8 @@ import RangeSlider from "@components/Ranger";
 import { setLoanTenure,setLoanAmount } from "@store/userDataSlice";
 import { useSelector } from "react-redux";
  
-const LeftSection = ({ state, dispatch,maxPrice }) => {  
-
+const LeftSection = ({state,dispatch,maxPrice }) => {  
+ 
   dispatch(setLoanAmount(maxPrice)); 
    
   // buttons data
@@ -41,7 +41,7 @@ const LeftSection = ({ state, dispatch,maxPrice }) => {
         min={0.1}
         minLabel="0.1%"
         maxLabel="15%"
-        value={state.roi}
+        value={8}
       /> 
       {/* <InputSlider
         state={state}
@@ -66,7 +66,7 @@ const LeftSection = ({ state, dispatch,maxPrice }) => {
         min={10000}
         minLabel="0"
         maxLabel={maxPrice}
-        value={state.roi}
+        value={10000}
       /> 
     </div>
     
