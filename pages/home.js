@@ -347,7 +347,7 @@ export default function HomePage({locale,inventoryData }) {
             )}
         </div>
     ))
-
+     
    
     const compareTractorData = useMemo(() => 
         getHomePageTractorsListBasedOnInventory(inventoryList), 
