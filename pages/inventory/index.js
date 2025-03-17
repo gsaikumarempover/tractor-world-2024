@@ -1103,8 +1103,7 @@ export default function Inventory({ locale, inventoryData }) {
       />
     </div>
   );
-}
-
+} 
 export async function getServerSideProps(context) {
   return await getLocaleProps(context);
 }
