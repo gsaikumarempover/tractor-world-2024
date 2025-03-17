@@ -26,15 +26,10 @@ import Pagination from "@components/Pagination";
 import { GET_ALL_POPULAR_BRANDS } from "@utils/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { GET_ALL_STATES } from "@utils/constants";
-import Link from "next/link";
-import LoaderHi from '@Images/loader.gif';
-import LoaderMr from '@Images/loaderMr.gif';
-import LoaderEn from '@Images/loaderEn.gif';
+import Link from "next/link"; 
+
+export default function Inventory({ locale, inventoryData }) {
  
-export default function Inventory({ locale }) {
-
-  const { locale: activeLocale, locales, asPath } = useRouter();
-
   //// apply,reset btns active 
   const { t, i18n } = useTranslation('common'); // 'common' refers to common.json
   // Use Next.js router to redirect to the dynamic page
@@ -49,7 +44,7 @@ export default function Inventory({ locale }) {
   //get serach value
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [liveInventoryFilters, setliveInventoryFilters] = useState([]);
+  const [liveInventoryFilters, setLiveInventoryFilters] = useState(["", "", "", ""]);
   const [searchQuery, setSearchQuery] = useState('');
   const [brandsLogos, setBrandLogos] = useState([]);
   const [PopularTractors, setPopularTractorsData] = useState([]);
@@ -58,8 +53,7 @@ export default function Inventory({ locale }) {
   const [locationDetails, setLocationDetails] = useState('');
   const [stateList, setStateList] = useState([]);
   const { loading, error, data } = useQuery(GET_ALL_STATES);
-
-  useEffect(() => {
+   useEffect(() => { 
     if (state && city) {
       setLocationDetails(`${city}, ${state}`);
     }
@@ -164,80 +158,37 @@ export default function Inventory({ locale }) {
     setResetBgColor(true);
     setApplyBgColor(false);
     clearSelectedValues();
-    setliveInventoryFilters(['', '', '']);
+    setLiveInventoryFilters(['', '', '']);
   };
 
   const handleApplyClick = () => {
-    // Set background color states
+    debugger;
     setApplyBgColor(true);
     setResetBgColor(false);
-
-    // Capture selected radio button values
+  
     const radios = document.querySelectorAll('input[type="radio"]');
-    const selectedValues = [];
-
-    let selectedBrandSlug = ''; // Initialize an empty variable for storing the slug
-
+    let selectedValues = ["", "", "", ""]; // Ensure correct array structure
+  
     radios.forEach((radio) => {
-      // debugger;
       if (radio.checked) {
-        selectedValues.push(radio.value);  // Collect the checked radio values
-
-        // Assuming the radio value holds the slug for the brand
-        if (radio.name === 'brand') { // Adjust the 'brand' field according to your form name
-          selectedBrandSlug = radio.value; // Get the selected brand slug
-        }
+        if (radio.name === "brand") selectedValues[0] = radio.value;
+        if (radio.name === "hp") selectedValues[1] = radio.value;
+        if (radio.name === "price") selectedValues[2] = radio.value;
       }
     });
-
-    // Check if filters have actually changed before updating the state
-    if (JSON.stringify(selectedValues) !== JSON.stringify(liveInventoryFilters)) {
-      setliveInventoryFilters(selectedValues); // Update state if filters are different
-    }
-
-    if (selectedBrandSlug) {
-      router.push(`/inventory/${selectedBrandSlug}`); // Redirect to the dynamic slug page
-    }
+  
+    setLiveInventoryFilters(selectedValues); // ✅ Update state safely
   };
 
   const clearSelectedValues = () => {
     const radios = document.querySelectorAll('input[type="radio"]');
     radios.forEach((radio) => (radio.checked = false));
   };
+ 
 
   //all brands 
-  const { data: brandsData, loading: brandsLoading, error: brandsError } = useQuery(GET_ALL_BRANDS);
-  useEffect(() => {
-    if (brandsData && brandsData.brandsmodels && liveInventoryData && liveInventoryData.allLiveInventory) {
-      // Map the API response to the options for the "Brand" filter
-      const brandOptions = brandsData.brandsmodels.edges.map(({ node }) => {
-        const modelsString = node.brandmodelFields.models;
-        const modelCount = modelsString.split(',').length;
-
-        // Count the number of live inventory items that match the brand's slug
-        const liveInventoryCount = liveInventoryData.allLiveInventory.edges.filter(({ node: inventoryNode }) =>
-          inventoryNode.liveInventoryData.brandSlug === node.slug // Assuming brandSlug field exists in live inventory data
-        ).length;
-
-        return {
-          label: `${node.brandmodelFields.brand} (${liveInventoryCount})`, // Use live inventory count for the label
-          value: node.slug, // Slugify the brand name
-        };
-      });
-      // Update the filters state with the brand options
-      setFilters(prevFilters =>
-        prevFilters.map(filter =>
-          filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
-        )
-      );
-    }
-
-    // setNoResults(prevFilters.options.length === 0);
-
-
-  }, [brandsData, liveInventoryData]);
-
-
+  //inventoryData 
+  
   ///get popular brands 
   const { data: PopularBrandsData, loading: PopularBrandsLoading, error: PopularBrandsError } = useQuery(GET_ALL_POPULAR_BRANDS);
   useEffect(() => {
@@ -248,59 +199,32 @@ export default function Inventory({ locale }) {
     }
   }, [PopularBrandsData]);
 
-
-  // Filter brands whenever the search query changes
-  useEffect(() => {
-    //  debugger;
-    if (brandsData && brandsData.brandsmodels) {
-      // debugger;
-      const filtered = brandsData.brandsmodels.edges.filter(({ node }) =>
-        node.brandmodelFields.brand.toLowerCase().includes(searchQuery.toLowerCase())
-      ).map(({ node }) => {
-        const modelsString = node.brandmodelFields.models;
-        const modelCount = modelsString.split(',').length;
-        return {
-          label: `${node.brandmodelFields.brand}`,
-          value: node.slug
-        };
-      });
-      // setFilters(prevFilters =>
-      //   prevFilters.map(filter =>
-      //     filter.title === "Brand" ? { ...filter, options: filtered } : filter
-      //   )
-      // ); 
-      setFilters(prevFilters =>
-        prevFilters.map(filter => {
-      //    console.log('Filter Title:', filter.title); // Add this line for debugging
-          if (filter.title === "Brand") {
-            if (filtered.length === 0) {
-              setNoResults(true);
-            } else {
-              setNoResults(false);
-            }
-            return { ...filter, options: filtered };
-          }
-          return filter;
-        })
-      );
-
-    }
-
-  }, [searchQuery, brandsData]);
-
-
+ 
   //live inventory  fetching and execution
-
-  const { data: liveInventoryData, loading: inventoryLoading, error: inventoryError, fetchMore } = useQuery(GET_LIVE_INVENTORY, {
-    variables:
-    {
-      lang: language,
-      first: 9,
-      after: null
-    },
-    notifyOnNetworkStatusChange: true
-  });
-
+ 
+  useEffect(() => {
+    if (inventoryData && inventoryData.length > 0) {
+      console.log("Updating PopularTractors from inventoryData"); // ✅ Debugging
+  
+      const PopularTractorsList = inventoryData.slice(0, 200).map((item) => ({
+        title: `${item.brand} ${item.model}`,
+        price: item.max_price,
+        imageLink: DefaultTractor,
+        features: [
+          { icon: "/images/time.svg", text: `${item.engine_hours}` },
+          { icon: "/images/wheel.svg", text: item.drive_type },
+          { icon: "/images/hp.svg", text: `${item.engine_power}` },
+          { icon: "/images/mapIcon.svg", text: `${item.district} ${item.state}` }
+        ],
+        id: item.tractor_id,
+        state: item.state
+      }));
+  
+      console.log("New PopularTractors:", PopularTractorsList); // ✅ Debugging
+      setPopularTractorsData(PopularTractorsList);
+    }
+  }, [inventoryData]); // ✅ Ensure it updates when `inventoryData` changes
+ 
   //pagination
   const CardsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
@@ -309,64 +233,30 @@ export default function Inventory({ locale }) {
   const indexOfFirstCard = indexOfLastCard - CardsPerPage;
   const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);
 
-  useEffect(() => {
-    if (liveInventoryData && liveInventoryData.allLiveInventory) {
-      // debugger; 
-      const PopularTractorsList = liveInventoryData.allLiveInventory.edges.map(({ node }) => {
-        return {
-          certified: node.liveInventoryData.isVerified,
-          title: node.title,
-          price: node.liveInventoryData.maxPrice,
-          imageLink: DefaultTractor,
-          features: [
-            { icon: "/images/time.svg", text: `${node.liveInventoryData.engineHours}` },
-            { icon: "/images/wheel.svg", text: node.liveInventoryData.driveType },
-            { icon: "/images/hp.svg", text: `${node.liveInventoryData.enginePower}` },
-            { icon: "/images/mapIcon.svg", text: node.liveInventoryData.district }
-          ],
-          slug: node.slug,
-          id: node.id
-        };
-      });
-
-      // Append new tractors to the existing list
-      setPopularTractorsData(PopularTractorsList);
-
-    }
-  }, [liveInventoryData])
-
   ///fliter the tractors 
   useEffect(() => {
-    if (!liveInventoryFilters.length || !PopularTractors.length) {
-      return;
-    }
+    if (!liveInventoryFilters.length || !PopularTractors.length) return;
+  
+    console.log("Applying Filters:", liveInventoryFilters); // ✅ Debugging
+    console.log("PopularTractors Before Filter:", PopularTractors); // ✅ Debugging
+  
+    const [brandFilter, hpFilter, priceFilter, stateFilter] = liveInventoryFilters;
+  
+    const filteredTractors = PopularTractors.filter(tractor => tractor.state === stateFilter);
 
-
-    const filteredTractors = PopularTractors.filter(tractor => {
-
-      const [brandFilter, hpFilter, priceFilter] = liveInventoryFilters;
-
-      const tractorHP = parseInt(tractor.features.find(f => f.text.includes("HP")).text); // Extract HP
-      const tractorPrice = parseInt(tractor.price); // Convert price to number
-
-      // If priceFilter is defined, split it into min and max range; otherwise set defaults
-      const priceRange = priceFilter
-        ? priceFilter.split("_").map(price => Number(price.replace("lakh", '')) * 100000)
-        : [0, Number.MAX_VALUE]; // Default range if priceFilter is undefined
-
-      // Build the filtering conditions, only applying filters that are defined
-      const isBrandMatch = brandFilter ? tractor.title.toLowerCase().includes(brandFilter.toLowerCase()) : true;
-      const isHPMatch = hpFilter
-        ? tractorHP >= parseInt(hpFilter.split("_")[0]) && tractorHP <= parseInt(hpFilter.split("_")[1])
-        : true;
-      const isPriceMatch = tractorPrice >= priceRange[0] && tractorPrice <= priceRange[1];
-
-      return isBrandMatch && isHPMatch && isPriceMatch;
+  
+    console.log("FilteredTractors:", filteredTractors); // ✅ Debugging
+  
+    setPopularTractorsData(prevData => {
+      if (JSON.stringify(prevData) !== JSON.stringify(filteredTractors)) {
+        console.log("Updating PopularTractorsData:", filteredTractors); // ✅ Debugging
+        return filteredTractors;
+      }
+      return prevData;
     });
-
-    setPopularTractorsData(filteredTractors); // Only update if the filtered data has changed
-  }, [liveInventoryFilters, PopularTractors]); // Ensure dependencies are correctly set
-
+  
+  }, [liveInventoryFilters, PopularTractors]); // ✅ Added `PopularTractors` dependency
+  
 
   //get states list 
   useEffect(() => {
@@ -380,11 +270,22 @@ export default function Inventory({ locale }) {
     }
   }, [data]); // Trigger this effect when `data` changes
 
+  const handleStateChange = (e) => {
+    debugger;
+    const stateValue = e.target.value;
+  
+    setLiveInventoryFilters(prev => {
+      const updatedFilters = [prev[0], prev[1], prev[2], stateValue];
+      
+      console.log("Updated Filters:", updatedFilters); // ✅ Debugging
+      return updatedFilters;
+    });
+  };
 
-  if (brandsLoading || inventoryLoading) return (
-    <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
-  );
-  if (brandsError || inventoryError) return <p>Error: {brandsError?.message || inventoryError.message}</p>;
+  // if (brandsLoading ) return (
+  //   <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
+  // );
+  // if (brandsError) return <p>Error: {brandsError?.message}</p>;
 
   return (
     <div>
@@ -544,22 +445,22 @@ export default function Inventory({ locale }) {
               <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
                 <Image src={mapIcon} alt="search" width={22} height={22} />
               </div>
-              <select
-                id="location"
-                className="bg-white border border-gray-300
-                                      text-black rounded-md  block w-full 
-                                        p-2.5 dark:bg-gray-700 dark:border-gray-600 
-                                     dark:placeholder-gray-400 dark:text-white  px-8"
-              >
-                <option value="" hidden>{locationDetails}</option>
-                {stateList.map((item, index) => {
-                  return (
-                    <option key={index} value={item.state}>
-                      {item.state}
-                    </option>
-                  );
-                })}
-              </select>
+            <select
+              id="location"
+              className="bg-white border border-gray-300 text-black rounded-md block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white px-8"
+              onChange={handleStateChange} // ✅ Attach function
+            >
+              <option value="" hidden>{locationDetails || "Select a state"}</option>
+              {stateList.length > 0 ? (
+                stateList.map((item, index) => (
+                  <option key={index} value={item.state}>
+                    {item.state}
+                  </option>
+                ))
+              ) : (
+                <option disabled>Loading states...</option> // Show this if stateList is empty
+              )}
+            </select>
             </div>
 
             <div className="bg-[#F6F6F6] p-4 sm:w-[25%] w-full sm:block hidden">
@@ -681,6 +582,7 @@ export default function Inventory({ locale }) {
                                       text-black rounded-md  block w-full 
                                         p-2.5 dark:bg-gray-700 dark:border-gray-600 
                                      dark:placeholder-gray-400 dark:text-white  px-8"
+                        onChange={handleStateChange}
                       >
                         <option value="" hidden>{locationDetails}</option>
                         {stateList.map((item, index) => {
@@ -703,54 +605,54 @@ export default function Inventory({ locale }) {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                       {
                         currentCards.slice(0, 3).map((item, idx) => (
- 
-                            <div
-                              key={idx}
-                              className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
-                            >
 
-                              <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
-                                <Image
-                                  className="w-full"
-                                  src={item.imageLink}
-                                  alt="cardImage"
-                                  layout="responsive"
-                                  width={100}
-                                  height={70}
-                                />
-                                {item.isVerified && (
-                                  <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
-                                    {item.price}
-                                  </div>
-                                )}
-                                <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
+                          <div
+                            key={idx}
+                            className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
+                          >
+
+                            <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
+                              <Image
+                                className="w-full"
+                                src={item.imageLink}
+                                alt="cardImage"
+                                layout="responsive"
+                                width={100}
+                                height={70}
+                              />
+                              {item.isVerified && (
+                                <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
                                   {item.price}
                                 </div>
+                              )}
+                              <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
+                                {item.price}
                               </div>
-                              <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                                <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
-                                  {item.title}
-                                </div>
-                                <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
-                                  {item.features.map((feature, fIdx) => (
-                                    <div
-                                      key={fIdx}
-                                      className={`flex gap-1 h-[14px] items-center  ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''}  ${fIdx > 0 ? 'px-[6px] ' : 'pr-[6px]'}`}
-                                    >
-                                      <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
-                                      <span>{feature.text}</span>
-                                    </div>
-                                  ))}
-                                </div>
+                            </div>
+                            <div className="xl:px-4 bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                                {item.title}
                               </div>
-                              <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
-                                <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
-                                  <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
-                                    <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
-                                  </span>
-                                </div>
+                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
+                                {item.features.map((feature, fIdx) => (
+                                  <div
+                                    key={fIdx}
+                                    className={`flex gap-1 h-[14px] items-center  ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''}  ${fIdx > 0 ? 'px-[6px] ' : 'pr-[6px]'}`}
+                                  >
+                                    <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
+                                    <span>{feature.text}</span>
+                                  </div>
+                                ))}
                               </div>
-                            </div> 
+                            </div>
+                            <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
+                              <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
+                                <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
+                                  <Image src='/images/phnIcon.svg' width={15} height={15} className="w-4 mr-1" alt="phnIcon" /> Interested{" "}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                         ))
                       }
                     </div>
@@ -954,43 +856,43 @@ export default function Inventory({ locale }) {
                         key={idx}
                         className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none w-80 sm:w-auto"
                       >
-                        
-                          <div className="wholeCard cursor-pointer">
-                            <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
-                              <Image
-                                className="w-full"
-                                src={DefaultTractor}
-                                alt="cardImage"
-                                layout="responsive"
-                                width={100}
-                                height={70}
-                              />
-                              {item.certified && (
-                                <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
-                                  CERTIFIED
+
+                        <div className="wholeCard cursor-pointer">
+                          <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
+                            <Image
+                              className="w-full"
+                              src={DefaultTractor}
+                              alt="cardImage"
+                              layout="responsive"
+                              width={100}
+                              height={70}
+                            />
+                            {item.certified && (
+                              <div className="bg-secondaryColor px-2 text-white text-sm absolute top-4 left-4 uppercase font-medium border-gradient">
+                                CERTIFIED
+                              </div>
+                            )}
+                            <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
+                              {item.price}
+                            </div>
+                          </div>
+                          <div className="xl:px-4  sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
+                            <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
+                              {item.title}
+                            </div>
+                            <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
+                              {item.features.map((feature, fIdx) => (
+                                <div
+                                  key={fIdx}
+                                  className={`flex gap-1 h-[14px] items-center  ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''}  ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
+                                >
+                                  <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
+                                  <span>{feature.text}</span>
                                 </div>
-                              )}
-                              <div className="bg-black font-semibold text-white w-auto px-2 py-1 float-right">
-                                {item.price}
-                              </div>
+                              ))}
                             </div>
-                            <div className="xl:px-4  sm:bg-white bg-[#eeeeee] lg:px-2 sm:px-2 px-2 pt-1 h-24">
-                              <div className="ellipsis font-bold xl:text-lg md:text-[16px] sm:text-[14px] text-base tractorTitle">
-                                {item.title}
-                              </div>
-                              <div className="flex items-center xl:text-base lg:text-sm sm:text-sm text-base my-3">
-                                {item.features.map((feature, fIdx) => (
-                                  <div
-                                    key={fIdx}
-                                    className={`flex gap-1 h-[14px] items-center  ${fIdx < item.features.length - 1 ? 'border-r-[1px] border-black' : ''}  ${fIdx > 0 ? 'px-[6px]' : 'pr-[6px]'}`}
-                                  >
-                                    <Image src={feature.icon} alt={feature.icon} width={10} height={10} />
-                                    <span>{feature.text}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div> 
+                          </div>
+                        </div>
                         <div className="border-t-[1px] border-[#D9D9D9] relative bottom-0">
                           <div className="m-[1px] xl:px-6 px-4 pt-4 pb-2 bg-secondaryColor cursor-pointer">
                             <span className="flex items-center gap-1 font-semibold text-white mr-2 mb-2 text-base justify-center">
