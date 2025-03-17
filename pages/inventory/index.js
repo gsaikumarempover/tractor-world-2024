@@ -202,11 +202,10 @@ export default function Inventory({ locale, inventoryData }) {
  
   //live inventory  fetching and execution
  
+
   useEffect(() => {
     if (inventoryData && inventoryData.length > 0) {
-      console.log("Updating PopularTractors from inventoryData"); // ✅ Debugging
-  
-      const PopularTractorsList = inventoryData.slice(0, 200).map((item) => ({
+      const PopularTractorsList = inventoryData.slice(0, 400).map((item) => ({
         title: `${item.brand} ${item.model}`,
         price: item.max_price,
         imageLink: DefaultTractor,
@@ -219,11 +218,13 @@ export default function Inventory({ locale, inventoryData }) {
         id: item.tractor_id,
         state: item.state
       }));
-  
-      console.log("New PopularTractors:", PopularTractorsList); // ✅ Debugging
+
       setPopularTractorsData(PopularTractorsList);
     }
-  }, [inventoryData]); // ✅ Ensure it updates when `inventoryData` changes
+  }, [inventoryData]); // ✅ Updates only when inventoryData changes
+
+  console.log("pT"+JSON.stringify(PopularTractors));
+  
  
   //pagination
   const CardsPerPage = 9;
@@ -242,8 +243,13 @@ export default function Inventory({ locale, inventoryData }) {
   
     const [brandFilter, hpFilter, priceFilter, stateFilter] = liveInventoryFilters;
   
-    const filteredTractors = PopularTractors.filter(tractor => tractor.state === stateFilter);
-
+    const filteredTractors = PopularTractors.filter(tractor => {
+      console.log("Checking Tractor:", tractor.state); // ✅ Debugging
+  
+      const tractorState = tractor.state;
+  
+      return stateFilter ? tractorState.includes(stateFilter) : true;
+    });
   
     console.log("FilteredTractors:", filteredTractors); // ✅ Debugging
   
@@ -1103,7 +1109,8 @@ export default function Inventory({ locale, inventoryData }) {
       />
     </div>
   );
-} 
+}
+
 export async function getServerSideProps(context) {
   return await getLocaleProps(context);
 }
