@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useMemo } from 'react';
+import React, { useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import languagePopupImg from '@Images/languagePopup.svg';
@@ -225,21 +225,17 @@ export default function HomePage({ Inventorydata }) {
     }); 
 
 
-    const inventoryList = useMemo(() => {
-        if (!inventoryData || inventoryData.length === 0) {
-            return [];
-        }
-    
-        return inventoryData.slice(0, 50).map((item) => ({
-            title: `${item.brand} ${item.model}`,
-            price: item.max_price,
-            engineHours: item.engine_hours,
-            driveType: item.drive_type,
-            enginePower: item.engine_power,
-            tractorId: item.tractor_id,
-        }));
-    }, [inventoryData]); // ✅ Correct dependency
- 
+    const inventoryList = (!inventoryData || inventoryData.length === 0) 
+    ? [] 
+    : inventoryData.slice(0, 50).map((item) => ({
+        title: `${item.brand} ${item.model}`,
+        price: item.max_price,
+        engineHours: item.engine_hours,
+        driveType: item.drive_type,
+        enginePower: item.engine_power,
+        tractorId: item.tractor_id,
+    }));
+
     const handleCompareAll = () => {
         router.push('/compare-tractors');
     };
@@ -356,9 +352,8 @@ export default function HomePage({ Inventorydata }) {
     ))
      
    
-    const compareTractorData = useMemo(() => 
-        getHomePageTractorsListBasedOnInventory(inventoryList), 
-    [inventoryList]); 
+    const compareTractorData = getHomePageTractorsListBasedOnInventory(inventoryList);
+
 
     const customStyles = {
         content: {

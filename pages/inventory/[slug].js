@@ -1139,6 +1139,4 @@ export default function Inventory({ locale,InventoryData }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  return await getLocaleProps(context);
-}
+ 

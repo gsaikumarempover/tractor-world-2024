@@ -149,11 +149,16 @@ export default function TractorDetails({ locale , inventoryData }) {
         { src: Finance, alt: "Finance", label: "Mahendra Financing" }
     ];
 
+ 
+
     const [activeTab, setActiveTab] = useState("oneData");
+
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
-    };
-
+    }; 
+   
+    useEffect(() => { 
+    }, [activeTab]);
 
     // for accordion 
     const [openAccordion, setOpenAccordion] = useState(null);
@@ -250,8 +255,7 @@ export default function TractorDetails({ locale , inventoryData }) {
         debugger;
         const tractorId = Number(slug);
         const selectedTractor = inventoryData.find(tractor => tractor.tractor_id === tractorId);
-        console.log("similarTractorsListData"+JSON.stringify(similarTractorsListData));
-    
+     
         if (selectedTractor) {
             debugger;
             // Extract tractor details
