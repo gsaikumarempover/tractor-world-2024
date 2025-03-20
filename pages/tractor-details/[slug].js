@@ -149,7 +149,7 @@ export default function TractorDetails({ locale , inventoryData }) {
         { src: Finance, alt: "Finance", label: "Mahendra Financing" }
     ];
 
- 
+      
 
     const [activeTab, setActiveTab] = useState("oneData");
 
