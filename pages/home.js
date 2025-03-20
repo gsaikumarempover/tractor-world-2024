@@ -523,7 +523,22 @@ export default function HomePage({locale,inventoryData }) {
                                                 </div>
                                             </div>
 
-                                            <Btn className="uppercase" text={t('Home.COMPARE')} onClick={handleCompareAll} />
+                                            {/* <Btn className="uppercase" text={t('Home.COMPARE')} onClick={handleCompareAll} /> */}
+
+                                    <Link
+                                        href={{
+                                            pathname: '/compare-tractors/compare-tractor-details',
+                                            query: {
+                                            t1: item.brand1,
+                                            t2: item.brand2,
+                                            id1: item.brand1Id,
+                                            id2: item.brand2Id
+                                            }
+                                        }}
+                                        passHref
+                                        >
+                                        <Btn className="uppercase" text={t('Home.COMPARE')} />
+                                        </Link>
                                         </div>
                                     ))}
 
