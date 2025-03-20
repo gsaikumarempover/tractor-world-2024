@@ -149,15 +149,17 @@ export default function TractorDetails({ locale , inventoryData }) {
         { src: Finance, alt: "Finance", label: "Mahendra Financing" }
     ];
 
-      
+ 
 
     const [activeTab, setActiveTab] = useState("oneData");
 
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
-    }; 
+    };
+
    
-    useEffect(() => { 
+    useEffect(() => {
+         
     }, [activeTab]);
 
     // for accordion 
