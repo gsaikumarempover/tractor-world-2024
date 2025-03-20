@@ -14,11 +14,7 @@ const { i18n } = require('./next-i18next.config');
     config.resolve.alias['@store']=path.join(__dirname,'store','slices');
     config.resolve.fallback = { fs: false };
     return config; 
-  },
-  env: {
-    WORDPRESS_API_URL: 'https://tractorworld.empover.com/api/',
-    //LOCATION_GET_API: process.env.LOCATION_GET_API
-  },
+  }, 
   images: {
     domains: ['tractorworld.empover.com']
   }
