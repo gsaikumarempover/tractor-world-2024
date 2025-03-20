@@ -1,3 +1,4 @@
+//All the important imports
 import React, { useState, useEffect } from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
@@ -17,9 +18,12 @@ import listView from "@Images/inventory/listView.svg";
 import listActiveView from "@Images/inventory/listActiveView.svg";
 import gridActiveView from "@Images/inventory/gridActiveView.svg";
 import gridView from "@Images/inventory/gridView.svg";
+import LoaderEn from '@Images/loaderEn.gif';
+import LoaderHi from '@Images/loader.gif';
+import LoaderMr from '@Images/loaderMr.gif';
 import { GET_ALL_BRANDS, customImageLoader, GET_LIVE_INVENTORY, HP_OPTIONS, PRICE_OPTIONS } from "@utils/constants";
 import { useQuery } from '@apollo/client';
-//import { getLocaleProps } from "@helpers";
+import { getLocaleProps } from "@helpers";
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import Pagination from "@components/Pagination";
@@ -28,10 +32,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GET_ALL_STATES } from "@utils/constants";
 import Link from "next/link"; 
 
-export default function Inventory({ locale, inventoryData }) {
- 
-  //// apply,reset btns active 
+// Define the Inventory function
+export default function Inventory({ locale , inventoryData}) {
+
+  const { locale: activeLocale, locales, asPath } = useRouter();
+
+  // apply,reset btns active 
   const { t, i18n } = useTranslation('common'); // 'common' refers to common.json
+  
+
   // Use Next.js router to redirect to the dynamic page
   const router = useRouter();
   const [showFilter, setShowFilter] = useState(false);
@@ -48,43 +57,67 @@ export default function Inventory({ locale, inventoryData }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [brandsLogos, setBrandLogos] = useState([]);
   const [PopularTractors, setPopularTractorsData] = useState([]);
+  
   const state = useSelector((state) => state.user.addressData.state);
   const city = useSelector((state) => state.user.addressData.city);
   const [locationDetails, setLocationDetails] = useState('');
   const [stateList, setStateList] = useState([]);
   const { loading, error, data } = useQuery(GET_ALL_STATES);
-   useEffect(() => { 
+  const [brandsData, setBrandsData] = useState(null);
+
+  // State for filtered tractors
+  const [filteredTractors, setFilteredTractors] = useState([]); 
+  const [selectedState, setSelectedState] = useState("");
+
+  const handleStateChange = (event) => {
+    const selectedState = event.target.value;
+    console.log("Dropdown Changed! Selected State:", selectedState);
+  
+    setLiveInventoryFilters((prevFilters) => {
+      const newFilters = [...prevFilters];
+      newFilters[3] = selectedState;
+      console.log("Updated liveInventoryFilters:", newFilters); 
+      return newFilters;
+    });
+  };
+  
+  
+  useEffect(() => {
     if (state && city) {
       setLocationDetails(`${city}, ${state}`);
     }
   }, [state, city]); // Only re-run effect when `state` or `city` changes
 
+
   const [filters, setFilters] = useState([
     {
       title: "Brand",
       showKey: "showBrands",
-      options: [] // To be populated with API response
+      options: [], // To be populated with API response
+      selected:""
     },
     {
       title: "HP",
       showKey: "showHps",
-      options: HP_OPTIONS
+      options: HP_OPTIONS,
+      selected: "" 
     },
     {
       title: "Price",
       showKey: "showPrices",
-      options: PRICE_OPTIONS
+      options: PRICE_OPTIONS,
+      selected: "" 
     }
   ]);
 
-  ///// for collpase
+  // for collpase
   const [showStates, setShowStates] = useState({
     showBrands: true,
     showHps: false,
     showPrices: false
   });
 
-  ///breadcrumbs data
+  // breadcrumbs data
   const breadcrumbData = [
     { label: "Home", link: "/" },
     { label: "Inventory", link: "#" },
@@ -113,7 +146,21 @@ export default function Inventory({ locale, inventoryData }) {
   ////for filters collpase
   const onToggle = (key) => {
     setShowStates((prev) => ({ ...prev, [key]: !prev[key] }));
+    console.log("Current Filters State:", filters); 
   };
+  
+
+  const onSelectFilter = (filterType, value) => {
+    setFilters((prevFilters) => 
+      prevFilters.map((filter) =>
+        filter.showKey === filterType
+          ? { ...filter, selected: value } 
+          : filter
+      )
+    );
+  };
+  
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -157,38 +204,113 @@ export default function Inventory({ locale, inventoryData }) {
   const handleResetClick = () => {
     setResetBgColor(true);
     setApplyBgColor(false);
-    clearSelectedValues();
+    setFilters((prevFilters) =>
+      prevFilters.map((filter) => ({
+        ...filter,
+        selected: "", // Reset selected value
+      }))
+    );
+    
+    setSelectedState("");
     setLiveInventoryFilters(['', '', '']);
+
+    clearSelectedValues();
   };
 
   const handleApplyClick = () => {
-    debugger;
     setApplyBgColor(true);
     setResetBgColor(false);
   
-    const radios = document.querySelectorAll('input[type="radio"]');
-    let selectedValues = ["", "", "", ""]; // Ensure correct array structure
+    // Read selected values from `filters` state
+    const selectedValues = filters.map((filter) => filter.selected);
   
-    radios.forEach((radio) => {
-      if (radio.checked) {
-        if (radio.name === "brand") selectedValues[0] = radio.value;
-        if (radio.name === "hp") selectedValues[1] = radio.value;
-        if (radio.name === "price") selectedValues[2] = radio.value;
-      }
-    });
-  
-    setLiveInventoryFilters(selectedValues); // ✅ Update state safely
+    setLiveInventoryFilters([
+      selectedValues[0], 
+      selectedValues[1], 
+      selectedValues[2], 
+      selectedState,     
+    ]);
   };
+  
 
   const clearSelectedValues = () => {
     const radios = document.querySelectorAll('input[type="radio"]');
-    radios.forEach((radio) => (radio.checked = false));
+    radios.forEach((radio) => (radio.checked = false)); // 
   };
+  
  
+  // Ensure PopularTractors (which is containing all 1725 data) is populated at the start
+  useEffect(() => {
+
+    console.log("useEffect triggered! inventoryData:", inventoryData);
+    console.log("First Tractor Data:", inventoryData[0]);
+
+    if (Array.isArray(inventoryData) && inventoryData.length > 0) {
+      const allTractors = inventoryData.map((node) => ({
+        certified: node.is_verified,
+        title:`${node.brand} ${node.model}`,
+        price: node.max_price,
+        imageLink: DefaultTractor,
+        state: node.state || "Unknown", 
+        features: [
+          { icon: "/images/time.svg", text: `${node.engine_hours}` },
+          { icon: "/images/wheel.svg", text: node.drive_type },
+          { icon: "/images/hp.svg", text: `${node.engine_power}` },
+          { icon: "/images/mapIcon.svg", text: node.district }
+        ],
+        slug: node.slug || "#",
+        id: node.id
+      }));
+      
+      console.log("Mapped Tractors Data:", allTractors);
+      setPopularTractorsData(allTractors); 
+    } 
+  }, [inventoryData]);
+  
+  
+
 
   //all brands 
-  //inventoryData 
+  useEffect(() => {
   
+    const brandCounts = {};
+  
+    inventoryData.forEach((item, index) => {
+     const brand =
+        item.brandSlug ||
+        item.brand ||
+        item.details?.brandSlug; // different possible keys
+  
+      if (brand) {
+        brandCounts[brand] = (brandCounts[brand] || 0) + 1;
+      }
+    });
+  
+    const brandOptions = Object.keys(brandCounts).map((brand) => ({
+      label: `${brand} (${brandCounts[brand]})`,
+      value: brand,
+    }));
+  
+    setFilters((prevFilters) =>
+      prevFilters.map((filter) =>
+        filter.title === "Brand" ? { ...filter, options: brandOptions } : filter
+      )
+    );
+  }, [inventoryData]);
+  
+
+// Maintain a live inventory state
+const [liveInventory, setLiveInventory] = useState(inventoryData || []);
+
+// Extract brandsData from inventoryData when it changes
+useEffect(() => {
+  if (Array.isArray(inventoryData) && inventoryData.length > 0) {    
+    // Extract all unique brands
+    const brandsData = [...new Set(inventoryData.map(item => item.brandSlug?.trim()))].filter(Boolean);
+    setBrandsData(brandsData);
+  }
+}, [inventoryData]);
+
   ///get popular brands 
   const { data: PopularBrandsData, loading: PopularBrandsLoading, error: PopularBrandsError } = useQuery(GET_ALL_POPULAR_BRANDS);
   useEffect(() => {
@@ -199,72 +321,103 @@ export default function Inventory({ locale, inventoryData }) {
     }
   }, [PopularBrandsData]);
 
- 
-  //live inventory  fetching and execution
- 
-
-  useEffect(() => {
-    if (inventoryData && inventoryData.length > 0) {
-      const PopularTractorsList = inventoryData.slice(0, 400).map((item) => ({
-        title: `${item.brand} ${item.model}`,
-        price: item.max_price,
-        imageLink: DefaultTractor,
-        features: [
-          { icon: "/images/time.svg", text: `${item.engine_hours}` },
-          { icon: "/images/wheel.svg", text: item.drive_type },
-          { icon: "/images/hp.svg", text: `${item.engine_power}` },
-          { icon: "/images/mapIcon.svg", text: `${item.district} ${item.state}` }
-        ],
-        id: item.tractor_id,
-        state: item.state
+// Filter brands whenever the search query changes
+useEffect(() => {
+  if (brandsData && brandsData.edges) {
+    const filtered = brandsData.edges
+      .filter(({ node }) =>
+        node.brandmodelFields.brand)
+      .map(({ node }) => ({
+        label: node.brandmodelFields.brand || "Unknown Brand",
+        value: node.slug
       }));
 
-      setPopularTractorsData(PopularTractorsList);
-    }
-  }, [inventoryData]); // ✅ Updates only when inventoryData changes
+    setFilters(prevFilters =>
+      prevFilters.map(filter => {
+        if (filter.title === "Brand") {
+          setNoResults(filtered.length === 0);
+          return { ...filter, options: filtered };
+        }
+        return filter;
+      })
+    );
+  }
+}, [searchQuery, brandsData]);
 
-  console.log("pT"+JSON.stringify(PopularTractors));
-  
- 
   //pagination
   const CardsPerPage = 9;
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(PopularTractors.length / CardsPerPage);
-  const indexOfLastCard = currentPage * CardsPerPage;
-  const indexOfFirstCard = indexOfLastCard - CardsPerPage;
-  const currentCards = PopularTractors.slice(indexOfFirstCard, indexOfLastCard);
+const [currentPage, setCurrentPage] = useState(1);
+const totalPages = Math.ceil(filteredTractors.length / CardsPerPage);
 
-  ///fliter the tractors 
-  useEffect(() => {
-    if (!liveInventoryFilters.length || !PopularTractors.length) return;
-  
-    console.log("Applying Filters:", liveInventoryFilters); // ✅ Debugging
-    console.log("PopularTractors Before Filter:", PopularTractors); // ✅ Debugging
-  
-    const [brandFilter, hpFilter, priceFilter, stateFilter] = liveInventoryFilters;
-  
-    const filteredTractors = PopularTractors.filter(tractor => {
-      console.log("Checking Tractor:", tractor.state); // ✅ Debugging
-  
-      const tractorState = tractor.state;
-  
-      return stateFilter ? tractorState.includes(stateFilter) : true;
-    });
-  
-    console.log("FilteredTractors:", filteredTractors); // ✅ Debugging
-  
-    setPopularTractorsData(prevData => {
-      if (JSON.stringify(prevData) !== JSON.stringify(filteredTractors)) {
-        console.log("Updating PopularTractorsData:", filteredTractors); // ✅ Debugging
-        return filteredTractors;
-      }
-      return prevData;
-    });
-  
-  }, [liveInventoryFilters, PopularTractors]); // ✅ Added `PopularTractors` dependency
-  
+const indexOfLastCard = currentPage * CardsPerPage;
+const indexOfFirstCard = indexOfLastCard - CardsPerPage;
+const currentCards = filteredTractors.slice(indexOfFirstCard, indexOfLastCard);
 
-  //get states list 
+
+//// Applying the filters
+useEffect(() => {
+  if (!PopularTractors || PopularTractors.length === 0) {
+    console.log("No PopularTractors available for filtering.");
+    return;
+  }
+
+  const [brandFilter, hpFilter, priceFilter, stateFilter] = liveInventoryFilters;
+
+  console.log("Applying Filters:", { brandFilter, hpFilter, priceFilter, stateFilter });
+  console.log("PopularTractors Sample:", PopularTractors[0]);
+
+  const filtered = PopularTractors.filter((tractor) => {
+    // BRAND FILTER
+    const matchesBrand = brandFilter ? tractor.title?.includes(brandFilter) : true;
+
+    // HP FILTER
+    const matchesHP = hpFilter
+      ? (tractor.features || []).some((f) => {
+          if (f.icon.includes("hp")) {
+            const hpValue = parseInt(f.text.match(/\d+/)?.[0], 10);
+            const range = hpFilter.split("_").map(Number);
+
+            if (range.length === 2) {
+              const [min, max] = range;
+              return hpValue >= min && hpValue <= max;
+            } else if (range.length === 1) {
+              const min = range[0];
+              return hpValue >= min;
+            }
+          }
+          return false;
+        })
+      : true;
+
+    // PRICE FILTER
+    const maxPrice = tractor?.price ?? 0;
+    let minFilter = 0,
+      maxFilter = Infinity;
+
+    if (priceFilter === "above_10" || priceFilter === ">10") {
+      minFilter = 1000000;
+      maxFilter = Infinity;
+    } else if (priceFilter.includes("_")) {
+      [minFilter, maxFilter] = priceFilter.split("_").map((num) => parseInt(num, 10) * 100000);
+    }
+
+    const matchesPrice = maxPrice >= minFilter && maxPrice <= maxFilter;
+
+    // STATE FILTER
+    const matchesState = stateFilter
+      ? tractor.state?.trim().toLowerCase() === stateFilter.trim().toLowerCase()
+      : true;
+
+    // Combine all filters
+    return matchesBrand && matchesHP && matchesPrice && matchesState;
+  });
+
+  console.log("Tractors After Filtering:", filtered.map((t) => ({ state: t.state, name: t.name })));
+
+  setFilteredTractors(filtered); // ✅ Update filteredTractors with the filtered data
+}, [liveInventoryFilters, PopularTractors]);
+
+  // get states list 
   useEffect(() => {
     // Fetch data from API when component mounts
     if (data && data.allStateTowns) {
@@ -274,24 +427,34 @@ export default function Inventory({ locale, inventoryData }) {
       }));
       setStateList(fetchedStates); // Update state with fetched data
     }
+    
   }, [data]); // Trigger this effect when `data` changes
 
-  const handleStateChange = (e) => {
-    debugger;
-    const stateValue = e.target.value;
+  const [inventoryLoading, setInventoryLoading] = useState(true);
+  const [inventoryError, setInventoryError] = useState(null);
   
-    setLiveInventoryFilters(prev => {
-      const updatedFilters = [prev[0], prev[1], prev[2], stateValue];
-      
-      console.log("Updated Filters:", updatedFilters); // ✅ Debugging
-      return updatedFilters;
-    });
-  };
+  useEffect(() => {
+    if (inventoryData) {
+      setInventoryLoading(false);
+    } else {
+      setInventoryLoading(true);
+    }
+  }, [inventoryData]);
+  
 
-  // if (brandsLoading ) return (
-  //   <Loader loaderImage={language == 'HI' ? LoaderHi : language == 'MR' ? LoaderMr : LoaderEn} />
-  // );
-  // if (brandsError) return <p>Error: {brandsError?.message}</p>;
+  if (inventoryLoading) {
+    return (
+      <Loader loaderImage={language === 'HI' ? LoaderHi : language === 'MR' ? LoaderMr : LoaderEn} />
+    );
+  }
+
+  if (!inventoryData || inventoryData.length === 0) {
+    return <p>No data available. Try refreshing or checking filters.</p>;
+  }
+  
+  if (inventoryError) {
+    return <p>Error: {inventoryError.message}</p>;
+  }
 
   return (
     <div>
@@ -341,7 +504,7 @@ export default function Inventory({ locale, inventoryData }) {
                 </div>
               </div>
 
-              <div className="mt-2 w-full">
+              {/* <div className="mt-2 w-full">
                 <div className="w-full flex">
                   <input
                     type="search"
@@ -352,7 +515,7 @@ export default function Inventory({ locale, inventoryData }) {
                   />
                   <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
                 </div>
-              </div>
+              </div> */}
 
               <div className="border mt-4 bg-white">
                 {filters.map((filter) => (
@@ -410,7 +573,8 @@ export default function Inventory({ locale, inventoryData }) {
                           <div className="p-2 flex flex-col w-full gap-2">
                             {filter.options.map((option, index) => (
                               <div key={index}>
-                                <input type="radio" name={filter.title.toLowerCase()} value={option.value} />
+                                <input type="radio" name={filter.title.toLowerCase()} value={option.value}checked={filter.selected === option.value}
+                                onChange={() => onSelectFilter(filter.showKey, option.value)} />
                                 <label className="ml-2">{option.label}</label>
                               </div>
                             ))}
@@ -446,7 +610,7 @@ export default function Inventory({ locale, inventoryData }) {
                 <span className="text-sm text-secondaryColor cursor-pointer font-medium">Edit</span>
               </div>
             </div> */}
-
+           
             <div className="relative w-full sm:hidden block">
               <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
                 <Image src={mapIcon} alt="search" width={22} height={22} />
@@ -454,9 +618,10 @@ export default function Inventory({ locale, inventoryData }) {
             <select
               id="location"
               className="bg-white border border-gray-300 text-black rounded-md block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white px-8"
-              onChange={handleStateChange} // ✅ Attach function
+               onChange={handleStateChange} 
+               value={locationDetails || ""}
             >
-              <option value="" hidden>{locationDetails || "Select a state"}</option>
+              <option value="" disabled selected>Your Location</option>
               {stateList.length > 0 ? (
                 stateList.map((item, index) => (
                   <option key={index} value={item.state}>
@@ -481,7 +646,7 @@ export default function Inventory({ locale, inventoryData }) {
                 </div>
               </div>
 
-              <div className="mt-2 w-full">
+              {/* <div className="mt-2 w-full">
                 <div className="w-full flex">
                   <input type="search" placeholder="Type Here"
                     className="border-secondaryColor border-r-0 w-full"
@@ -490,7 +655,7 @@ export default function Inventory({ locale, inventoryData }) {
                   />
                   <Image src="/images/inventory/searchicon.svg" width={85} height={75} alt="SearchIcon" className="w-[48px]" />
                 </div>
-              </div>
+              </div> */}
 
               <div className="border mt-4 bg-white">
                 {filters.map((filter) => (
@@ -546,7 +711,14 @@ export default function Inventory({ locale, inventoryData }) {
                           <div className="p-2 flex flex-col w-full gap-2">
                             {filter.options.map((option, index) => (
                               <div key={index}>
-                                <input type="radio" name={filter.title.toLowerCase()} value={option.value} />
+                                <input 
+                                 type="radio" 
+                                 name={filter.title.toLowerCase()} 
+                                 value={option.value}
+                                checked={filter.selected === option.value} // ✅ Controlled by state
+                                 onChange={() => onSelectFilter(filter.showKey, option.value)} // ✅ Updates state
+                                />
+
                                 <label className="ml-2">{option.label}</label>
                               </div>
                             ))}
@@ -577,7 +749,8 @@ export default function Inventory({ locale, inventoryData }) {
 
                 <div className="sm:flex hidden items-center gap-3">
                   <div>
-
+                  
+ 
                     <div className="relative w-full">
                       <div className="absolute top-[55%] transform -translate-y-1/2 left-2">
                         <Image src={mapIcon} alt="search" width={22} height={22} />
@@ -1069,7 +1242,7 @@ export default function Inventory({ locale, inventoryData }) {
               </div>
 
               <Pagination
-                data={PopularTractors}
+                data={filteredTractors}
                 TotalPages={totalPages}
                 CurrentPage={currentPage}
                 setCurrentPage={setCurrentPage}
