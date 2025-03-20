@@ -16,8 +16,8 @@ const { i18n } = require('./next-i18next.config');
     return config; 
   },
   env: {
-    WORDPRESS_API_URL: process.env.WORDPRESS_API_URL,
-    LOCATION_GET_API: process.env.LOCATION_GET_API
+    WORDPRESS_API_URL: 'https://tractorworld.empover.com/api/',
+    //LOCATION_GET_API: process.env.LOCATION_GET_API
   },
   images: {
     domains: ['tractorworld.empover.com']
