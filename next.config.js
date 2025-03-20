@@ -2,7 +2,7 @@ const path = require('path');
 const { i18n } = require('./next-i18next.config');
 
  module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: true,   
   i18n,
   webpack: (config) => {
    // config.resolve.alias['@locales'] = path.join(__dirname, 'public','locales');
