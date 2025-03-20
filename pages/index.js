@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next';
 import { useGeolocation } from '@utils';
 import { setModalStatus } from '../store/slices/userDataSlice';
 
-export default function Home({ locale }) {
+export default function Home({ locale, inventoryData}) {
   const { error, getLocation } = useGeolocation();
   const dispatch = useDispatch()
   const router = useRouter();
@@ -95,7 +95,7 @@ export default function Home({ locale }) {
 
     <>
       <Layout currentPage={"home"} onClick={showLanguageModal}>
-        <HomePage locale={locale} />
+        <HomePage locale={locale} inventoryData={inventoryData} />
       </Layout>
       <Modal showModal={showModal} customStyles={customStyles} handleClose={handleClose} content={
         <div className='flex items-center sm:flex-row flex-col-reverse w-full'>

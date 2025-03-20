@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Layout from "@components/Layout";
 import Banner from "@components/Banner";
 import Btn from "@components/Btn";
@@ -10,85 +10,114 @@ import CompareImage from '@Images/liveInventory/compareImage.svg';
 import closeIcon from '@Images/closeIcon.svg';
 import BannerImg from '@Images/compareTractorImg/Compare_tractor_banner.svg';
 import vs from '@Images/compareTractorImg/vs.svg';
+import { useRouter } from 'next/router';
+import { getLocaleProps } from "@helpers";
+import { useTranslation } from 'next-i18next';
+import { getHomePageTractorsListBasedOnInventory } from "../../utils";
 
-export default function CompareTractorDetails() {
+
+export async function getServerSideProps(context) {
+    return await getLocaleProps(context);
+}
+
+export default function CompareTractorDetails({ locale , inventoryData }) {
+
+    console.log("inventoryData"+JSON.stringify(inventoryData));
+
+    const router = useRouter();
+    const { t1, t2, id1, id2 } = router.query; // Extract query parameters
+    const { t, i18n } = useTranslation('common');
+
     const breadcrumbData = [
         { label: 'Home', link: '/' },
         { label: 'Compare Tractor', link: '#' },
     ];
+ 
+    const [tractorDetails, setTractorDetails] = useState([]);
+    const [specifications, setSpecifications] = useState([]);
+    const [steeringData, setSteeringData] = useState([]);
+    const [SimilarTractorsListData, setSimilarTractorsListData] = useState([]);
 
-    const images = [
-        {
-            name: "Mahindra 475 DI",
-            emiStartsFrom: "EMI starts from ₹ 13,810*",
-            price: "₹ 6.45 lac - 6.75 lac*",
-            checkPrice: "Check Tractor Price",
-            image: "/images/compareTractorImg/mahindra.svg"
-        },
-        {
-            name: "Massey Ferguson 90 4WD",
-            emiStartsFrom: "EMI starts from ₹ 24,055*",
-            price: "₹ 11.24 lac - 11.55 lac*",
-            checkPrice: "Check Tractor Price",
-            image: "/images/compareTractorImg/massey.svg"
-        },
+    useEffect(() => {
+        if (id1 && id2 && inventoryData.length > 0) {
+            debugger
+            const tractor1 = inventoryData.find(tractor => tractor.tractor_id === Number(id1));
+            const tractor2 = inventoryData.find(tractor => tractor.tractor_id === Number(id2));
 
-        {
-            name: "Massey Ferguson 90 4WD",
-            emiStartsFrom: "EMI starts from ₹ 24,055*",
-            price: "₹ 11.24 lac - 11.55 lac*",
-            checkPrice: "Check Tractor Price",
-            image: "/images/compareTractorImg/massey.svg"
-        },
+            if (tractor1 && tractor2) {
+                // 🖼️ Format imagesData for UI
+                const imagesData = [
+                    {
+                        name: `${tractor1.brand} ${tractor1.model}`,
+                        emiStartsFrom: "EMI starts from ₹ 13,810*",
+                        price: `₹ ${tractor1.max_price || 'N/A'}`,
+                        checkPrice: "Check Tractor Price",
+                        image: "/images/compareTractorImg/mahindra.svg", // Replace with actual image
+                        tractorId: tractor1.tractor_id
+                    },
+                    {
+                        name: `${tractor2.brand} ${tractor2.model}`,
+                        emiStartsFrom: "EMI starts from ₹ 24,055*",
+                        price: `₹ ${tractor2.max_price || 'N/A'}`,
+                        checkPrice: "Check Tractor Price",
+                        image: "/images/compareTractorImg/massey.svg", // Replace with actual image
+                        tractorId: tractor1.tractor_id
+                    }
+                ];
 
+                setTractorDetails(imagesData);
 
-    ];
+                // ⚙️ Engine & Transmission Specifications
+                const specData = [
+                    {
+                        tablData: [
+                            { td: "Engine HP" },
+                            { td: `${tractor1.engine_power}` },
+                            { td: "Torque" },
+                            { td: `${tractor1.engine_hours} Nm` }
+                        ]
+                    },
+                    {
+                        tablData: [
+                            { td: "RPM" },
+                            { td: `${tractor1.engine_power * 120} RPM` }, // Example calculation
+                            { td: "Fuel Type" },
+                            { td: tractor1.fuel_type || 'Diesel' }
+                        ]
+                    },
+                    {
+                        tablData: [
+                            { td: "Transmission" },
+                            { td: tractor1.transmission || 'Manual' },
+                            { td: "Drivetrain" },
+                            { td: tractor1.drive_type || '2WD' }
+                        ]
+                    }
+                ];
 
-    // Specifications data
-    const [engineData, setEngineData] = useState([
-        {
-            tablData: [
-                { td: "Engine HP" },
-                { td: "49 HP" },
-                { td: "Torque" },
-                { td: "150 Nm" }
-            ]
-        },
-        {
-            tablData: [
-                { td: "RPM" },
-                { td: "6000 RPM" },
-                { td: "Fuel Type" },
-                { td: "Diesel" }
-            ]
-        },
-        {
-            tablData: [
-                { td: "Transmission" },
-                { td: "Manual" },
-                { td: "Drivetrain" },
-                { td: "4WD" }
-            ]
+                setSpecifications(specData);
+
+                // 🛞 Steering & Other Features
+                const steeringDetails = [
+                    { label: "Engine HP", value: `${tractor1.engine_power}` },
+                    { label: "PTO HP", value: `${tractor1.pto_hp || 'N/A'}` },
+                    { label: "Wheel Drive", value: `${tractor1.drive_type || '2WD'}` },
+                    { label: "Forward Gears", value: `${tractor1.forward_gears || 'N/A'}` },
+                    { label: "Reverse Gears", value: `${tractor1.reverse_gears || 'N/A'}` },
+                    { label: "Brake Type", value: `${tractor1.brake_type || 'Oil Immersed'}` },
+                    { label: "Price", value: `₹ ${tractor1.max_price || 'Check Price'}` }
+                ];
+
+                setSteeringData(steeringDetails);
+            }
         }
-    ]);
-
-
-    const [steeringData, setSteeringData] = useState([
-        { label: "Engine HP", value: "niharika" },
-        { label: "PTO HP", value: "44.9 HP" },
-        { label: "Wheel drive", value: "2WD" },
-        { label: "Forward Gears", value: "2" },
-        { label: "Reverse Gears", value: "2" },
-        { label: "Brake Type", value: "Oil Immersed" },
-        { label: "Price", value: "Check Price" },
-    ]);
-    // end Specifications
+    }, [id1, id2, inventoryData]);
 
     const accordionData = [
-        { id: 1, heading: "Engine", content: { data: engineData } },
-        { id: 2, heading: "Transmission", content: { data: engineData } },
-        { id: 3, heading: "Brakes", content: { data: engineData } },
-        { id: 4, heading: "Steering", content: { data: engineData }, },
+        { id: 1, heading: "Engine", content: { data: specifications } },
+        { id: 2, heading: "Transmission", content: { data: specifications } },
+        { id: 3, heading: "Brakes", content: { data: specifications } },
+        { id: 4, heading: "Steering", content: { data: specifications }, },
         { id: 5, heading: "Power Take Off", content: { data: steeringData }, },
         { id: 6, heading: "Fuel Tank", content: { data: steeringData }, },
         { id: 7, heading: "Dimensions And Weight Of Tractor", content: { data: steeringData }, },
@@ -103,177 +132,59 @@ export default function CompareTractorDetails() {
         setOpenAccordion(openAccordion === index ? null : index);
     };
 
-    const compareTractorData = {
+    //similarTractors
+    
+    let similarTractorsListData = [];
 
-        oneData: [
+    if (inventoryData.length > 0 && id1 && id2) {
+        debugger;
+    
+        // Ensure id1 and id2 are numbers
+        const tractor1 = inventoryData.find(t => Number(t.tractor_id) === Number(id1));
+        const tractor2 = inventoryData.find(t => Number(t.tractor_id) === Number(id2));
+    
+        console.log("Found Tractor 1:", tractor1);
+        console.log("Found Tractor 2:", tractor2);
+    
+        if (!tractor1 || !tractor2) {
+            console.warn("One or both tractors not found in inventoryData");
+        }
+    
+        // Extract engine power safely
+        const enginePower1 = tractor1?.engine_power;
+        const enginePower2 = tractor2?.engine_power;
+    
+        console.log("Engine Power 1:", enginePower1);
+        console.log("Engine Power 2:", enginePower2);
+    
+        if (enginePower1 === null || enginePower2 === null) {
+            console.warn("Missing engine power for one or both tractors");
+        }
+    
+        // 🚀 Filter tractors with the same engine power
+        let similarTractorsListData = inventoryData
+            .filter(item => 
+                (item.engine_power === enginePower1 || item.engine_power === enginePower2) &&
+                item.tractor_id !== Number(id1) &&
+                item.tractor_id !== Number(id2)
+            )
+            .slice(0, 10) // ✅ Limit results to 10 similar tractors
+            .map(item => ({
+                title: `${item.brand} ${item.model}`,
+                price: item.max_price,
+                engineHours: item.engine_hours,
+                driveType: item.drive_type,
+                enginePower: item.engine_power,
+                tractorId: item.tractor_id,
+            }));
+    
+        console.log("Filtered Similar Tractors:", JSON.stringify(similarTractorsListData));
+        setSimilarTractorsListData(similarTractorsListData)
+    }
+    
+    // 🏗️ Pass filtered data for comparison
+    const compareTractorData = getHomePageTractorsListBasedOnInventory(SimilarTractorsListData);
 
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
-
-        twoData: [
-
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
-
-        ThreeData: [
-
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
-
-        FourData: [
-
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
-
-        FifthData: [
-
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-        ],
-
-        SixthData: [
-
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-            {
-                brand1: 'Mahindra 475 DI',
-                brand2: 'Kubota MU401 2WD',
-                brand1hrs: '50 hrs',
-                brand2hrs: '50 hrs',
-                brand1price: '₹ 6.45-6.75 Lakh*',
-                brand2price: '₹ 8.30-8.40 Lakh*'
-            },
-
-        ]
-    };
 
     const [activeTab, setActiveTab] = useState("oneData");
     const handleTabClick = (tabId) => {
@@ -292,7 +203,7 @@ export default function CompareTractorDetails() {
                 <div className="w-full bg-white lg:px-14 md:px-6 sm:px-3 px-2 sm:pt-4 pt-2 py-3">
 
                     <div className="w-full flex grid-cols-1 sm:flex-row sm:items-start items-center flex-col sm:gap-10 gap-4 justify-between">
-                        {images.map((tractor, index) => (
+                        {tractorDetails.map((tractor, index) => (
                             <>
                                 {index > 0 && (
                                     <div className='m-auto sm:w-[100px] sm:h-[100px] h-[40px] w-[40px]'>

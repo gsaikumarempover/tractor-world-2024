@@ -40,8 +40,7 @@ function SamplePrevArrow(props) {
 
 const LiveInventoryContainer = ({ locale, data }) => {
 
-  console.log("live inventory data received"+data);
-  // debugger;
+   // debugger;
 
   const [activeTab, setActiveTab] = useState("gridData");
   const handleTabClick = (tabId) => {
@@ -197,7 +196,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
                       className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none cursor-pointer"
                     >
 
-                      <div className="relative" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
+                      <div className="relative" onClick={() => router.push(`/tractor-details/${item.tractorId}`)}>
                         <Image
                           className="w-full"
                           src={DefaultTractor}
@@ -275,7 +274,7 @@ const LiveInventoryContainer = ({ locale, data }) => {
                       className="gap-4 bg-white border-[#D9D9D9] border-[1px] overflow-hidden shadow-lg flex-none  cursor-pointer">
                       <div className="flex">
                         <div className="w-[40%] relative">
-                          <div className="w-full h-[175px]" onClick={() => router.push(`/tractor-details/${item.slug}`)}>
+                          <div className="w-full h-[175px]" onClick={() => router.push(`/tractor-details/${item.tractorId}`)}>
                             <Image
                               className="w-full h-[600px]"
                               src={DefaultTractor}

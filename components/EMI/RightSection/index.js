@@ -4,13 +4,18 @@ import { setTotalPrincipleAndInt } from "@store/userDataSlice";
 import EmiChart from "./emiChart";
 import ChartFooter from "./chartFooter";
  
-const RightSection = ({ state }) => {
+const RightSection = ({ state = {} }) => {
 
-  const dispatch=useDispatch();
+  console.log("state"+JSON.stringify(state));
 
-  //{"principal":1000000,"loanAmount":549998,"tenure":48,"roi":9.1,"downPayment":401133} 
-
-  const { principal, roi, tenure, loanAmount,downPayment} = state;
+  const dispatch=useDispatch(); 
+  
+  const { 
+    roi = 5,  // Default ROI (change as needed)
+    tenure = 72, 
+    loanAmount = 0, 
+    downPayment = 0 
+  } = state || {}; 
 
   console.log("EMI CLALCULATOR"+JSON.stringify(state));
 
