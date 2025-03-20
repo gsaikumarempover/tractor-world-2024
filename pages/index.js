@@ -9,11 +9,11 @@ import Modal from "@components/Modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useGeolocation } from '@utils';
+// import { useGeolocation } from '@utils';
 import { setModalStatus } from '../store/slices/userDataSlice';
 
 export default function Home({ locale, inventoryData}) {
-  const { error} = useGeolocation();
+  // const { error} = useGeolocation();
   const dispatch = useDispatch()
   const router = useRouter();
   const { i18n } = useTranslation();
